@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'; // importer une seul fois
 
@@ -34,7 +35,8 @@ import { UserService } from './services/user.service'; // faire import de chaque
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule 
    
   ],
   providers: [ // ajt tout les service  cree ici ici

@@ -12,28 +12,72 @@ class UserManager
     $this->db = $db;
   }
 
-  public function getUsers()
-{
-    $users = []; // Initialise un tableau vide pour stocker les objets User
+  public function getUsers($page, $pageSize)
+{ 
 
-    $sql = "SELECT * FROM utilisateur";
+ $users = []; // Initialise un tableau vide pour stocker les objets User
+
+    // Calculer le décalage (offset) en fonction du numéro de page et de la taille de la page
+    $offset = ($page - 1) * $pageSize;
+
+    // Requête SQL avec LIMIT pour pagination
+    $sql = "SELECT * FROM utilisateur WHERE id_role = 4 LIMIT :offset, :pageSize";
     try {
         $prep = $this->db->prepare($sql);
+        $prep->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $prep->bindParam(':pageSize', $pageSize, PDO::PARAM_INT);
         $prep->execute();
         $result = $prep->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($result as $c) {
-            $user = new User($c);
-            $users[] = $user; // Ajoute l'objet User au tableau $users
+        foreach ($result as $userData) {
+            // Créer un nouvel objet User à partir des données de la base de données
+            $user = new User();
+            $user->setId($userData['id_utilisateur']);
+            $user->setCivilite($userData['civilite']);
+            $user->setNom($userData['nom']);
+            $user->setPrenom($userData['prenom']);
+            $user->setEmail($userData['email']);
+            $user->setGsm($userData['gsm']);
+            // Ajouter l'objet User au tableau $users
+            $users[] = $user;
         }
     } catch (PDOException $e) {
+        // Gérer l'erreur de requête SQL
         die($e->getMessage());
     } finally {
         $prep = null;
     }
 
     return $users;
+
 }
+
+
+
+
+public function getUsersByName(string $nom): ?User {
+    $sql = "SELECT * FROM utilisateur WHERE nom LIKE :nom";
+    try {
+        $prep = $this->db->prepare($sql);
+        $prep->bindValue(':nom', '%' . $nom . '%', PDO::PARAM_STR);
+        $prep->execute();
+        $result = $prep->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!$result) {
+            return null; // Aucun utilisateur trouvé avec ce nom
+            echo 'Client inexistant';
+        }
+
+        // Retourner le premier utilisateur trouvé (ou null s'il n'y en a pas)
+        return new User($result[0]);
+    } catch (PDOException $e) {
+        die($e->getMessage());
+    } finally {
+        $prep = null;
+    }
+}
+ 
+
 
   /**
    * @param User $user
@@ -124,7 +168,7 @@ public function selectUsers()
 
   public function deleteUser($id)
   {
-    $sql = "DELETE FROM utilisateur WHERE id=:id";
+    $sql = "DELETE FROM utilisateur WHERE id_utilisateur=:id";
     try {
       $prep = $this->db->prepare($sql);
       $prep->bindParam(':id', $id, PDO::PARAM_INT);

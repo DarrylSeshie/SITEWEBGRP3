@@ -12,26 +12,71 @@ import { Observable } from 'rxjs';
 })
 export class GestionUtilisateurComponent implements OnInit{
 
-  users!: Observable<User[]>;
+ selectedUser: User | null = null; // Stocke l'utilisateur sélectionné
 
+  currentPage: number = 1;
+  pageSize: number = 10;
+
+  users!: Observable<User[]>;
+  searchTerm: string = '';
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.users = this.userService.getUsers() ;
+    this.loadUsers();
   }
 
-  deleteUser(id: number) {
-    this.userService.deleteUser(id).subscribe(() => {
-      this.users = this.userService.getUsers();
+  loadUsers() {
+  //  this.users = this.userService.getUsers();
+  this.users = this.userService.getUsers(this.currentPage, this.pageSize);
+  }
+
+  
+  nextPage() {
+    this.currentPage++;
+    console.log('Current Page:', this.currentPage);
+    this.loadUsers();
+  }
+  
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      console.log('Current Page:', this.currentPage);
+      this.loadUsers();
+    }
+  }
+
+  searchUsers() {
+    if (this.searchTerm.trim() !== '') {
+      this.users = this.userService.searchUsersByName(this.searchTerm);
+    } else {
+      this.loadUsers(); 
+    }
+  }
+
+  
+
+  deleteUser(userId: number) {
+    this.userService.deleteUser(userId).subscribe(() => {
+      this.loadUsers(); // Recharger la liste des utilisateurs après suppression
     });
   }
 
-  updateUser(user: User){
-  this.userService.updateUser(user);
+  updateUser(user: User) {
+    this.userService.updateUser(user); // Appeler la méthode de mise à jour de l'utilisateur
   }
 
- addUser(user: User){
-  this.userService.addUser ;
- }
+  // Cette méthode doit être liée à un événement de formulaire pour ajouter un utilisateur
+  addUser(user: User) {
+    this.userService.addUser(user); // Appeler la méthode pour ajouter un utilisateur
+  }
+
+  selectUser(userId: number) {
+    this.userService.getUserById(userId).subscribe(user => {
+      console.log('Selected User:', user); // Vérifiez les données de l'utilisateur
+      this.selectedUser = user; // Affecte l'utilisateur sélectionné
+    });
+  }
+
+
 
 }

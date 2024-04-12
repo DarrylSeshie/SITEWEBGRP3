@@ -1,4 +1,14 @@
-<h2>Liste des Utilisateurs</h2>
+<h2>Liste des clients</h2>
+
+
+
+<div class="usercard">
+  <td><button class="searchButtont">Ajouter  client</button>
+ 
+<form (ngSubmit)="searchUsers()" class="search-container">
+  <input id="searchInput" type="text" name="searchTerm" [(ngModel)]="searchTerm" placeholder="Entrez le nom à rechercher">
+  <button id="searchButton" type="submit">Search</button>
+</form>
 
 <table class="table table-striped mt-3">
   <thead>
@@ -12,17 +22,38 @@
   </thead>
   <tbody>
     <!-- Utilisation de la directive *ngFor pour itérer sur les utilisateurs -->
-    <tr *ngFor="let user of users | async; let i = index">
+    <tr *ngFor="let user of users | async">
       <td>{{ user.civilite }}</td>
       <td>{{ user.nom }}</td>
       <td>{{ user.prenom }}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.gsm }}</td>
-  <td><button class="btn btn-danger" (click)="deleteUser(this.user.id_utilisateur)"><i class="fa-solid fa-trash"></i></button>
-  <td><button class="btn btn-danger" (click)="updateUser(this.user)"><i class="fa-solid fa-trash"></i></button>
+  <td><button  (click)="selectUser(this.user.id_utilisateur)">Look</button>
+  <td><button  (click)="deleteUser(this.user.id_utilisateur)">Del</button>
+  <td><button  (click)="updateUser(this.user)">Edit</button>
 
 </td>
-
+<!-- <td><button class="btn btn-danger" (click)="deleteUser(this.user.id_utilisateur)"><i class="pi-user-edit"></i></button>
+  <td><button class="btn btn-danger" (click)="updateUser(this.user)"><i class="fa-solid fa-trash"></i></button>  -->
     </tr>
+    
   </tbody>
 </table>
+<button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1">Back</button>
+<button  id="searchButton"(click)="nextPage()">Next</button>
+</div>
+
+
+
+<!-- Section des détails du client -->
+<div *ngIf="selectedUser" class="usercard">
+  <h3>Détails du client</h3>
+  <p>Civilité: {{ selectedUser.civilite }}</p>
+  <p>Nom: {{ selectedUser.nom }}</p>
+  <p>Prénom: {{ selectedUser.prenom }}</p>
+  <p>Email: {{ selectedUser.email }}</p>
+  <p>Tel: {{ selectedUser.gsm }}</p>
+  <p>Adresse: {{ selectedUser.id_adresse }}</p>
+  <p>Institution: {{ selectedUser.id_institution }}</p>
+  <p>TVA: {{ selectedUser.TVA }}</p>
+</div>
