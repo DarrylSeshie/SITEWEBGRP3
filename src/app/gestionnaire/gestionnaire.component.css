@@ -1,0 +1,7 @@
+.contenairButton{
+    display: flex; /* Utilisation de Flexbox */
+    flex-direction: column; /* Aligner les éléments en colonne */
+    align-items: center; /* Centrer les éléments horizontalement */
+    justify-content: center; /* Centrer les éléments verticalement */
+    
+}

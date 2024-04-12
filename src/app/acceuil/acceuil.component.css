@@ -1,0 +1,22 @@
+.texteAcceuil{
+    text-align: center;
+    background-color: #f0eaee;
+    margin-bottom: 20px;
+    padding: 15px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Couleur de fond */
+  }
+  
+  
+  
+  h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #a2085c98; /* Couleur du titre */
+    text-align: center; /* Centre le titre */
+    margin-bottom: 20px; /* Espacement sous le titre */
+  }
+  

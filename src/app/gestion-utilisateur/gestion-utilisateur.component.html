@@ -1,0 +1,28 @@
+<h2>Liste des Utilisateurs</h2>
+
+<table class="table table-striped mt-3">
+  <thead>
+    <tr>
+      <th>Civilité</th>
+      <th>Nom</th>
+      <th>Prénom</th>
+      <th>Email</th>
+      <th>Téléphone</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Utilisation de la directive *ngFor pour itérer sur les utilisateurs -->
+    <tr *ngFor="let user of users | async; let i = index">
+      <td>{{ user.civilite }}</td>
+      <td>{{ user.nom }}</td>
+      <td>{{ user.prenom }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.gsm }}</td>
+  <td><button class="btn btn-danger" (click)="deleteUser(this.user.id_utilisateur)"><i class="fa-solid fa-trash"></i></button>
+  <td><button class="btn btn-danger" (click)="updateUser(this.user)"><i class="fa-solid fa-trash"></i></button>
+
+</td>
+
+    </tr>
+  </tbody>
+</table>
