@@ -7,6 +7,15 @@
 
    
   }
+
+  .buttonadd{
+    padding: 8px 16px;
+    background-color: #800860; /* Couleur de fond du bouton (bleu par défaut) */
+    color: black; /* Couleur du texte */
+    border: 1,5 solid #800860 ;
+    border-radius: 4px;
+    cursor: pointer;
+  }
   
   /* Style du champ de saisie */
   #searchInput {
@@ -61,6 +70,14 @@
 
 
   h2{
+    text-align: center;
+    font-family: 'Helvetica Neue', Arial, sans-serif; 
+   
+    font-size: 24px; 
+    font-weight: bold; 
+    color: #333;
+  }
+  h3{
     text-align: center;
     font-family: 'Helvetica Neue', Arial, sans-serif; 
    

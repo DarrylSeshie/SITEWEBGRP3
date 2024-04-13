@@ -1,59 +1,104 @@
 <h2>Liste des clients</h2>
 
-
-
 <div class="usercard">
-  <td><button class="searchButtont">Ajouter  client</button>
- 
-<form (ngSubmit)="searchUsers()" class="search-container">
-  <input id="searchInput" type="text" name="searchTerm" [(ngModel)]="searchTerm" placeholder="Entrez le nom à rechercher">
-  <button id="searchButton" type="submit">Search</button>
-</form>
+  <button class="buttonadd">Ajouter client</button>
 
-<table class="table table-striped mt-3">
-  <thead>
-    <tr>
-      <th>Civilité</th>
-      <th>Nom</th>
-      <th>Prénom</th>
-      <th>Email</th>
-      <th>Téléphone</th>
-    </tr>
-  </thead>
-  <tbody>
-    <!-- Utilisation de la directive *ngFor pour itérer sur les utilisateurs -->
-    <tr *ngFor="let user of users | async">
-      <td>{{ user.civilite }}</td>
-      <td>{{ user.nom }}</td>
-      <td>{{ user.prenom }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.gsm }}</td>
-  <td><button  (click)="selectUser(this.user.id_utilisateur)">Look</button>
-  <td><button  (click)="deleteUser(this.user.id_utilisateur)">Del</button>
-  <td><button  (click)="updateUser(this.user)">Edit</button>
+  <!-- Formulaire de recherche -->
+  <form (ngSubmit)="searchUsersByname(searchTerm)" class="search-container" #searchForm="ngForm">
+    <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Rechercher par nom..." />
+    <button id="searchButton" type="submit">Search</button>
+  </form>
 
-</td>
-<!-- <td><button class="btn btn-danger" (click)="deleteUser(this.user.id_utilisateur)"><i class="pi-user-edit"></i></button>
-  <td><button class="btn btn-danger" (click)="updateUser(this.user)"><i class="fa-solid fa-trash"></i></button>  -->
-    </tr>
-    
-  </tbody>
-</table>
-<button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1">Back</button>
-<button  id="searchButton"(click)="nextPage()">Next</button>
+  <!-- Tableau des utilisateurs -->
+  <table class="table table-striped mt-3" *ngIf="!(showSearchResults && (users2 | async)?.length)">
+    <thead>
+      <tr>
+        <th>Civilité</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th>Téléphone</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Utilisation de la directive *ngFor pour itérer sur les utilisateurs -->
+      <tr *ngFor="let user of users | async">
+        <td>{{ user.civilite }}</td>
+        <td>{{ user.nom }}</td>
+        <td>{{ user.prenom }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.gsm }}</td>
+        <td>
+         <button (click)="selectUser(user.id_utilisateur)">Look</button>
+          <button (click)="deleteUser(user.id_utilisateur)">Del</button>
+          <button (click)="updateUser(user)">Edit</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+  
+<!-- Section des résultats de recherche -->
+<div  *ngIf="showSearchResults && (users2 | async)?.length">
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>Civilité</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th>Téléphone</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr *ngFor="let user of users2 | async">
+        <td>{{ user.civilite }}</td>
+        <td>{{ user.nom }}</td>
+        <td>{{ user.prenom }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.gsm }}</td>
+        <td>
+          <button (click)="selectUser(user.id_utilisateur)">Look</button>
+          <button (click)="deleteUser(user.id_utilisateur)">Del</button>
+          <button (click)="updateUser(user)">Edit</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 
 
-<!-- Section des détails du client -->
-<div *ngIf="selectedUser" class="usercard">
+
+  <!-- Pagination -->
+  <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1">Précédent</button>
+  <button id="searchButton" (click)="nextPage()">Suivant</button>
+</div>
+
+
+<!-- Section des détails du client sélectionné -->
+<div *ngIf="selectedUser && userDetailVisible[selectedUser.id_utilisateur]" class="usercard">
   <h3>Détails du client</h3>
   <p>Civilité: {{ selectedUser.civilite }}</p>
   <p>Nom: {{ selectedUser.nom }}</p>
   <p>Prénom: {{ selectedUser.prenom }}</p>
   <p>Email: {{ selectedUser.email }}</p>
   <p>Tel: {{ selectedUser.gsm }}</p>
+  <p>Profession: {{ selectedUser.profession }}</p>
   <p>Adresse: {{ selectedUser.id_adresse }}</p>
   <p>Institution: {{ selectedUser.id_institution }}</p>
   <p>TVA: {{ selectedUser.TVA }}</p>
+  <button id="searchButton" (click)="toggleDetails(selectedUser)">
+    {{ userDetailVisible[selectedUser.id_utilisateur] ? 'Masquer Détails' : 'Afficher Détails' }}
+  </button>
 </div>
+
+
+
+
+

@@ -52,6 +52,52 @@ class UserManager
 
 }
 
+public function getUsersByname2($page, $pageSize,$nom)
+{ 
+
+ $users = []; // Initialise un tableau vide pour stocker les objets User
+
+    // Calculer le décalage (offset) en fonction du numéro de page et de la taille de la page
+    $offset = ($page - 1) * $pageSize;
+
+    // Requête SQL avec LIMIT pour pagination
+    $sql = "SELECT * FROM utilisateur WHERE nom LIKE :nom LIMIT :offset, :pageSize";
+    try {
+        $prep = $this->db->prepare($sql);
+        $prep->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $prep->bindParam(':pageSize', $pageSize, PDO::PARAM_INT);
+        $prep->bindValue(':nom', '%' . $nom . '%', PDO::PARAM_STR);
+        $prep->execute();
+        $result = $prep->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($result as $userData) {
+            // Créer un nouvel objet User à partir des données de la base de données
+            $user = new User();
+            $user->setId($userData['id_utilisateur']);
+            $user->setCivilite($userData['civilite']);
+            $user->setNom($userData['nom']);
+            $user->setPrenom($userData['prenom']);
+            $user->setEmail($userData['email']);
+            $user->setGsm($userData['gsm']);
+            $user->setProfession($userData['profession']);
+            $user->setIdAdresse($userData[ 'id_adresse'] );
+            $user->setIdInstitution($userData[ 'id_institution'] );
+            $user->setTVA($userData[ 'TVA'] );
+            // Ajouter l'objet User au tableau $users
+            $users[] = $user;
+        }
+    } catch (PDOException $e) {
+        // Gérer l'erreur de requête SQL
+        die($e->getMessage());
+    } finally {
+        $prep = null;
+    }
+
+    return $users;
+
+}
+
+
 
 
 
@@ -90,29 +136,14 @@ public function getUsersByName(string $nom): ?User {
         $prep->bindParam(':userId', $userId, PDO::PARAM_INT);
         $prep->execute();
 
-        // Récupérer le résultat de la requête sous forme de tableau associatif
-        $user = $prep->fetch(PDO::FETCH_ASSOC);
+        $userData = $prep->fetch(PDO::FETCH_ASSOC);
 
-        if (!$user) {
+        if (!$userData) {
             return null; // Aucun utilisateur trouvé avec cet ID
         }
 
-        // Créer un nouvel objet User et définir ses propriétés
-        $userObject = new User();
-        $userObject->setId($user['id_utilisateur']);
-        $userObject->setCivilite($user['civilite']);
-        $userObject->setNom($user['nom']);
-        $userObject->setPrenom($user['prenom']);
-        $userObject->setEmail($user['email']);
-        $userObject->setMotDePasse($user['mot_de_passe']);
-        $userObject->setGsm($user['gsm']);
-        $userObject->setTva($user['TVA']);
-        $userObject->setProfession($user['profession']);
-        $userObject->setGsmPro($user['gsm_pro']);
-        $userObject->setEmailPro($user['email_pro']);
-        $userObject->setIdRole($user['id_role']);
-        $userObject->setIdInstitution($user['id_institution']);
-        $userObject->setIdAdresse($user['id_adresse']);
+        // Création d'un nouvel objet User à partir des données récupérées
+        $userObject = new User($userData);
 
         return $userObject;
     } catch (PDOException $e) {
