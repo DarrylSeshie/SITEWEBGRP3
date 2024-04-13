@@ -8,7 +8,7 @@
         <a class="nav-link"   routerLink="acceuil">Acceuil</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" >Inscription</a>
+        <a class="nav-link" >s'inscrire a une formation</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" >Profil</a>
@@ -17,12 +17,39 @@
         <a class="nav-link" >Mes formations</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"   routerLink="gestion">Gestion</a>
+        <a class="nav-link"   data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Gestion</a>
       </li>
      
     </ul>
   </nav>
-  
 </header>
+
+        
+  <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel"><h3>Gestion de l'application</h3></h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      
+    <div id="gestionButonContenaire">
+      <div class="gestionOption" routerLink="/gestionutilisateurs">Gestion des clients</div>
+      <div class="gestionOption" routerLink="/gestionformateurs">Gestion de formateurs</div>
+      <div class="gestionOption" routerLink="/gestionformations">Gestion de Formations</div>    
+      <div class="gestionOption" routerLink="/gestioninstitutions">Gestion de Institutions</div>
+      <div class="gestionOption" routerLink="/gestionadresses">Gestion d'adresses</div>
+      <div class="gestionOption" routerLink="/gestionlieux">Gestion des lieux</div>
+      <div class="gestionOption" routerLink="/gestionimages">Gestion d'images</div>
+       <!-- Toption admin a cachez plus tard en fcn du role -->
+       <div class="gestionOption" routerLink="/gestionimages">Gestion des roles</div>
+       <div class="gestionOption" routerLink="/gestionimages">Effectuer des Sauvegardes</div>
+      
+    </div>
+
+ </div>
+  </div>
+
+
+
 
 

@@ -7,7 +7,7 @@ import { GestionInstitutionComponent } from './gestion-institution/gestion-insti
 import { GestionUtilisateurComponent } from './gestion-utilisateur/gestion-utilisateur.component';
 import { GestionLieuComponent } from './gestion-lieu/gestion-lieu.component';
 import { AcceuilComponent } from './acceuil/acceuil.component';
-import { GestionnaireComponent } from './gestionnaire/gestionnaire.component';
+//import { GestionnaireComponent } from './gestionnaire/gestionnaire.component';
 import { GestionAdresseComponent } from './gestion-adresse/gestion-adresse.component';
 
 const routes: Routes = [
@@ -34,9 +34,9 @@ const routes: Routes = [
     {
       path: 'gestionlieux', component: GestionLieuComponent
     },
-    {
+    /*{
       path: 'gestion', component: GestionnaireComponent
-    }, 
+    }, */
     {
       path: 'gestionadresses', component: GestionAdresseComponent
     }

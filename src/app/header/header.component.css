@@ -17,3 +17,32 @@ a {
   color: #666;
   text-decoration: underline;
 }
+
+
+
+
+.gestionOption {
+ 
+  background-color: #800860;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 30px 20px; /* Ajoute un espace intérieur aux boutons */
+  margin: 5px; /* Marge autour des boutons */
+  flex-basis: 8%; /* Largeur de chaq Marge à droite entre les boutons */
+  width: 90%;
+  text-align: center;
+}
+
+#gestionButonContenaire {
+  vertical-align: middle;
+  text-align: center;
+  display: flex; /* Utilisation de flexbox pour organiser les éléments en ligne */
+  flex-direction: column; /* Affiche les éléments en colonnes */
+ 
+  height: 100vh; /* Utilisation de la hauteur totale de la vue pour le conteneur */
+  align-items: center; /* Centre les éléments horizontalement */
+  padding: 10px; /* Espace intérieur du conteneur */
+ 
+}
