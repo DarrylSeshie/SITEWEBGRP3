@@ -18,6 +18,10 @@ import { GestionAdresseComponent } from './gestion-adresse/gestion-adresse.compo
 
 import { UserService } from './services/user.service'; // faire import de chaque service utiliser
 import { FormateurService } from './services/formateur.service';
+import { LieuService } from './services/lieu.service';
+import { AdresseService } from './services/adresse.service';
+import { InstitutionService } from './services/institution.service';
+import { ImageService } from './services/image.service';
 
 @NgModule({
   declarations: [
@@ -42,7 +46,11 @@ import { FormateurService } from './services/formateur.service';
   ],
   providers: [ // ajt tout les service  cree ici ici
     UserService,
-    FormateurService
+    FormateurService,
+    LieuService,
+    AdresseService,
+    InstitutionService,
+    ImageService
   ], 
   bootstrap: [AppComponent]
 })
