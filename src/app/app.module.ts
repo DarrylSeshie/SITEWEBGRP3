@@ -17,6 +17,7 @@ import { AcceuilComponent } from './acceuil/acceuil.component';
 import { GestionAdresseComponent } from './gestion-adresse/gestion-adresse.component';
 
 import { UserService } from './services/user.service'; // faire import de chaque service utiliser
+import { FormateurService } from './services/formateur.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { UserService } from './services/user.service'; // faire import de chaque
    
   ],
   providers: [ // ajt tout les service  cree ici ici
-    UserService
+    UserService,
+    FormateurService
   ], 
   bootstrap: [AppComponent]
 })

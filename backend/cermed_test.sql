@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : sam. 13 avr. 2024 à 20:58
+-- Généré le : dim. 14 avr. 2024 à 15:25
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -309,7 +309,11 @@ INSERT INTO `utilisateur` (`id_utilisateur`, `civilite`, `nom`, `prenom`, `email
 (82, 'M.', 'Garcia', 'Antoine', 'antoine.garcia@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2),
 (83, 'Mr', 'Roux', 'Luc', 'luc.roux@example.com', 'mdp789012', '0612345678', 'PT456789123', 'Dentiste', '0478901234', 'l.roux@dental.pt', 4, 2, 4),
 (84, 'Mme', 'Leroy', 'Claire', 'claire.leroy@example.com', 'password123', '0734567890', 'CH987654321', 'Pharmacienne', '0490123456', 'c.leroy@pharma.ch', 4, 2, 4),
-(85, 'M.', 'Sanchez', 'Carlos', 'carlos.sanchez@example.com', 'pwd987654', '0790123456', 'AT321987654', 'Médecin urgentiste', '0487654321', 'c.sanchez@hopital.at', 4, 1, 2);
+(85, 'M.', 'Sanchez', 'Carlos', 'carlos.sanchez@example.com', 'pwd987654', '0790123456', 'AT321987654', 'Médecin urgentiste', '0487654321', 'c.sanchez@hopital.at', 4, 1, 2),
+(86, 'Mr', 'The_D', 'Darryl', 'la226963@student.helha.be', 'mdp123', '123456789', NULL, NULL, NULL, NULL, 2, NULL, 4),
+(87, 'Mr', 'Celestinio', 'Geni', 'la22xxxx@student.helha.be', 'mdp123', '987654321', NULL, NULL, NULL, NULL, 3, NULL, 5),
+(88, 'Mr', 'Tonton_houss', 'bgs', 'la22xxxx@student.helha.be', 'mdp123', '555666777', NULL, NULL, NULL, NULL, 3, NULL, 6),
+(90, 'Mr', 'The_D', 'Darryl', 'la226963@student.helha.be', 'mdp123', '123456789', NULL, NULL, NULL, NULL, 2, NULL, 4);
 
 --
 -- Index pour les tables déchargées
@@ -442,7 +446,7 @@ ALTER TABLE `type_produit`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
 
 --
 -- Contraintes pour les tables déchargées
