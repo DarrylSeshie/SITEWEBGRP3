@@ -1,12 +1,12 @@
 <h2>Liste des clients</h2>
 
 <div class="usercard">
-  <button class="buttonadd">Ajouter client</button>
+  <button class="buttonadd"><i class="fa-solid fa-user-plus"></i></button>
 
   <!-- Formulaire de recherche -->
   <form (ngSubmit)="searchUsersByname(searchTerm)" class="search-container" #searchForm="ngForm">
     <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Rechercher par nom..." />
-    <button id="searchButton" type="submit">Search</button>
+    <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
   </form>
 
   <!-- Tableau des utilisateurs -->
@@ -29,9 +29,9 @@
         <td>{{ user.email }}</td>
         <td>{{ user.gsm }}</td>
         <td>
-         <button (click)="selectUser(user.id_utilisateur)">Look</button>
-          <button (click)="deleteUser(user.id_utilisateur)">Del</button>
-          <button (click)="updateUser(user)">Edit</button>
+         <button (click)="selectUser(user.id_utilisateur)"><i class="fa-solid fa-eye"></i></button>
+          <button (click)="updateUser(user)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="--bs-dark-bg-subtle" (click)="deleteUser(user.id_utilisateur)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>
     </tbody>
@@ -63,9 +63,9 @@
         <td>{{ user.email }}</td>
         <td>{{ user.gsm }}</td>
         <td>
-          <button (click)="selectUser(user.id_utilisateur)">Look</button>
-          <button (click)="deleteUser(user.id_utilisateur)">Del</button>
-          <button (click)="updateUser(user)">Edit</button>
+          <button (click)="selectUser(user.id_utilisateur)"><i class="fa-solid fa-eye"></i></button>
+          <button (click)="updateUser(user)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button class="--bs-dark-bg-subtle" (click)="deleteUser(user.id_utilisateur)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>
     </tbody>
@@ -76,8 +76,8 @@
 
 
   <!-- Pagination -->
-  <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1">Précédent</button>
-  <button id="searchButton" (click)="nextPage()">Suivant</button>
+  <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
+  <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
 </div>
 
 

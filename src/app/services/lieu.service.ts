@@ -9,7 +9,43 @@ import { Lieu } from '../models/lieu.model';
 export class LieuService {
 
 
+  private apiUrl = 'http://localhost/PROJET_ceREF/backend/lieu.php'; // URL de votre API pour les utilisateurs
 
+  constructor(private http: HttpClient) { } 
+
+  
+
+  getLieux(page: number, pageSize: number): Observable<Lieu[]> {
+    const url = `${this.apiUrl}?page=${page}&pageSize=${pageSize}`;
+    return this.http.get<Lieu[]>(url);
+  }
+
+   
+  getLieuById(LieuId: number): Observable<Lieu> {
+    return this.http.get<Lieu>( 'http://localhost/PROJET_ceREF/backend/lieu.php' + `?id=${LieuId}` );
+  }
+  
+ 
+  addLieu(newLieu: Lieu): Observable<Lieu> {
+    return this.http.post<Lieu>(this.apiUrl, newLieu);
+  }
+
+
+
+  searchLieuxByName2(page: number, pageSize: number, search: string): Observable<Lieu[]> {
+    const url = `${this.apiUrl}?page=${page}&pageSize=${pageSize}&search=${search}`;
+    return this.http.get<Lieu[]>(url);
+  }
+
+
+  updateLieu(updatedLieu: Lieu): Observable<Lieu> {
+    const url = `${this.apiUrl}/${updatedLieu.id_lieu}`;
+    return this.http.put<Lieu>(url, updatedLieu);
+  }
+
+  deleteLieu(id: number): Observable<any> {
+     return this.http.delete("http://localhost/PROJET_ceREF/backend/lieu.php?id=" + id);
+  }
 
 
 

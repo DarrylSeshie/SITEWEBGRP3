@@ -1,1 +1,94 @@
-<p>gestion-lieu works!</p>
+<h2>Liste des lieux</h2>
+
+<div class="usercard">
+  <button class="buttonadd">Ajouter lieu</button>
+
+  <!-- Formulaire de recherche -->
+  <form (ngSubmit)="searchLieuByname(searchTerm)" class="search-container" #searchForm="ngForm">
+    <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Rechercher par nom..." />
+    <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+  </form>
+
+  <!-- Tableau des utilisateurs -->
+  <table class="table table-striped mt-3" *ngIf="!(showSearchResults && ( lieux2 | async)?.length)">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Batiment</th>
+        <th>Local</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Utilisation de la directive *ngFor pour itérer sur les utilisateurs -->
+       
+      <tr *ngFor="let lieu of  lieux | async">
+        <td>{{ lieu.nom }}</td>
+        <td>{{ lieu.batiment }}</td>
+        <td>{{ lieu.locaux }}</td>
+        <td>
+          <button (click)="selectLieu(lieu.id_lieu)"><i class="fa-solid fa-eye"></i></button>
+          <button (click)="updateLieu(lieu)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button (click)="deleteLieu(lieu.id_lieu)"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+  
+<!-- Section des résultats de recherche -->
+<div  *ngIf="showSearchResults && ( lieux2 | async)?.length">
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Batiment</th>
+        <th>Local</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr *ngFor="let lieu of  lieux2 | async">
+        <td>{{ lieu.nom }}</td>
+        <td>{{ lieu.batiment }}</td>
+        <td>{{ lieu.locaux }}</td>
+        <td>
+          <button (click)="selectLieu(lieu.id_lieu)"><i class="fa-solid fa-eye"></i></button>
+          <button (click)="updateLieu(lieu)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button (click)="deleteLieu(lieu.id_lieu)"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+  <!-- Pagination -->
+  <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
+  <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
+</div>
+
+
+<!-- Section des détails du client sélectionné -->
+<div *ngIf="selectedLieu && userDetailVisible[selectedLieu.id_lieu]" class="usercard">
+  <h3>Détails du lieu</h3>
+  <p>Nom: {{ selectedLieu.nom }}</p>
+  <p>Batiment: {{ selectedLieu.batiment }}</p>
+  <p>Local: {{ selectedLieu.locaux }}</p>
+  <p>Adresse: {{ selectedLieu.id_adresse }}</p>
+  <p>Institution: {{ selectedLieu.id_institution }}</p>
+  <button id="searchButton" (click)="toggleDetails(selectedLieu)">
+    {{ userDetailVisible[selectedLieu.id_lieu] ? 'Masquer Détails' : 'Afficher Détails' }}
+  </button>
+</div>
+
+
+
+
+
+
+

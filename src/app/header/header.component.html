@@ -4,22 +4,52 @@
 <nav id="navbar-example2" class="navbar bg-body-tertiary px-3 mb-3">
     <a class="navbar-brand" routerLink="acceuil"><img class="logoceref" src="assets/ceref-logo.png" alt="logo"></a>
     <ul class="nav nav-pills">
+     
+
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="fa-solid fa-table-list"></i>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li class="nav-item">
+            <a class="nav-link"   data-bs-toggle="offcanvas" routerLink="#" ><i class="fa-solid fa-plus"></i> Formation </a> <!-- Mettre la route vers component adequat -->
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link"   data-bs-toggle="offcanvas" routerLink="#" ><i class="fa-regular fa-eye"></i> Formations</a><!-- Mettre la route vers component adequat -->
+          </li>
+
+
+            <li class="nav-item">
+            <a class="nav-link"   data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="fa-solid fa-gear"></i> Gestion</a>
+          </li>
+        </ul>
+        
+    </li>
+
       <li class="nav-item">
-        <a class="nav-link" >s'inscrire a une formation</a>
+        <a class="nav-link"  title="Profil"><i class="fa-solid fa-user"></i></a> <!-- Mettre la route vers component adequat -->
       </li>
+      
+     
       <li class="nav-item">
-        <a class="nav-link" >Profil</a>
+        <a class="nav-link" ><i class="fa-solid fa-right-from-bracket"></i></a> <!-- Mettre la methode pour deco -->
       </li>
-      <li class="nav-item">
-        <a class="nav-link" >Mes formations</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link"   data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions">Gestion</a>
-      </li>
+
+     
+    
+
+
+
+      
+      
      
     </ul>
   </nav>
 </header>
+
+
 
         
   <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
@@ -38,8 +68,8 @@
       <div class="gestionOption" routerLink="/gestionlieux">Gestion des lieux</div>
       <div class="gestionOption" routerLink="/gestionimages">Gestion d'images</div>
        <!-- Toption admin a cachez plus tard en fcn du role -->
-       <div class="gestionOption" >Gestion des roles</div>
-       <div class="gestionOption" >Effectuer des Sauvegardes</div>
+       <!--  <div class="gestionOption" >Gestion des roles</div>
+       <div class="gestionOption" >Effectuer des Sauvegardes</div> -->
       
     </div>
 
@@ -49,4 +79,13 @@
 
 
 
+
+
+  
+ 
+     
+    
+
+      
+  
 

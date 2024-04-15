@@ -1,6 +1,6 @@
 header {
   text-align: center;
-  background-color: #800860;
+  background-color: #7a055b;
   margin-bottom: 20px;
   padding: 15px;
 }
@@ -50,3 +50,13 @@ a {
   width: 40 px;
   height: 40px;
 }
+ul li a {
+  color: #1c1919; /* Couleur du texte */
+  text-decoration: none; /* Pas de soulignement */
+}
+
+a:hover {
+  background-color: #7a055b; /* Couleur de fond au survol */
+}
+
+/* gestion du menu pour quelle reste coller en haut a faire*/
