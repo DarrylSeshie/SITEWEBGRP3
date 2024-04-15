@@ -36,10 +36,8 @@ class LieuManager
             $lieu->setNom($lieuData['nom']);
             $lieu->setBatiment($lieuData['batiment']);
             $lieu->setLocaux($lieuData['locaux']);
-            $lieu->setIdInstitution($lieuData['id_institution']);
-            $lieu->setIdAdresse($lieuData['id_adresse']);
             // Ajouter l'objet User au tableau $users
-            $Lieux[] = $lieu;
+            $lieux[] = $lieu;
         }
     } catch (PDOException $e) {
         // Gérer l'erreur de requête SQL
@@ -106,7 +104,7 @@ public function getLieuByname2($page, $pageSize,$nom)
     $sql = "SELECT * FROM lieu WHERE id_lieu = :lieuId";
     try {
         $prep = $this->db->prepare($sql);
-        $prep->bindParam(':userId', $lieuId, PDO::PARAM_INT);
+        $prep->bindParam(':lieuId', $lieuId, PDO::PARAM_INT);
         $prep->execute();
 
         $lieuData = $prep->fetch(PDO::FETCH_ASSOC);
@@ -125,6 +123,71 @@ public function getLieuByname2($page, $pageSize,$nom)
         $prep = null; // Libérer la ressource PDOStatement
     }
 }
+/*
+public function selectLieuById2($lieuId)
+{
+    $sql = "SELECT lieu.id_lieu, 
+                   lieu.nom AS lieu_nom, 
+                   lieu.batiment, 
+                   lieu.locaux, 
+                   institution.id_institution, 
+                   institution.nom AS institution_nom, 
+                   institution.logo, 
+                   adresse.rue_numero, 
+                   adresse.code_postal, 
+                   adresse.localite, 
+                   adresse.pays
+            FROM lieu
+            JOIN institution ON lieu.id_institution = institution.id_institution
+            JOIN adresse ON lieu.id_adresse = adresse.id_adresse
+            WHERE lieu.id_lieu = :id";
+
+    try {
+        $prep = $this->db->prepare($sql);
+        $prep->bindParam(':id', $lieuId, PDO::PARAM_INT);
+        $prep->execute();
+        $result = $prep->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            
+            $lieu = new Lieu();
+            $lieu->setIdLieu($result['id_lieu']);
+            $lieu->setNom($result['lieu_nom']); 
+            $lieu->setBatiment($result['batiment']);
+            $lieu->setLocaux($result['locaux']);
+
+          
+            $institution = new Institution();
+            $institution->setIdInstitution($result['id_institution']);
+            $institution->setNom($result['institution_nom']); 
+            $institution->setLogo($result['logo']);
+          
+            $lieu->setInstitution($institution);
+
+            
+            $adresse = new Adresse();
+            $adresse->setRueNumero($result['rue_numero']);
+            $adresse->setCodePostal($result['code_postal']);
+            $adresse->setLocalite($result['localite']);
+            $adresse->setPays($result['pays']);
+            // Associer l'adresse au lieu
+            $lieu->setAdresse($adresse);
+
+            return $lieu; 
+        } else {
+            return null; 
+        }
+    } catch (PDOException $e) {
+        // Gérer l'erreur de requête SQL de manière appropriée (ex. journal des erreurs)
+        error_log('Erreur lors de la récupération du détail du lieu : ' . $e->getMessage());
+        throw new Exception('Erreur lors de la récupération du détail du lieu.');
+    } finally {
+        $prep = null;
+    }
+}
+
+*/
+
 
 public function selectLieux()
 {
@@ -162,7 +225,30 @@ public function selectLieux()
 }
 
 
-  public function deleteLieu($id)
+public function deleteLieu($id)
+{
+    $sql = "DELETE FROM lieu WHERE id_lieu=:id";
+    try {
+        $prep = $this->db->prepare($sql);
+        $prep->bindParam(':id', $id, PDO::PARAM_INT);
+        $success = $prep->execute();
+
+        
+        if ($success) {
+            return true; // Retourne true si la suppression ok
+        } else {
+            return false; // Retourne false si la suppression ko
+        }
+    } catch (PDOException $e) {
+        
+        error_log('Erreur lors de la suppression du lieu : ' . $e->getMessage());
+        throw new Exception('Erreur lors de la suppression du lieu.');
+    } finally {
+        $prep = null;
+    }
+}
+
+ /* public function deleteLieu2($id)
   {
     $sql = "DELETE FROM lieu WHERE id_lieu=:id";
     try {
@@ -174,7 +260,10 @@ public function selectLieux()
     } finally {
       $prep = null;
     }
-  }
+  }*/
+
+ 
+  
 
 
   public function updateLieu($lieu)
