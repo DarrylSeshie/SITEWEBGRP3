@@ -73,22 +73,23 @@ if ($http_method === "GET") {
         http_response_code(500);
         echo json_encode(array("error" => $e->getMessage()));
     }
-} elseif ($http_method === "DELETE") {
-    // Requête DELETE pour supprimer un utilisateur par ID
+}  elseif ($http_method === "DELETE") {
+    // Requête DELETE pour supprimer un lieu par ID
     $id = isset($_GET['id']) ? $_GET['id'] : null;
     if ($id !== null) {
         try {
             $lieuManager->deleteLieu($id);
-            http_response_code(204);
+            http_response_code(204); // Succès sans contenu
         } catch (PDOException $e) {
             http_response_code(500);
-            echo json_encode(array("error" => $e->getMessage()));
+            echo json_encode(array("error" => "Erreur lors de la suppression du lieu : " . $e->getMessage()));
         }
     } else {
         http_response_code(400);
-        echo json_encode(array("error" => "ID de l'utilisateur non fourni"));
+        echo json_encode(array("error" => "ID du lieu non fourni"));
     }
-} elseif ($http_method === "OPTIONS") {
+}
+ elseif ($http_method === "OPTIONS") {
     http_response_code(200);
 } else {
     http_response_code(400);

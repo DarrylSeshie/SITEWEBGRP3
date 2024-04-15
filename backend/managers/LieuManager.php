@@ -224,44 +224,47 @@ public function selectLieux()
     }
 }
 
-
 public function deleteLieu($id)
 {
-    $sql = "DELETE FROM lieu WHERE id_lieu=:id";
+    $sql = "DELETE FROM lieu WHERE id_lieu = :id";
     try {
         $prep = $this->db->prepare($sql);
         $prep->bindParam(':id', $id, PDO::PARAM_INT);
-        $success = $prep->execute();
-
-        
-        if ($success) {
-            return true; // Retourne true si la suppression ok
-        } else {
-            return false; // Retourne false si la suppression ko
-        }
+        $prep->execute();
     } catch (PDOException $e) {
-        
-        error_log('Erreur lors de la suppression du lieu : ' . $e->getMessage());
-        throw new Exception('Erreur lors de la suppression du lieu.');
-    } finally {
-        $prep = null;
+        // Gérer l'erreur de suppression du lieu
+        throw new PDOException('Erreur lors de la suppression du lieu : ' . $e->getMessage());
     }
 }
 
- /* public function deleteLieu2($id)
-  {
-    $sql = "DELETE FROM lieu WHERE id_lieu=:id";
-    try {
-      $prep = $this->db->prepare($sql);
-      $prep->bindParam(':id', $id, PDO::PARAM_INT);
-      $prep->execute();
-    } catch (PDOException $e) {
-      die($e->getMessage());
-    } finally {
-      $prep = null;
-    }
-  }*/
+/*
+public function deleteLieu2($id)
+{
+    // Vérifier s'il existe des dépendances dans d'autres tables
+    // Exemple : Vérification de la table Adresse
+    $sqlCheckDependencies = "SELECT COUNT(*) AS count FROM adresse WHERE id_lieu = :id";
+    $prepCheck = $this->db->prepare($sqlCheckDependencies);
+    $prepCheck->bindParam(':id', $id, PDO::PARAM_INT);
+    $prepCheck->execute();
+    $resultCheck = $prepCheck->fetch(PDO::FETCH_ASSOC);
 
+    if ($resultCheck['count'] > 0) {
+        // Il existe des dépendances, empêcher la suppression
+        throw new Exception('Impossible de supprimer ce lieu car il est lié à des enregistrements dans d\'autres tables.');
+    }
+
+    // Suppression du lieu
+    $sqlDelete = "DELETE FROM lieu WHERE id_lieu = :id";
+    try {
+        $prep = $this->db->prepare($sqlDelete);
+        $prep->bindParam(':id', $id, PDO::PARAM_INT);
+        $prep->execute();
+    } catch (PDOException $e) {
+        // Gérer l'erreur de suppression du lieu
+        throw new PDOException('Erreur lors de la suppression du lieu : ' . $e->getMessage());
+    }
+}
+*/
  
   
 
