@@ -1,1 +1,101 @@
-<p>gestion-institution works!</p>
+<h2>Liste des Institutions</h2>
+
+<div class="usercard">
+  <button class="buttonadd">Ajouter une institution</button>
+
+  <!-- Formulaire de recherche -->
+  <form (ngSubmit)="searchInstitutionByname(searchTerm)" class="search-container" #searchForm="ngForm">
+    <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Recherche par nom..." />
+    <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+  </form>
+
+  <!-- Tableau des utilisateurs -->
+  <table class="table table-striped mt-3" *ngIf="!(showSearchResults && ( institutions | async)?.length)">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>logo</th>
+        <th>Adresse</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Utilisation de la directive *ngFor pour itérer sur les utilisateurs -->
+       
+      <tr *ngFor="let institution of  institutions | async">
+        <td>{{ institution.nom }}</td>
+        <td><img class="logoInstitution" [src]="institution.logo" alt="{{ institution.nom }} Logo"></td> 
+        <td>{{ institution.id_adresse }}</td>
+        <td>
+            <button (click)="selectInstitution(institution.id_institution)"><i class="fa-solid fa-eye"></i></button>
+            <button (click)="updateInstitution(institution)"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button (click)="deleteInstitution(institution.id_adresse)"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+  
+<!-- Section des résultats de recherche -->
+<div  *ngIf="showSearchResults && ( institutions2 | async)?.length">
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>logo</th>
+        <th>Adresse</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr *ngFor="let institution of  institutions2 | async">
+        <td>{{ institution.nom }}</td>
+        <td><img class="logoInstitution" [src]="institution.logo" alt="{{ institution.nom }} Logo"></td> 
+        <td>{{ institution.id_adresse }}</td>
+        <td>
+            <button (click)="selectInstitution(institution.id_institution)"><i class="fa-solid fa-eye"></i></button>
+            <button (click)="updateInstitution(institution)"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button (click)="deleteInstitution(institution.id_adresse)"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+  <!-- Pagination -->
+  <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
+  <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
+</div>
+
+
+<!-- Section des détails du instit sélectionné -->
+<div *ngIf="selectedInstitution && userDetailVisible[selectedInstitution.id_institution]" id="usercard2">
+
+  
+
+  <div class="card" style="width: 18rem;">
+    <img class="logoInstitution" [src]="selectedInstitution.logo" class="card-img-top" alt="{{ selectedInstitution.nom }} Logo">
+    <div class="card-body">
+      <h5 class="card-title">{{ selectedInstitution.nom }}</h5>
+      <p class="card-text">{{ selectedInstitution.id_adresse }}</p>
+      <button id="searchButton" (click)="toggleDetails(selectedInstitution)"><i class="fa-solid fa-eye-slash"></i>
+        {{ userDetailVisible[selectedInstitution.id_institution] ? '' : '' }}
+      </button>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
