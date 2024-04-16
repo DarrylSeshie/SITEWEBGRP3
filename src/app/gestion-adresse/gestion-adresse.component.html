@@ -1,1 +1,94 @@
-<p>gestion-adresse works!</p>
+<h2>Liste des adresses</h2>
+
+<div class="usercard">
+  <button class="buttonadd">Ajouter une adresse</button>
+
+  <!-- Formulaire de recherche -->
+  <form (ngSubmit)="searchAdresseByname(searchTerm)" class="search-container" #searchForm="ngForm">
+    <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Entrez un code postal..." />
+    <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+  </form>
+
+  <!-- Tableau des utilisateurs -->
+  <table class="table table-striped mt-3" *ngIf="!(showSearchResults && ( Adresses | async)?.length)">
+    <thead>
+      <tr>
+        <th>Rue</th>
+        <th>localite</th>
+        <th>Code postal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Utilisation de la directive *ngFor pour itérer sur les utilisateurs -->
+       
+      <tr *ngFor="let adresse of  Adresses | async">
+        <td>{{ adresse.rue_numero }}</td>
+        <td>{{ adresse.localite }}</td>
+        <td>{{ adresse.code_postal }}</td>
+        <td>
+            <button (click)="selectAdresse(adresse.id_adresse)"><i class="fa-solid fa-eye"></i></button>
+            <button (click)="updateAdresse(adresse)"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button (click)="deleteAdresse(adresse.id_adresse)"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+  
+<!-- Section des résultats de recherche -->
+<div  *ngIf="showSearchResults && ( Adresses2 | async)?.length">
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>Rue</th>
+        <th>localite</th>
+        <th>Code postal</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr *ngFor="let adresse of  Adresses2 | async">
+        <td>{{ adresse.rue_numero }}</td>
+        <td>{{ adresse.localite }}</td>
+        <td>{{ adresse.code_postal }}</td>
+        <td>
+          <button (click)="selectAdresse(adresse.id_adresse)"><i class="fa-solid fa-eye"></i></button>
+          <button (click)="updateAdresse(adresse)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button (click)="deleteAdresse(adresse.id_adresse)"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+  <!-- Pagination -->
+  <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
+  <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
+</div>
+
+
+<!-- Section des détails du client sélectionné -->
+<div *ngIf="selectedAdresse && userDetailVisible[selectedAdresse.id_adresse]" class="usercard">
+  <h3>Détails d' adresse</h3>
+  <p>Rue: {{ selectedAdresse.rue_numero }}</p>
+  <p>Code postal: {{ selectedAdresse.code_postal }}</p>
+  <p>Localite: {{ selectedAdresse.localite }}</p>
+  <p>Pays: {{ selectedAdresse.pays }}</p>
+  <button id="searchButton" (click)="toggleDetails(selectedAdresse)">
+    {{ userDetailVisible[selectedAdresse.id_adresse] ? 'Masquer Détails' : 'Afficher Détails' }}
+  </button>
+</div>
+
+
+
+
+
+
+
+
