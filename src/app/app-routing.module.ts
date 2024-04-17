@@ -9,6 +9,10 @@ import { GestionLieuComponent } from './gestion-lieu/gestion-lieu.component';
 import { AcceuilComponent } from './acceuil/acceuil.component';
 //import { GestionnaireComponent } from './gestionnaire/gestionnaire.component';
 import { GestionAdresseComponent } from './gestion-adresse/gestion-adresse.component';
+import { InscriptionFormationComponent } from './inscription-formation/inscription-formation.component';
+import { VoirFormationsComponent } from './voir-formations/voir-formations.component';
+import { VoirProfilComponent } from './voir-profil/voir-profil.component';
+
 
 
 const routes: Routes = [
@@ -40,7 +44,17 @@ const routes: Routes = [
     }, */
     {
       path: 'gestionadresses', component: GestionAdresseComponent
+    },
+    {
+      path: 'inscription-formation', component: InscriptionFormationComponent
+    },
+    {
+      path: 'voir-formations', component: VoirFormationsComponent
+    },
+    {
+      path: 'voir-profil', component: VoirProfilComponent
     }
+
 
     
 

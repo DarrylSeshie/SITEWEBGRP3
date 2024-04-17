@@ -22,6 +22,11 @@ import { LieuService } from './services/lieu.service';
 import { AdresseService } from './services/adresse.service';
 import { InstitutionService } from './services/institution.service';
 import { ImageService } from './services/image.service';
+import { VoirFormationsComponent } from './voir-formations/voir-formations.component';
+import { VoirProfilComponent } from './voir-profil/voir-profil.component';
+import { InscriptionFormationComponent } from './inscription-formation/inscription-formation.component';
+import { VoirProfileService } from './services/voirProfile.service'; 
+
 
 
 @NgModule({
@@ -36,7 +41,10 @@ import { ImageService } from './services/image.service';
     GestionImageComponent,
     GestionLieuComponent,
     AcceuilComponent,
-    GestionAdresseComponent
+    GestionAdresseComponent,
+    VoirFormationsComponent,
+    VoirProfilComponent,
+    InscriptionFormationComponent
     
   ],
   imports: [
@@ -52,7 +60,9 @@ import { ImageService } from './services/image.service';
     LieuService,
     AdresseService,
     InstitutionService,
-    ImageService
+    ImageService,
+    VoirProfileService
+    
   ], 
   bootstrap: [AppComponent]
 })

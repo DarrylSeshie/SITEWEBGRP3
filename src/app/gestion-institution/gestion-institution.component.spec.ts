@@ -21,3 +21,4 @@ describe('GestionInstitutionComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
