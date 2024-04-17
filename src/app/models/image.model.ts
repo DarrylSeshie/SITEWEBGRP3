@@ -1,4 +1,5 @@
 export interface Image {
     id_image: number;        
-    url_image: string;             
+    url_image: string;       
+    nom: string;        
   }

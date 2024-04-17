@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 17 avr. 2024 à 00:56
+-- Généré le : mer. 17 avr. 2024 à 20:00
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -33,7 +33,7 @@ CREATE TABLE `adresse` (
   `code_postal` int(11) DEFAULT NULL,
   `localite` varchar(100) DEFAULT NULL,
   `pays` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `adresse`
@@ -47,18 +47,16 @@ INSERT INTO `adresse` (`id_adresse`, `rue_numero`, `code_postal`, `localite`, `p
 (5, '456 Avenue Centrale', 2000, 'Anvers', 'Belgique'),
 (6, '789 Boulevard Central', 3000, 'Louvain', 'Belgique'),
 (7, '101 Rue du Centre', 4000, 'Liège', 'Belgique'),
-(8, '123 Rue des Lilas', 1000, 'Bruxelles', 'Belgique'),
-(9, '456 Avenue du Soleil', 75001, 'Paris', 'France'),
-(11, '1010 Main Street', 10001, 'New York', 'États-Unis'),
-(12, '222 Boulevard des Roses', 75008, 'Paris', 'France'),
-(13, '333 Avenue des Champs', 1000, 'Genève', 'Suisse'),
-(14, '444 Via Roma', 100, 'Rome', 'Italie'),
-(15, '555 Calle Principal', 28001, 'Madrid', 'Espagne'),
-(16, '666 Hauptstrasse', 10115, 'Berlin', 'Allemagne'),
-(17, '777 Strada di Fiori', 120, 'Milan', 'Italie'),
-(18, '888 Rua Principal', 1000, 'Lisbonne', 'Portugal'),
-(19, '999 Strasse der Sonne', 10178, 'Berlin', 'Allemagne'),
-(22, '1313 Piazza del Popolo', 187, 'Rome', 'Italie');
+(8, 'Bd Dolez 31 ', 7000, 'Mons', 'Belgique'),
+(9, '123 Rue Principale', 1000, 'Bruxelles', 'Belgique'),
+(10, '456 Avenue Centrale', 2000, 'Anvers', 'Belgique'),
+(11, '789 Boulevard Central', 3000, 'Louvain', 'Belgique'),
+(12, '101 Rue du Centre', 4000, 'Liège', 'Belgique'),
+(13, 'Bd Dolez 31 ', 7000, 'Mons', 'Belgique'),
+(14, '123 Rue Principale', 1000, 'Bruxelles', 'Belgique'),
+(15, '456 Avenue Centrale', 2000, 'Anvers', 'Belgique'),
+(16, '789 Boulevard Central', 3000, 'Louvain', 'Belgique'),
+(17, '101 Rue du Centre', 4000, 'Liège', 'Belgique');
 
 -- --------------------------------------------------------
 
@@ -69,7 +67,23 @@ INSERT INTO `adresse` (`id_adresse`, `rue_numero`, `code_postal`, `localite`, `p
 CREATE TABLE `donne` (
   `id_utilisateur` int(11) NOT NULL,
   `id_produit` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `donne`
+--
+
+INSERT INTO `donne` (`id_utilisateur`, `id_produit`) VALUES
+(11, 4),
+(11, 5),
+(12, 3),
+(12, 6),
+(12, 9),
+(15, 2),
+(15, 6),
+(15, 7),
+(19, 1),
+(19, 4);
 
 -- --------------------------------------------------------
 
@@ -81,7 +95,27 @@ CREATE TABLE `est_partenaire` (
   `id_institution` int(11) NOT NULL,
   `id_produit` int(11) NOT NULL,
   `type_de_partenariat` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `est_partenaire`
+--
+
+INSERT INTO `est_partenaire` (`id_institution`, `id_produit`, `type_de_partenariat`) VALUES
+(1, 1, 'Assension A'),
+(1, 10, 'OEH J'),
+(2, 1, 'Amour K'),
+(2, 2, 'Budget Commune B'),
+(3, 2, 'Bien etre L'),
+(3, 3, 'Patriote C'),
+(4, 3, 'Sante M'),
+(4, 4, 'Revolution D'),
+(5, 4, 'Planing Familiale N'),
+(5, 5, 'Lutte E'),
+(6, 5, 'Vie commun O'),
+(6, 6, 'Agression F'),
+(7, 7, 'Justice G'),
+(7, 9, 'FFF I');
 
 -- --------------------------------------------------------
 
@@ -91,19 +125,20 @@ CREATE TABLE `est_partenaire` (
 
 CREATE TABLE `image` (
   `id_image` int(11) NOT NULL,
-  `url_image` varchar(200) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `url_image` varchar(200) DEFAULT NULL,
+  `nom` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `image`
 --
 
-INSERT INTO `image` (`id_image`, `url_image`) VALUES
-(1, 'https://www.helha.be/app/uploads/2022/05/vignette-helha2.jpg'),
-(2, 'https://www.bde-group.be/wp-content/uploads/2017/11/Image1-300x169.png'),
-(3, 'https://pbs.twimg.com/profile_images/651375653082652672/fEr3_2_M_400x400.png'),
-(4, 'https://www.helha.be/app/uploads/2022/07/dernierjourdecours-PUB.jpg'),
-(5, 'https://www.helha.be/app/uploads/2023/09/Ecrire-a-la-HELHa-ConnectED.png');
+INSERT INTO `image` (`id_image`, `url_image`, `nom`) VALUES
+(1, 'https://www.helha.be/app/uploads/2022/05/vignette-helha2.jpg', 'Image Helha 1'),
+(2, 'https://www.bde-group.be/wp-content/uploads/2017/11/Image1-300x169.png', 'Image BDE Group'),
+(3, 'https://pbs.twimg.com/profile_images/651375653082652672/fEr3_2_M_400x400.png', 'Twitter Profile Image'),
+(4, 'https://www.helha.be/app/uploads/2022/07/dernierjourdecours-PUB.jpg', 'Dernier Jour de Cours'),
+(5, 'https://www.helha.be/app/uploads/2023/09/Ecrire-a-la-HELHa-ConnectED.png', 'Ecrire à la HELHa ConnectED');
 
 -- --------------------------------------------------------
 
@@ -116,7 +151,7 @@ CREATE TABLE `institution` (
   `nom` varchar(100) DEFAULT NULL,
   `logo` varchar(200) DEFAULT NULL,
   `id_adresse` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `institution`
@@ -125,9 +160,12 @@ CREATE TABLE `institution` (
 INSERT INTO `institution` (`id_institution`, `nom`, `logo`, `id_adresse`) VALUES
 (1, 'Helha', 'https://www.helha.be/app/uploads/2022/05/vignette-helha2.jpg', 1),
 (2, 'Umons', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 3),
-(4, 'ULB', 'https://actus.ulb.be/uas/ulbactus/LOGO/Logo-Actus-Agenda.svg', 3),
-(5, 'HEH', 'https://www.heh.be/design/logo_HEH.svg', 5),
-(6, 'UNAMUR', 'https://pbs.twimg.com/profile_images/1261898496799657984/0LXybiZu_400x400.jpg', 3);
+(3, 'UNamur', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 4),
+(4, 'ULiege', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 3),
+(5, 'ULB', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 4),
+(6, 'HEH', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 3),
+(7, 'ULouvain la Neuve', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 3),
+(8, 'UGI', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 3);
 
 -- --------------------------------------------------------
 
@@ -142,7 +180,7 @@ CREATE TABLE `lieu` (
   `locaux` varchar(50) DEFAULT NULL,
   `id_institution` int(11) NOT NULL,
   `id_adresse` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `lieu`
@@ -152,8 +190,12 @@ INSERT INTO `lieu` (`id_lieu`, `nom`, `batiment`, `locaux`, `id_institution`, `i
 (1, 'Helha_montignie', 'Batiment A', 'E206', 1, 1),
 (2, 'Helha_Mons', 'Batiment B', 'B201', 1, 2),
 (3, 'Umons', 'Batiment C', 'Locaux C', 2, 3),
-(10, 'Helha_montignie', 'Batiment A', 'E206', 1, 1),
-(11, 'Helha_Mons', 'Batiment B', 'B201', 1, 2);
+(4, 'Helha_gilly', 'Batiment A', 'E206', 1, 1),
+(5, 'HEH_', 'Batiment B', 'B201', 1, 2),
+(6, 'Umons', 'Batiment C', 'Locaux C', 2, 3),
+(7, 'Umons', 'Batiment C', 'Locaux C', 2, 3),
+(8, 'Helha_gilly', 'Batiment A', 'E206', 1, 1),
+(9, 'HEH_', 'Batiment B', 'B201', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -164,7 +206,31 @@ INSERT INTO `lieu` (`id_lieu`, `nom`, `batiment`, `locaux`, `id_institution`, `i
 CREATE TABLE `participe` (
   `id_utilisateur` int(11) NOT NULL,
   `id_produit` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `participe`
+--
+
+INSERT INTO `participe` (`id_utilisateur`, `id_produit`) VALUES
+(20, 1),
+(20, 2),
+(20, 3),
+(21, 2),
+(21, 3),
+(21, 6),
+(22, 3),
+(22, 4),
+(22, 7),
+(23, 2),
+(23, 4),
+(23, 6),
+(24, 2),
+(24, 5),
+(24, 9),
+(25, 4),
+(25, 6),
+(25, 9);
 
 -- --------------------------------------------------------
 
@@ -176,27 +242,35 @@ CREATE TABLE `produit` (
   `id_produit` int(11) NOT NULL,
   `titre` varchar(100) DEFAULT NULL,
   `sous_titre` varchar(150) DEFAULT NULL,
-  `date_debut` datetime DEFAULT NULL,
-  `date_fin` varchar(50) DEFAULT NULL,
+  `date_debut` date DEFAULT NULL,
+  `date_fin` date DEFAULT NULL,
   `date_fin_inscription` date DEFAULT NULL,
-  `descriptif` varchar(500) DEFAULT NULL,
+  `descriptif` varchar(500) NOT NULL,
   `objectif` varchar(250) DEFAULT NULL,
   `contenu` varchar(250) DEFAULT NULL,
   `methodologie` varchar(250) DEFAULT NULL,
-  `public_cible` varchar(100) DEFAULT NULL,
+  `public_cible` varchar(250) DEFAULT NULL,
   `prix` double DEFAULT NULL,
+  `id_image` int(11) NOT NULL,
   `id_lieu` int(11) NOT NULL,
   `id_type_produit` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `produit`
 --
 
-INSERT INTO `produit` (`id_produit`, `titre`, `sous_titre`, `date_debut`, `date_fin`, `date_fin_inscription`, `descriptif`, `objectif`, `contenu`, `methodologie`, `public_cible`, `prix`, `id_lieu`, `id_type_produit`) VALUES
-(1, 'Formation Python avancé', 'Approfondissez vos compétences en Python', '2024-05-15 09:00:00', '2024-05-17', '2024-05-10', 'Formation intensive sur Python avancé.', 'Maîtriser les concepts avancés de Python.', 'Contenu avancé sur les bibliothèques Python.', 'Cours interactif avec exercices pratiques.', 'Développeurs Python intermédiaires à avancés.', 299.99, 1, 1),
-(2, 'Formation Web Design', 'Créez des sites web attrayants', '2024-06-10 10:00:00', '2024-06-12', '2024-06-05', 'Formation complète sur le design web.', 'Apprenez à concevoir des interfaces modernes.', 'Techniques avancées de conception web.', 'Approche centrée sur utilisateur.', 'Aspirants designers web.', 249.99, 2, 1),
-(3, 'Journée Portes Ouvertes', 'Découvrez notre institution', '2024-07-01 08:00:00', '2024-07-01', '2024-06-28', 'Venez visiter nos installations et rencontrer nos équipes.', 'Présentation de nos programmes et services.', 'Visites guidées et présentations interactives.', 'Rencontres avec les futurs étudiants et leurs familles.', 'Tout public intéressé par notre institution.', 0, 3, 2);
+INSERT INTO `produit` (`id_produit`, `titre`, `sous_titre`, `date_debut`, `date_fin`, `date_fin_inscription`, `descriptif`, `objectif`, `contenu`, `methodologie`, `public_cible`, `prix`, `id_image`, `id_lieu`, `id_type_produit`) VALUES
+(1, 'Formation 1', 'Description de la formation 1', '2024-05-01', '2024-05-10', '2024-04-25', 'Ceci est le descriptif de la formation 1', 'Objectif de la formation 1', 'Contenu de la formation 1', 'Méthodologie de la formation 1', 'Public cible de la formation 1', 10, 1, 1, 1),
+(2, 'Formation 2', 'Description de la formation 2', '2024-06-01', '2024-06-10', '2024-05-25', 'Ceci est le descriptif de la formation 2', 'Objectif de la formation 2', 'Contenu de la formation 2', 'Méthodologie de la formation 2', 'Public cible de la formation 2', 12, 2, 1, 1),
+(3, 'Formation 3', 'Description de la formation 3', '2024-07-01', '2024-07-10', '2024-06-25', 'Ceci est le descriptif de la formation 3', 'Objectif de la formation 3', 'Contenu de la formation 3', 'Méthodologie de la formation 3', 'Public cible de la formation 3', 20, 3, 1, 1),
+(4, 'Formation 4', 'Description de la formation 4', '2024-08-01', '2024-08-10', '2024-07-25', 'Ceci est le descriptif de la formation 4', 'Objectif de la formation 4', 'Contenu de la formation 4', 'Méthodologie de la formation 4', 'Public cible de la formation 4', 11, 4, 1, 1),
+(5, 'Formation 5', 'Description de la formation 5', '2024-09-01', '2024-09-10', '2024-08-25', 'Ceci est le descriptif de la formation 5', 'Objectif de la formation 5', 'Contenu de la formation 5', 'Méthodologie de la formation 5', 'Public cible de la formation 5', 5, 5, 1, 1),
+(6, 'Journée 1', 'Description de la journée 1', '2024-05-15', '2024-05-15', '2024-05-10', 'Ceci est le descriptif de la journée 1', 'Objectif de la journée 1', 'Contenu de la journée 1', 'Méthodologie de la journée 1', 'Public cible de la journée 1', 50, 5, 1, 2),
+(7, 'Journée 2', 'Description de la journée 2', '2024-06-15', '2024-06-15', '2024-06-10', 'Ceci est le descriptif de la journée 2', 'Objectif de la journée 2', 'Contenu de la journée 2', 'Méthodologie de la journée 2', 'Public cible de la journée 2', 60, 4, 1, 2),
+(8, 'Journée 3', 'Description de la journée 3', '2024-07-15', '2024-07-15', '2024-07-10', 'Ceci est le descriptif de la journée 3', 'Objectif de la journée 3', 'Contenu de la journée 3', 'Méthodologie de la journée 3', 'Public cible de la journée 3', 55, 3, 1, 2),
+(9, 'Journée 4', 'Description de la journée 4', '2024-08-15', '2024-08-15', '2024-08-10', 'Ceci est le descriptif de la journée 4', 'Objectif de la journée 4', 'Contenu de la journée 4', 'Méthodologie de la journée 4', 'Public cible de la journée 4', 65, 2, 1, 2),
+(10, 'Journée 5', 'Description de la journée 5', '2024-09-15', '2024-09-15', '2024-09-10', 'Ceci est le descriptif de la journée 5', 'Objectif de la journée 5', 'Contenu de la journée 5', 'Méthodologie de la journée 5', 'Public cible de la journée 5', 70, 1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -207,7 +281,7 @@ INSERT INTO `produit` (`id_produit`, `titre`, `sous_titre`, `date_debut`, `date_
 CREATE TABLE `role` (
   `id_role` int(11) NOT NULL,
   `nom` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `role`
@@ -228,7 +302,7 @@ INSERT INTO `role` (`id_role`, `nom`) VALUES
 CREATE TABLE `type_produit` (
   `id_type_produit` int(11) NOT NULL,
   `nom` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `type_produit`
@@ -259,57 +333,49 @@ CREATE TABLE `utilisateur` (
   `id_role` int(11) NOT NULL,
   `id_institution` int(11) DEFAULT NULL,
   `id_adresse` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Déchargement des données de la table `utilisateur`
 --
 
 INSERT INTO `utilisateur` (`id_utilisateur`, `civilite`, `nom`, `prenom`, `email`, `mot_de_passe`, `gsm`, `TVA`, `profession`, `gsm_pro`, `email_pro`, `id_role`, `id_institution`, `id_adresse`) VALUES
-(1, 'Mr', 'Stoffel', 'Jean-Francois', 'stoffeljf@helha.be', 'AdminHelha1234', '048xxxxxxx', NULL, NULL, NULL, NULL, 1, NULL, 1),
-(2, 'Mr', 'The_D', 'Darryl', 'la226963@student.helha.be', 'mdp123', '123456789', NULL, 'Etudiant', NULL, NULL, 2, NULL, 4),
-(3, 'Mr', 'Celestinio', 'Geni', 'la22xxxx@student.helha.be', 'mdp123', '987654321', NULL, NULL, NULL, NULL, 2, NULL, 5),
-(38, 'M.', 'Durand', 'Pierre', 'pierre.durand@example.com', 'securepwd789', '0487654321', 'LU456789123', 'Chirurgien orthopédiste', '0456789012', 'pierre.durand@clinique.lu', 4, 1, 3),
-(39, 'Mlle', 'Lefevre', 'Sophie', 'sophie.lefevre@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
-(41, 'Mme', 'Moreau', 'Julie', 'julie.moreau@example.com', 'password789', '0687654321', 'IT987654321', 'Sage-femme', '0487654321', 'j.moreau@clinique.it', 4, 1, 4),
-(42, 'M.', 'Garcia', 'Antoine', 'antoine.garcia@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2),
-(43, 'Mr', 'Roux', 'Luc', 'luc.roux@example.com', 'mdp789012', '0612345678', 'PT456789123', 'Dentiste', '0478901234', 'l.roux@dental.pt', 4, 2, 4),
-(44, 'Mme', 'Leroy', 'Claire', 'claire.leroy@example.com', 'password123', '0734567890', 'CH987654321', 'Pharmacienne', '0490123456', 'c.leroy@pharma.ch', 4, 2, 4),
-(51, 'Mme', 'Robert', 'Julie', 'julie.robert@example.com', 'password123', '0687654321', 'DE210987654', 'Enseignante', '0611223344', 'julie.robert@pro.example.com', 4, NULL, 6),
-(52, 'M.', 'Moreau', 'Luc', 'luc.moreau@example.com', 'secret456', '0612345678', 'FR678901234', 'Développeur', '0687654321', 'luc.moreau@pro.example.com', 4, NULL, 7),
-(54, 'M.', 'Garcia', 'Antoine', 'antoine.garcia@example.com', 'password789', '0612345678', 'DE109876543', 'Designer', '0698765432', 'antoine.garcia@pro.example.com', 4, NULL, 1),
-(55, 'Mme', 'Fournier', 'Sophie', 'sophie.fournier@example.com', 'pass456', '0678912345', 'FR321098765', 'Chercheuse', '0612345678', 'sophie.fournier@pro.example.com', 4, NULL, 1),
-(56, 'M.', 'Roux', 'Paul', 'paul.roux@example.com', 'secure123', '0601020304', 'BE987654321', 'Ingénieur Civil', '0678912345', 'paul.roux@pro.example.com', 4, NULL, 1),
-(57, 'Mme', 'Caron', 'Céline', 'celine.caron@example.com', 'mdp456', '0698765432', 'DE876543210', 'Comptable', '0612345678', 'celine.caron@pro.example.com', 4, NULL, 2),
-(59, 'Mme', 'Guerin', 'Camille', 'camille.guerin@example.com', 'secret789', '0612233445', 'BE210987654', 'Avocate', '0678901234', 'camille.guerin@pro.example.com', 4, NULL, 4),
-(60, 'M.', 'Marchand', 'Louis', 'louis.marchand@example.com', 'password789', '0698765432', 'DE876543210', 'Ingénieur Biomédical', '0612233445', 'louis.marchand@pro.example.com', 4, NULL, 5),
-(61, 'Mme', 'Andre', 'Marine', 'marine.andre@example.com', 'pass789', '0612345678', 'FR987654321', 'Journaliste', '0698765432', 'marine.andre@pro.example.com', 4, NULL, 6),
-(63, 'Mme', 'Martin', 'Marie', 'marie.martin@example.com', 'password456', '0712345678', 'FR987654321', 'Infirmière', '0498765432', 'marie.martin@hopital.fr', 4, 2, 2),
-(64, 'M.', 'Durand', 'Pierre', 'pierre.durand@example.com', 'securepwd789', '0487654321', 'LU456789123', 'Chirurgien orthopédiste', '0456789012', 'pierre.durand@clinique.lu', 4, 1, 3),
-(65, 'Mlle', 'Lefevre', 'Sophie', 'sophie.lefevre@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
-(66, 'M.', 'Dupont', 'Jean', 'jean.dupont@example.com', 'motdepasse123', '0612345678', 'BE123456789', 'Médecin généraliste', '0478901234', 'jean.dupont@clinique.com', 4, 1, 2),
-(67, 'Mme', 'Martin', 'Marie', 'marie.martin@example.com', 'password456', '0712345678', 'FR987654321', 'Infirmière', '0498765432', 'marie.martin@hopital.fr', 4, 2, 2),
-(68, 'M.', 'Durand', 'Pierre', 'pierre.durand@example.com', 'securepwd789', '0487654321', 'LU456789123', 'Chirurgien orthopédiste', '0456789012', 'pierre.durand@clinique.lu', 4, 1, 3),
-(69, 'Mlle', 'Lefevre', 'Sophie', 'sophie.lefevre@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
-(70, 'Mr', 'Dubois', 'François', 'francois.dubois@example.com', 'mdp456789', '0789012345', 'ES321987654', 'Cardiologue', '0490123456', 'francois.dubois@cardio.es', 4, 2, 3),
-(71, 'Mme', 'Moreau', 'Julie', 'julie.moreau@example.com', 'password789', '0687654321', 'IT987654321', 'Sage-femme', '0487654321', 'j.moreau@clinique.it', 4, 1, 4),
-(72, 'M.', 'Garcia', 'Antoine', 'antoine.garcia@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2),
-(73, 'Mr', 'Roux', 'Luc', 'luc.roux@example.com', 'mdp789012', '0612345678', 'PT456789123', 'Dentiste', '0478901234', 'l.roux@dental.pt', 4, 2, 4),
-(74, 'Mme', 'Leroy', 'Claire', 'claire.leroy@example.com', 'password123', '0734567890', 'CH987654321', 'Pharmacienne', '0490123456', 'c.leroy@pharma.ch', 4, 2, 4),
-(75, 'M.', 'Sanchez', 'Carlos', 'carlos.sanchez@example.com', 'pwd987654', '0790123456', 'AT321987654', 'Médecin urgentiste', '0487654321', 'c.sanchez@hopital.at', 4, 1, 2),
-(76, 'M.', 'Dupont', 'Jean', 'jean.dupont@example.com', 'motdepasse123', '0612345678', 'BE123456789', 'Médecin généraliste', '0478901234', 'jean.dupont@clinique.com', 4, 1, 2),
-(77, 'Mme', 'Martin', 'Marie', 'marie.martin@example.com', 'password456', '0712345678', 'FR987654321', 'Infirmière', '0498765432', 'marie.martin@hopital.fr', 4, 2, 2),
-(78, 'M.', 'Durand', 'Pierre', 'pierre.durand@example.com', 'securepwd789', '0487654321', 'LU456789123', 'Chirurgien orthopédiste', '0456789012', 'pierre.durand@clinique.lu', 4, 1, 3),
-(79, 'Mlle', 'Lefevre', 'Sophie', 'sophie.lefevre@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
-(80, 'Mr', 'Dubois', 'François', 'francois.dubois@example.com', 'mdp456789', '0789012345', 'ES321987654', 'Cardiologue', '0490123456', 'francois.dubois@cardio.es', 4, 2, 3),
-(81, 'Mme', 'Moreau', 'Julie', 'julie.moreau@example.com', 'password789', '0687654321', 'IT987654321', 'Sage-femme', '0487654321', 'j.moreau@clinique.it', 4, 1, 4),
-(82, 'M.', 'Garcia', 'Antoine', 'antoine.garcia@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2),
-(83, 'Mr', 'Roux', 'Luc', 'luc.roux@example.com', 'mdp789012', '0612345678', 'PT456789123', 'Dentiste', '0478901234', 'l.roux@dental.pt', 4, 2, 4),
-(84, 'Mme', 'Leroy', 'Claire', 'claire.leroy@example.com', 'password123', '0734567890', 'CH987654321', 'Pharmacienne', '0490123456', 'c.leroy@pharma.ch', 4, 2, 4),
-(85, 'M.', 'Sanchez', 'Carlos', 'carlos.sanchez@example.com', 'pwd987654', '0790123456', 'AT321987654', 'Médecin urgentiste', '0487654321', 'c.sanchez@hopital.at', 4, 1, 2),
-(86, 'Mr', 'The_D', 'Darryl', 'la226963@student.helha.be', 'mdp123', '123456789', NULL, NULL, NULL, NULL, 2, NULL, 4),
-(87, 'Mr', 'Celestinio', 'Geni', 'la22xxxx@student.helha.be', 'mdp123', '987654321', NULL, NULL, NULL, NULL, 3, NULL, 5),
-(90, 'Mr', 'The_D', 'Darryl', 'la226963@student.helha.be', 'mdp123', '123456789', NULL, NULL, NULL, NULL, 2, NULL, 4);
+(2, 'Mr', 'Stoffel', 'Jean-Francois', 'stoffeljf@helha.be', 'AdminHelha1234', '048xxxxxxx', NULL, 'Etudiant', NULL, NULL, 1, NULL, 1),
+(3, 'Mr', 'The_D', 'Darryl', 'la226963@student.helha.be', 'mdp123', '123456789', NULL, 'Etudiant', NULL, NULL, 1, NULL, 4),
+(4, 'Mr', 'Celestinio', 'Geni', 'la22xxxx@student.helha.be', 'mdp123', '987654321', NULL, 'Etudiant', NULL, NULL, 1, NULL, 5),
+(5, 'M.', 'Durand', 'Pierre', 'pierre.durand@example.com', 'securepwd789', '0487654321', 'LU456789123', 'Chirurgien orthopédiste', '0456789012', 'pierre.durand@clinique.lu', 4, 1, 3),
+(6, 'Mlle', 'Lefevre', 'Sophie', 'sophie.lefevre@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 2, 2, 4),
+(7, 'Mme', 'Moreau', 'Julie', 'julie.moreau@example.com', 'password789', '0687654321', 'IT987654321', 'Sage-femme', '0487654321', 'j.moreau@clinique.it', 2, 1, 4),
+(8, 'M.', 'Garcia', 'Antoine', 'antoine.garcia@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2),
+(9, 'Mr', 'Roux', 'Luc', 'luc.roux@example.com', 'mdp789012', '0612345678', 'PT456789123', 'Dentiste', '0478901234', 'l.roux@dental.pt', 2, 2, 4),
+(10, 'Mme', 'Leroy', 'Claire', 'claire.leroy@example.com', 'password123', '0734567890', 'CH987654321', 'Pharmacienne', '0490123456', 'c.leroy@pharma.ch', 2, 2, 4),
+(11, 'Mme', 'Robert', 'Julie', 'julie.robert@example.com', 'password123', '0687654321', 'DE210987654', 'Enseignante', '0611223344', 'julie.robert@pro.example.com', 3, NULL, 6),
+(12, 'M.', 'Moreau', 'Luc', 'luc.moreau@example.com', 'secret456', '0612345678', 'FR678901234', 'Développeur', '0687654321', 'luc.moreau@pro.example.com', 3, NULL, 7),
+(13, 'M.', 'Garcia', 'Antoine', 'antoine.garcia@example.com', 'password789', '0612345678', 'DE109876543', 'Designer', '0698765432', 'antoine.garcia@pro.example.com', 4, NULL, 1),
+(14, 'Mme', 'Fournier', 'Sophie', 'sophie.fournier@example.com', 'pass456', '0678912345', 'FR321098765', 'Chercheuse', '0612345678', 'sophie.fournier@pro.example.com', 4, NULL, 1),
+(15, 'M.', 'Roux', 'Paul', 'paul.roux@example.com', 'secure123', '0601020304', 'BE987654321', 'Ingénieur Civil', '0678912345', 'paul.roux@pro.example.com', 3, NULL, 1),
+(16, 'Mme', 'Caron', 'Céline', 'celine.caron@example.com', 'mdp456', '0698765432', 'DE876543210', 'Comptable', '0612345678', 'celine.caron@pro.example.com', 4, NULL, 2),
+(17, 'Mme', 'Guerin', 'Camille', 'camille.guerin@example.com', 'secret789', '0612233445', 'BE210987654', 'Avocate', '0678901234', 'camille.guerin@pro.example.com', 4, NULL, 4),
+(18, 'M.', 'Marchand', 'Louis', 'louis.marchand@example.com', 'password789', '0698765432', 'DE876543210', 'Ingénieur Biomédical', '0612233445', 'louis.marchand@pro.example.com', 4, NULL, 5),
+(19, 'Mme', 'Andre', 'Marine', 'marine.andre@example.com', 'pass789', '0612345678', 'FR987654321', 'Journaliste', '0698765432', 'marine.andre@pro.example.com', 3, NULL, 6),
+(20, 'Mme', 'Martin', 'Marie', 'marie.martin@example.com', 'password456', '0712345678', 'FR987654321', 'Infirmière', '0498765432', 'marie.martin@hopital.fr', 4, 2, 2),
+(21, 'M.', 'Durand', 'Pierre', 'pierre.durand@example.com', 'securepwd789', '0487654321', 'LU456789123', 'Chirurgien orthopédiste', '0456789012', 'pierre.durand@clinique.lu', 4, 1, 3),
+(22, 'Mlle', 'Lefevre', 'Sophie', 'sophie.lefevre@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
+(23, 'M.', 'Dupont', 'Jean', 'jean.dupont@example.com', 'motdepasse123', '0612345678', 'BE123456789', 'Médecin généraliste', '0478901234', 'jean.dupont@clinique.com', 4, 1, 2),
+(24, 'Mme', 'Martin', 'Marie', 'marie.martin@example.com', 'password456', '0712345678', 'FR987654321', 'Infirmière', '0498765432', 'marie.martin@hopital.fr', 4, 2, 2),
+(25, 'M.', 'Durand', 'Pierre', 'pierre.durand@example.com', 'securepwd789', '0487654321', 'LU456789123', 'Chirurgien orthopédiste', '0456789012', 'pierre.durand@clinique.lu', 4, 1, 3),
+(26, 'Mlle', 'Lefevre', 'Sophie', 'sophie.lefevre@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
+(27, 'Mr', 'Dubois', 'François', 'francois.dubois@example.com', 'mdp456789', '0789012345', 'ES321987654', 'Cardiologue', '0490123456', 'francois.dubois@cardio.es', 4, 2, 3),
+(28, 'Mme', 'Moreau', 'Julie', 'julie.moreau@example.com', 'password789', '0687654321', 'IT987654321', 'Sage-femme', '0487654321', 'j.moreau@clinique.it', 3, 1, 4),
+(29, 'M.', 'Garcia', 'Antoine', 'antoine.garcia@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2),
+(30, 'Mr', 'Roux', 'Luc', 'luc.roux@example.com', 'mdp789012', '0612345678', 'PT456789123', 'Dentiste', '0478901234', 'l.roux@dental.pt', 4, 2, 4),
+(31, 'Mme', 'Leroy', 'Claire', 'claire.leroy@example.com', 'password123', '0734567890', 'CH987654321', 'Pharmacienne', '0490123456', 'c.leroy@pharma.ch', 4, 2, 4),
+(32, 'M.', 'Sanchez', 'Carlos', 'carlos.sanchez@example.com', 'pwd987654', '0790123456', 'AT321987654', 'Médecin urgentiste', '0487654321', 'c.sanchez@hopital.at', 4, 1, 2),
+(33, 'M.', 'Dupont', 'Jean', 'jean.dupont@example.com', 'motdepasse123', '0612345678', 'BE123456789', 'Médecin généraliste', '0478901234', 'jean.dupont@clinique.com', 4, 1, 2),
+(34, 'Mme', 'Martin', 'Marie', 'marie.martin@example.com', 'password456', '0712345678', 'FR987654321', 'Infirmière', '0498765432', 'marie.martin@hopital.fr', 3, 2, 2),
+(35, 'M.', 'Durand', 'Pierre', 'pierre.durand@example.com', 'securepwd789', '0487654321', 'LU456789123', 'Chirurgien orthopédiste', '0456789012', 'pierre.durand@clinique.lu', 4, 1, 3),
+(36, 'Mlle', 'Lefevre', 'Sophie', 'sophie.lefevre@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
+(37, 'Mr', 'Dubois', 'François', 'francois.dubois@example.com', 'mdp456789', '0789012345', 'ES321987654', 'Cardiologue', '0490123456', 'francois.dubois@cardio.es', 4, 2, 3);
 
 --
 -- Index pour les tables déchargées
@@ -368,6 +434,7 @@ ALTER TABLE `participe`
 --
 ALTER TABLE `produit`
   ADD PRIMARY KEY (`id_produit`),
+  ADD KEY `id_image` (`id_image`),
   ADD KEY `id_lieu` (`id_lieu`),
   ADD KEY `id_type_produit` (`id_type_produit`);
 
@@ -400,7 +467,7 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `adresse`
 --
 ALTER TABLE `adresse`
-  MODIFY `id_adresse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id_adresse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT pour la table `image`
@@ -412,19 +479,19 @@ ALTER TABLE `image`
 -- AUTO_INCREMENT pour la table `institution`
 --
 ALTER TABLE `institution`
-  MODIFY `id_institution` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_institution` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `lieu`
 --
 ALTER TABLE `lieu`
-  MODIFY `id_lieu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_lieu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT pour la table `produit`
 --
 ALTER TABLE `produit`
-  MODIFY `id_produit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_produit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `role`
@@ -442,7 +509,7 @@ ALTER TABLE `type_produit`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=94;
+  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- Contraintes pour les tables déchargées
@@ -466,14 +533,14 @@ ALTER TABLE `est_partenaire`
 -- Contraintes pour la table `institution`
 --
 ALTER TABLE `institution`
-  ADD CONSTRAINT `Institution_ibfk_1` FOREIGN KEY (`id_adresse`) REFERENCES `adresse` (`id_adresse`);
+  ADD CONSTRAINT `institution_ibfk_1` FOREIGN KEY (`id_adresse`) REFERENCES `adresse` (`id_adresse`);
 
 --
 -- Contraintes pour la table `lieu`
 --
 ALTER TABLE `lieu`
-  ADD CONSTRAINT `Lieu_ibfk_1` FOREIGN KEY (`id_institution`) REFERENCES `institution` (`id_institution`),
-  ADD CONSTRAINT `Lieu_ibfk_2` FOREIGN KEY (`id_adresse`) REFERENCES `adresse` (`id_adresse`);
+  ADD CONSTRAINT `lieu_ibfk_1` FOREIGN KEY (`id_institution`) REFERENCES `institution` (`id_institution`),
+  ADD CONSTRAINT `lieu_ibfk_2` FOREIGN KEY (`id_adresse`) REFERENCES `adresse` (`id_adresse`);
 
 --
 -- Contraintes pour la table `participe`
@@ -486,16 +553,17 @@ ALTER TABLE `participe`
 -- Contraintes pour la table `produit`
 --
 ALTER TABLE `produit`
-  ADD CONSTRAINT `produit_ibfk_1` FOREIGN KEY (`id_lieu`) REFERENCES `lieu` (`id_lieu`),
-  ADD CONSTRAINT `produit_ibfk_2` FOREIGN KEY (`id_type_produit`) REFERENCES `type_produit` (`id_type_produit`);
+  ADD CONSTRAINT `produit_ibfk_1` FOREIGN KEY (`id_image`) REFERENCES `image` (`id_image`),
+  ADD CONSTRAINT `produit_ibfk_2` FOREIGN KEY (`id_lieu`) REFERENCES `lieu` (`id_lieu`),
+  ADD CONSTRAINT `produit_ibfk_3` FOREIGN KEY (`id_type_produit`) REFERENCES `type_produit` (`id_type_produit`);
 
 --
 -- Contraintes pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  ADD CONSTRAINT `Utilisateur_ibfk_1` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`),
-  ADD CONSTRAINT `Utilisateur_ibfk_2` FOREIGN KEY (`id_institution`) REFERENCES `institution` (`id_institution`),
-  ADD CONSTRAINT `Utilisateur_ibfk_3` FOREIGN KEY (`id_adresse`) REFERENCES `adresse` (`id_adresse`);
+  ADD CONSTRAINT `utilisateur_ibfk_1` FOREIGN KEY (`id_role`) REFERENCES `role` (`id_role`),
+  ADD CONSTRAINT `utilisateur_ibfk_2` FOREIGN KEY (`id_institution`) REFERENCES `institution` (`id_institution`),
+  ADD CONSTRAINT `utilisateur_ibfk_3` FOREIGN KEY (`id_adresse`) REFERENCES `adresse` (`id_adresse`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
