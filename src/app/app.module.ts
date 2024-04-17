@@ -16,6 +16,8 @@ import { GestionLieuComponent } from './gestion-lieu/gestion-lieu.component';
 import { AcceuilComponent } from './acceuil/acceuil.component';
 import { GestionAdresseComponent } from './gestion-adresse/gestion-adresse.component';
 
+import { FormationService } from './services/formation.service';
+import { TypeProduitService } from './services/typeProduit.service';
 import { UserService } from './services/user.service'; // faire import de chaque service utiliser
 import { FormateurService } from './services/formateur.service';
 import { LieuService } from './services/lieu.service';
@@ -61,7 +63,10 @@ import { VoirProfileService } from './services/voirProfile.service';
     AdresseService,
     InstitutionService,
     ImageService,
-    VoirProfileService
+    VoirProfileService,
+    FormationService,
+    TypeProduitService
+    
     
   ], 
   bootstrap: [AppComponent]
