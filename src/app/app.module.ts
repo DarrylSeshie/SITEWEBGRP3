@@ -22,9 +22,7 @@ import { LieuService } from './services/lieu.service';
 import { AdresseService } from './services/adresse.service';
 import { InstitutionService } from './services/institution.service';
 import { ImageService } from './services/image.service';
-import { InscriptionClientComponent } from './inscription-client/inscription-client.component';
-import { VoirProfilComponent } from './voir-profil/voir-profil.component';
-import { VoirFormationsComponent } from './voir-formations/voir-formations.component';
+
 
 @NgModule({
   declarations: [
@@ -38,10 +36,8 @@ import { VoirFormationsComponent } from './voir-formations/voir-formations.compo
     GestionImageComponent,
     GestionLieuComponent,
     AcceuilComponent,
-    GestionAdresseComponent,
-    InscriptionClientComponent,
-    VoirProfilComponent,
-    VoirFormationsComponent
+    GestionAdresseComponent
+    
   ],
   imports: [
     BrowserModule,
