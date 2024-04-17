@@ -9,6 +9,9 @@ import { GestionLieuComponent } from './gestion-lieu/gestion-lieu.component';
 import { AcceuilComponent } from './acceuil/acceuil.component';
 //import { GestionnaireComponent } from './gestionnaire/gestionnaire.component';
 import { GestionAdresseComponent } from './gestion-adresse/gestion-adresse.component';
+import { InscriptionClientComponent } from './inscription-client/inscription-client.component';
+import { VoirFormationsComponent } from './voir-formations/voir-formations.component';
+import { VoirProfilComponent } from './voir-profil/voir-profil.component';
 
 const routes: Routes = [
   /*Indiquez les routes a suivre*/ 
@@ -39,7 +42,19 @@ const routes: Routes = [
     }, */
     {
       path: 'gestionadresses', component: GestionAdresseComponent
+    },
+
+    {
+      path: 'inscription-client', component: InscriptionClientComponent
+    },
+    {
+      path: 'voir-formations', component: VoirFormationsComponent
+    },
+    {
+      path: 'voir-profil', component: VoirProfilComponent
     }
+
+
 
   
 ];
