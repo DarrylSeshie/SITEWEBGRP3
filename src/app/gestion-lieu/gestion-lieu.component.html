@@ -75,20 +75,34 @@
 
 <!-- Section des détails du client sélectionné -->
 <div *ngIf="selectedLieu && userDetailVisible[selectedLieu.id_lieu]" class="usercard">
-  <h3>Détails du lieu</h3>
-  <p>Nom: {{ selectedLieu.nom }}</p>
-  <p>Batiment: {{ selectedLieu.batiment }}</p>
-  <p>Local: {{ selectedLieu.locaux }}</p>
-  <p>Adresse: {{ selectedLieu.id_adresse }}</p>
-  <p>Institution: {{ selectedLieu.id_institution }}</p>
-  <button id="searchButton" (click)="toggleDetails(selectedLieu)">
-    {{ userDetailVisible[selectedLieu.id_lieu] ? 'Masquer Détails' : 'Afficher Détails' }}
-  </button>
+ 
+
+  
+<div class="card mb-3" style="max-width: 940px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="/assets/batiment.png" class="img-fluid rounded-start" alt="Logo ">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ selectedLieu.nom }}</h5>
+        <p class="card-text"> 
+          <p>Batiment: {{ selectedLieu.batiment }}</p>
+          <p>Local: {{ selectedLieu.locaux }}</p>
+          <p>Adresse: {{ selectedLieu.id_adresse }}</p>
+          <p>Institution: {{ selectedLieu.id_institution }}</p>
+      
+        <p class="card-text"><small class="text-body-secondary"> <p>N° {{ selectedLieu.id_lieu }}</p></small></p>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-
-
-
+<button id="searchButton" (click)="toggleDetails(selectedLieu)">
+  {{ userDetailVisible[selectedLieu.id_lieu] ? 'Masquer Détails' : 'Afficher Détails' }}
+</button>
+</div>
 
 
 

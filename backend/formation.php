@@ -6,7 +6,7 @@ require_once 'managers/FormationManager.php';
 
 $dbManager = new DBManager();
 $connexion = $dbManager->connect();
-$prodManager = new FormationManager($connexion); // Utilisez le bon nom de classe pour le gestionnaire d'utilisateurs
+$lieuManager = new FormationManager($connexion); 
 
 $http_method = $_SERVER['REQUEST_METHOD'];
 header('Access-Control-Allow-Origin: http://localhost:4200');
@@ -21,19 +21,19 @@ if ($http_method === "GET") {
         $pageSize = isset($_GET['pageSize']) ? intval($_GET['pageSize']) : 10;
         $search = $_GET['search'];
 
-        $prod = $prodManager->getProduitsByName($page, $pageSize, $search);
-        echo json_encode($prod);
+        $lieux = $lieuManager->getProduitsByname2($page, $pageSize, $search);
+        echo json_encode($lieux);
     } elseif (isset($_GET['id'])) {
         // Requête GET pour récupérer un utilisateur par ID
         $id = $_GET['id'];
         try {
-            $prod = $prodManager->selectProduitById($id);
-            if ($prod) {
+            $lieu = $lieuManager->selectProduitById($id);
+            if ($lieu) {
                 http_response_code(200);
-                echo json_encode($prod);
+                echo json_encode($lieu);
             } else {
                 http_response_code(404);
-                echo json_encode(array("error" => "Produit non trouvé"));
+                echo json_encode(array("error" => "Lieu non trouvé"));
             }
         } catch (PDOException $e) {
             http_response_code(500);
@@ -44,18 +44,18 @@ if ($http_method === "GET") {
         $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
         $pageSize = isset($_GET['pageSize']) ? intval($_GET['pageSize']) : 10;
 
-        $prods = $prodManager->getProduits($page, $pageSize);
-        echo json_encode($prods);
+        $lieux = $lieuManager->getProduits($page, $pageSize);
+        echo json_encode($lieux);
     }
 } elseif ($http_method === "POST") {
     // Requête POST pour ajouter un nouvel utilisateur
     $jsonStr = file_get_contents('php://input');
-    $prodArray = json_decode($jsonStr, true);
-    $prod = new Formation($prodArray);
+    $lieuArray = json_decode($jsonStr, true);
+    $lieu = new Formation($lieuArray);
 
     try {
-        $prodManager->addProduit($prod); 
-        echo json_encode($prod); // Répondre avec les données de l'utilisateur ajouté
+        $lieuManager->addProduit($lieu); // Utilisez la méthode addUser pour insérer l'utilisateur
+        echo json_encode($lieu); // Répondre avec les données de l'utilisateur ajouté
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(array("error" => $e->getMessage()));
@@ -63,12 +63,12 @@ if ($http_method === "GET") {
 } elseif ($http_method === "PUT" || $http_method === "PATCH") {
     // Requête PUT ou PATCH pour mettre à jour un utilisateur existant
     $jsonStr = file_get_contents('php://input');
-    $prodArray = json_decode($jsonStr, true);
-    $prod = new Formation($prodArray);
+    $lieuArray = json_decode($jsonStr, true);
+    $lieu = new Formation($lieuArray);
 
     try {
-        $prodManager->updateProduit($prod); 
-        echo json_encode($prod); // Répondre avec les données de l'utilisateur mis à jour
+        $lieuManager->updateProduit($lieu); // Utilisez la méthode updateUser pour mettre à jour l'utilisateur
+        echo json_encode($lieu); // Répondre avec les données de l'utilisateur mis à jour
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(array("error" => $e->getMessage()));
@@ -78,7 +78,7 @@ if ($http_method === "GET") {
     $id = isset($_GET['id']) ? $_GET['id'] : null;
     if ($id !== null) {
         try {
-            $prodManager->deleteProduit($id);
+            $lieuManager->deleteProduit($id);
             http_response_code(204); // Succès sans contenu
         } catch (PDOException $e) {
             http_response_code(500);

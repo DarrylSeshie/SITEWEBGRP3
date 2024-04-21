@@ -1,1 +1,124 @@
-<p>gestion-formation works!</p>
+<h2>Liste des formations / journeés</h2>
+
+<div class="usercard">
+  <button class="buttonadd">Ajouter une formation</button>
+
+  <!-- Formulaire de recherche -->
+  <form (ngSubmit)="searchFormationsByname(searchTerm)" class="search-container" #searchForm="ngForm">
+    <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Rechercher par titre..." />
+    <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+  </form>
+
+  <!-- Tableau des Formations -->
+  <table class="table table-striped mt-3" *ngIf="!(showSearchResults && ( Formations | async)?.length)">
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Date debut</th>
+        <th>Public</th>
+        <th>Lieu</th>
+        <th>Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Utilisation de la directive *ngFor pour itérer sur les utilisateurs -->
+      <tr *ngFor="let produit of  Formations | async">
+        <td>{{ produit.titre}}</td>
+        <td>{{ produit.date_debut }}</td>
+        <td>{{ produit.public_cible}}</td>
+        <td>{{ produit.id_lieu }}</td>
+        <td> <img [src]="produit.id_image" class="custom-image" alt="Logo"></td>
+        <td>
+         <button (click)="selectFormation(produit.id_produit)"><i class="fa-solid fa-eye"></i></button>
+         <button (click)="updateFormation(produit)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button (click)="deleteFormation(produit.id_produit)"><i class="fa-solid fa-trash"></i></button>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+  
+<!-- Section des résultats de recherche -->
+<div  *ngIf="showSearchResults && ( Formations2 | async)?.length">
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Date debut</th>
+        <th>Public</th>
+        <th>Lieu</th>
+        <th>Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr *ngFor="let produit of  Formations2 | async">
+        <td>{{ produit.titre}}</td>
+        <td>{{ produit.date_debut }}</td>
+        <td>{{ produit.public_cible}}</td>
+        <td>{{ produit.id_lieu }}</td>
+        <td> <img [src]="produit.id_image" class="custom-image" alt="Logo"></td>
+        <td>
+          <button (click)="selectFormation(produit.id_produit)"><i class="fa-solid fa-eye"></i></button>
+          <button (click)="updateFormation(produit)"><i class="fa-solid fa-pen-to-square"></i></button>
+           <button (click)="deleteFormation(produit.id_produit)"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+  <!-- Pagination -->
+  <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
+  <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
+</div>
+
+
+<!-- Section des détails du client sélectionné -->
+<div *ngIf="selectedFormation && userDetailVisible[selectedFormation.id_produit]" class="usercard">
+ 
+  <div class="card mb-3" style="max-width: 940px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img [src]="selectedFormation.id_image" class="img-fluid rounded-start" alt="Logo">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{ selectedFormation.titre }}</h5>
+          <p class="card-text">   <p>Sous titre: {{ selectedFormation.sous_titre }}</p>
+          <p>description: {{ selectedFormation.descriptif }}</p>
+          <p>Objectif: {{ selectedFormation.objectif }}</p>
+          <p>Contenue: {{ selectedFormation.contenu }}</p>
+          <p>Methodologie: {{ selectedFormation.methodologie }}</p>
+          <p>Date debut: {{ selectedFormation.date_debut }}</p>
+          <p>Date fin: {{ selectedFormation.date_fin }}</p>
+          <p>Adresse: {{ selectedFormation.id_lieu }}</p>
+          <p>Institution: {{ selectedFormation.id_type_produit }}</p>
+          <p>Public: {{ selectedFormation.public_cible }}</p>
+          <p>Prix: {{ selectedFormation.prix }}</p>
+          
+  
+          <p class="card-text"><small class="text-body-secondary"> <p>Fin d'inscription: {{ selectedFormation.date_fin_inscription }}</p></small></p>
+        </div>
+      </div>
+    </div>
+  
+ 
+</div>
+<button id="searchButton" (click)="toggleDetails(selectedFormation)">
+  {{ userDetailVisible[selectedFormation.id_produit] ? 'Masquer Détails' : 'Afficher Détails' }}
+</button>
+</div>
+
+
+
+
+
+

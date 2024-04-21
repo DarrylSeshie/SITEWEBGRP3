@@ -75,14 +75,32 @@
 
 <!-- Section des détails du client sélectionné -->
 <div *ngIf="selectedAdresse && userDetailVisible[selectedAdresse.id_adresse]" class="usercard">
-  <h3>Détails d' adresse</h3>
-  <p>Rue: {{ selectedAdresse.rue_numero }}</p>
-  <p>Code postal: {{ selectedAdresse.code_postal }}</p>
-  <p>Localite: {{ selectedAdresse.localite }}</p>
-  <p>Pays: {{ selectedAdresse.pays }}</p>
-  <button id="searchButton" (click)="toggleDetails(selectedAdresse)">
-    {{ userDetailVisible[selectedAdresse.id_adresse] ? 'Masquer Détails' : 'Afficher Détails' }}
-  </button>
+
+   
+<div class="card mb-3" style="max-width: 940px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="/assets/location.png" class="img-fluid rounded-start" alt="Logo ">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ selectedAdresse.rue_numero }}</h5>
+        <p class="card-text"> 
+          <p>Code postal: {{ selectedAdresse.code_postal }}</p>
+          <p>Localité: {{ selectedAdresse.localite }}</p>
+          <p>Pays: {{ selectedAdresse.pays }}</p>
+         
+      
+        <p class="card-text"><small class="text-body-secondary"> <p>N° {{ selectedAdresse.id_adresse }}</p></small></p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<button id="searchButton" (click)="toggleDetails(selectedAdresse)">
+  {{ userDetailVisible[selectedAdresse.id_adresse] ? 'Masquer Détails' : 'Afficher Détails' }}
+</button>
 </div>
 
 

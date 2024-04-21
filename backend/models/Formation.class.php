@@ -1,21 +1,21 @@
 <?php
 
 class Formation {
-    private $id_produit;
-    private $titre;
-    private $sous_titre;
-    private $date_debut;
-    private $date_fin;
-    private $date_fin_inscription;
-    private $descriptif;
-    private $objectif;
-    private $contenu;
-    private $methodologie;
-    private $public_cible;
-    private $prix;
-    private $id_image;
-    private $id_lieu;
-    private $id_type_produit;
+    public $id_produit;
+    public $titre;
+    public $sous_titre;
+    public $date_debut;
+    public $date_fin;
+    public $date_fin_inscription;
+    public $descriptif;
+    public $objectif;
+    public $contenu;
+    public $methodologie;
+    public $public_cible;
+    public $prix;
+    public $id_image;
+    public $id_lieu;
+    public $id_type_produit;
 
     public function __construct($array = null)
     {
@@ -30,13 +30,14 @@ class Formation {
             $this->setObjectif($array["objectif"]);
             $this->setContenu($array["contenu"]);
             $this->setMethodologie($array["methodologie"]);
-            $this->setPublicCible($array["pubic_cible"]);
+            $this->setPublicCible($array["public_cible"]);
             $this->setPrix($array["prix"]);
             $this->setIdImage($array["id_image"]);
             $this->setIdLieu($array["id_lieu"]);
             $this->setIdTypeProduit($array["id_type_produit"]);
         }
     }
+
 
 
 

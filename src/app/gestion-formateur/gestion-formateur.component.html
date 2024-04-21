@@ -10,7 +10,7 @@
   </form>
 
   <!-- Tableau des utilisateurs -->
-  <table class="table table-striped mt-3" *ngIf="!(showSearchResults && ( formateurs2 | async)?.length)">
+  <table class="table table-striped mt-3" *ngIf="!(showSearchResults && ( formateurs | async)?.length)">
     <thead>
       <tr>
         <th>Civilité</th>
@@ -84,23 +84,39 @@
 
 <!-- Section des détails du client sélectionné -->
 <div *ngIf="selectedUser && userDetailVisible[selectedUser.id_utilisateur]" class="usercard">
-  <h3>Détails du client</h3>
-  <p>Civilité: {{ selectedUser.civilite }}</p>
-  <p>Nom: {{ selectedUser.nom }}</p>
-  <p>Prénom: {{ selectedUser.prenom }}</p>
-  <p>Email: {{ selectedUser.email }}</p>
-  <p>Tel: {{ selectedUser.gsm }}</p>
-  <p>Profession: {{ selectedUser.profession }}</p>
-  <p>Adresse: {{ selectedUser.id_adresse }}</p>
-  <p>Institution: {{ selectedUser.id_institution }}</p>
-  <p>TVA: {{ selectedUser.TVA }}</p>
-  <button id="searchButton" (click)="toggleDetails(selectedUser)">
-    {{ userDetailVisible[selectedUser.id_utilisateur] ? 'Masquer Détails' : 'Afficher Détails' }}
-  </button>
+ 
+
+  
+  <div class="card mb-3" style="max-width: 940px;">
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img src="/assets/avatar.jpg" class="img-fluid rounded-start" alt="Logo avatar">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{ selectedUser.nom  }}</h5>
+          <p class="card-text"> 
+          <p>Civilité: {{ selectedUser.civilite }}</p>
+          <p>Prénom: {{ selectedUser.prenom }}</p>
+          <p>Email: {{ selectedUser.email }}</p>
+          <p>Tel: {{ selectedUser.gsm }}</p>
+         
+          <p>Adresse: {{ selectedUser.id_adresse }}</p>
+          <p>Institution: {{ selectedUser.id_institution }}</p>
+          <p>TVA: {{ selectedUser.TVA }}</p>
+          <p>Email pro: {{ selectedUser.email_pro }}</p>
+          <p>Gsm pro: {{ selectedUser.gsm_pro }}</p>
+          
+  
+          <p class="card-text"><small class="text-body-secondary"> <p>Profession: {{ selectedUser.profession }}</p></small></p>
+        </div>
+      </div>
+    </div>
+
+
+
 </div>
-
-
-
-
-
+<button id="searchButton" (click)="toggleDetails(selectedUser)">
+  {{ userDetailVisible[selectedUser.id_utilisateur] ? 'Masquer Détails' : 'Afficher Détails' }}
+</button>
 
