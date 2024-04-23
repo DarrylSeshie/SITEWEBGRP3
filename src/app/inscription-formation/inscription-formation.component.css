@@ -33,7 +33,7 @@ input[type="text"] {
     font-size: 1rem;
     padding: .5rem;
     margin-bottom: 1rem; /* Espace entre l'input et le bouton */
-    border: 2px solid #a3b8c3; /* Bordure de l'input */
+    border: 3px solid #a3b8c3; /* Bordure de l'input */
     border-radius: 10px; /* Coins arrondis de l'input */
 }
 
