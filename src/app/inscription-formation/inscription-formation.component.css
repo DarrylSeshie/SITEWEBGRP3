@@ -1,0 +1,52 @@
+/* style.css */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e6f7f8; /* Couleur de fond similaire à l'image */
+}
+
+.container {
+    width: 50%; /* Ajustez cette valeur pour obtenir la largeur souhaitée */
+    padding: 2rem;
+    background-color: #88a0a8; /* Couleur de fond du conteneur */
+    border-radius: 20px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre pour donner de la profondeur */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 1rem;
+    color: #fff; /* Couleur de texte pour le label */
+    margin-bottom: .5rem;
+}
+
+input[type="text"] {
+    font-size: 1rem;
+    padding: .5rem;
+    margin-bottom: 1rem; /* Espace entre l'input et le bouton */
+    border: 2px solid #a3b8c3; /* Bordure de l'input */
+    border-radius: 10px; /* Coins arrondis de l'input */
+}
+
+button {
+    padding: .5rem 1rem;
+    border: none;
+    border-radius: 20px; /* Coins arrondis du bouton */
+    background-color: #f2a154; /* Couleur de fond du bouton */
+    color: #fff; /* Couleur de texte du bouton */
+    cursor: pointer; /* Forme du curseur en survolant le bouton */
+    transition: background-color 0.3s; /* Animation de fond au survol */
+}
+
+button:hover {
+    background-color: #d98c41; /* Couleur de fond du bouton au survol */
+}
