@@ -3,6 +3,8 @@ import { ImageService } from '../services/image.service';
 import { Observable } from 'rxjs';
 import { Image } from '../models/image.model';
 
+
+declare const bootstrap: any;
 @Component({
   selector: 'app-gestion-image',
   templateUrl: './gestion-image.component.html',
@@ -20,6 +22,9 @@ export class GestionImageComponent {
   showDefaultImages: boolean = true;
   userDetailVisible: { [key: number]: boolean } = {};
 
+  // message de notifs
+  successMessage: string = '';
+  errorMessage: string = '';
 
   constructor(private imageService:ImageService) { }
 
@@ -61,9 +66,30 @@ export class GestionImageComponent {
   searchImageByname(searchTerm: string): void {
     if (this.searchTerm.trim() !== '') {
       // Charge les utilisateurs avec la recherche par nom et pagination
-      this. images2 = this.imageService.searchImagesByName(this.currentPage, this.pageSize, searchTerm);
+      this.images2 = this.imageService.searchImagesByName(this.currentPage, this.pageSize, searchTerm);
       this.showSearchResults = true; // Active le drapeau des résultats de recherche
-      this.showDefaultImages = false; // Désactive l'affichage des images normales
+
+      // Vérifie si aucun utilisateur n'est trouvé après la recherche
+      this.images2.subscribe(
+        (users) => {
+          if (users.length === 0) {
+            const toastElement = document.getElementById('liveToast');
+            const toastBootstrap = new bootstrap.Toast(toastElement);
+            toastBootstrap.show();
+            this.successMessage = 'Aucune image trouvé pour ce nom ';
+            this.errorMessage = ''; 
+           
+          }
+        },
+        (error) => {
+          const toastElement = document.getElementById('liveToast');
+          const toastBootstrap = new bootstrap.Toast(toastElement);
+          toastBootstrap.show();
+          console.error('Error search user:', error);
+          this.errorMessage = 'Erreur de recherche , vous avez mal encodez  ';
+          this.successMessage = '';
+        }
+      );
     } else {
       // Charge à nouveau tous les utilisateurs si aucun terme de recherche n'est spécifié
       this.loadImages();
@@ -72,17 +98,70 @@ export class GestionImageComponent {
   
 
   deleteImage(imageId: number) {
-    this.imageService.deleteImage(imageId).subscribe(() => {
-      this.loadImages(); // Recharger la liste des utilisateurs après suppression
-    });
+    // Appel du service pour supprimer l'utilisateur
+    this.imageService.deleteImage(imageId).subscribe(
+      () => {
+        this.loadImages(); 
+        // Afficher le toast de confirmation
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        this.successMessage = 'Image supprimer avec succès.';
+        this.errorMessage = ''; 
+      },
+      error => {
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        console.error('Error deleting user:', error);
+        this.errorMessage = 'Erreur de suppression de l\'image car celui ci est affilié à quelque chose  ';
+        this.successMessage = '';
+      }
+    );
   }
 
   updateImage(image: Image) {
-    this.imageService.updateImage(image); // Appeler la méthode de mise à jour de l'utilisateur
+    this.imageService.updateImage(image).subscribe(
+      () => {
+        this.loadImages(); // Recharger la liste des utilisateurs après la mise à jour
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        this.successMessage = 'Image modifié avec succès.';
+        this.errorMessage = ''; // Réinitialiser le message d'erreur
+      },
+      error => {
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        console.error('Error updating user:', error);
+        this.errorMessage = 'Erreur lors de la modification de l\'image: ' + error.message;
+        this.successMessage = ''; // Réinitialiser le message de succès
+      }
+    );
   }
 
   addImage(image: Image) {
-    this.imageService.addImage(image); // Appeler la méthode pour ajouter un utilisateur
+   
+    this.imageService.addImage(image).subscribe(
+      () => {
+        this.loadImages(); // Recharger la liste des utilisateurs après ajout
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        this.successMessage = 'Image ajouté avec succès.';
+        this.errorMessage = ''; 
+       
+      },
+      error => {
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        console.error('Error adding user:', error);
+        this.errorMessage = 'Erreur lors de l\'ajout de l\'image : ' + error.message;
+        this.successMessage = ''; // Réinitialiser le message de succès
+      }
+    );
   }
   selectImage(imageId: number) {
     this.imageService.getImageById(imageId).subscribe(

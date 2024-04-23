@@ -31,14 +31,37 @@
         <td class="affichage">{{ user.email }}</td>
         <td>{{ user.gsm }}</td>
         <td>
-         <button (click)="selectUser(user.id_utilisateur)"><i class="fa-solid fa-eye"></i></button>
+         <button  (click)="selectUser(user.id_utilisateur)"><i class="fa-solid fa-eye"></i></button>
          <button (click)="updateUser(user)"><i class="fa-solid fa-pen-to-square"></i></button>
-          <button (click)="deleteUser(user.id_utilisateur)"><i class="fa-solid fa-trash"></i></button>
+          <button id="searchButton" (click)="deleteUser(user.id_utilisateur)"><i class="fa-solid fa-trash"></i></button>
           
         </td>
       </tr>
      </tbody>
       </table>
+
+
+
+      <!-- Gestion notif-->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+        <strong class="me-auto">ceREF</strong>
+        <small>Maintenant</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+        <div class="alert alert-success" *ngIf="successMessage">
+          {{ successMessage }}
+        </div>
+        
+        <div class="alert alert-danger" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+      </div>
+    </div>
+  </div>
 
 
 
@@ -67,7 +90,7 @@
         <td>
           <button (click)="selectUser(user.id_utilisateur)"><i class="fa-solid fa-eye"></i></button>
           <button (click)="updateUser(user)"><i class="fa-solid fa-pen-to-square"></i></button>
-           <button (click)="deleteUser(user.id_utilisateur)"><i class="fa-solid fa-trash"></i></button>
+           <button id="searchButton" (click)="deleteUser(user.id_utilisateur)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>
       </tbody>

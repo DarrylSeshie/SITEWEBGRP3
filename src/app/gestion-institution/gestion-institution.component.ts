@@ -3,6 +3,8 @@ import { InstitutionService } from '../services/institution.service';
 import { Observable } from 'rxjs';
 import { Institution } from '../models/institution.model';
 
+
+declare const bootstrap: any;
 @Component({
   selector: 'app-gestion-institution',
   templateUrl: './gestion-institution.component.html',
@@ -20,6 +22,9 @@ export class GestionInstitutionComponent {
   showSearchResults: boolean = false; 
   userDetailVisible: { [key: number]: boolean } = {};
 
+  // message de notifs
+  successMessage: string = '';
+  errorMessage: string = '';
 
   constructor(private institutionService:InstitutionService) { }
 
@@ -59,8 +64,30 @@ export class GestionInstitutionComponent {
   searchInstitutionByname(searchTerm: string): void {
     if (this.searchTerm.trim() !== '') {
       // Charge les utilisateurs avec la recherche par nom et pagination
-      this. institutions2 = this.institutionService.searchInstitutionsByName(this.currentPage, this.pageSize, searchTerm);
+      this.institutions2 = this.institutionService.searchInstitutionsByName(this.currentPage, this.pageSize, searchTerm);
       this.showSearchResults = true; // Active le drapeau des résultats de recherche
+
+      // Vérifie si aucun utilisateur n'est trouvé après la recherche
+      this.institutions2.subscribe(
+        (users) => {
+          if (users.length === 0) {
+            const toastElement = document.getElementById('liveToast');
+            const toastBootstrap = new bootstrap.Toast(toastElement);
+            toastBootstrap.show();
+            this.successMessage = 'Aucune institution trouvé pour ce nom ';
+            this.errorMessage = ''; 
+           
+          }
+        },
+        (error) => {
+          const toastElement = document.getElementById('liveToast');
+          const toastBootstrap = new bootstrap.Toast(toastElement);
+          toastBootstrap.show();
+          console.error('Error search user:', error);
+          this.errorMessage = 'Erreur de recherche , vous avez mal encodez  ';
+          this.successMessage = '';
+        }
+      );
     } else {
       // Charge à nouveau tous les utilisateurs si aucun terme de recherche n'est spécifié
       this.loadInstitutions();
@@ -69,19 +96,71 @@ export class GestionInstitutionComponent {
   
 
   deleteInstitution(institutionId: number) {
-    this.institutionService.deleteInstitution(institutionId).subscribe(() => {
-      this.loadInstitutions(); // Recharger la liste des utilisateurs après suppression
-    });
+      // Appel du service pour supprimer l'utilisateur
+      this.institutionService.deleteInstitution(institutionId).subscribe(
+        () => {
+          this.loadInstitutions(); 
+          // Afficher le toast de confirmation
+          const toastElement = document.getElementById('liveToast');
+          const toastBootstrap = new bootstrap.Toast(toastElement);
+          toastBootstrap.show();
+          this.successMessage = 'Institution supprimer avec succès.';
+          this.errorMessage = ''; 
+        },
+        error => {
+          const toastElement = document.getElementById('liveToast');
+          const toastBootstrap = new bootstrap.Toast(toastElement);
+          toastBootstrap.show();
+          console.error('Error deleting user:', error);
+          this.errorMessage = 'Erreur de suppression de l\'institution car celui ci est affilié à un evenement  ';
+          this.successMessage = '';
+        }
+      );
   }
 
   updateInstitution(institution: Institution) {
-    this.institutionService.updateInstitution(institution); // Appeler la méthode de mise à jour de l'utilisateur
-  }
+    this.institutionService.updateInstitution(institution).subscribe(
+      () => {
+        this.loadInstitutions(); // Recharger la liste des utilisateurs après la mise à jour
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        this.successMessage = 'Institution modifié avec succès.';
+        this.errorMessage = ''; // Réinitialiser le message d'erreur
+      },
+      error => {
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        console.error('Error updating user:', error);
+        this.errorMessage = 'Erreur lors de la modification de l\'institution : ' + error.message;
+        this.successMessage = ''; // Réinitialiser le message de succès
+      }
+    );  }
 
   // Cette méthode doit être liée à un événement de formulaire pour ajouter un utilisateur
   addInstitution(institution: Institution) {
-    this.institutionService.addInstitution(institution); // Appeler la méthode pour ajouter un utilisateur
+    this.institutionService.addInstitution(institution).subscribe(
+      () => {
+        this.loadInstitutions(); // Recharger la liste des utilisateurs après ajout
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        this.successMessage = 'Institution ajouté avec succès.';
+        this.errorMessage = ''; 
+       
+      },
+      error => {
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        console.error('Error adding user:', error);
+        this.errorMessage = 'Erreur lors de l\'ajout de l\'institution : ' + error.message;
+        this.successMessage = ''; // Réinitialiser le message de succès
+      }
+    );
   }
+
   selectInstitution(institutionId: number) {
     this.institutionService.getInstitutionById(institutionId).subscribe(
       institution => {

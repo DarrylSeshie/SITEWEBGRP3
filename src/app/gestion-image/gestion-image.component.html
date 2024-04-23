@@ -21,7 +21,7 @@
         <div class="button-container">
           <button (click)="selectImage(image.id_image)"><i class="fa-solid fa-eye"></i></button>
           <button (click)="updateImage(image)"><i class="fa-solid fa-pen-to-square"></i></button>
-          <button (click)="deleteImage(image.id_image)"><i class="fa-solid fa-trash"></i></button>
+          <button  id="searchButton" (click)="deleteImage(image.id_image)"><i class="fa-solid fa-trash"></i></button>
         </div>
       </div>
       <!-- Ajouter une nouvelle ligne après chaque 3ème élément -->
@@ -29,6 +29,30 @@
      </ng-container>
      </div>
     </div>
+
+
+    
+<!-- Gestion notif-->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+        <strong class="me-auto">ceREF</strong>
+        <small>Maintenant</small>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body">
+        <div class="alert alert-success" *ngIf="successMessage">
+          {{ successMessage }}
+        </div>
+        
+        <div class="alert alert-danger" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   
 
@@ -41,7 +65,7 @@
             <div class="button-container">
               <button (click)="selectImage(image.id_image)"><i class="fa-solid fa-eye"></i></button>
               <button (click)="updateImage(image)"><i class="fa-solid fa-pen-to-square"></i></button>
-              <button (click)="deleteImage(image.id_image)"><i class="fa-solid fa-trash"></i></button>
+              <button  id="searchButton" (click)="deleteImage(image.id_image)"><i class="fa-solid fa-trash"></i></button>
             </div>
           </div>
           <!-- Ajouter une nouvelle ligne après chaque 3ème élément -->

@@ -5,7 +5,7 @@ import { Formation } from '../models/formation.model';
 import { TypeProduit } from '../models/typeProduit.model';
 import { TypeProduitService } from '../services/typeProduit.service';
 
-
+declare const bootstrap: any;
 @Component({
   selector: 'app-gestion-formation',
   templateUrl: './gestion-formation.component.html',
@@ -24,6 +24,9 @@ export class GestionFormationComponent {
   userDetailVisible: { [key: number]: boolean } = {};
 
 
+  // message de notifs
+  successMessage: string = '';
+  errorMessage: string = '';
   constructor(private formationService:FormationService) { }
 
   ngOnInit(): void {
@@ -63,8 +66,30 @@ export class GestionFormationComponent {
   searchFormationsByname(searchTerm: string): void {
     if (this.searchTerm.trim() !== '') {
       // Charge les utilisateurs avec la recherche par nom et pagination
-      this. Formations2 = this.formationService.searchFormationsByName(this.currentPage, this.pageSize, searchTerm);
+      this.Formations2 = this.formationService.searchFormationsByName(this.currentPage, this.pageSize, searchTerm);
       this.showSearchResults = true; // Active le drapeau des résultats de recherche
+
+      // Vérifie si aucun utilisateur n'est trouvé après la recherche
+      this.Formations2.subscribe(
+        (users) => {
+          if (users.length === 0) {
+            const toastElement = document.getElementById('liveToast');
+            const toastBootstrap = new bootstrap.Toast(toastElement);
+            toastBootstrap.show();
+            this.successMessage = 'Aucun utilisateur trouvé pour ce nom ';
+            this.errorMessage = ''; 
+           
+          }
+        },
+        (error) => {
+          const toastElement = document.getElementById('liveToast');
+          const toastBootstrap = new bootstrap.Toast(toastElement);
+          toastBootstrap.show();
+          console.error('Error search user:', error);
+          this.errorMessage = 'Erreur de recherche , vous avez mal encodez  ';
+          this.successMessage = '';
+        }
+      );
     } else {
       // Charge à nouveau tous les utilisateurs si aucun terme de recherche n'est spécifié
       this.loadFormations();
@@ -74,18 +99,74 @@ export class GestionFormationComponent {
   
 
   deleteFormation(formationId: number) {
-    this.formationService.deleteFormation(formationId).subscribe(() => {
-      this.loadFormations(); 
-    });
+    // Appel du service pour supprimer l'utilisateur
+    this.formationService.deleteFormation(formationId).subscribe(
+      () => {
+        this.loadFormations(); 
+        // Afficher le toast de confirmation
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        this.successMessage = 'Formation supprimer avec succès.';
+        this.errorMessage = ''; 
+      },
+      error => {
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        console.error('Error deleting user:', error);
+        this.errorMessage = 'Erreur de suppression de la Formation car des utilisateurs se sont inscris  ';
+        this.successMessage = '';
+      }
+    );
   }
 
+
+
   updateFormation(formation: Formation) {
-    this.formationService.updateFormation(formation); 
+    this.formationService.updateFormation(formation).subscribe(
+      () => {
+        this.loadFormations(); // Recharger la liste des utilisateurs après la mise à jour
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        this.successMessage = 'Formation modifié avec succès.';
+        this.errorMessage = ''; // Réinitialiser le message d'erreur
+      },
+      error => {
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        console.error('Error updating user:', error);
+        this.errorMessage = 'Erreur lors de la modification de la formation : ' + error.message;
+        this.successMessage = ''; // Réinitialiser le message de succès
+      }
+    ); 
   }
 
   addFormation(formation: Formation) {
-    this.formationService.addFormation(formation); 
+    this.formationService.addFormation(formation).subscribe(
+      () => {
+        this.loadFormations(); // Recharger la liste des utilisateurs après ajout
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        this.successMessage = 'Formation ajouté avec succès.';
+        this.errorMessage = ''; 
+       
+      },
+      error => {
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        console.error('Error adding user:', error);
+        this.errorMessage = 'Erreur lors de l\'ajout de la formation : ' + error.message;
+        this.successMessage = ''; // Réinitialiser le message de succès
+      }
+    );
   }
+
+
   selectFormation(formationId: number) {
     this.formationService.getFormationById(formationId).subscribe(
       formation => {

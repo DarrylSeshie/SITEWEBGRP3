@@ -3,7 +3,7 @@ import { Lieu } from '../models/lieu.model';// un service a besoin de son model
 import { Observable } from 'rxjs';
 import { LieuService } from '../services/lieu.service';
 
-
+declare const bootstrap: any;
 @Component({
   selector: 'app-gestion-lieu',
   templateUrl: './gestion-lieu.component.html',
@@ -21,6 +21,10 @@ export class GestionLieuComponent {
   searchTerm: string = '';
   showSearchResults: boolean = false; 
   userDetailVisible: { [key: number]: boolean } = {};
+  
+  // message de notifs
+  successMessage: string = '';
+  errorMessage: string = '';
 
 
   constructor(private lieuService: LieuService) { }
@@ -61,8 +65,30 @@ export class GestionLieuComponent {
   searchLieuByname(searchTerm: string): void {
     if (this.searchTerm.trim() !== '') {
       // Charge les utilisateurs avec la recherche par nom et pagination
-      this. lieux2 = this.lieuService.searchLieuxByName2(this.currentPage, this.pageSize, searchTerm);
+      this.lieux2 = this.lieuService.searchLieuxByName2(this.currentPage, this.pageSize, searchTerm);
       this.showSearchResults = true; // Active le drapeau des résultats de recherche
+
+      // Vérifie si aucun utilisateur n'est trouvé après la recherche
+      this.lieux2.subscribe(
+        (users) => {
+          if (users.length === 0) {
+            const toastElement = document.getElementById('liveToast');
+            const toastBootstrap = new bootstrap.Toast(toastElement);
+            toastBootstrap.show();
+            this.successMessage = 'Aucun utilisateur trouvé pour ce nom ';
+            this.errorMessage = ''; 
+           
+          }
+        },
+        (error) => {
+          const toastElement = document.getElementById('liveToast');
+          const toastBootstrap = new bootstrap.Toast(toastElement);
+          toastBootstrap.show();
+          console.error('Error search user:', error);
+          this.errorMessage = 'Erreur de recherche , vous avez mal encodez  ';
+          this.successMessage = '';
+        }
+      );
     } else {
       // Charge à nouveau tous les utilisateurs si aucun terme de recherche n'est spécifié
       this.loadLieux();
@@ -71,18 +97,70 @@ export class GestionLieuComponent {
   
 
   deleteLieu(lieuId: number) {
-    this.lieuService.deleteLieu(lieuId).subscribe(() => {
-      this.loadLieux(); // Recharger la liste des utilisateurs après suppression
-    });
+    // Appel du service pour supprimer l'utilisateur
+    this.lieuService.deleteLieu(lieuId).subscribe(
+      () => {
+        this.loadLieux(); 
+        // Afficher le toast de confirmation
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        this.successMessage = 'Lieu supprimer avec succès.';
+        this.errorMessage = ''; 
+      },
+      error => {
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        console.error('Error deleting user:', error);
+        this.errorMessage = 'Erreur de suppression de lieu car celui ci est affilié à un evenement  ';
+        this.successMessage = '';
+      }
+    );
   }
 
   updateLieu(lieu: Lieu) {
-    this.lieuService.updateLieu(lieu); // Appeler la méthode de mise à jour de l'utilisateur
+    this.lieuService.updateLieu(lieu).subscribe(
+      () => {
+        this.loadLieux(); // Recharger la liste des utilisateurs après la mise à jour
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        this.successMessage = 'Lieu modifié avec succès.';
+        this.errorMessage = ''; // Réinitialiser le message d'erreur
+      },
+      error => {
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        console.error('Error updating user:', error);
+        this.errorMessage = 'Erreur lors de la modification de lieu : ' + error.message;
+        this.successMessage = ''; // Réinitialiser le message de succès
+      }
+    );
   }
 
   // Cette méthode doit être liée à un événement de formulaire pour ajouter un utilisateur
   addLieu(lieu: Lieu) {
-    this.lieuService.addLieu(lieu); // Appeler la méthode pour ajouter un utilisateur
+    this.lieuService.addLieu(lieu).subscribe(
+      () => {
+        this.loadLieux(); // Recharger la liste des utilisateurs après ajout
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        this.successMessage = 'Lieu ajouté avec succès.';
+        this.errorMessage = ''; 
+       
+      },
+      error => {
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        console.error('Error adding user:', error);
+        this.errorMessage = 'Erreur lors de l\'ajout de lieu : ' + error.message;
+        this.successMessage = ''; // Réinitialiser le message de succès
+      }
+    );
   }
 
   selectLieu(lieuId: number) {

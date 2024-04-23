@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ElementRef, ViewChild  } from '@angular/core';
 import { UserService } from '../services/user.service'; // import des services (mehode) et model
 import { User } from '../models/user.model';// un service a besoin de son model
 import { Observable } from 'rxjs';
 
 
+declare const bootstrap: any;
 @Component({
   selector: 'app-gestion-utilisateur',
   templateUrl: './gestion-utilisateur.component.html',
@@ -19,6 +20,10 @@ export class GestionUtilisateurComponent implements OnInit{
   searchTerm: string = '';
   showSearchResults: boolean = false; 
   userDetailVisible: { [key: number]: boolean } = {};
+
+  // message de notifs
+  successMessage: string = '';
+  errorMessage: string = '';
 
 
   constructor(private userService: UserService) { }
@@ -62,27 +67,108 @@ export class GestionUtilisateurComponent implements OnInit{
       // Charge les utilisateurs avec la recherche par nom et pagination
       this.users2 = this.userService.searchUsersByName2(this.currentPage, this.pageSize, searchTerm);
       this.showSearchResults = true; // Active le drapeau des résultats de recherche
+
+      // Vérifie si aucun utilisateur n'est trouvé après la recherche
+      this.users2.subscribe(
+        (users) => {
+          if (users.length === 0) {
+            const toastElement = document.getElementById('liveToast');
+            const toastBootstrap = new bootstrap.Toast(toastElement);
+            toastBootstrap.show();
+            this.successMessage = 'Aucun utilisateur trouvé pour ce nom ';
+            this.errorMessage = ''; 
+           
+          }
+        },
+        (error) => {
+          const toastElement = document.getElementById('liveToast');
+          const toastBootstrap = new bootstrap.Toast(toastElement);
+          toastBootstrap.show();
+          console.error('Error search user:', error);
+          this.errorMessage = 'Erreur de recherche , vous avez mal encodez  ';
+          this.successMessage = '';
+        }
+      );
     } else {
       // Charge à nouveau tous les utilisateurs si aucun terme de recherche n'est spécifié
       this.loadUsers();
     }
   }
+
   
 
   deleteUser(userId: number) {
-    this.userService.deleteUser(userId).subscribe(() => {
-      this.loadUsers(); // Recharger la liste des utilisateurs après suppression
-    });
+    // Appel du service pour supprimer l'utilisateur
+    this.userService.deleteUser(userId).subscribe(
+      () => {
+        this.loadUsers(); 
+        // Afficher le toast de confirmation
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        this.successMessage = 'Utilisateur supprimer avec succès.';
+        this.errorMessage = ''; 
+      },
+      error => {
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        console.error('Error deleting user:', error);
+        this.errorMessage = 'Erreur de suppression de l\'utilisateur car celui ci est affilié à un evenement  ';
+        this.successMessage = '';
+      }
+    );
   }
 
+  
   updateUser(user: User) {
-    this.userService.updateUser(user); 
+    this.userService.updateUser(user).subscribe(
+      () => {
+        this.loadUsers(); // Recharger la liste des utilisateurs après la mise à jour
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        this.successMessage = 'Utilisateur modifié avec succès.';
+        this.errorMessage = ''; // Réinitialiser le message d'erreur
+      },
+      error => {
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        console.error('Error updating user:', error);
+        this.errorMessage = 'Erreur lors de la modification de l\'utilisateur : ' + error.message;
+        this.successMessage = ''; // Réinitialiser le message de succès
+      }
+    );
+    
   }
 
 
   addUser(user: User) {
-    this.userService.addUser(user); // Appeler la méthode pour ajouter un utilisateur
+    this.userService.addUser(user).subscribe(
+      () => {
+        this.loadUsers(); // Recharger la liste des utilisateurs après ajout
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        this.successMessage = 'Utilisateur ajouté avec succès.';
+        this.errorMessage = ''; 
+       
+      },
+      error => {
+        const toastElement = document.getElementById('liveToast');
+        const toastBootstrap = new bootstrap.Toast(toastElement);
+        toastBootstrap.show();
+        console.error('Error adding user:', error);
+        this.errorMessage = 'Erreur lors de l\'ajout de l\'utilisateur : ' + error.message;
+        this.successMessage = ''; // Réinitialiser le message de succès
+      }
+    );
   }
+
+
+
+
 
   selectUser(userId: number) {
     this.userService.getUserById(userId).subscribe(
@@ -99,6 +185,11 @@ export class GestionUtilisateurComponent implements OnInit{
   }
   
 
+
+
+
+
+  /*Gestion notif*/
 
 
 }

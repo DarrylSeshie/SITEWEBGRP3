@@ -147,7 +147,7 @@ class FormationManager
             id_lieu = :id_lieu,
             id_type_produit = :id_type_produit
             WHERE id_produit = :id";
-
+ try {
         $prep = $this->db->prepare($sql);
 
         // Liaison des paramètres avec les valeurs de l'objet Produit
@@ -168,8 +168,14 @@ class FormationManager
         $prep->bindValue(':id', $prod->getIdProduit(), PDO::PARAM_INT);
 
         $prep->execute();
+    } catch (PDOException $e) {
+        throw $e; // Propager l'exception pour la gestion des erreurs
+    } finally {
+        $prep = null; // Libérer la ressource PDOStatement
+    }
     }
 
+    
     public function addProduit($prod)
     {
         $sql = "INSERT INTO produit (titre, sous_titre, date_debut, date_fin, date_fin_inscription, descriptif, objectif, contenu, methodologie, public_cible, prix, id_image, id_lieu, id_type_produit) 
