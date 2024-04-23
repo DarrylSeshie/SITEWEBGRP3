@@ -1,33 +1,36 @@
-<h2>Liste des formations / journeés</h2>
+<div class="body">
 
-<div class="usercard">
-  <button class="buttonadd">Ajouter une formation</button>
 
-  <!-- Formulaire de recherche -->
-  <form (ngSubmit)="searchFormationsByname(searchTerm)" class="search-container" #searchForm="ngForm">
+
+  <div *ngIf="!selectedFormation || !userDetailVisible[selectedFormation.id_produit]" class="usercard" >
+      <h2>Liste des formations / journeés</h2>
+      <button class="buttonadd">Ajouter une formation</button>
+
+       <!-- Formulaire de recherche -->
+       <form (ngSubmit)="searchFormationsByname(searchTerm)" class="search-container" #searchForm="ngForm">
     <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Rechercher par titre..." />
     <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-  </form>
+        </form>
 
-  <!-- Tableau des Formations -->
-  <table class="table table-striped mt-3" *ngIf="!(showSearchResults && ( Formations | async)?.length)">
+      <!-- Tableau des Formations -->
+       <table class="table table-striped mt-3" *ngIf="!(showSearchResults && ( Formations | async)?.length)">
     <thead>
       <tr>
         <th>Titre</th>
         <th>Date debut</th>
         <th>Public</th>
-        <th>Lieu</th>
+        <th class="affichage">Lieu</th>
         <th>Image</th>
       </tr>
-    </thead>
-    <tbody>
+     </thead>
+     <tbody>
       <!-- Utilisation de la directive *ngFor pour itérer sur les utilisateurs -->
       <tr *ngFor="let produit of  Formations | async">
         <td>{{ produit.titre}}</td>
         <td>{{ produit.date_debut }}</td>
         <td>{{ produit.public_cible}}</td>
-        <td>{{ produit.id_lieu }}</td>
-        <td> <img [src]="produit.id_image" class="custom-image" alt="Logo"></td>
+        <td class="affichage">{{ produit.id_lieu }}</td>
+        <td> <img [src]="produit.id_image" class="custom-image" ></td>
         <td>
          <button (click)="selectFormation(produit.id_produit)"><i class="fa-solid fa-eye"></i></button>
          <button (click)="updateFormation(produit)"><i class="fa-solid fa-pen-to-square"></i></button>
@@ -35,22 +38,22 @@
           
         </td>
       </tr>
-    </tbody>
-  </table>
+      </tbody>
+      </table>
 
 
 
 
   
-<!-- Section des résultats de recherche -->
-<div  *ngIf="showSearchResults && ( Formations2 | async)?.length">
-  <table class="table table-striped mt-3">
+      <!-- Section des résultats de recherche -->
+    <div  *ngIf="showSearchResults && ( Formations2 | async)?.length">
+    <table class="table table-striped mt-3">
     <thead>
       <tr>
         <th>Titre</th>
         <th>Date debut</th>
         <th>Public</th>
-        <th>Lieu</th>
+        <th class="affichage">Lieu</th>
         <th>Image</th>
       </tr>
     </thead>
@@ -60,35 +63,39 @@
         <td>{{ produit.titre}}</td>
         <td>{{ produit.date_debut }}</td>
         <td>{{ produit.public_cible}}</td>
-        <td>{{ produit.id_lieu }}</td>
-        <td> <img [src]="produit.id_image" class="custom-image" alt="Logo"></td>
+        <td class="affichage">{{ produit.id_lieu }}</td>
+        <td> <img [src]="produit.id_image" class="custom-image" ></td>
         <td>
           <button (click)="selectFormation(produit.id_produit)"><i class="fa-solid fa-eye"></i></button>
           <button (click)="updateFormation(produit)"><i class="fa-solid fa-pen-to-square"></i></button>
            <button (click)="deleteFormation(produit.id_produit)"><i class="fa-solid fa-trash"></i></button>
         </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+         </tr>
+         </tbody>
+        </table>
+     </div>
 
 
 
 
-  <!-- Pagination -->
-  <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
-  <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
-</div>
+      <!-- Pagination -->
+
+      <div class="button-container">
+        <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
+        <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
+      </div>
+
+  </div>
 
 
 <!-- Section des détails du client sélectionné -->
-<div *ngIf="selectedFormation && userDetailVisible[selectedFormation.id_produit]" class="usercard">
- 
-  <div class="card mb-3" style="max-width: 940px;">
-    <div class="row g-0">
-      <div class="col-md-4">
-        <img [src]="selectedFormation.id_image" class="img-fluid rounded-start" alt="Logo">
-      </div>
+  <div *ngIf="selectedFormation && userDetailVisible[selectedFormation.id_produit]" class="detailView">
+    <h3>Details</h3>
+     <div class="card mb-3" style="max-width: 1040px;">
+       <div class="row g-0">
+         <div class="col-md-4">
+          <img [src]="selectedFormation.id_image" class="img-fluid rounded-start" alt="Logo">
+          </div>
       <div class="col-md-8">
         <div class="card-body">
           <h5 class="card-title">{{ selectedFormation.titre }}</h5>
@@ -111,14 +118,14 @@
     </div>
   
  
+    </div>
+      <button id="searchButton" (click)="toggleDetails(selectedFormation)">
+       {{ userDetailVisible[selectedFormation.id_produit] ? 'Masquer Détails' : 'Afficher Détails' }}
+      </button>
+    </div>
+
+
+
+
 </div>
-<button id="searchButton" (click)="toggleDetails(selectedFormation)">
-  {{ userDetailVisible[selectedFormation.id_produit] ? 'Masquer Détails' : 'Afficher Détails' }}
-</button>
-</div>
-
-
-
-
-
 

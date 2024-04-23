@@ -1,6 +1,7 @@
-<h2>Liste des Institutions</h2>
+<div class="body">
 
-<div class="usercard">
+<div class="usercard" *ngIf="!selectedInstitution || !userDetailVisible[selectedInstitution.id_institution]">
+  <h2>Liste des Institutions</h2>
   <button class="buttonadd">Ajouter une institution</button>
 
   <!-- Formulaire de recherche -->
@@ -68,9 +69,12 @@
 
 
   <!-- Pagination -->
-  <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
-  <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
-</div>
+  
+  <div class="button-container">
+    <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
+    <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
+  </div>
+ </div>
 
 
 <!-- Section des détails du instit sélectionné -->
@@ -94,7 +98,7 @@
 
 
 
-
+</div>
 
 
 

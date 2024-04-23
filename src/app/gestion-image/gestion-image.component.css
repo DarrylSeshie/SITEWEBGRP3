@@ -69,6 +69,20 @@
   }
 
 
+  .button-container {
+    text-align: center; 
+}
+
+.button-container button {
+    display: inline-block; 
+    padding: 10px 20px; 
+    margin-right: 10px; 
+}
+
+.button-container button:last-child {
+    margin-right: 0; 
+}
+
   h2{
     text-align: center;
     font-family: 'Helvetica Neue', Arial, sans-serif; 
@@ -84,6 +98,39 @@
     font-size: 24px; 
     font-weight: bold; 
     color: #333;
+  }
+  .body{
+    margin-top: 150px;
+  }
+ 
+  .detailView{
+    box-sizing: border-box;
+    width: 50%;
+    margin: 20px auto;
+    padding: 10px 30px;
+    box-shadow: lightgray 4px 4px 20px;
+    
+   
+    p {
+      font-weight: 300;
+      font-size: 16px;
+    }
+    button {
+      background-color: transparent;
+      box-sizing: border-box;
+      padding: 5px 10px;
+      border: none;
+      box-shadow: lightgray 3px 3px 7px;
+      margin-right: 20px;
+      outline: none;
+      font-size: 14px;
+      font-weight: 500;
+      &:active {
+        transform: translate(1px, 1px);
+        box-shadow: lightgray 0 0 5px;
+      }
+    }
+  
   }
  
   .logoImage{
@@ -125,4 +172,68 @@
   width: 200px; 
   height: 150px; 
   object-fit: cover; /* Redimensionne l'image pour remplir le conteneur sans déformer */
+}
+
+
+
+  
+@media screen  and (max-width: 1024px)
+{
+
+
+ nav a
+ {
+     font-size: 1.1em;
+ }
+
+ .affichage{
+  display: none;
+}
+
+
+
+.logoImage{
+  height: 100px;
+  width: 150px;
+
+}
+
+
+.custom-image {
+  width: 200px; 
+  height: 150px; 
+  object-fit: cover; /* Redimensionne l'image pour remplir le conteneur sans déformer */
+}
+
+
+ 
+.usercard {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 20px auto;
+  padding: 10px 30px;
+  box-shadow: lightgray 4px 4px 20px;
+  
+ 
+  p {
+    font-weight: 300;
+    font-size: 16px;
+  }
+  button {
+    background-color: transparent;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    border: none;
+    box-shadow: lightgray 3px 3px 7px;
+    margin-right: 20px;
+    outline: none;
+    font-size: 14px;
+    font-weight: 500;
+    &:active {
+      transform: translate(1px, 1px);
+      box-shadow: lightgray 0 0 5px;
+    }
+  }
+}
+
 }

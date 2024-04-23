@@ -1,6 +1,8 @@
-<h2>Liste des lieux</h2>
 
-<div class="usercard">
+
+<div class="body">
+<div class="usercard"  *ngIf="!selectedLieu || !userDetailVisible[selectedLieu.id_lieu]" >
+  <h2>Liste des lieux</h2>
   <button class="buttonadd">Ajouter lieu</button>
 
   <!-- Formulaire de recherche -->
@@ -68,13 +70,15 @@
 
 
   <!-- Pagination -->
-  <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
-  <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
-</div>
+ 
+  <div class="button-container">
+    <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
+    <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
+  </div></div>
 
 
 <!-- Section des détails du client sélectionné -->
-<div *ngIf="selectedLieu && userDetailVisible[selectedLieu.id_lieu]" class="usercard">
+<div *ngIf="selectedLieu && userDetailVisible[selectedLieu.id_lieu]" class="detailView">
  
 
   
@@ -106,3 +110,4 @@
 
 
 
+</div>

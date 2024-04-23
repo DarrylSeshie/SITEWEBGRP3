@@ -21,7 +21,7 @@ class UserManager
     $offset = ($page - 1) * $pageSize;
 
     // Requête SQL avec LIMIT pour pagination
-    $sql = "SELECT * FROM utilisateur WHERE id_role = 4 LIMIT :offset, :pageSize";
+    $sql = "SELECT * FROM utilisateur WHERE id_role IN (4, 3, 2) LIMIT :offset, :pageSize";
     try {
         $prep = $this->db->prepare($sql);
         $prep->bindParam(':offset', $offset, PDO::PARAM_INT);

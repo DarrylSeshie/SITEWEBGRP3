@@ -76,10 +76,10 @@ export class GestionUtilisateurComponent implements OnInit{
   }
 
   updateUser(user: User) {
-    this.userService.updateUser(user); // Appeler la méthode de mise à jour de l'utilisateur
+    this.userService.updateUser(user); 
   }
 
-  // Cette méthode doit être liée à un événement de formulaire pour ajouter un utilisateur
+
   addUser(user: User) {
     this.userService.addUser(user); // Appeler la méthode pour ajouter un utilisateur
   }
@@ -90,6 +90,7 @@ export class GestionUtilisateurComponent implements OnInit{
         this.selectedUser = user;
         // Toggle the visibility of user details
         this.toggleDetails(user);
+
       },
       error => {
         console.error('Error fetching user:', error);

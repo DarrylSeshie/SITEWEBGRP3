@@ -1,6 +1,11 @@
-<h2>Liste des clients</h2>
 
-<div class="usercard">
+  
+
+<div class="body">
+  
+ 
+  <div *ngIf="!selectedUser || !userDetailVisible[selectedUser.id_utilisateur]" class="usercard" >  <!-- affichage sans detail + search -->
+    <h2>Liste des clients</h2>
   <button class="buttonadd"><i class="fa-solid fa-user-plus"></i></button>
 
   <!-- Formulaire de recherche -->
@@ -16,7 +21,7 @@
         <th>Civilité</th>
         <th>Nom</th>
         <th>Prénom</th>
-        <th>Email</th>
+        <th class="affichage">Email</th>
         <th>Téléphone</th>
       </tr>
     </thead>
@@ -26,7 +31,7 @@
         <td>{{ user.civilite }}</td>
         <td>{{ user.nom }}</td>
         <td>{{ user.prenom }}</td>
-        <td>{{ user.email }}</td>
+        <td class="affichage">{{ user.email }}</td>
         <td>{{ user.gsm }}</td>
         <td>
          <button (click)="selectUser(user.id_utilisateur)"><i class="fa-solid fa-eye"></i></button>
@@ -41,50 +46,53 @@
 
 
   
-<!-- Section des résultats de recherche -->
-<div  *ngIf="showSearchResults && (users2 | async)?.length">
-  <table class="table table-striped mt-3">
+    <!-- Section des résultats de recherche -->
+    <div  *ngIf="showSearchResults && (users2 | async)?.length">
+    <table class="table table-striped mt-3">
     <thead>
       <tr>
         <th>Civilité</th>
         <th>Nom</th>
         <th>Prénom</th>
-        <th>Email</th>
+        <th class="affichage">Email</th>
         <th>Téléphone</th>
-        <th>Actions</th>
       </tr>
-    </thead>
-    <tbody>
+     </thead>
+     <tbody>
       
       <tr *ngFor="let user of users2 | async">
         <td>{{ user.civilite }}</td>
         <td>{{ user.nom }}</td>
         <td>{{ user.prenom }}</td>
-        <td>{{ user.email }}</td>
+        <td class="affichage">{{ user.email }}</td>
         <td>{{ user.gsm }}</td>
         <td>
-          <button (click)="selectUser(user.id_utilisateur)"><i class="fa-solid fa-eye"></i></button>
+          <button id="searchButton" (click)="selectUser(user.id_utilisateur)"><i class="fa-solid fa-eye"></i></button>
           <button (click)="updateUser(user)"><i class="fa-solid fa-pen-to-square"></i></button>
           <button class="--bs-dark-bg-subtle" (click)="deleteUser(user.id_utilisateur)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>
-    </tbody>
-  </table>
-</div>
+     </tbody>
+   </table>
+ </div>
 
 
 
 
   <!-- Pagination -->
-  <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
-  <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
-</div>
+
+  <div class="button-container">
+    <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
+    <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
+  </div>
+ 
+ </div>
 
 
 <!-- Section des détails du client sélectionné -->
-<div *ngIf="selectedUser && userDetailVisible[selectedUser.id_utilisateur]" class="usercard">
- 
-  <div class="card mb-3" style="max-width: 940px;">
+ <div *ngIf="selectedUser && userDetailVisible[selectedUser.id_utilisateur]" class="detailView" >
+ <h3>Détails</h3>
+  <div class="card mb-3" style="max-width: 1040px;">
     <div class="row g-0">
       <div class="col-md-4">
         <img src="/assets/avatar.jpg" class="img-fluid rounded-start" alt="Logo avatar">
@@ -108,12 +116,15 @@
           <p class="card-text"><small class="text-body-secondary"> N° {{ selectedUser.id_utilisateur }}</small></p>
         </div>
       </div>
+      <button id="searchButton" (click)="toggleDetails(selectedUser)">
+        {{ userDetailVisible[selectedUser.id_utilisateur] ? '' : '' }}<i class="fa-solid fa-eye-slash"></i>
+        </button>
     </div>
+ </div>
  
+
 </div>
-<button id="searchButton" (click)="toggleDetails(selectedUser)">
-  {{ userDetailVisible[selectedUser.id_utilisateur] ? 'Masquer Détails' : 'Afficher Détails' }}
-</button>
+
 
 
 

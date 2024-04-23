@@ -1,6 +1,8 @@
-<h2>Liste des adresses</h2>
 
-<div class="usercard">
+
+<div class="body">
+<div  *ngIf="!selectedAdresse || !userDetailVisible[selectedAdresse.id_adresse]" class="usercard">
+  <h2>Liste des adresses</h2>
   <button class="buttonadd">Ajouter une adresse</button>
 
   <!-- Formulaire de recherche -->
@@ -38,8 +40,8 @@
 
 
   
-<!-- Section des résultats de recherche -->
-<div  *ngIf="showSearchResults && ( Adresses2 | async)?.length">
+  <!-- Section des résultats de recherche -->
+  <div  *ngIf="showSearchResults && ( Adresses2 | async)?.length">
   <table class="table table-striped mt-3">
     <thead>
       <tr>
@@ -61,23 +63,26 @@
         </td>
       </tr>
     </tbody>
-  </table>
-</div>
+   </table>
+   </div>
 
 
 
 
   <!-- Pagination -->
-  <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
-  <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
+ 
+      <div class="button-container">
+         <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
+         <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
+       </div>
 </div>
 
 
 <!-- Section des détails du client sélectionné -->
-<div *ngIf="selectedAdresse && userDetailVisible[selectedAdresse.id_adresse]" class="usercard">
+<div *ngIf="selectedAdresse && userDetailVisible[selectedAdresse.id_adresse]" class="detailView">
 
-   
-<div class="card mb-3" style="max-width: 940px;">
+   <h3>Details</h3>
+<div class="card mb-3" style="max-width: 1040px;">
   <div class="row g-0">
     <div class="col-md-4">
       <img src="/assets/location.png" class="img-fluid rounded-start" alt="Logo ">
@@ -105,7 +110,7 @@
 
 
 
-
+</div>
 
 
 
