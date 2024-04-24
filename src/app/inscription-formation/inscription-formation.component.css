@@ -1,55 +1,37 @@
-/* style.css */
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color:#f8f9fa;; /* Couleur de fond similaire à l'image */
-}
-
-.container {
-    width: 50%; /* Ajustez cette valeur pour obtenir la largeur souhaitée */
-    padding: 2rem;
-    background-color: #88a0a8; /* Couleur de fond du conteneur */
-    border-radius: 20px; /* Coins arrondis */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre pour donner de la profondeur */
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-label {
-    font-size: 1rem;
-    color: #fff; /* Couleur de texte pour le label */
-    margin-bottom: .5rem;
-}
-
-input[type="text"] {
-    font-size: 1rem;
-    padding: .5rem;
-    margin-bottom: 1rem; /* Espace entre l'input et le bouton */
-    border: 3px solid #a3b8c3; /* Bordure de l'input */
-    border-radius: 10px; /* Coins arrondis de l'input */
-}
-
-button {
-    padding: .5rem 1rem;
-    border: none;
-    border-radius: 20px; /* Coins arrondis du bouton */
-    background-color: #f2a154; /* Couleur de fond du bouton */
-    color: #fff; /* Couleur de texte du bouton */
-    cursor: pointer; /* Forme du curseur en survolant le bouton */
-    transition: background-color 0.3s; /* Animation de fond au survol */
-}
-
-button:hover {
-    background-color: #d98c41; /* Couleur de fond du bouton au survol */
-}
-.body{
-    margin-top: 150px;
+.register-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    margin: auto;
+    border: 1px solid #dee2e6;
+    border-radius: .25rem;
+    background-color: white;
+  }
+  .register-form img {
+    width: 72px;
+    height: 72px;
+    margin: 0 auto 10px;
+    display: block;
+  }
+  .register-form h4 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .register-form .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+  }
+  .register-form .form-control:focus {
+    z-index: 2;
+  }
+  .register-form .register-btn {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+  }
+  .gray-bg container{
+    background-color: #f0eaee;
 }

@@ -1,20 +1,38 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire de Formation</title>
-    <link rel="stylesheet" href="inscription-formation.component.css">
-</head>
-<div class="body">
-<body>
-    <div class="container">
-        <form>
-            <label for="formationName">Nom et code la formation :</label>
-            <input type="text" id="formationName" name="formationName" placeholder="T 07 Infirmier relais en soins de plaies">
-            <button type="submit">S'inscrire</button>
-        </form>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<div class="container gray-bg" style="margin-top: 100px;">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="register-form mt-5 p-4">
+          <img src="assets/ceref-logo.png" alt="Logo WordPress">
+          <h4>Inscrivez-vous sur nos formation</h4>
+          <form action="" class="row g-3">
+            <div class="col-12">
+              <label>Nom d'utilisateur</label>
+              <input type="text" name="username" class="form-control" placeholder="Nom d'utilisateur">
+            </div>
+            <div class="col-12">
+                <label for="formation">Liste des formations</label>
+                <select name="formation" class="form-control" id="formation">
+                  <option value="">Choisissez une formation...</option>
+                  <option value="formation1">Formation 1</option>
+                  <option value="formation2">Formation 2</option>
+                  <option value="formation3">Formation 3</option>
+                  <option value="formation4">Formation 4</option>
+                  <!-- Ajoutez d'autres options ici selon vos formations disponibles -->
+                </select>
+              </div>
+              
+            <div class="col-12">
+              <button type="submit" class="btn  register-btn" style="background-color: #7a055b; color: white;">S'inscrire</button>
+            </div>
+          </form>
+          <hr class="mt-4">
+          <div class="col-12">
+            <p class="text-center mb-0">Bienvenue dans nos formations !</p>
+          </div>
+        </div>
+      </div>
     </div>
-</body>
-</div>
-</html>
+  </div>

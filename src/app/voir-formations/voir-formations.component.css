@@ -1,9 +1,8 @@
 .body{
     margin-top: 150px;
 }
-.formation-title {
-    color: #4a5d68;
-    background-color: #e9ecef;
+/*.formation-title {
+    color:black;
     padding: 10px;
     border-radius: 0.25rem;
     margin-bottom: 1rem;
@@ -16,7 +15,49 @@
 
 .formation-section {
     margin-bottom: 2rem;
-}
-body{
+}*/
+body, html {
+    height: 100%;
+    margin: 0;
     background-color: #f0eaee;
+}
+
+.container-fluid {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.formation-card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none; 
+    border-radius: 0.5rem; 
+}
+
+.formation-card .card-title {
+    color: #007bff; 
+}
+
+.formation-card .card-text {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+@media (min-width: 992px) {
+    .container-fluid {
+        padding: 2rem;
+    }
+}
+
+
+@media (max-width: 991px) {
+    .formation-card {
+        margin: 0 15px; 
+    }
+}
+.description{
+    font-size: 1.0rem; 
+    color: rgb(70, 67, 67); 
+    margin-bottom: 10px; 
 }
