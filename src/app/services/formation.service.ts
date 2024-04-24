@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Formation } from '../models/formation.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -50,8 +51,13 @@ export class FormationService {
   }
 
 
+  get3ProduitsAvenir(): Observable<Formation[]> {
+    const url = `${this.apiUrl}?get3ProduitsByDate`;
+    return this.http.get<Formation[]>(url);
+  }
+ 
 
-
+  
 
 
 

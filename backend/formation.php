@@ -23,7 +23,17 @@ if ($http_method === "GET") {
 
         $lieux = $lieuManager->getProduitsByname2($page, $pageSize, $search);
         echo json_encode($lieux);
-    } elseif (isset($_GET['id'])) {
+    } elseif (isset($_GET['get3ProduitsByDate'])) {
+        // Requête GET pour récupérer les 3 produits à venir
+        try {
+            $produitsAVenir = $lieuManager->get3ProduitByDate();
+            echo json_encode($produitsAVenir);
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(array("error" => $e->getMessage()));
+        }
+    }
+    elseif (isset($_GET['id'])) {
         // Requête GET pour récupérer un utilisateur par ID
         $id = $_GET['id'];
         try {

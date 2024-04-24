@@ -1,32 +1,101 @@
-<div class="body">
-<H1> Bienvenue sur ceREF Extranet</H1>
-<br><br>
-
-<p class="texteAcceuil">
-    Bienvenue sur le site de Ceref Formation, une plateforme créée par des étudiants pour vous <br>
-     offrir un accès privilégié aux formations dispensées par notre entreprise partenaire, Ceref Santé. <br> <br>
-
-Chez Ceref Santé, nous nous engageons à promouvoir l'excellence dans le domaine de la santé en offrant des formations <br>
- de qualité supérieure, dispensées par des experts du secteur. Notre site Ceref Formation a été conçu pour vous permettre  <br>
- de découvrir et de vous inscrire facilement à nos divers programmes de formation. <br><br>
-
-Que vous soyez un professionnel de la santé en quête de perfectionnement, un étudiant désireux d'acquérir de nouvelles compétences, <br>
- ou une entreprise cherchant à investir dans le développement de ses équipes,<br>
-  vous trouverez ici une gamme de formations adaptées à vos besoins. <br><br>
-
-Parcourez notre catalogue de formations, qui comprend des sujets allant des pratiques médicales actuelles aux dernières avancées<br>
- technologiques dans le domaine de la santé. Nos cours sont conçus pour être interactifs, informatifs et pratiques,<br>
-  vous permettant d'acquérir des compétences concrètes que vous pourrez mettre en œuvre immédiatement <br>
-  dans votre pratique professionnelle.<br><br>
-
-Nous croyons en l'importance de l'apprentissage continu pour rester à la pointe de votre domaine.<br>
- Rejoignez-nous sur Ceref Formation pour faire partie d'une communauté engagée dans l'amélioration continue <br>
- et le partage des connaissances.<br><br>
-
-Explorez nos formations dès aujourd'hui et découvrez comment Ceref Santé peut vous aider à développer <br>
-votre expertise et à réussir dans le domaine passionnant de la santé. Nous sommes impatients de vous <br>
-accompagner dans votre parcours de formation et de contribuer à votre réussite professionnelle.<br>
+<div class="body" >
+<div class="texteAcceuil"></div>
+  <H1> Bienvenue sur ceREF Extranet</H1>
 
 
-</p>
+
+
+<div class="accordion" id="accordionExample" >
+  <div class="accordion-item" >
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+         Nos formations à venir
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body"  class="imgproduit"><!-- formations dev -->
+
+
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active"  class="carousel-item" *ngFor="let formation of Formations | async; let i = index" [class.active]="i === 0"><!-- formation 1 -->
+            
+              <div class="card mb-3">
+                <img src="/assets/batiment.png" alt="" >
+               <!-- <img [src]="formation.id_image" class="card-img-top" alt="Formation Image">-->
+                <div class="card-body">
+                  <h5 class="card-title" id="txtFinInscription">{{ formation.titre }}</h5>
+                  <p class="card-text">{{ formation.descriptif }}</p>
+                  <p class="card-text">{{ formation.public_cible }}</p>
+                  <p class="card-text">Date :{{ formation.date_fin  | date:'dd MMMM yyyy'}}</p>
+                  <p class="card-text"><small class="text-muted"  > <div id="txtFinInscription">Fin d'inscription dans : {{ getCountdown(formation.date_fin_inscription.toString())}} </div></small></p>
+                </div>
+              </div>
+                
+            
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+           </div><!-- formations dev fin --> 
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+       ceREF
+      </button>
+    </h2>
+    <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <p >
+          <strong> Bienvenue sur le site de Ceref Formation</strong>, une plateforme créée par des étudiants pour vous <br>
+            offrir un accès privilégié aux formations dispensées par notre entreprise partenaire, Ceref Santé. <br> <br>
+       
+       Chez Ceref Santé, nous nous engageons à promouvoir l'excellence dans le domaine de la santé en offrant des formations <br>
+        de qualité supérieure, dispensées par des experts du secteur. Notre site Ceref Formation a été conçu pour vous permettre  <br>
+        de découvrir et de vous inscrire facilement à nos divers programmes de formation. <br><br>
+       
+       Que vous soyez un professionnel de la santé en quête de perfectionnement, un étudiant désireux d'acquérir de nouvelles compétences, <br>
+        ou une entreprise cherchant à investir dans le développement de ses équipes,<br>
+         vous trouverez ici une gamme de formations adaptées à vos besoins. <br><br>
+       
+       Parcourez notre catalogue de formations, qui comprend des sujets allant des pratiques médicales actuelles aux dernières avancées<br>
+        technologiques dans le domaine de la santé. Nos cours sont conçus pour être interactifs, informatifs et pratiques,<br>
+         vous permettant d'acquérir des compétences concrètes que vous pourrez mettre en œuvre immédiatement <br>
+         dans votre pratique professionnelle.<br><br>
+       
+       Nous croyons en l'importance de l'apprentissage continu pour rester à la pointe de votre domaine.<br>
+        Rejoignez-nous sur Ceref Formation pour faire partie d'une communauté engagée dans l'amélioration continue <br>
+        et le partage des connaissances.<br><br>
+       
+       Explorez nos formations dès aujourd'hui et découvrez comment Ceref Santé peut vous aider à développer <br>
+       votre expertise et à réussir dans le domaine passionnant de la santé. Nous sommes impatients de vous <br>
+       accompagner dans votre parcours de formation et de contribuer à votre réussite professionnelle.<br>
+       
+       
+       </p>  
+      </div>
+    </div>
+  </div>
+  
+</div>
+
+
+
+
+
+
+
+</div>
+
 </div>

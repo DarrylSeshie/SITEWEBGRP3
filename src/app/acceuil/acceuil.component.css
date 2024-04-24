@@ -11,7 +11,7 @@ body {
   }
   
   .body{
-    margin-top: 150px;
+    margin-top: 50px;
   }
  
   
@@ -19,8 +19,81 @@ body {
   h1 {
     font-size: 36px;
     font-weight: bold;
-    color: #a2085c98; /* Couleur du titre */
+    color: #7a055b; /* Couleur du titre */
     text-align: center; /* Centre le titre */
     margin-bottom: 20px; /* Espacement sous le titre */
   }
+
+  .imgproduit{
+    width: auto;
+    height: auto;
+    margin: 10px;
+  } 
+  #txtFinInscription{
+    color: #7a055b;
+    font-weight: bold;
+    
+    
+  }
+
+
+  .accordion-button:hover {
+    background-color:  #7a055b; /* Changer la couleur de fond au survol */
+    color: white; /* Changer la couleur du texte au survol */
+  }
   
+
+  .accordion-button {
+    background-color:#f0eaee; /* Couleur de fond */
+    color: black; /* Couleur du texte */
+    border-color: #7a055b; /* Couleur de la bordure */
+    outline: none; /* Supprimer la bordure de focus */
+    box-shadow: none; /* Supprimer toute ombre autour du bouton */
+  }
+  
+  /* Styliser la bordure lorsqu'il est en focus ou actif */
+  .accordion-button:focus,
+  .accordion-button:active {
+    border-color: #7a055b; /* Couleur de la bordure en focus ou actif */
+    box-shadow: black 3px 3px 20px; /* Supprimer toute ombre en focus ou actif */
+  }
+
+
+  .body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; 
+  }
+  
+   
+  .accordion {
+    width: 100%;
+  }
+
+  .accordion-body {
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    text-align: center;
+    height: 80%;
+  } 
+  
+  /* Style pour chaque carte */
+  .card {
+    max-width: auto; /* Ajustez cette valeur selon vos besoins */
+    margin: 20px; /* Ajoute une marge autour de chaque carte */
+    padding: 20px; /* Ajoute un espace intérieur à chaque carte */
+    text-align: center; /* Centre le contenu à l'intérieur de la carte */
+    overflow: hidden; /* Masque tout contenu dépassant la limite de la carte */
+  }
+  
+  /* Style pour l'image à l'intérieur de chaque carte */
+  .card img {
+    width: 100%; /* Ajuster la largeur de l'image pour remplir la carte */
+    height: 200px; /* Définir une hauteur fixe pour la carte */
+    object-fit: cover; /* Ajuster la taille de l'image pour remplir le conteneur */
+  }
+
+  
+ 

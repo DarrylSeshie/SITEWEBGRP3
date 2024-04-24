@@ -52,6 +52,54 @@ class FormationManager
     }
 
 
+
+    public function get3ProduitByDate()
+    {
+        $currentDate = date("Y-m-d");
+
+    // Requête SQL qui récupe les 3 produits futur
+    $sql = "SELECT * FROM produit WHERE date_debut > :currentDate ORDER BY date_debut ASC LIMIT 3";
+
+    try {
+        $prep = $this->db->prepare($sql);
+        $prep->bindParam(':currentDate', $currentDate, PDO::PARAM_STR);
+        $prep->execute();
+        $result = $prep->fetchAll(PDO::FETCH_ASSOC);
+
+        $produits = [];
+
+        foreach ($result as $prodData) {
+            $prod = new Formation();
+            $prod->setIdProduit($prodData['id_produit']);
+            $prod->setTitre($prodData["titre"]);
+            $prod->setSousTitre($prodData["sous_titre"]);
+            $prod->setDateDebut($prodData["date_debut"]);
+            $prod->setDateFin($prodData["date_fin"]);
+            $prod->setDateFinInscription($prodData["date_fin_inscription"]);
+            $prod->setDescriptif($prodData["descriptif"]);
+            $prod->setObjectif($prodData["objectif"]);
+            $prod->setContenu($prodData["contenu"]);
+            $prod->setMethodologie($prodData["methodologie"]);
+            $prod->setPublicCible($prodData["public_cible"]);
+            $prod->setPrix($prodData["prix"]);
+            $prod->setIdImage($prodData["id_image"]);
+            $prod->setIdLieu($prodData["id_lieu"]);
+            $prod->setIdTypeProduit($prodData["id_type_produit"]);
+
+            $produits[] = $prod;
+        }
+
+        return $produits;
+    } catch (PDOException $e) {
+        // Gérer l'erreur de requête SQL
+        throw $e;
+    }
+
+
+
+
+    }
+
     public function getProduitsByname2($page, $pageSize,$nom)
     { 
     
