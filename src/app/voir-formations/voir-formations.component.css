@@ -1,6 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
-    background: #f4f4f8;
+    background: #f8f9fa;
     margin: 0;
     padding: 0;
 }
@@ -38,4 +38,7 @@ body {
         width: 90%;
         margin: 20px auto;
     }
+}
+.body{
+    margin-top: 150px;
 }

@@ -7,7 +7,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #e6f7f8; /* Couleur de fond similaire à l'image */
+    background-color:#f8f9fa;; /* Couleur de fond similaire à l'image */
 }
 
 .container {
@@ -49,4 +49,7 @@ button {
 
 button:hover {
     background-color: #d98c41; /* Couleur de fond du bouton au survol */
+}
+.body{
+    margin-top: 150px;
 }
