@@ -27,7 +27,8 @@ import { ImageService } from './services/image.service';
 import { VoirFormationsComponent } from './voir-formations/voir-formations.component';
 import { VoirProfilComponent } from './voir-profil/voir-profil.component';
 import { InscriptionFormationComponent } from './inscription-formation/inscription-formation.component';
-import { VoirProfileService } from './services/voirProfile.service'; 
+import { VoirProfileService } from './services/voirProfile.service';
+
 
 
 
