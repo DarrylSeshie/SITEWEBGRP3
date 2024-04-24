@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 17 avr. 2024 à 20:00
+-- Généré le : mer. 24 avr. 2024 à 19:51
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -193,7 +193,6 @@ INSERT INTO `lieu` (`id_lieu`, `nom`, `batiment`, `locaux`, `id_institution`, `i
 (4, 'Helha_gilly', 'Batiment A', 'E206', 1, 1),
 (5, 'HEH_', 'Batiment B', 'B201', 1, 2),
 (6, 'Umons', 'Batiment C', 'Locaux C', 2, 3),
-(7, 'Umons', 'Batiment C', 'Locaux C', 2, 3),
 (8, 'Helha_gilly', 'Batiment A', 'E206', 1, 1),
 (9, 'HEH_', 'Batiment B', 'B201', 1, 2);
 
@@ -261,12 +260,12 @@ CREATE TABLE `produit` (
 --
 
 INSERT INTO `produit` (`id_produit`, `titre`, `sous_titre`, `date_debut`, `date_fin`, `date_fin_inscription`, `descriptif`, `objectif`, `contenu`, `methodologie`, `public_cible`, `prix`, `id_image`, `id_lieu`, `id_type_produit`) VALUES
-(1, 'Formation 1', 'Description de la formation 1', '2024-05-01', '2024-05-10', '2024-04-25', 'Ceci est le descriptif de la formation 1', 'Objectif de la formation 1', 'Contenu de la formation 1', 'Méthodologie de la formation 1', 'Public cible de la formation 1', 10, 1, 1, 1),
-(2, 'Formation 2', 'Description de la formation 2', '2024-06-01', '2024-06-10', '2024-05-25', 'Ceci est le descriptif de la formation 2', 'Objectif de la formation 2', 'Contenu de la formation 2', 'Méthodologie de la formation 2', 'Public cible de la formation 2', 12, 2, 1, 1),
+(1, 'F02', 'Accompagner l\'etudiant infirmier en stage ', '2024-05-01', '2024-05-10', '2024-04-25', 'Adopter la posture de refecrence/coach en equipe...', 'Devenir pro', 'Contenu de la formation 1', 'Méthodologie de la formation 1', 'Etudiant', 10, 2, 1, 1),
+(2, 'R03', 'Solliciter l\'expression des émotion', '2024-05-09', '2024-05-10', '2024-05-25', 'Solliciter l\'expression des émotions chez les patients et résidents par le biais du journal créatif', 'Objectif de la formation 2', 'Contenu de la formation 2', 'Méthodologie de la formation 2', 'Etudiant', 12, 2, 1, 1),
 (3, 'Formation 3', 'Description de la formation 3', '2024-07-01', '2024-07-10', '2024-06-25', 'Ceci est le descriptif de la formation 3', 'Objectif de la formation 3', 'Contenu de la formation 3', 'Méthodologie de la formation 3', 'Public cible de la formation 3', 20, 3, 1, 1),
 (4, 'Formation 4', 'Description de la formation 4', '2024-08-01', '2024-08-10', '2024-07-25', 'Ceci est le descriptif de la formation 4', 'Objectif de la formation 4', 'Contenu de la formation 4', 'Méthodologie de la formation 4', 'Public cible de la formation 4', 11, 4, 1, 1),
 (5, 'Formation 5', 'Description de la formation 5', '2024-09-01', '2024-09-10', '2024-08-25', 'Ceci est le descriptif de la formation 5', 'Objectif de la formation 5', 'Contenu de la formation 5', 'Méthodologie de la formation 5', 'Public cible de la formation 5', 5, 5, 1, 1),
-(6, 'Journée 1', 'Description de la journée 1', '2024-05-15', '2024-05-15', '2024-05-10', 'Ceci est le descriptif de la journée 1', 'Objectif de la journée 1', 'Contenu de la journée 1', 'Méthodologie de la journée 1', 'Public cible de la journée 1', 50, 5, 1, 2),
+(6, 'Q08', 'Initiation à l\'evaluation des apt pro', '2024-05-15', '2024-05-15', '2024-05-10', 'Il est parfois difficile d\'evaluer les aptitude professionelles de maniere objective .\r\nla methode ESAP change la donne.', 'Objectif de la journée 1', 'Contenu de la journée 1', 'Méthodologie de la journée 1', 'Travailleur', 50, 5, 1, 2),
 (7, 'Journée 2', 'Description de la journée 2', '2024-06-15', '2024-06-15', '2024-06-10', 'Ceci est le descriptif de la journée 2', 'Objectif de la journée 2', 'Contenu de la journée 2', 'Méthodologie de la journée 2', 'Public cible de la journée 2', 60, 4, 1, 2),
 (8, 'Journée 3', 'Description de la journée 3', '2024-07-15', '2024-07-15', '2024-07-10', 'Ceci est le descriptif de la journée 3', 'Objectif de la journée 3', 'Contenu de la journée 3', 'Méthodologie de la journée 3', 'Public cible de la journée 3', 55, 3, 1, 2),
 (9, 'Journée 4', 'Description de la journée 4', '2024-08-15', '2024-08-15', '2024-08-10', 'Ceci est le descriptif de la journée 4', 'Objectif de la journée 4', 'Contenu de la journée 4', 'Méthodologie de la journée 4', 'Public cible de la journée 4', 65, 2, 1, 2),
@@ -343,7 +342,6 @@ INSERT INTO `utilisateur` (`id_utilisateur`, `civilite`, `nom`, `prenom`, `email
 (2, 'Mr', 'Stoffel', 'Jean-Francois', 'stoffeljf@helha.be', 'AdminHelha1234', '048xxxxxxx', NULL, 'Etudiant', NULL, NULL, 1, NULL, 1),
 (3, 'Mr', 'The_D', 'Darryl', 'la226963@student.helha.be', 'mdp123', '123456789', NULL, 'Etudiant', NULL, NULL, 1, NULL, 4),
 (4, 'Mr', 'Celestinio', 'Geni', 'la22xxxx@student.helha.be', 'mdp123', '987654321', NULL, 'Etudiant', NULL, NULL, 1, NULL, 5),
-(5, 'M.', 'Durand', 'Pierre', 'pierre.durand@example.com', 'securepwd789', '0487654321', 'LU456789123', 'Chirurgien orthopédiste', '0456789012', 'pierre.durand@clinique.lu', 4, 1, 3),
 (6, 'Mlle', 'Lefevre', 'Sophie', 'sophie.lefevre@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 2, 2, 4),
 (7, 'Mme', 'Moreau', 'Julie', 'julie.moreau@example.com', 'password789', '0687654321', 'IT987654321', 'Sage-femme', '0487654321', 'j.moreau@clinique.it', 2, 1, 4),
 (8, 'M.', 'Garcia', 'Antoine', 'antoine.garcia@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2),
@@ -366,16 +364,11 @@ INSERT INTO `utilisateur` (`id_utilisateur`, `civilite`, `nom`, `prenom`, `email
 (25, 'M.', 'Durand', 'Pierre', 'pierre.durand@example.com', 'securepwd789', '0487654321', 'LU456789123', 'Chirurgien orthopédiste', '0456789012', 'pierre.durand@clinique.lu', 4, 1, 3),
 (26, 'Mlle', 'Lefevre', 'Sophie', 'sophie.lefevre@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
 (27, 'Mr', 'Dubois', 'François', 'francois.dubois@example.com', 'mdp456789', '0789012345', 'ES321987654', 'Cardiologue', '0490123456', 'francois.dubois@cardio.es', 4, 2, 3),
-(28, 'Mme', 'Moreau', 'Julie', 'julie.moreau@example.com', 'password789', '0687654321', 'IT987654321', 'Sage-femme', '0487654321', 'j.moreau@clinique.it', 3, 1, 4),
 (29, 'M.', 'Garcia', 'Antoine', 'antoine.garcia@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2),
 (30, 'Mr', 'Roux', 'Luc', 'luc.roux@example.com', 'mdp789012', '0612345678', 'PT456789123', 'Dentiste', '0478901234', 'l.roux@dental.pt', 4, 2, 4),
 (31, 'Mme', 'Leroy', 'Claire', 'claire.leroy@example.com', 'password123', '0734567890', 'CH987654321', 'Pharmacienne', '0490123456', 'c.leroy@pharma.ch', 4, 2, 4),
 (32, 'M.', 'Sanchez', 'Carlos', 'carlos.sanchez@example.com', 'pwd987654', '0790123456', 'AT321987654', 'Médecin urgentiste', '0487654321', 'c.sanchez@hopital.at', 4, 1, 2),
-(33, 'M.', 'Dupont', 'Jean', 'jean.dupont@example.com', 'motdepasse123', '0612345678', 'BE123456789', 'Médecin généraliste', '0478901234', 'jean.dupont@clinique.com', 4, 1, 2),
-(34, 'Mme', 'Martin', 'Marie', 'marie.martin@example.com', 'password456', '0712345678', 'FR987654321', 'Infirmière', '0498765432', 'marie.martin@hopital.fr', 3, 2, 2),
-(35, 'M.', 'Durand', 'Pierre', 'pierre.durand@example.com', 'securepwd789', '0487654321', 'LU456789123', 'Chirurgien orthopédiste', '0456789012', 'pierre.durand@clinique.lu', 4, 1, 3),
-(36, 'Mlle', 'Lefevre', 'Sophie', 'sophie.lefevre@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
-(37, 'Mr', 'Dubois', 'François', 'francois.dubois@example.com', 'mdp456789', '0789012345', 'ES321987654', 'Cardiologue', '0490123456', 'francois.dubois@cardio.es', 4, 2, 3);
+(33, 'M.', 'Dupont', 'Jean', 'jean.dupont@example.com', 'motdepasse123', '0612345678', 'BE123456789', 'Médecin généraliste', '0478901234', 'jean.dupont@clinique.com', 4, 1, 2);
 
 --
 -- Index pour les tables déchargées
