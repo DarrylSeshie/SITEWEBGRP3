@@ -1,24 +1,31 @@
 <?php
+require_once 'models/Adresse.class.php';
+require_once 'models/Institution.class.php';
+require_once 'models/Role.class.php';
+
 class User
 {
-    public $id_utilisateur;
-    public $civilite;
-    public $nom;
-    public $prenom;
-    public $email;
-    public $mot_de_passe;
-    public $gsm;
-    public $TVA;
-    public $profession;
-    public $gsm_pro;
-    public $email_pro;
-    public $id_role;
-    public $id_institution;
-    public $id_adresse;
+    public int $id_utilisateur;
+    public string $civilite;
+    public string $nom;
+    public string $prenom;
+    public string $email;
+    public string $mot_de_passe;
+    public string $gsm;
+    public string $TVA;
+    public string $profession;
+    public string $gsm_pro;
+    public string $email_pro;
+    public int $id_role;
+    public int $id_institution;
+    public int $id_adresse;
+    public ?Adresse $adresse;
+    public ?Institution $institution; // Pour stocker les détails de l'institution associée à l'utilisateur
+    public ?Role $role;
 
-    public function __construct($array = null)
+    public function __construct(?array $array = null)
     {
-        if ($array != null) {
+        if ($array !== null) {
             $this->setId($array["id_utilisateur"]);
             $this->setCivilite($array["civilite"]);
             $this->setNom($array["nom"]);
@@ -33,148 +40,191 @@ class User
             $this->setIdRole($array["id_role"]);
             $this->setIdInstitution($array["id_institution"]);
             $this->setIdAdresse($array["id_adresse"]);
+
+            if (isset($array['adresse'])) {
+                $this->setAddress(new Adresse($array['adresse']));
+            }
+    
+            // Vérifier et initialiser l'institution si elle est fournie
+            if (isset($array['institution'])) {
+                $this->setInstitution(new Institution($array['institution']));
+            }
+    
+            // Vérifier et initialiser le rôle s'il est fourni
+            if (isset($array['role'])) {
+                $this->setRole(new Role($array['role']));
+            }
         }
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id_utilisateur;
     }
 
-    public function setId($id)
+    public function setId(int $id): void
     {
-        $this->id_utilisateur = intval($id);
+        $this->id_utilisateur = $id;
     }
 
-    public function getCivilite()
+    public function getCivilite(): string
     {
         return $this->civilite;
     }
 
-    public function setCivilite($civilite)
+    public function setCivilite(string $civilite): void
     {
         $this->civilite = $civilite;
     }
 
-    public function getNom()
+    public function getNom(): string
     {
         return $this->nom;
     }
 
-    public function setNom($nom)
+    public function setNom(string $nom): void
     {
         $this->nom = $nom;
     }
 
-    public function getPrenom()
+    public function getPrenom(): string
     {
         return $this->prenom;
     }
 
-    public function setPrenom($prenom)
+    public function setPrenom(string $prenom): void
     {
         $this->prenom = $prenom;
     }
 
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    public function setEmail($email)
+    public function setEmail(string $email): void
     {
         $this->email = $email;
     }
 
-    public function getMotDePasse()
+    public function getMotDePasse(): string
     {
         return $this->mot_de_passe;
     }
 
-    public function setMotDePasse($mot_de_passe)
+    public function setMotDePasse(string $mot_de_passe): void
     {
         $this->mot_de_passe = $mot_de_passe;
     }
 
-    public function getGsm()
+    public function getGsm(): string
     {
         return $this->gsm;
     }
 
-    public function setGsm($gsm)
+    public function setGsm(string $gsm): void
     {
         $this->gsm = $gsm;
     }
 
-    public function getTVA()
+    public function getTVA(): string
     {
         return $this->TVA;
     }
 
-    public function setTVA($TVA)
+    public function setTVA(string $TVA): void
     {
         $this->TVA = $TVA;
     }
 
-    public function getProfession()
+    public function getProfession(): string
     {
         return $this->profession;
     }
 
-    public function setProfession($profession)
+    public function setProfession(string $profession): void
     {
         $this->profession = $profession;
     }
 
-    public function getGsmPro()
+    public function getGsmPro(): string
     {
         return $this->gsm_pro;
     }
 
-    public function setGsmPro($gsm_pro)
+    public function setGsmPro(string $gsm_pro): void
     {
         $this->gsm_pro = $gsm_pro;
     }
 
-    public function getEmailPro()
+    public function getEmailPro(): string
     {
         return $this->email_pro;
     }
 
-    public function setEmailPro($email_pro)
+    public function setEmailPro(string $email_pro): void
     {
         $this->email_pro = $email_pro;
     }
 
-    public function getIdRole()
+    public function getIdRole(): int
     {
         return $this->id_role;
     }
 
-    public function setIdRole($id_role)
+    public function setIdRole(int $id_role): void
     {
         $this->id_role = $id_role;
     }
 
-    public function getIdInstitution()
+    public function getIdInstitution(): int
     {
         return $this->id_institution;
     }
 
-    public function setIdInstitution($id_institution)
+    public function setIdInstitution(int $id_institution): void
     {
         $this->id_institution = $id_institution;
     }
 
-    public function getIdAdresse()
+    public function getIdAdresse(): int
     {
         return $this->id_adresse;
     }
 
-    public function setIdAdresse($id_adresse)
+    public function setIdAdresse(int $id_adresse): void
     {
         $this->id_adresse = $id_adresse;
     }
+
+    public function getAddress(): ?Adresse
+    {
+        return $this->adresse;
+    }
+
+    public function setAddress(?Adresse $adresse): void
+    {
+        $this->adresse = $adresse;
+    }
+
+    public function getInstitution(): ?Institution
+    {
+        return $this->institution;
+    }
+
+    public function setInstitution(?Institution $institution): void
+    {
+        $this->institution = $institution;
+    }
+
+    public function getRole(): ?Role
+    {
+        return $this->role;
+    }
+
+    public function setRole(?Role $role): void
+    {
+        $this->role = $role;
+    }
 }
 ?>
-

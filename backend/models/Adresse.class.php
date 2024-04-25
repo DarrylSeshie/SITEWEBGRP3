@@ -7,14 +7,14 @@ class Adresse
     public $localite;
     public $pays;
 
-    public function __construct($array = null)
+    public function __construct(array $data = [])
     {
-        if ($array != null) {
-            $this->setIdAdresse($array["id_adresse"]);
-            $this->setRueNumero($array["rue_numero"]);
-            $this->setCodePostal($array["code_postal"]);
-            $this->setLocalite($array["localite"]);
-            $this->setPays($array["pays"]);
+        if (!empty($data)) {
+            $this->setIdAdresse($data['id_adresse'] ?? null);
+            $this->setRueNumero($data['rue_numero'] ?? null);
+            $this->setCodePostal($data['code_postal'] ?? null);
+            $this->setLocalite($data['localite'] ?? null);
+            $this->setPays($data['pays'] ?? null);
         }
     }
 

@@ -12,19 +12,19 @@ export class UserService {
 
   constructor(private http: HttpClient) { } 
 
-  /*getUsers(): Observable<User[]> {
-    return this.http.get<User[]>("http://localhost/PROJET_ceREF/backend/user.php");
-  }*/
+  
 
   getUsers(page: number, pageSize: number): Observable<User[]> {
     const url = `${this.apiUrl}?page=${page}&pageSize=${pageSize}`;
     return this.http.get<User[]>(url);
   }
 
-   
+  
   getUserById(userId: number): Observable<User> {
     return this.http.get<User>( 'http://localhost/PROJET_ceREF/backend/user.php' + `?id=${userId}` );
   }
+
+  
   
   addUser(newUser: User): Observable<User> {
     return this.http.post<User>(this.apiUrl, newUser);
@@ -46,6 +46,21 @@ export class UserService {
    
   }
 
+
+    // Méthode pour récupérer une adresse par son ID
+    getAdresseById(adresseId: number): Observable<User> {
+      return this.http.get<User>( 'http://localhost/PROJET_ceREF/backend/user.php' + `?id_adresse=${adresseId}` );
+    }
+  
+    // Méthode pour récupérer un rôle par son ID
+    getRoleById(roleId: number): Observable<User> {
+      return this.http.get<User>( 'http://localhost/PROJET_ceREF/backend/role.php' + `?id=${roleId}` );
+    }
+  
+    // Méthode pour récupérer une institution par son ID
+    getInstitutionById(institutionId: number): Observable<any> {
+      return this.http.get<User>( 'http://localhost/PROJET_ceREF/backend/user.php' + `?id_institution=${institutionId}` );
+    }
 
 
   

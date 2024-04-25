@@ -1,8 +1,11 @@
 <?php
-
 require_once 'models/User.class.php';
+require_once 'models/Adresse.class.php';
+require_once 'models/Institution.class.php';
+require_once 'models/Role.class.php';
 require_once 'managers/DBManager.php';
-require_once 'managers/UserManager.php'; // Assurez-vous que le nom du fichier correspond au nom de classe UserManager
+require_once 'managers/UserManager.php';
+// Assurez-vous que le nom du fichier correspond au nom de classe UserManager
 
 $dbManager = new DBManager();
 $connexion = $dbManager->connect();
@@ -39,7 +42,40 @@ if ($http_method === "GET") {
             http_response_code(500);
             echo json_encode(array("error" => $e->getMessage()));
         }
-    } else {
+    } // Route pour obtenir une adresse par ID
+    elseif ($http_method === "GET" && isset($_GET['id_adresse'])) {
+        $id = $_GET['id_adresse'];
+        try {
+            $user = $userManager->getAdresseById($id);
+            if ($user) {
+                http_response_code(200);
+                echo json_encode($user);
+            } else {
+                http_response_code(404);
+                echo json_encode(array("error" => "Adresse non trouvée"));
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(array("error" => $e->getMessage()));
+        }
+    }
+    elseif ($http_method === "GET" && isset($_GET['id_institution'])) {
+        $institution_id = $_GET['id_institution'];
+        try {
+            $institution = $userManager->getInstitutionById($institution_id);
+            if ($institution) {
+                http_response_code(200);
+                echo json_encode($institution);
+            } else {
+                http_response_code(404);
+                echo json_encode(array("error" => "Institution non trouvée"));
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(array("error" => $e->getMessage()));
+        }
+    }
+    else {
         // Requête GET pour récupérer tous les utilisateurs avec pagination
         $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
         $pageSize = isset($_GET['pageSize']) ? intval($_GET['pageSize']) : 10;
@@ -48,18 +84,25 @@ if ($http_method === "GET") {
         echo json_encode($users);
     }
 } elseif ($http_method === "POST") {
-    // Requête POST pour ajouter un nouvel utilisateur
-    $jsonStr = file_get_contents('php://input');
-    $userArray = json_decode($jsonStr, true);
-    $user = new User($userArray);
-
-    try {
-        $userManager->addUser($user); // Utilisez la méthode addUser pour insérer l'utilisateur
-        echo json_encode($user); // Répondre avec les données de l'utilisateur ajouté
-    } catch (PDOException $e) {
-        http_response_code(500);
-        echo json_encode(array("error" => $e->getMessage()));
-    }
+   
+        // Requête POST pour ajouter un nouvel utilisateur
+        $jsonStr = file_get_contents('php://input');
+        $userArray = json_decode($jsonStr, true);
+    
+        try {
+            $user = new User($userArray);
+            $institution = new Institution($userArray['institution']);
+            
+            // Utilisez UserManager pour ajouter l'utilisateur avec l'institution associée
+            $userManager->addUser($user); 
+            // Ajoutez également la logique pour associer l'utilisateur à l'institution dans votre base de données
+            
+            echo json_encode($user); // Répondre avec les données de l'utilisateur ajouté
+        } catch (Exception $e) {
+            http_response_code(500);
+            echo json_encode(array("error" => $e->getMessage()));
+        }
+    
 } elseif ($http_method === "PUT" || $http_method === "PATCH") {
     // Requête PUT ou PATCH pour mettre à jour un utilisateur existant
     $jsonStr = file_get_contents('php://input');

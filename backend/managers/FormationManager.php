@@ -89,14 +89,14 @@ class FormationManager
             $produits[] = $prod;
         }
 
-        return $produits;
+       
     } catch (PDOException $e) {
-        // Gérer l'erreur de requête SQL
-        throw $e;
+         
+         die($e->getMessage());
+    } finally {
+        $prep = null;
     }
-
-
-
+    return $produits;
 
     }
 

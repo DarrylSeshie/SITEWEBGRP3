@@ -1,4 +1,5 @@
 <?php
+require_once 'models/Adresse.class.php';
 class Institution
 {
     public $id_institution;
@@ -7,17 +8,16 @@ class Institution
     public $id_adresse;
     public $adresse; // Propriété pour stocker l'objet Adresse associé
 
-    public function __construct($array = null)
+    public function __construct(array $data = [])
     {
-        if ($array != null) {
-            $this->setIdInstitution($array["id_institution"]);
-            $this->setNom($array["nom"]);
-            $this->setLogo($array["logo"]);
-            $this->setIdAdresse($array["id_adresse"]);
-            
-            // Si une adresse est fournie, instancier un objet Adresse
-            if (isset($array['adresse'])) {
-                $this->setAdresse(new Adresse($array['adresse']));
+        if (!empty($data)) {
+            $this->setIdInstitution($data['id_institution'] ?? null);
+            $this->setNom($data['nom'] ?? null);
+            $this->setLogo($data['logo'] ?? null);
+            $this->setIdAdresse($data['id_adresse'] ?? null);
+
+            if (isset($data['adresse']) && is_array($data['adresse'])) {
+                $this->setAdresse(new Adresse($data['adresse']));
             }
         }
     }
@@ -72,6 +72,7 @@ class Institution
         $this->adresse = $adresse;
     }
 }
+
 
 
 ?>

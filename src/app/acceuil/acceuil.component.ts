@@ -47,14 +47,18 @@ export class AcceuilComponent implements OnInit, OnDestroy{
   getCountdown(targetDateStr: string): string {
     const targetDate = new Date(targetDateStr);
     const now = new Date();
+  
+    if (now >= targetDate) {
+      return "La période d'inscription est terminée.";
+    }
+  
     const diff = Math.abs(targetDate.getTime() - now.getTime()) / 1000;
-
     const days = Math.floor(diff / (24 * 60 * 60));
     const hours = Math.floor((diff % (24 * 60 * 60)) / (60 * 60));
     const minutes = Math.floor((diff % (60 * 60)) / 60);
     const seconds = Math.floor(diff % 60);
-
-    return `${days} Jours, ${hours} heurs, ${minutes} minutes, ${seconds} seconds`;
+  
+    return `Fin d'inscription dans : ${days} jours, ${hours} heures, ${minutes} minutes, ${seconds} secondes `;
   }
 
 }

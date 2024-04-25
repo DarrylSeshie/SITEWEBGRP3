@@ -128,7 +128,7 @@ public function getUsersByName(string $nom): ?User {
   /**
    * @param User $user
    */
-  public function selectUserById($userId)
+ public function selectUserById2($userId)
 {
     $sql = "SELECT * FROM Utilisateur WHERE id_utilisateur = :userId";
     try {
@@ -152,49 +152,165 @@ public function getUsersByName(string $nom): ?User {
         $prep = null; // Libérer la ressource PDOStatement
     }
 }
+// Apres 6 h aessayr de faire la jointure sans reussite moi Darryl j ai decider de faire 3 methode disctinc a qui je passerai id et le tour est jouer 
+// pourquoi j ai pas pense plustot zuuuut j aurai ganer 6 h ma tete chauffe  php...hummm
 
-public function selectUsers()
+
+public function selectUserById($userId)
 {
-    $sql = "SELECT * FROM Utilisateur";
+    $sql = "
+        SELECT
+            u.id_utilisateur,
+            u.civilite,
+            u.nom,
+            u.prenom,
+            u.email,
+            u.mot_de_passe,
+            u.gsm,
+            u.TVA,
+            u.profession,
+            u.gsm_pro,
+            u.email_pro,
+            u.id_role,
+            u.id_institution,
+            u.id_adresse,
+            a.rue_numero AS adresse_rue_numero,
+            a.code_postal AS adresse_code_postal,
+            a.localite AS adresse_localite,
+            a.pays AS adresse_pays,
+            i.nom AS institution_nom,
+            i.logo AS institution_logo,
+            i.id_adresse AS institution_id_adresse,
+            r.nom AS role_nom
+        FROM
+            utilisateur u
+        LEFT JOIN
+            adresse a ON u.id_adresse = a.id_adresse
+        LEFT JOIN
+            institution i ON u.id_institution = i.id_institution
+        LEFT JOIN
+            role r ON u.id_role = r.id_role
+        WHERE
+            u.id_utilisateur = :userId
+    ";
+
     try {
         $prep = $this->db->prepare($sql);
+        $prep->bindParam(':userId', $userId, PDO::PARAM_INT);
         $prep->execute();
 
-        // Récupérer tous les résultats de la requête sous forme de tableau associatif
-        $users = $prep->fetchAll(PDO::FETCH_ASSOC);
+        $userData = $prep->fetch(PDO::FETCH_ASSOC);
 
-        // Créer un tableau pour stocker les objets User
-        $userObjects = [];
-
-        // Parcourir les résultats et créer des objets User pour chaque utilisateur
-        foreach ($users as $user) {
-            $userObject = new User();
-            $userObject->setId($user['id_utilisateur']);
-            $userObject->setCivilite($user['civilite']);
-            $userObject->setNom($user['nom']);
-            $userObject->setPrenom($user['prenom']);
-            $userObject->setEmail($user['email']);
-            $userObject->setMotDePasse($user['mot_de_passe']);
-            $userObject->setGsm($user['gsm']);
-            $userObject->setTva($user['TVA']);
-            $userObject->setProfession($user['profession']);
-            $userObject->setGsmPro($user['gsm_pro']);
-            $userObject->setEmailPro($user['email_pro']);
-            $userObject->setIdRole($user['id_role']);
-            $userObject->setIdInstitution($user['id_institution']);
-            $userObject->setIdAdresse($user['id_adresse']);
-
-            // Ajouter l'objet User au tableau
-            $userObjects[] = $userObject;
+        if (!$userData) {
+            return null; // Aucun utilisateur trouvé avec cet ID
         }
 
-        return $userObjects;
+        // Création d'un nouvel objet User en utilisant les données appropriées avec gestion des clés
+        $user = new User([
+            'id_utilisateur' => $userData['id_utilisateur'],
+            'civilite' => $userData['civilite'],
+            'nom' => $userData['nom'],
+            'prenom' => $userData['prenom'],
+            'email' => $userData['email'],
+            'mot_de_passe' => $userData['mot_de_passe'],
+            'gsm' => $userData['gsm'],
+            'TVA' => $userData['TVA'],
+            'profession' => $userData['profession'],
+            'gsm_pro' => $userData['gsm_pro'],
+            'email_pro' => $userData['email_pro'],
+            'id_role' => $userData['id_role'],
+            'id_institution' => $userData['id_institution'],
+            'id_adresse' => $userData['id_adresse'],
+            'address' => [
+                'id_adresse' => $userData['id_adresse'],
+                'rue_numero' => $userData['adresse_rue_numero'] ?? null,
+                'code_postal' => $userData['adresse_code_postal'] ?? null,
+                'localite' => $userData['adresse_localite'] ?? null,
+                'pays' => $userData['adresse_pays'] ?? null
+            ],
+            'institution' => [
+                'id_institution' => $userData['id_institution'],
+                'nom' => $userData['institution_nom'] ?? null,
+                'logo' => $userData['institution_logo'] ?? null,
+                'id_adresse' => $userData['institution_id_adresse'] ?? null
+            ],
+            'role' => [
+                'id_role' => $userData['id_role'],
+                'nom' => $userData['role_nom'] ?? null
+            ]
+        ]);
+
+        return $user;
     } catch (PDOException $e) {
         throw $e; // Propager l'exception pour la gestion des erreurs
     } finally {
         $prep = null; // Libérer la ressource PDOStatement
     }
 }
+
+public function getAdresseById($id_adresse)
+{
+    $sql = "SELECT * FROM adresse WHERE id_adresse = :id_adresse";
+
+    try {
+        $prep = $this->db->prepare($sql);
+        $prep->bindParam(':id_adresse', $id_adresse, PDO::PARAM_INT);
+        $prep->execute();
+
+        $adresseData = $prep->fetch(PDO::FETCH_ASSOC);
+
+        if (!$adresseData) {
+            return null; // Aucune adresse trouvée avec cet ID
+        }
+
+        $adresse = new Adresse(
+            $adresseData['id_adresse'],
+            $adresseData['rue_numero'],
+            $adresseData['code_postal'],
+            $adresseData['localite'],
+            $adresseData['pays']
+        );
+
+        return $adresse;
+    } catch (PDOException $e) {
+        throw $e; // Gestion des erreurs PDO
+    }
+}
+
+public function getInstitutionById($id_institution)
+{
+    $sql = "SELECT * FROM institution WHERE id_institution = :id_institution";
+
+    try {
+        $prep = $this->db->prepare($sql);
+        $prep->bindParam(':id_institution', $id_institution, PDO::PARAM_INT);
+        $prep->execute();
+
+        $institutionData = $prep->fetch(PDO::FETCH_ASSOC);
+
+        if (!$institutionData) {
+            return null; // Aucune institution trouvée avec cet ID
+        }
+
+        // Vous pouvez instancier l'objet Institution en utilisant les données récupérées
+        $institution = new Institution([
+            'id_institution' => $institutionData['id_institution'],
+            'nom' => $institutionData['nom'],
+            'logo' => $institutionData['logo'],
+            'id_adresse' => $institutionData['id_adresse']
+        ]);
+
+        return $institution;
+    } catch (PDOException $e) {
+        throw $e; // Gestion des erreurs PDO
+    }
+}
+
+
+
+
+
+
 
 
   public function deleteUser($id)
