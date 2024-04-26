@@ -1,8 +1,8 @@
 <?php
 
 class TypeProduit {
-    private $id_type_produit;
-    private $nom;
+    public $id_type_produit;
+    public $nom;
 
     public function __construct($array = null)
     {
@@ -18,7 +18,7 @@ class TypeProduit {
     }
 
     public function setIdTypeProduit($id_type_produit) {
-        $this->id_type_produit = $id_type_produit;
+        $this->id_type_produit = intval($id_type_produit) ;
     }
 
     public function getNom() {

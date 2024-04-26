@@ -29,8 +29,8 @@
         <td>{{ produit.titre}}</td>
         <td>{{ produit.date_debut }}</td>
         <td>{{ produit.public_cible}}</td>
-        <td class="affichage">{{ produit.id_lieu }}</td>
-        <td> <img [src]="produit.id_image" class="custom-image" ></td>
+        <td class="affichage">{{ produit.lieu?.nom }}</td>
+        <td> <img [src]="produit.image?.url_image" class="custom-image" ></td>
         <td>
          <button (click)="selectFormation(produit.id_produit)"><i class="fa-solid fa-eye"></i></button>
          <button (click)="updateFormation(produit)"><i class="fa-solid fa-pen-to-square"></i></button>
@@ -85,8 +85,8 @@
         <td>{{ produit.titre}}</td>
         <td>{{ produit.date_debut }}</td>
         <td>{{ produit.public_cible}}</td>
-        <td class="affichage">{{ produit.id_lieu }}</td>
-        <td> <img [src]="produit.id_image" class="custom-image" ></td>
+        <td class="affichage">{{ produit.lieu?.nom }}</td>
+        <td> <img [src]="produit.image?.url_image" class="custom-image" ></td>
         <td>
           <button (click)="selectFormation(produit.id_produit)"><i class="fa-solid fa-eye"></i></button>
           <button (click)="updateFormation(produit)"><i class="fa-solid fa-pen-to-square"></i></button>
@@ -116,7 +116,7 @@
      <div class="card mb-3" style="max-width: 1040px;">
        <div class="row g-0">
          <div class="col-md-4">
-          <img [src]="selectedFormation.id_image" class="img-fluid rounded-start" alt="Logo">
+          <img [src]="selectedFormation.image?.url_image" class="img-fluid rounded-start" alt="Logo">
           </div>
       <div class="col-md-8">
         <div class="card-body">
@@ -128,8 +128,8 @@
           <p>Methodologie: {{ selectedFormation.methodologie }}</p>
           <p>Date debut: {{ selectedFormation.date_debut }}</p>
           <p>Date fin: {{ selectedFormation.date_fin }}</p>
-          <p>Adresse: {{ selectedFormation.id_lieu }}</p>
-          <p>Institution: {{ selectedFormation.id_type_produit }}</p>
+          <p>Lieu: {{ selectedFormation.lieu?.batiment }}  {{ selectedFormation.lieu?.locaux }}</p>
+          <p>Type: {{ selectedFormation.typeProduit?.nom }}</p>
           <p>Public: {{ selectedFormation.public_cible }}</p>
           <p>Prix: {{ selectedFormation.prix }}</p>
           

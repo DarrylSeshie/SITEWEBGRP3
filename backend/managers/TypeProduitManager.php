@@ -16,7 +16,7 @@ class TypeProduitManager
       $Tproduits = []; // Initialise un tableau vide pour stocker les objets Produit
   
       
-      $sql = "SELECT * FROM type_produit";
+      $sql = "SELECT * FROM typeproduit";
       try {
           $prep = $this->db->prepare($sql);
           $prep->execute();
@@ -51,7 +51,7 @@ class TypeProduitManager
 
 public function selectTypeProduitById($prodId)
 {
-    $sql = "SELECT * FROM type_produit WHERE id_type_produit = :TprodId";
+    $sql = "SELECT * FROM typeproduit WHERE id_type_produit = :TprodId";
     try {
         $prep = $this->db->prepare($sql);
         $prep->bindParam(':TprodId', $prodId, PDO::PARAM_INT);
@@ -82,7 +82,7 @@ public function selectTypeProduitById($prodId)
 
 public function deleteTypeProduit($id)
 {
-    $sql = "DELETE FROM type_produit WHERE id_type_produit = :id";
+    $sql = "DELETE FROM typeproduit WHERE id_type_produit = :id";
     try {
         $prep = $this->db->prepare($sql);
         $prep->bindParam(':id', $id, PDO::PARAM_INT);
@@ -118,7 +118,7 @@ public function updateTypeProduit($prod)
 
 public function addTypeProduit($typeProduit)
 {
-    $sql = "INSERT INTO type_produit (nom) VALUES (:nom)";
+    $sql = "INSERT INTO typeproduit (nom) VALUES (:nom)";
 
     try {
         $prep = $this->db->prepare($sql);

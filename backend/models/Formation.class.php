@@ -1,5 +1,12 @@
 <?php
 
+require_once 'models/Lieu.class.php';
+require_once 'models/Image.class.php';
+require_once 'models/TypeProduit.class.php';
+
+require_once 'models/Adresse.class.php';
+
+
 class Formation {
     public $id_produit;
     public $titre;
@@ -17,7 +24,13 @@ class Formation {
     public $id_lieu;
     public $id_type_produit;
 
-    public function __construct($array = null)
+    public ?Lieu $lieu;
+    public ?Image $image;
+    public ?TypeProduit $typeproduit;
+   // public ?Adresse $adresse;
+   
+
+    public function __construct(?array $array = null)
     {
         if ($array != null) {
             $this->setIdProduit($array["id_produit"]);
@@ -35,6 +48,25 @@ class Formation {
             $this->setIdImage($array["id_image"]);
             $this->setIdLieu($array["id_lieu"]);
             $this->setIdTypeProduit($array["id_type_produit"]);
+
+
+            if (isset($array['lieu'])) {
+                $this->setLieu(new Lieu($array['lieu']));
+            }
+    
+            // Vérifier et initialiser l'institution si elle est fournie
+            if (isset($array['image'])) {
+                $this->setImage(new Image($array['image']));
+            }
+    
+            // Vérifier et initialiser le rôle s'il est fourni
+            if (isset($array['typeproduit'])) {
+                $this->setTypeProduit(new TypeProduit($array['typeproduit']));
+            }
+
+           /* if (isset($array['adresse'])) {
+                $this->setAddress(new Adresse($array['adresse']));
+            }*/
         }
     }
 
@@ -160,6 +192,56 @@ class Formation {
     public function setIdTypeProduit($id_type_produit) {
         $this->id_type_produit = $id_type_produit;
     }
+
+
+
+   /* public function getAddress(): ?Adresse
+    {
+        return $this->adresse;
+    }
+
+    public function setAddress(?Adresse $adresse): void
+    {
+        $this->adresse = $adresse;
+    }*/
+
+    public function getImage(): ?Image
+    {
+        return $this->image;
+    }
+
+    public function setImage(?Image $image): void
+    {
+        $this->image = $image;
+    }
+
+    public function getLieu(): ?Lieu
+    {
+        return $this->lieu;
+    }
+
+    public function setLieu(?Lieu $lieu): void
+    {
+        $this->lieu = $lieu;
+    }
+
+
+    public function getTypeProduit(): ?TypeProduit
+    {
+        return $this->typeproduit;
+    }
+
+    public function setTypeProduit(?TypeProduit $typeproduit ): void
+    {
+        $this->typeproduit = $typeproduit ;
+    }
+
+
+
+
+
+
+
 }
 
 

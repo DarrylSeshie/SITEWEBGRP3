@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 26 avr. 2024 à 18:44
+-- Généré le : ven. 26 avr. 2024 à 23:52
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -261,7 +261,7 @@ CREATE TABLE `produit` (
 
 INSERT INTO `produit` (`id_produit`, `titre`, `sous_titre`, `date_debut`, `date_fin`, `date_fin_inscription`, `descriptif`, `objectif`, `contenu`, `methodologie`, `public_cible`, `prix`, `id_image`, `id_lieu`, `id_type_produit`) VALUES
 (1, 'F02', 'Accompagner l\'etudiant infirmier en stage ', '2024-05-01', '2024-05-10', '2024-04-25', 'Adopter la posture de refecrence/coach en equipe...', 'Devenir pro', 'Contenu de la formation 1', 'Méthodologie de la formation 1', 'Etudiant', 10, 2, 1, 1),
-(2, 'R03', 'Solliciter l\'expression des émotion', '2024-05-09', '2024-05-10', '2024-05-25', 'Solliciter l\'expression des émotions chez les patients et résidents par le biais du journal créatif', 'Objectif de la formation 2', 'Contenu de la formation 2', 'Méthodologie de la formation 2', 'Etudiant', 12, 2, 1, 1),
+(2, 'R03', 'Solliciter l\'expression des émotion', '2024-05-09', '2024-05-10', '2024-05-25', 'Solliciter l\'expression des émotions chez les patients et résidents par le biais du journal créatif', 'Objectif de la formation 2', 'Contenu de la formation 2', 'Méthodologie de la formation 2', 'Etudiant', 12, 4, 1, 1),
 (3, 'Formation 3', 'Description de la formation 3', '2024-07-01', '2024-07-10', '2024-06-25', 'Ceci est le descriptif de la formation 3', 'Objectif de la formation 3', 'Contenu de la formation 3', 'Méthodologie de la formation 3', 'Public cible de la formation 3', 20, 3, 1, 1),
 (4, 'Formation 4', 'Description de la formation 4', '2024-08-01', '2024-08-10', '2024-07-25', 'Ceci est le descriptif de la formation 4', 'Objectif de la formation 4', 'Contenu de la formation 4', 'Méthodologie de la formation 4', 'Public cible de la formation 4', 11, 4, 1, 1),
 (5, 'Formation 5', 'Description de la formation 5', '2024-09-01', '2024-09-10', '2024-08-25', 'Ceci est le descriptif de la formation 5', 'Objectif de la formation 5', 'Contenu de la formation 5', 'Méthodologie de la formation 5', 'Public cible de la formation 5', 5, 5, 1, 1),
@@ -385,10 +385,8 @@ INSERT INTO `utilisateur` (`id_utilisateur`, `civilite`, `nom`, `prenom`, `email
 (44, 'M.', 'Garcia', 'Antoine', 'antoine.garcia@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2),
 (45, 'Mr', 'Roux', 'Luc', 'luc.roux@example.com', 'mdp789012', '0612345678', 'PT456789123', 'Dentiste', '0478901234', 'l.roux@dental.pt', 2, 2, 4),
 (46, 'Mme', 'Leroy', 'Claire', 'claire.leroy@example.com', 'password123', '0734567890', 'CH987654321', 'Pharmacienne', '0490123456', 'c.leroy@pharma.ch', 2, 2, 4),
-(47, 'Mlle', 'Lefevre', 'Sophie', 'sophie.lefevre@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
 (48, 'M.', 'Dupont', 'Jean', 'jean.dupont@example.com', 'motdepasse123', '0612345678', 'BE123456789', 'Médecin généraliste', '0478901234', 'jean.dupont@clinique.com', 4, 1, 2),
 (49, 'Mme', 'Martin', 'Marie', 'marie.martin@example.com', 'password456', '0712345678', 'FR987654321', 'Infirmière', '0498765432', 'marie.martin@hopital.fr', 4, 2, 2),
-(50, 'M.', 'Durand', 'Pierre', 'pierre.durand@example.com', 'securepwd789', '0487654321', 'LU456789123', 'Chirurgien orthopédiste', '0456789012', 'pierre.durand@clinique.lu', 4, 1, 3),
 (51, 'Mlle', 'Lefevre', 'Sophie', 'sophie.lefevre@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
 (52, 'Mr', 'Dubois', 'François', 'francois.dubois@example.com', 'mdp456789', '0789012345', 'ES321987654', 'Cardiologue', '0490123456', 'francois.dubois@cardio.es', 4, 2, 3),
 (53, 'M.', 'Garcia', 'Antoine', 'antoine.garcia@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2),
@@ -404,14 +402,7 @@ INSERT INTO `utilisateur` (`id_utilisateur`, `civilite`, `nom`, `prenom`, `email
 (63, 'Mlle', 'Lefevre', 'Sophie', 'sophie.lefevre@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
 (64, 'M.', 'Dupont', 'Jean', 'jean.dupont@example.com', 'motdepasse123', '0612345678', 'BE123456789', 'Médecin généraliste', '0478901234', 'jean.dupont@clinique.com', 4, 1, 2),
 (65, 'Mme', 'Martin', 'Marie', 'marie.martin@example.com', 'password456', '0712345678', 'FR987654321', 'Infirmière', '0498765432', 'marie.martin@hopital.fr', 4, 2, 2),
-(66, 'M.', 'Durand', 'Pierre', 'pierre.durand@example.com', 'securepwd789', '0487654321', 'LU456789123', 'Chirurgien orthopédiste', '0456789012', 'pierre.durand@clinique.lu', 4, 1, 3),
-(67, 'Mlle', 'Lefevre', 'Sophie', 'sophie.lefevre@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
-(68, 'Mr', 'Dubois', 'François', 'francois.dubois@example.com', 'mdp456789', '0789012345', 'ES321987654', 'Cardiologue', '0490123456', 'francois.dubois@cardio.es', 4, 2, 3),
-(69, 'M.', 'Garcia', 'Antoine', 'antoine.garcia@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2),
-(70, 'Mr', 'Roux', 'Luc', 'luc.roux@example.com', 'mdp789012', '0612345678', 'PT456789123', 'Dentiste', '0478901234', 'l.roux@dental.pt', 4, 2, 4),
-(71, 'Mme', 'Leroy', 'Claire', 'claire.leroy@example.com', 'password123', '0734567890', 'CH987654321', 'Pharmacienne', '0490123456', 'c.leroy@pharma.ch', 4, 2, 4),
-(72, 'M.', 'Sanchez', 'Carlos', 'carlos.sanchez@example.com', 'pwd987654', '0790123456', 'AT321987654', 'Médecin urgentiste', '0487654321', 'c.sanchez@hopital.at', 4, 1, 2),
-(73, 'M.', 'Dupont', 'Jean', 'jean.dupont@example.com', 'motdepasse123', '0612345678', 'BE123456789', 'Médecin généraliste', '0478901234', 'jean.dupont@clinique.com', 4, 1, 2);
+(66, 'M.', 'Durand', 'Pierre', 'pierre.durand@example.com', 'securepwd789', '0487654321', 'LU456789123', 'Chirurgien orthopédiste', '0456789012', 'pierre.durand@clinique.lu', 4, 1, 3);
 
 --
 -- Index pour les tables déchargées

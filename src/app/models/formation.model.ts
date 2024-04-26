@@ -20,8 +20,8 @@ export interface Formation {
     id_type_produit: number;
   
     // Annotations pour les relations de clés étrangères
-    image: Image; // Relation avec l'entité Image
-    lieu: Lieu; // Relation avec l'entité Lieu
-    typeProduit: TypeProduit; // Relation avec l'entité TypeProduit
+    image?: Image; // Relation avec l'entité Image
+    lieu?: Lieu; // Relation avec l'entité Lieu
+    typeProduit?: TypeProduit; // Relation avec l'entité TypeProduit
   }
   

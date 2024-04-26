@@ -1,5 +1,7 @@
 <?php
-
+require_once 'models/Image.class.php';
+require_once 'models/Lieu.class.php';
+require_once 'models/TypeProduit.class.php';
 require_once 'models/Formation.class.php';
 require_once 'managers/DBManager.php';
 require_once 'managers/FormationManager.php';

@@ -21,8 +21,8 @@
             <div class="carousel-item active"  class="carousel-item" *ngFor="let formation of Formations | async; let i = index" [class.active]="i === 0"><!-- formation 1 -->
             
               <div class="card mb-3">
-                <img src="/assets/avatar.jpg" alt="" >
-               <!-- <img [src]="formation.id_image" class="card-img-top" alt="Formation Image">-->
+                
+                <img [src]="formation.image?.url_image" class="card-img-top" alt="Formation Image">
                 <div class="card-body">
                   <h5 class="card-title" id="txtFinInscription">{{ formation.titre }}</h5>
                   <p class="card-text">{{ formation.descriptif }}</p>
