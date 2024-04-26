@@ -17,7 +17,7 @@ class Institution
             $this->setIdAdresse($data['id_adresse'] ?? null);
 
             if (isset($data['adresse'])) {
-                $this->setAddress(new Adresse($data['adresse']));
+                $this->setAdresse(new Adresse($data['adresse']));
             }
         }
     }
@@ -62,12 +62,12 @@ class Institution
         $this->id_adresse = intval($id_adresse);
     }
     
-    public function getAddress(): ?Adresse
+    public function getAdresse(): ?Adresse
     {
         return $this->adresse;
     }
 
-    public function setAddress(?Adresse $adresse): void
+    public function setAdresse(?Adresse $adresse)
     {
         $this->adresse = $adresse;
     }

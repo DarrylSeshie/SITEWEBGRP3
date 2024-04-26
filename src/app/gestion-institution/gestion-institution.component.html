@@ -25,7 +25,7 @@
       <tr *ngFor="let institution of  institutions | async">
         <td>{{ institution.nom }}</td>
         <td><img class="logoInstitution" [src]="institution.logo" alt="{{ institution.nom }} Logo"></td> 
-        <td>{{ institution.id_adresse }}</td>
+        <td>{{ institution.adresse?.rue_numero }} {{ institution.adresse?.code_postal}}, {{ institution.adresse?.pays }}</td>
         <td>
             <button (click)="selectInstitution(institution.id_institution)"><i class="fa-solid fa-eye"></i></button>
             <button (click)="updateInstitution(institution)"><i class="fa-solid fa-pen-to-square"></i></button>
@@ -75,7 +75,7 @@
       <tr *ngFor="let institution of  institutions2 | async">
         <td>{{ institution.nom }}</td>
         <td><img class="logoInstitution" [src]="institution.logo" alt="{{ institution.nom }} Logo"></td> 
-        <td>{{ institution.id_adresse }}</td>
+        <td>{{ institution.adresse?.rue_numero }} {{ institution.adresse?.code_postal}}, {{ institution.adresse?.pays }}</td>
         <td>
             <button (click)="selectInstitution(institution.id_institution)"><i class="fa-solid fa-eye"></i></button>
             <button (click)="updateInstitution(institution)"><i class="fa-solid fa-pen-to-square"></i></button>
@@ -107,7 +107,7 @@
     <img class="logoInstitution" [src]="selectedInstitution.logo" class="card-img-top" alt="{{ selectedInstitution.nom }} Logo">
     <div class="card-body">
       <h5 class="card-title">{{ selectedInstitution.nom }}</h5>
-      <p class="card-text">{{ selectedInstitution.id_adresse }}</p>
+      <p class="card-text">{{ selectedInstitution.adresse?.rue_numero }} ,{{ selectedInstitution.adresse?.pays }}</p>
       <button id="searchButton" (click)="toggleDetails(selectedInstitution)"><i class="fa-solid fa-eye-slash"></i>
         {{ userDetailVisible[selectedInstitution.id_institution] ? '' : '' }}
       </button>
