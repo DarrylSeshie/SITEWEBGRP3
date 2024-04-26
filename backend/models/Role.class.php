@@ -1,8 +1,8 @@
 <?php
 class Role
 {
-    private $id_role;
-    private $nom;
+    public $id_role;
+    public $nom;
 
     public function __construct(array $data = [])
     {

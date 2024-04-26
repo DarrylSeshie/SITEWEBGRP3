@@ -152,47 +152,89 @@ public function getUsersByName(string $nom): ?User {
         $prep = null; // Libérer la ressource PDOStatement
     }
 }
-// Apres 6 h aessayr de faire la jointure sans reussite moi Darryl j ai decider de faire 3 methode disctinc a qui je passerai id et le tour est jouer 
-// pourquoi j ai pas pense plustot zuuuut j aurai ganer 6 h ma tete chauffe  php...hummm
+// refaire cette methode car elle marche mais ya des erreur de memoi on dirait 
+/*public function selectUserById($userId) {
+    try {
+        $sql = "SELECT u.*, a.*, i.*, r.*
+                FROM Utilisateur u
+                LEFT JOIN Adresse a ON u.id_adresse = a.id_adresse
+                LEFT JOIN Institution i ON u.id_institution = i.id_institution
+                LEFT JOIN Role r ON u.id_role = r.id_role
+                WHERE u.id_utilisateur = :userId";
+
+        // Préparation de la requête
+        $prep = $this->db->prepare($sql);
+        $prep->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $prep->execute();
+
+        // Récupération des résultats
+        $result = $prep->fetch(PDO::FETCH_ASSOC);
+
+        // Si aucun résultat n'est trouvé, retourner null
+        if (!$result) {
+            return null;
+        }
+
+        // Création d'une nouvelle instance de User avec les données récupérées
+        $user = new User($result);
+
+        // Création des objets Adresse, Institution et Role et affectation aux propriétés correspondantes
+        $user->setAddress(new Adresse($result));
+        $user->setInstitution(new Institution($result));
+        $user->setRole(new Role($result));
+
+        return $user;
+    } catch (PDOException $e) {
+       
+        echo "Erreur SQL : " . $e->getMessage();
+        return null;
+    } catch (Exception $e) {
+        echo "Erreur inattendue : " . $e->getMessage();
+        return null;
+    }
+}
+*/
+
+
+
 
 
 public function selectUserById($userId)
 {
     $sql = "
-        SELECT
-            u.id_utilisateur,
-            u.civilite,
-            u.nom,
-            u.prenom,
-            u.email,
-            u.mot_de_passe,
-            u.gsm,
-            u.TVA,
-            u.profession,
-            u.gsm_pro,
-            u.email_pro,
-            u.id_role,
-            u.id_institution,
-            u.id_adresse,
-            a.rue_numero AS adresse_rue_numero,
-            a.code_postal AS adresse_code_postal,
-            a.localite AS adresse_localite,
-            a.pays AS adresse_pays,
-            i.nom AS institution_nom,
-            i.logo AS institution_logo,
-            i.id_adresse AS institution_id_adresse,
-            r.nom AS role_nom
-        FROM
-            utilisateur u
-        LEFT JOIN
-            adresse a ON u.id_adresse = a.id_adresse
-        LEFT JOIN
-            institution i ON u.id_institution = i.id_institution
-        LEFT JOIN
-            role r ON u.id_role = r.id_role
-        WHERE
-            u.id_utilisateur = :userId
-    ";
+    SELECT
+        u.id_utilisateur,
+        u.civilite,
+        u.nom,
+        u.prenom,
+        u.email,
+        u.mot_de_passe,
+        u.gsm,
+        u.TVA,
+        u.profession,
+        u.gsm_pro,
+        u.email_pro,
+        u.id_role,
+        u.id_institution,
+        u.id_adresse,
+        a.rue_numero AS adresse_rue_numero,
+        a.code_postal AS adresse_code_postal,
+        a.localite AS adresse_localite,
+        a.pays AS adresse_pays,
+        i.nom AS institution_nom,
+        i.logo AS institution_logo,
+        i.id_adresse AS institution_id_adresse,
+        r.nom AS role_nom
+    FROM
+        utilisateur u
+        LEFT JOIN Adresse a ON u.id_adresse = a.id_adresse
+    LEFT JOIN
+        institution i ON u.id_institution = i.id_institution
+    LEFT JOIN
+        role r ON u.id_role = r.id_role
+    WHERE
+        u.id_utilisateur = :userId
+";
 
     try {
         $prep = $this->db->prepare($sql);
@@ -221,7 +263,7 @@ public function selectUserById($userId)
             'id_role' => $userData['id_role'],
             'id_institution' => $userData['id_institution'],
             'id_adresse' => $userData['id_adresse'],
-            'address' => [
+            'adresse' => [
                 'id_adresse' => $userData['id_adresse'],
                 'rue_numero' => $userData['adresse_rue_numero'] ?? null,
                 'code_postal' => $userData['adresse_code_postal'] ?? null,
@@ -247,6 +289,12 @@ public function selectUserById($userId)
         $prep = null; // Libérer la ressource PDOStatement
     }
 }
+// methode ok mais trop long
+
+
+
+
+
 
 public function getAdresseById($id_adresse)
 {

@@ -28,6 +28,7 @@ import { VoirFormationsComponent } from './voir-formations/voir-formations.compo
 import { VoirProfilComponent } from './voir-profil/voir-profil.component';
 import { InscriptionFormationComponent } from './inscription-formation/inscription-formation.component';
 import { VoirProfileService } from './services/voirProfile.service';
+import { RoleService } from './services/role.service';
 
 
 
@@ -66,7 +67,8 @@ import { VoirProfileService } from './services/voirProfile.service';
     ImageService,
     VoirProfileService,
     FormationService,
-    TypeProduitService
+    TypeProduitService,
+    RoleService
     
     
   ], 

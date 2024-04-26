@@ -127,7 +127,7 @@
           <p>Prénom: {{ selectedUser.prenom }}</p>
           <p>Email: {{ selectedUser.email }}</p>
           <p>Tel: {{ selectedUser.gsm }}</p>
-          <p>Adresse: {{ selectedUser.adresse?.rue_numero }}</p>
+          <p>Adresse: {{ selectedUser.adresse?.rue_numero }} {{ selectedUser.adresse?.code_postal }}, {{ selectedUser.adresse?.pays }}</p>
           <p>Institution: {{ selectedUser.institution?.nom }}</p>
           <p>Role: {{ selectedUser.role?.nom }}</p>
           <p>TVA: {{ selectedUser.TVA }}</p>

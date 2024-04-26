@@ -2,9 +2,7 @@ import { Component, OnInit , ElementRef, ViewChild  } from '@angular/core';
 import { UserService } from '../services/user.service'; // import des services (mehode) et model
 import { User } from '../models/user.model';// un service a besoin de son model
 import { Observable } from 'rxjs';
-import { Adresse } from '../models/adresse.model';
-import { Institution } from '../models/institution.model';
-import { Role } from '../models/role.model';
+
 
 
 declare const bootstrap: any;
@@ -188,52 +186,7 @@ export class GestionUtilisateurComponent implements OnInit{
     );
   }
 
-  selectAdresseById(id_adresse: number) {
-    this.userService.getAdresseById(id_adresse)
-     
-  }
 
-  selectInstitById(id_institution: number) {
-    this.userService.getInstitutionById(id_institution);
-  }
-
-
-  selectRoleById(id_role: number) {
-    this.userService.getRoleById(id_role)
-  }
-  
-
-
-
-
-
- /* selectUser(userId: number) {
-    this.userService.getUserById(userId).subscribe(
-      user => {
-        this.selectedUser = user;
-        console.log('selectedUser:', this.selectedUser);
-  
-        // Affichage des détails d'adresse, d'institution ou de rôle
-        if (this.selectedUser.adresse) {
-          console.log('User Address:', this.selectedUser.adresse);
-        }
-  
-        if (this.selectedUser.institution) {
-          console.log('User Institution:', this.selectedUser.institution);
-        }
-  
-        if (this.selectedUser.role) {
-          console.log('User Role:', this.selectedUser.role);
-        }
-  
-        // Toggle the visibility of user details
-        this.toggleDetails(user);
-      },
-      error => {
-        console.error('Error fetching user:', error);
-      }
-    );
-  }*/
 
 
 }

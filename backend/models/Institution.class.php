@@ -2,11 +2,11 @@
 require_once 'models/Adresse.class.php';
 class Institution
 {
-    public $id_institution;
-    public $nom;
-    public $logo;
-    public $id_adresse;
-    public $adresse; // Propriété pour stocker l'objet Adresse associé
+    public  int $id_institution;
+    public string $nom;
+    public string $logo;
+    public int $id_adresse;
+    public ?Adresse $adresse; // Propriété pour stocker l'objet Adresse associé
 
     public function __construct(array $data = [])
     {
@@ -16,8 +16,8 @@ class Institution
             $this->setLogo($data['logo'] ?? null);
             $this->setIdAdresse($data['id_adresse'] ?? null);
 
-            if (isset($data['adresse']) && is_array($data['adresse'])) {
-                $this->setAdresse(new Adresse($data['adresse']));
+            if (isset($data['adresse'])) {
+                $this->setAddress(new Adresse($data['adresse']));
             }
         }
     }
@@ -62,12 +62,12 @@ class Institution
         $this->id_adresse = intval($id_adresse);
     }
     
-    public function getAdresse()
+    public function getAddress(): ?Adresse
     {
         return $this->adresse;
     }
 
-    public function setAdresse($adresse)
+    public function setAddress(?Adresse $adresse): void
     {
         $this->adresse = $adresse;
     }

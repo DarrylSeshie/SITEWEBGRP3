@@ -42,39 +42,7 @@ if ($http_method === "GET") {
             http_response_code(500);
             echo json_encode(array("error" => $e->getMessage()));
         }
-    } // Route pour obtenir une adresse par ID
-    elseif ($http_method === "GET" && isset($_GET['id_adresse'])) {
-        $id = $_GET['id_adresse'];
-        try {
-            $user = $userManager->getAdresseById($id);
-            if ($user) {
-                http_response_code(200);
-                echo json_encode($user);
-            } else {
-                http_response_code(404);
-                echo json_encode(array("error" => "Adresse non trouvée"));
-            }
-        } catch (PDOException $e) {
-            http_response_code(500);
-            echo json_encode(array("error" => $e->getMessage()));
-        }
-    }
-    elseif ($http_method === "GET" && isset($_GET['id_institution'])) {
-        $institution_id = $_GET['id_institution'];
-        try {
-            $institution = $userManager->getInstitutionById($institution_id);
-            if ($institution) {
-                http_response_code(200);
-                echo json_encode($institution);
-            } else {
-                http_response_code(404);
-                echo json_encode(array("error" => "Institution non trouvée"));
-            }
-        } catch (PDOException $e) {
-            http_response_code(500);
-            echo json_encode(array("error" => $e->getMessage()));
-        }
-    }
+    } 
     else {
         // Requête GET pour récupérer tous les utilisateurs avec pagination
         $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
@@ -91,7 +59,6 @@ if ($http_method === "GET") {
     
         try {
             $user = new User($userArray);
-            $institution = new Institution($userArray['institution']);
             
             // Utilisez UserManager pour ajouter l'utilisateur avec l'institution associée
             $userManager->addUser($user); 
