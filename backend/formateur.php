@@ -1,5 +1,7 @@
 <?php
-
+require_once 'models/Adresse.class.php';
+require_once 'models/Institution.class.php';
+require_once 'models/Role.class.php';
 require_once 'models/User.class.php';
 require_once 'managers/DBManager.php';
 require_once 'managers/FormateurManager.php'; // Assurez-vous que le nom du fichier correspond au nom de classe UserManager
