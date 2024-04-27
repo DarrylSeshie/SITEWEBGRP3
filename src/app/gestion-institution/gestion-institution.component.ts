@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component ,OnInit } from '@angular/core';
 import { InstitutionService } from '../services/institution.service';
 import { Observable } from 'rxjs';
 import { Institution } from '../models/institution.model';
+import { Adresse } from '../models/adresse.model';
 
 
 declare const bootstrap: any;
@@ -10,9 +11,7 @@ declare const bootstrap: any;
   templateUrl: './gestion-institution.component.html',
   styleUrl: './gestion-institution.component.css'
 })
-export class GestionInstitutionComponent {
-
-  
+export class GestionInstitutionComponent  implements OnInit{
   selectedInstitution!: Institution; // Stocke l'utilisateur sélectionné
   currentPage: number = 1;
   pageSize: number = 10;
@@ -21,11 +20,25 @@ export class GestionInstitutionComponent {
   searchTerm: string = '';
   showSearchResults: boolean = false; 
   userDetailVisible: { [key: number]: boolean } = {};
+  showAddInstitutionForm: boolean = false;
+  showUpdateInstitutionForm :boolean = false;
 
   // message de notifs
   successMessage: string = '';
   errorMessage: string = '';
 
+// instancier une new obj institution pour les ajout  et modif
+institution: Institution = {
+  id_institution: -1,
+  nom: '',
+  logo: '',
+  id_adresse: -1,
+};
+//maj de instit 
+InstitutionToUpdate: Institution | null = null;
+
+
+  
   constructor(private institutionService:InstitutionService) { }
 
   ngOnInit(): void {
@@ -38,6 +51,23 @@ export class GestionInstitutionComponent {
   }
 
   
+
+  toggleAddInstitutionForm(): void {
+    if (this.showAddInstitutionForm || this.showUpdateInstitutionForm) {
+      this.showAddInstitutionForm = false;
+      this.showUpdateInstitutionForm = false;
+    } else {
+      this.showAddInstitutionForm = true;
+    }
+  }
+
+  toggleUpdateInstitutionForm(institution: Institution) {
+    this.InstitutionToUpdate = institution;
+    this.showUpdateInstitutionForm = true;
+    this.showAddInstitutionForm = false; // Assurez-vous que le formulaire d'ajout est masqué
+  }
+
+
   nextPage() {
     this.currentPage++;
     console.log('Current Page:', this.currentPage);
@@ -71,21 +101,14 @@ export class GestionInstitutionComponent {
       this.institutions2.subscribe(
         (users) => {
           if (users.length === 0) {
-            const toastElement = document.getElementById('liveToast');
-            const toastBootstrap = new bootstrap.Toast(toastElement);
-            toastBootstrap.show();
-            this.successMessage = 'Aucune institution trouvé pour ce nom ';
-            this.errorMessage = ''; 
+            this.loadInstitutions();
+           this.showSuccessToast('Aucune institution trouvé pour ce nom ');
            
           }
-        },
+        }, 
         (error) => {
-          const toastElement = document.getElementById('liveToast');
-          const toastBootstrap = new bootstrap.Toast(toastElement);
-          toastBootstrap.show();
-          console.error('Error search user:', error);
-          this.errorMessage = 'Erreur de recherche , vous avez mal encodez  ';
-          this.successMessage = '';
+          console.error('Error updating institution:', error);
+          this.showErrorToast('Erreur lors de la modification de l\'institution.');
         }
       );
     } else {
@@ -95,71 +118,60 @@ export class GestionInstitutionComponent {
   }
   
 
-  deleteInstitution(institutionId: number) {
-      // Appel du service pour supprimer l'utilisateur
-      this.institutionService.deleteInstitution(institutionId).subscribe(
+ 
+
+
+    updateInstitution(InstitutionToUpdate: Institution) {
+      this.institutionService.updateInstitution(InstitutionToUpdate).subscribe(
         () => {
-          this.loadInstitutions(); 
-          // Afficher le toast de confirmation
-          const toastElement = document.getElementById('liveToast');
-          const toastBootstrap = new bootstrap.Toast(toastElement);
-          toastBootstrap.show();
-          this.successMessage = 'Institution supprimer avec succès.';
-          this.errorMessage = ''; 
+          this.loadInstitutions();
+          this.showSuccessToast('Institution modifiée avec succès.');
+          this.InstitutionToUpdate = null;
         },
-        error => {
-          const toastElement = document.getElementById('liveToast');
-          const toastBootstrap = new bootstrap.Toast(toastElement);
-          toastBootstrap.show();
-          console.error('Error deleting user:', error);
-          this.errorMessage = 'Erreur de suppression de l\'institution car celui ci est affilié à un evenement  ';
-          this.successMessage = '';
+        (error) => {
+          console.error('Error updating institution:', error);
+          this.showErrorToast('Erreur lors de la modification de l\'institution.');
         }
       );
-  }
-
-  updateInstitution(institution: Institution) {
-    this.institutionService.updateInstitution(institution).subscribe(
-      () => {
-        this.loadInstitutions(); // Recharger la liste des utilisateurs après la mise à jour
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Institution modifié avec succès.';
-        this.errorMessage = ''; // Réinitialiser le message d'erreur
-      },
-      error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        console.error('Error updating user:', error);
-        this.errorMessage = 'Erreur lors de la modification de l\'institution : ' + error.message;
-        this.successMessage = ''; // Réinitialiser le message de succès
-      }
-    );  }
+    }
 
   // Cette méthode doit être liée à un événement de formulaire pour ajouter un utilisateur
   addInstitution(institution: Institution) {
     this.institutionService.addInstitution(institution).subscribe(
       () => {
-        this.loadInstitutions(); // Recharger la liste des utilisateurs après ajout
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Institution ajouté avec succès.';
-        this.errorMessage = ''; 
+        this.institution.logo = ''; 
+        this.loadInstitutions();
+        this.showSuccessToast('Institution ajoutée avec succès.');
+        this.toggleAddInstitutionForm();
+        
        
       },
-      error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        console.error('Error adding user:', error);
-        this.errorMessage = 'Erreur lors de l\'ajout de l\'institution : ' + error.message;
-        this.successMessage = ''; // Réinitialiser le message de succès
+      (error) => {
+        console.error('Error adding institution:', error);
+        this.showErrorToast('Erreur lors de l\'ajout de l\'institution.');
+        this.loadInstitutions();
       }
     );
+    
+    
   }
+
+
+  
+ deleteInstitution(institutionId: number) {
+  this.institutionService.deleteInstitution(institutionId).subscribe(
+    () => {
+      this.loadInstitutions();
+      this.showSuccessToast('Institution supprimée avec succès.');
+    },
+    (error) => {
+      console.error('Error deleting institution:', error);
+      this.showErrorToast('Erreur lors de la suppression de l\'institution.');
+    }
+  );
+}   
+
+ 
 
   selectInstitution(institutionId: number) {
     this.institutionService.getInstitutionById(institutionId).subscribe(
@@ -172,5 +184,22 @@ export class GestionInstitutionComponent {
         console.error('Error fetching user:', error);
       }
     );
+  }
+
+
+  private showSuccessToast(message: string) {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.successMessage = message;
+    this.errorMessage = '';
+  }
+
+  private showErrorToast(message: string) {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.errorMessage = message;
+    this.successMessage = '';
   }
 }

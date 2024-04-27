@@ -48,18 +48,37 @@ if ($http_method === "GET") {
         echo json_encode($institutions);
     }
 } elseif ($http_method === "POST") {
-    // Requête POST pour ajouter un nouvel utilisateur
-    $jsonStr = file_get_contents('php://input');
-    $institutionArray = json_decode($jsonStr, true);
+    
+    // Récupérer les données JSON et l'URL de l'image
+$jsonStr = file_get_contents('php://input');
+$institutionArray = json_decode($jsonStr, true);
+
+if (!empty($institutionArray)) {
+    // Créer un nouvel objet Institution à partir des données JSON
     $institution = new Institution($institutionArray);
 
+    // Récupérer l'URL de l'image depuis les données JSON
+    $imageUrl = $institutionArray['logo'];
+
+    // Stocker l'URL de l'image dans l'objet Institution (si besoin)
+    $institution->setLogo($imageUrl);
+
     try {
-        $institutionManager->addInstitution($institution); 
-        echo json_encode($institution); // Répondre avec les données de l'utilisateur ajouté
+        // Ajouter l'institution à la base de données via le gestionnaire
+        $institutionManager->addInstitution($institution);
+
+        // Répondre avec les données de l'institution ajoutée
+        echo json_encode($institution);
     } catch (PDOException $e) {
+        // En cas d'erreur PDO, renvoyer un code HTTP 500 avec un message d'erreur
         http_response_code(500);
-        echo json_encode(array("error" => $e->getMessage()));
+        echo json_encode(array("error" => "Erreur lors de l'ajout de l'institution : " . $e->getMessage()));
     }
+} else {
+    // Si les données JSON sont vides ou invalides
+    http_response_code(400);
+    echo json_encode(array("error" => "Données JSON invalides pour l'ajout d'institution"));
+}
 } elseif ($http_method === "PUT" || $http_method === "PATCH") {
     // Requête PUT ou PATCH pour mettre à jour un utilisateur existant
     $jsonStr = file_get_contents('php://input');
@@ -74,19 +93,24 @@ if ($http_method === "GET") {
         echo json_encode(array("error" => $e->getMessage()));
     }
 }  elseif ($http_method === "DELETE") {
-    // Requête DELETE pour supprimer un lieu par ID
     $id = isset($_GET['id']) ? $_GET['id'] : null;
     if ($id !== null) {
         try {
-            $institutionManager->deleteInstitution($id);
-            http_response_code(204); // Succès sans contenu
+            $success = $institutionManager->deleteInstitution($id);
+
+            if ($success) {
+                http_response_code(204); // Succès sans contenu
+            } else {
+                http_response_code(404); // Élément non trouvé (ou autre code approprié en fonction du cas d'échec)
+                echo json_encode(array("error" => "La suppression de l'institution a échoué"));
+            }
         } catch (PDOException $e) {
             http_response_code(500);
-            echo json_encode(array("error" => "Erreur lors de la suppression du lieu : " . $e->getMessage()));
+            echo json_encode(array("error" => "Erreur lors de la suppression de l'institution : " . $e->getMessage()));
         }
     } else {
         http_response_code(400);
-        echo json_encode(array("error" => "ID du lieu non fourni"));
+        echo json_encode(array("error" => "ID de l'institution non fourni"));
     }
 }
  elseif ($http_method === "OPTIONS") {

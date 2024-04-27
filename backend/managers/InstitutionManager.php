@@ -1,7 +1,7 @@
 <?php
 
 
-
+require_once 'models/Institution.class.php';
 class InstitutionManager
 {
 
@@ -198,7 +198,7 @@ LEFT JOIN
 
 
 
-public function deleteInstitution($id)
+public function deleteInstitution2($id)
 {
     $sql = "DELETE FROM institution WHERE id_institution = :id";
     try {
@@ -209,6 +209,27 @@ public function deleteInstitution($id)
         // Gérer l'erreur de suppression du lieu
         throw new PDOException('Erreur lors de la suppression adresse : ' . $e->getMessage());
     }
+}
+
+
+public function deleteInstitution($id)
+{
+    $sql = "DELETE FROM institution WHERE id_institution = :id";
+    try {
+        $prep = $this->db->prepare($sql);
+        $prep->bindParam(':id', $id, PDO::PARAM_INT);
+        $success = $prep->execute();
+
+        if ($success) {
+            echo "Suppression réussie.";
+             return true;
+        } else {
+            echo "Échec de la suppression.";
+             return false;
+        }
+    } catch (PDOException $e) {
+        die("Erreur lors de la suppression : " . $e->getMessage());
+    } 
 }
 
  
@@ -240,68 +261,40 @@ public function updateInstitution($institution)
 
 
 
-/*
 public function addInstitution($institution)
 {
-    $sql = "INSERT INTO institution (nom, logo, id_adresse) 
-            VALUES (:nom, :logo, :id_adresse)";
-
-    try {
-        $prep = $this->db->prepare($sql);
-
-        // Liaison des paramètres avec les valeurs de l'objet Adresse
-        $prep->bindParam(':nom', $institution->getRueNumero(), PDO::PARAM_STR);
-        $prep->bindParam(':logo', $institution->getCodePostal(), PDO::PARAM_INT);
-        $prep->bindParam(':id_adresse', $institution->getLocalite(), PDO::PARAM_STR);
-
-        $prep->execute();
-
-        $institution->setId($this->db->lastInsertId());
-    } catch (PDOException $e) {
-        throw $e;
-    } finally {
-        $prep = null;
-    }
-}*/
-
-public function addInstitution($institution)
-{
-    $sql = "INSERT INTO institution (nom, logo, id_adresse) 
-            VALUES (:nom, :logo, :id_adresse)";
-
-    try {
-        $prep = $this->db->prepare($sql);
-
-        // Liaison des paramètres avec les valeurs de l'objet Institution
-        $prep->bindParam(':nom', $institution->getNom(), PDO::PARAM_STR);
-        $prep->bindParam(':logo', $institution->getLogo(), PDO::PARAM_STR);
-
-        // Récupérer l'adresse associée à l'institution
-        $adresse = $institution->getAdresse();
-
-        if ($adresse instanceof Adresse) {
-            // Liaison des paramètres de l'adresse avec les valeurs appropriées
-            $prep->bindParam(':id_adresse', $adresse->getIdAdresse(), PDO::PARAM_INT);
-            // Vous devez ajuster les autres liaisons pour les détails de l'adresse
-            // Exemple :
-             $prep->bindParam(':rue_numero', $adresse->getRueNumero(), PDO::PARAM_STR);
-             $prep->bindParam(':code_postal', $adresse->getCodePostal(), PDO::PARAM_STR);
-             $prep->bindParam(':localite', $adresse->getLocalite(), PDO::PARAM_STR);
-             $prep->bindParam(':pays', $adresse->getPays(), PDO::PARAM_STR);
-        } else {
-            $prep->bindValue(':id_adresse', 1, PDO::PARAM_NULL);
-            // Vous devez ajuster les autres liaisons pour les détails de l'adresse ou utiliser des valeurs par défaut
+   
+    
+        $sql = "INSERT INTO institution (nom, logo, id_adresse) 
+                VALUES (:nom, :logo, :id_adresse)";
+    
+        try {
+            $prep = $this->db->prepare($sql);
+    
+            // Liaison des paramètres avec les valeurs de l'objet Institution
+            $prep->bindParam(':nom', $institution->getNom(), PDO::PARAM_STR);
+            $prep->bindParam(':logo', $institution->getLogo(), PDO::PARAM_STR);
+            $prep->bindParam(':id_adresse', $institution->getIdAdresse(), PDO::PARAM_INT);
+    
+            $prep->execute();
+    
+            // Définir l'ID de l'institution avec l'ID généré par la base de données
+            $institutionId = $this->db->lastInsertId();
+            $institution->setId($institutionId);
+    
+            return true; // Succès
+    
+        } catch (PDOException $e) {
+            // En cas d'erreur, renvoyer une réponse d'erreur
+            throw $e;
+            return false;
         }
-
-        $prep->execute();
-
-        $institution->setIdInstitution($this->db->lastInsertId());
-    } catch (PDOException $e) {
-        throw $e; 
-    } finally {
-        $prep = null; 
-    }
+    
+    
 }
+
+
+
 
 
 }

@@ -1,8 +1,16 @@
-<div class="body">
 
+<div class="body"  *ngIf="!showAddInstitutionForm && !showUpdateInstitutionForm" >
+
+
+
+
+
+
+
+ 
 <div class="usercard" *ngIf="!selectedInstitution || !userDetailVisible[selectedInstitution.id_institution]">
   <h2>Liste des Institutions</h2>
-  <button class="buttonadd">Ajouter une institution</button>
+  <button id="searchButton" (click)="toggleAddInstitutionForm()">Ajouter une institution</button>
 
   <!-- Formulaire de recherche -->
   <form (ngSubmit)="searchInstitutionByname(searchTerm)" class="search-container" #searchForm="ngForm">
@@ -24,12 +32,12 @@
        
       <tr *ngFor="let institution of  institutions | async">
         <td>{{ institution.nom }}</td>
-        <td><img class="logoInstitution" [src]="institution.logo" alt="{{ institution.nom }} Logo"></td> 
+        <td><img class="logoInstitution" [src]="institution.logo" alt="{{ institution.nom }} Logo"></td>  
         <td>{{ institution.adresse?.rue_numero }} {{ institution.adresse?.code_postal}}, {{ institution.adresse?.pays }}</td>
         <td>
             <button (click)="selectInstitution(institution.id_institution)"><i class="fa-solid fa-eye"></i></button>
-            <button (click)="updateInstitution(institution)"><i class="fa-solid fa-pen-to-square"></i></button>
-            <button id="searchButton" (click)="deleteInstitution(institution.id_adresse)"><i class="fa-solid fa-trash"></i></button>
+            <button (click)="toggleUpdateInstitutionForm(institution)"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button id="searchButton" (click)="deleteInstitution(institution.id_institution)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>
     </tbody>
@@ -78,8 +86,8 @@
         <td>{{ institution.adresse?.rue_numero }} {{ institution.adresse?.code_postal}}, {{ institution.adresse?.pays }}</td>
         <td>
             <button (click)="selectInstitution(institution.id_institution)"><i class="fa-solid fa-eye"></i></button>
-            <button (click)="updateInstitution(institution)"><i class="fa-solid fa-pen-to-square"></i></button>
-            <button id="searchButton" (click)="deleteInstitution(institution.id_adresse)"><i class="fa-solid fa-trash"></i></button>
+            <button (click)="toggleUpdateInstitutionForm(institution)"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button id="searchButton" (click)="deleteInstitution(institution.id_institution)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>
     </tbody>
@@ -116,9 +124,121 @@
 
 </div>
 
+</div>
+
+
+<!-- Gestion  form ajout -->
+<div class="usercard2"  *ngIf="showAddInstitutionForm" >
+
+  <button id="searchButton" (click)="toggleAddInstitutionForm()">Retour</button>
+
+  
+  <form >
+    <div class="row mt-3">
+      <div class="col-3"></div>
+      <div class="col form-floating mb-3">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="name" placeholder="Nom" [(ngModel)]="institution.nom" name="nom" autofocus required>
+          <label for="name">Nom</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" name="logo"  [(ngModel)]="institution.logo" name="logo">
+          <label for="logo">Url image</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="number" class="form-control" id="id" [(ngModel)]="institution.id_adresse" name="id_adresse">
+          <label for="logo">id</label>
+        </div>
+    
+        <p style="color: red;">{{errorMessage}}</p>
+        <div class="align-right">
+          <button type="submit" id="searchButton" (click)="addInstitution(institution)">Ajouter</button>
+        </div>
+      </div>
+      <div class="col-3"></div>
+    </div>
+  </form>
+
+
+<!-- Gestion notif-->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <div class="alert alert-success" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+      
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 
 
 
+
+
+
+
+<!-- Gestion  Update  instit -->
+<div class="usercard2"    *ngIf="showUpdateInstitutionForm" >
+
+ 
+
+
+  <div class="update-form" *ngIf="InstitutionToUpdate" >
+    <h2>Modifier Institution</h2>
+    <button id="searchButton" (click)="toggleAddInstitutionForm()">Retour</button>
+
+    <form (ngSubmit)="updateInstitution(InstitutionToUpdate)" #updateForm="ngForm">
+      <div class="form-group">
+        <label for="name">Nom :</label>
+        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="InstitutionToUpdate.nom" required>
+      </div>
+      <div class="form-group">
+        <label for="logo">URL Image :</label>
+        <input type="text" class="form-control" id="logo" name="logo" [(ngModel)]="InstitutionToUpdate.logo" required>
+      </div>
+      <div class="form-group">
+        <label for="idAdresse">ID Adresse :</label>
+        <input type="number" class="form-control" id="idAdresse" name="idAdresse" [(ngModel)]="InstitutionToUpdate.id_adresse" required>
+      </div>
+      <button type="submit" id="searchButton" >Enregistrer</button>
+    </form>
+  </div>
+  
+  
+
+
+
+<!-- Gestion notif-->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <div class="alert alert-success" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+      
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 
 

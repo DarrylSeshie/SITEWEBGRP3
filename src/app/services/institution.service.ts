@@ -23,14 +23,15 @@ export class InstitutionService {
    
 
    
-  getInstitutionById(adresseId: number): Observable<Institution> {
-    return this.http.get<Institution>( 'http://localhost/PROJET_ceREF/backend/institution.php' + `?id=${adresseId}`);
+  getInstitutionById(instId: number): Observable<Institution> {
+    return this.http.get<Institution>( 'http://localhost/PROJET_ceREF/backend/institution.php' + `?id=${instId}`);
   }
   
  
-  addInstitution(newAdresse: Institution): Observable<Institution> {
-    return this.http.post<Institution>(this.apiUrl, newAdresse);
+  addInstitution(newInstitution: Institution): Observable<Institution> {
+    return this.http.post<Institution>(this.apiUrl, newInstitution);
   }
+
 
 
 
@@ -40,15 +41,15 @@ export class InstitutionService {
   }
 
 
-  updateInstitution(updatedAdresse: Institution): Observable<Institution> {
-    const url = `${this.apiUrl}/${updatedAdresse.id_adresse}`;
-    return this.http.put<Institution>(url, updatedAdresse);
+  updateInstitution(updatedInstitution: Institution): Observable<Institution> {
+    const url = `${this.apiUrl}/${updatedInstitution.id_institution}`;
+    return this.http.put<Institution>(url, updatedInstitution);
   }
+
 
   deleteInstitution(id: number): Observable<any> {
-     return this.http.delete("http://localhost/PROJET_ceREF/backend/institution.php?id=" + id);
-  }
-
+    return this.http.delete("http://localhost/PROJET_ceREF/backend/institution.php?id=" + id);
+ }
 
 
 
