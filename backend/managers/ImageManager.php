@@ -51,7 +51,7 @@ class ImageManager
 public function getImagesByName($page, $pageSize,$nom)
 { 
 
-    $images[] = []; // Initialise un tableau vide pour stocker les objets Adresse
+    $images = []; // Initialise un tableau vide pour stocker les objets Adresse
 
     $offset = ($page - 1) * $pageSize;
 

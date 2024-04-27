@@ -7,10 +7,10 @@ class Lieu
     public $locaux;
     public $id_institution;
     public $id_adresse;
-    public $institution; // Propriété pour stocker l'objet Institution associé
-    public $adresse; // Propriété pour stocker l'objet Adresse associé
+    public ?Adresse $adresse;
+    public ?Institution $institution;
 
-    public function __construct($array = null)
+    public function __construct(?array $array = null)
     {
         if ($array != null) {
             $this->setIdLieu($array["id_lieu"]);
@@ -21,13 +21,13 @@ class Lieu
             $this->setIdAdresse($array["id_adresse"]);
             
             // Si une institution est fournie, instancier un objet Institution
-            if (isset($array['institution'])) {
-                $this->setInstitution(new Institution($array['institution']));
-            }
-            
-            // Si une adresse est fournie, instancier un objet Adresse
             if (isset($array['adresse'])) {
                 $this->setAdresse(new Adresse($array['adresse']));
+            }
+    
+            // Vérifier et initialiser l'institution si elle est fournie
+            if (isset($array['institution'])) {
+                $this->setInstitution(new Institution($array['institution']));
             }
         }
     }
@@ -92,24 +92,24 @@ class Lieu
         $this->id_adresse = intval($id_adresse);
     }
     
-    public function getInstitution()
-    {
-        return $this->institution;
-    }
-
-    public function setInstitution($institution)
-    {
-        $this->institution = $institution;
-    }
-    
-    public function getAdresse()
+    public function getAdresse(): ?Adresse
     {
         return $this->adresse;
     }
 
-    public function setAdresse($adresse)
+    public function setAdresse(?Adresse $adresse): void
     {
         $this->adresse = $adresse;
+    }
+
+    public function getInstitution(): ?Institution
+    {
+        return $this->institution;
+    }
+
+    public function setInstitution(?Institution $institution): void
+    {
+        $this->institution = $institution;
     }
 }
 

@@ -15,7 +15,7 @@ class LieuManager
   public function getLieux($page, $pageSize)
 { 
 
- $lieux = []; // Initialise un tableau vide pour stocker les objets User
+ $lieux = [];
 
     // Calculer le décalage (offset) en fonction du numéro de page et de la taille de la page
     $offset = ($page - 1) * $pageSize;
@@ -30,7 +30,7 @@ class LieuManager
         $result = $prep->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($result as $lieuData) {
-            // Créer un nouvel objet User à partir des données de la base de données
+            
             $lieu = new Lieu();
             $lieu->setIdLieu($lieuData['id_lieu']);
             $lieu->setNom($lieuData['nom']);
@@ -53,9 +53,9 @@ class LieuManager
 public function getLieuByname2($page, $pageSize,$nom)
 { 
 
- $lieux = []; // Initialise un tableau vide pour stocker les objets User
+ $lieux = []; 
 
-    // Calculer le décalage (offset) en fonction du numéro de page et de la taille de la page
+  
     $offset = ($page - 1) * $pageSize;
 
     // Requête SQL avec LIMIT pour pagination
@@ -69,7 +69,7 @@ public function getLieuByname2($page, $pageSize,$nom)
         $result = $prep->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($result as $lieuData) {
-            // Créer un nouvel objet User à partir des données de la base de données
+            
             $lieu = new lieu();
             
             $lieu->setIdLieu($lieuData['id_lieu']);
@@ -99,9 +99,16 @@ public function getLieuByname2($page, $pageSize,$nom)
   /**
    * @param Lieu $lieu
    */
-  public function selectLieuById($lieuId)
+ 
+
+   public function selectLieuById($lieuId)
 {
-    $sql = "SELECT * FROM lieu WHERE id_lieu = :lieuId";
+    $sql = "SELECT l.*, a.*, i.nom AS institution_nom, i.logo AS institution_logo, i.id_adresse AS institution_id_adresse
+            FROM lieu l
+            LEFT JOIN adresse a ON l.id_adresse = a.id_adresse
+            LEFT JOIN institution i ON l.id_institution = i.id_institution
+            WHERE l.id_lieu = :lieuId";
+
     try {
         $prep = $this->db->prepare($sql);
         $prep->bindParam(':lieuId', $lieuId, PDO::PARAM_INT);
@@ -110,119 +117,41 @@ public function getLieuByname2($page, $pageSize,$nom)
         $lieuData = $prep->fetch(PDO::FETCH_ASSOC);
 
         if (!$lieuData) {
-            return null; // Aucun lieu trouvé avec cet ID
-        }
-
-        // Création d'un nouvel objet User à partir des données récupérées
-        $lieuObject = new Lieu($lieuData);
-
-        return $lieuObject;
-    } catch (PDOException $e) {
-        throw $e; // Propager l'exception pour la gestion des erreurs
-    } finally {
-        $prep = null; // Libérer la ressource PDOStatement
-    }
-}
-/*
-public function selectLieuById2($lieuId)
-{
-    $sql = "SELECT lieu.id_lieu, 
-                   lieu.nom AS lieu_nom, 
-                   lieu.batiment, 
-                   lieu.locaux, 
-                   institution.id_institution, 
-                   institution.nom AS institution_nom, 
-                   institution.logo, 
-                   adresse.rue_numero, 
-                   adresse.code_postal, 
-                   adresse.localite, 
-                   adresse.pays
-            FROM lieu
-            JOIN institution ON lieu.id_institution = institution.id_institution
-            JOIN adresse ON lieu.id_adresse = adresse.id_adresse
-            WHERE lieu.id_lieu = :id";
-
-    try {
-        $prep = $this->db->prepare($sql);
-        $prep->bindParam(':id', $lieuId, PDO::PARAM_INT);
-        $prep->execute();
-        $result = $prep->fetch(PDO::FETCH_ASSOC);
-
-        if ($result) {
-            
-            $lieu = new Lieu();
-            $lieu->setIdLieu($result['id_lieu']);
-            $lieu->setNom($result['lieu_nom']); 
-            $lieu->setBatiment($result['batiment']);
-            $lieu->setLocaux($result['locaux']);
-
-          
-            $institution = new Institution();
-            $institution->setIdInstitution($result['id_institution']);
-            $institution->setNom($result['institution_nom']); 
-            $institution->setLogo($result['logo']);
-          
-            $lieu->setInstitution($institution);
-
-            
-            $adresse = new Adresse();
-            $adresse->setRueNumero($result['rue_numero']);
-            $adresse->setCodePostal($result['code_postal']);
-            $adresse->setLocalite($result['localite']);
-            $adresse->setPays($result['pays']);
-            // Associer l'adresse au lieu
-            $lieu->setAdresse($adresse);
-
-            return $lieu; 
-        } else {
             return null; 
         }
+
+       
+        $lieu = new Lieu($lieuData);
+        $adresseData = [
+            'id_adresse' => $lieuData['id_adresse'],
+            'rue_numero' => $lieuData['rue_numero'], 
+            'code_postal' => $lieuData['code_postal'], 
+            'localite' => $lieuData['localite'],
+            'pays' => $lieuData['pays'] 
+        ];
+        $adresse = new Adresse($adresseData);
+        $lieu->setAdresse($adresse);
+        $institutionData = [
+            'id_institution' => $lieuData['id_institution'],
+            'nom' => $lieuData['institution_nom'], 
+            'logo' => $lieuData['institution_logo'], 
+            'id_adresse' => $lieuData['institution_id_adresse'] 
+        ];
+        $institution = new Institution($institutionData);
+        $lieu->setInstitution($institution);
+
+        return $lieu;
     } catch (PDOException $e) {
-        // Gérer l'erreur de requête SQL de manière appropriée (ex. journal des erreurs)
-        error_log('Erreur lors de la récupération du détail du lieu : ' . $e->getMessage());
-        throw new Exception('Erreur lors de la récupération du détail du lieu.');
-    } finally {
-        $prep = null;
-    }
-}
-
-*/
-
-
-public function selectLieux()
-{
-    $sql = "SELECT * FROM lieu";
-    try {
-        $prep = $this->db->prepare($sql);
-        $prep->execute();
-
-        // Récupérer tous les résultats de la requête sous forme de tableau associatif
-        $lieux = $prep->fetchAll(PDO::FETCH_ASSOC);
-
-        // Créer un tableau pour stocker les objets User
-        $lieuObjects = [];
-
-        // Parcourir les résultats et créer des objets User pour chaque lieu
-        foreach ($lieux as $lieu) {
-            $lieuObject = new lieu();
-            $lieuObject->setIdLieu($lieu['id_lieu']);
-            $lieuObject->setNom($lieu['nom']);
-            $lieuObject->setBatiment($lieu['batiment']);
-            $lieuObject->setLocaux($lieu['locaux']);
-            $lieuObject->setIdInstitution($lieu['id_institution']);
-            $lieuObject->setIdAdresse($lieu['id_adresse']);
-           
-            // Ajouter l'objet lieu au tableau
-            $lieuObjects[] = $lieuObject;
-        }
-
-        return $lieuObjects;
-    } catch (PDOException $e) {
-        throw $e; // Propager l'exception pour la gestion des erreurs
+        throw $e;
     } finally {
         $prep = null; // Libérer la ressource PDOStatement
     }
 }
+
+
+
+
+
 
 public function deleteLieu($id)
 {
@@ -237,39 +166,10 @@ public function deleteLieu($id)
     }
 }
 
-/*
-public function deleteLieu2($id)
-{
-    // Vérifier s'il existe des dépendances dans d'autres tables
-    // Exemple : Vérification de la table Adresse
-    $sqlCheckDependencies = "SELECT COUNT(*) AS count FROM adresse WHERE id_lieu = :id";
-    $prepCheck = $this->db->prepare($sqlCheckDependencies);
-    $prepCheck->bindParam(':id', $id, PDO::PARAM_INT);
-    $prepCheck->execute();
-    $resultCheck = $prepCheck->fetch(PDO::FETCH_ASSOC);
 
-    if ($resultCheck['count'] > 0) {
-        // Il existe des dépendances, empêcher la suppression
-        throw new Exception('Impossible de supprimer ce lieu car il est lié à des enregistrements dans d\'autres tables.');
-    }
-
-    // Suppression du lieu
-    $sqlDelete = "DELETE FROM lieu WHERE id_lieu = :id";
-    try {
-        $prep = $this->db->prepare($sqlDelete);
-        $prep->bindParam(':id', $id, PDO::PARAM_INT);
-        $prep->execute();
-    } catch (PDOException $e) {
-        // Gérer l'erreur de suppression du lieu
-        throw new PDOException('Erreur lors de la suppression du lieu : ' . $e->getMessage());
-    }
-}
-*/
- 
   
 
-
-  public function updateLieu($lieu)
+public function updateLieu($lieu)
 {
     $sql = "UPDATE lieu SET 
             nom = :nom,
@@ -282,17 +182,17 @@ public function deleteLieu2($id)
     try {
         $prep = $this->db->prepare($sql);
 
-        // Liaison des paramètres avec les valeurs de l'objet User
+        // Liaison des paramètres avec les valeurs de l'objet Lieu
         $prep->bindParam(':nom', $lieu->getNom(), PDO::PARAM_STR);
         $prep->bindParam(':batiment', $lieu->getBatiment(), PDO::PARAM_STR);
         $prep->bindParam(':locaux', $lieu->getLocaux(), PDO::PARAM_STR);
-        $prep->bindParam(':id_institution', $lieu->getIdInstitution(), PDO::PARAM_STR);
-        $prep->bindParam(':id_adresse', $lieu->getIdAdresse(), PDO::PARAM_STR);
+        $prep->bindParam(':id_institution', $lieu->getIdInstitution(), PDO::PARAM_INT);
+        $prep->bindParam(':id_adresse', $lieu->getIdAdresse(), PDO::PARAM_INT);
         $prep->bindParam(':id', $lieu->getIdLieu(), PDO::PARAM_INT); // ID de l'lieu à mettre à jour
 
         $prep->execute();
     } catch (PDOException $e) {
-        throw $e; // Propager l'exception pour la gestion des erreurs
+        throw $e; 
     } finally {
         $prep = null; // Libérer la ressource PDOStatement
     }
@@ -302,30 +202,27 @@ public function deleteLieu2($id)
 
 public function addLieu($lieu)
 {
-    $sql = "INSERT INTO lieu(civilite, nom, prenom, email, mot_de_passe, gsm, TVA, profession, gsm_pro, email_pro, id_role, id_institution, id_adresse) 
-            VALUES (:civilite, :nom, :prenom, :email, :mot_de_passe, :gsm, :TVA, :profession, :gsm_pro, :email_pro, :id_role, :id_institution, :id_adresse)";
+    $sql = "INSERT INTO lieu (nom, batiment, locaux, id_institution, id_adresse) 
+            VALUES (:nom, :batiment, :locaux, :id_institution, :id_adresse)";
 
     try {
         $prep = $this->db->prepare($sql);
 
-        // Liaison des paramètres avec les valeurs de l'objet User
-        $prep->bindParam(':civilite', $lieu->getCivilite(), PDO::PARAM_STR);
+        // Liaison des paramètres avec les valeurs de l'objet Lieu
         $prep->bindParam(':nom', $lieu->getNom(), PDO::PARAM_STR);
-        $prep->bindParam(':prenom', $lieu->getPrenom(), PDO::PARAM_STR);
-        $prep->bindParam(':email', $lieu->getEmail(), PDO::PARAM_STR);
-        $prep->bindParam(':mot_de_passe', $lieu->getMotDePasse(), PDO::PARAM_STR);
-        $prep->bindParam(':gsm', $lieu->getGsm(), PDO::PARAM_STR);
-        $prep->bindParam(':TVA', $lieu->getTva(), PDO::PARAM_STR);
-        $prep->bindParam(':profession', $lieu->getProfession(), PDO::PARAM_STR);
-        $prep->bindParam(':gsm_pro', $lieu->getGsmPro(), PDO::PARAM_STR);
-        $prep->bindParam(':email_pro', $lieu->getEmailPro(), PDO::PARAM_STR);
-        $prep->bindParam(':id_role', $lieu->getIdRole(), PDO::PARAM_INT);
+        $prep->bindParam(':batiment', $lieu->getBatiment(), PDO::PARAM_STR);
+        $prep->bindParam(':locaux', $lieu->getLocaux(), PDO::PARAM_STR);
         $prep->bindParam(':id_institution', $lieu->getIdInstitution(), PDO::PARAM_INT);
         $prep->bindParam(':id_adresse', $lieu->getIdAdresse(), PDO::PARAM_INT);
 
         $prep->execute();
 
-        $lieu->setId($this->db->lastInsertId());
+        $lieu->setIdLieu($this->db->lastInsertId());
+        
+        // Si vous avez besoin d'associer des objets Adresse et Institution au Lieu après l'insertion
+        // vous pouvez le faire ici en utilisant les méthodes de votre modèle de données.
+        // Exemple : $lieu->setAdresse($adresse); $lieu->setInstitution($institution);
+
     } catch (PDOException $e) {
         throw $e;
     } finally {
