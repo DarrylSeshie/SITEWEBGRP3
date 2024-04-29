@@ -21,12 +21,30 @@ export class GestionAdresseComponent {
   searchTerm: string = '';
   showSearchResults: boolean = false; 
   userDetailVisible: { [key: number]: boolean } = {};
+  showAddAdresseForm: boolean = false;
+  showUpdateAdresseForm :boolean = false;
 
 
     // message de notifs
     successMessage: string = '';
     errorMessage: string = '';
+
+    adresse :  Adresse= {
+      id_adresse: -1,
+      rue_numero: "",
+      code_postal:0,
+      localite:"",
+      pays:""
+    };
+
+    AdresseToUpdate: Adresse | null = null;
+   
   constructor(private adresseService:AdresseService) { }
+
+
+
+
+
 
   ngOnInit(): void {
     this.loadAdresses();
@@ -38,6 +56,22 @@ export class GestionAdresseComponent {
   }
 
   
+
+  toggleAddAdresseForm(): void {
+    if (this.showAddAdresseForm || this.showUpdateAdresseForm) {
+      this.showAddAdresseForm = false;
+      this.showUpdateAdresseForm = false;
+    } else {
+      this.showAddAdresseForm = true;
+    }
+  }
+
+  toggleUpdateAdresseForm(Adresse: Adresse) {
+    this.AdresseToUpdate = Adresse;
+    this.showUpdateAdresseForm = true;
+    this.showAddAdresseForm = false; // Assurez-vous que le formulaire d'ajout est masqué
+  }
+
   nextPage() {
     this.currentPage++;
     console.log('Current Page:', this.currentPage);
@@ -96,46 +130,29 @@ export class GestionAdresseComponent {
   
 
   deleteAdresse(adresseId: number) {
-     // Appel du service pour supprimer l'utilisateur
-     this.adresseService.deleteAdresse(adresseId).subscribe(
+    this.adresseService.deleteAdresse(adresseId).subscribe(
       () => {
-        this.loadAdresses(); 
-        // Afficher le toast de confirmation
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Adresse supprimer avec succès.';
-        this.errorMessage = ''; 
+        this.loadAdresses();
+        this.showSuccessToast('Adresse supprimée avec succès.');
       },
-      error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        console.error('Error deleting user:', error);
-        this.errorMessage = 'Erreur de suppression de l\'adresse car celui ci est affilié à un evenement ou un client  ';
-        this.successMessage = '';
+      (error) => {
+        console.error('Error deleting adresse:', error);
+        this.showErrorToast('Erreur lors de la suppression de l\'adresse.');
       }
     );
   }
 
-  updateAdresse(adresse: Adresse) {
+  updateAdresse(AdresseToUpdate: Adresse) {
   
-    this.adresseService.updateAdresse(adresse).subscribe(
+    this.adresseService.updateAdresse(AdresseToUpdate).subscribe(
       () => {
-        this.loadAdresses(); // Recharger la liste des utilisateurs après la mise à jour
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Adresse modifié avec succès.';
-        this.errorMessage = ''; // Réinitialiser le message d'erreur
+        this.loadAdresses();
+        this.showSuccessToast('Adresse modifiée avec succès.');
+        this.AdresseToUpdate = null;
       },
-      error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        console.error('Error updating user:', error);
-        this.errorMessage = 'Erreur lors de la modification de l\'adresse  : ' + error.message;
-        this.successMessage = ''; // Réinitialiser le message de succès
+      (error) => {
+        console.error('Error updating Adresse:', error);
+        this.showErrorToast('Erreur lors de la modification de l\'Adresse.');
       }
     );
   }
@@ -144,21 +161,16 @@ export class GestionAdresseComponent {
   addAdresse(adresse: Adresse) {
     this.adresseService.addAdresse(adresse).subscribe(
       () => {
-        this.loadAdresses(); // Recharger la liste des utilisateurs après ajout
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Utilisateur ajouté avec succès.';
-        this.errorMessage = ''; 
+        this.loadAdresses();
+        this.showSuccessToast('Adresse ajoutée avec succès.');
+        this.toggleAddAdresseForm();
+        
        
       },
-      error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        console.error('Error adding user:', error);
-        this.errorMessage = 'Erreur lors de l\'ajout de l\'utilisateur : ' + error.message;
-        this.successMessage = ''; // Réinitialiser le message de succès
+      (error) => {
+        console.error('Error adding Adresse:', error);
+        this.showErrorToast('Erreur lors de l\'ajout de l\'Adresse.');
+        this.loadAdresses();
       }
     );
   }
@@ -175,5 +187,22 @@ export class GestionAdresseComponent {
         console.error('Error fetching user:', error);
       }
     );
+  }
+
+
+  showSuccessToast(message: string) {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.successMessage = message;
+    this.errorMessage = '';
+  }
+
+   showErrorToast(message: string) {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.errorMessage = message;
+    this.successMessage = '';
   }
 }

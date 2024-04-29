@@ -143,8 +143,8 @@ public function deleteAdresse($id)
             rue_numero = :rue_numero,
             code_postal = :code_postal,
             localite = :localite,
-            pays = :pays,
-            WHERE id_lieu = :id";
+            pays = :pays
+            WHERE id_adresse = :id";
 
     try {
         $prep = $this->db->prepare($sql);

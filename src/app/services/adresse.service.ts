@@ -40,9 +40,10 @@ export class AdresseService {
   }
 
 
-  updateAdresse(updatedAdresse: Adresse): Observable<Adresse> {
-    const url = `${this.apiUrl}/${updatedAdresse.id_adresse}`;
-    return this.http.put<Adresse>(url, updatedAdresse);
+ 
+  updateAdresse(updateAdresse: Adresse): Observable<Adresse> {
+    const url = `${this.apiUrl}/${updateAdresse.id_adresse}`;
+    return this.http.put<Adresse>(url, updateAdresse);
   }
 
   deleteAdresse(id: number): Observable<any> {

@@ -67,13 +67,13 @@ if ($http_method === "GET") {
     $adresse = new Adresse($adresseArray);
 
     try {
-        $adresseManager->updateAdresse($adresse); // Utilisez la méthode updateUser pour mettre à jour l'utilisateur
+        $adresseManager->updateAdresse($adresse); 
         echo json_encode($adresse); // Répondre avec les données de l'utilisateur mis à jour
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(array("error" => $e->getMessage()));
     }
-}  elseif ($http_method === "DELETE") {
+}   elseif ($http_method === "DELETE") {
     // Requête DELETE pour supprimer un lieu par ID
     $id = isset($_GET['id']) ? $_GET['id'] : null;
     if ($id !== null) {

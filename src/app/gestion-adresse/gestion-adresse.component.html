@@ -1,9 +1,10 @@
 
 
-<div class="body">
+<div class="body"  *ngIf="!showAddAdresseForm && !showUpdateAdresseForm" >
+
 <div  *ngIf="!selectedAdresse || !userDetailVisible[selectedAdresse.id_adresse]" class="usercard">
   <h2>Liste des adresses</h2>
-  <button class="buttonadd">Ajouter une adresse</button>
+  <button id="searchButton" (click)="toggleAddAdresseForm()" >Ajouter une adresse</button>
 
   <!-- Formulaire de recherche -->
   <form (ngSubmit)="searchAdresseByname(searchTerm)" class="search-container" #searchForm="ngForm">
@@ -29,7 +30,7 @@
         <td>{{ adresse.code_postal }}</td>
         <td>
             <button (click)="selectAdresse(adresse.id_adresse)"><i class="fa-solid fa-eye"></i></button>
-            <button (click)="updateAdresse(adresse)"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button (click)="toggleUpdateAdresseForm(adresse)"><i class="fa-solid fa-pen-to-square"></i></button>
             <button id="searchButton" (click)="deleteAdresse(adresse.id_adresse)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>
@@ -79,7 +80,7 @@
         <td>{{ adresse.code_postal }}</td>
         <td>
           <button (click)="selectAdresse(adresse.id_adresse)"><i class="fa-solid fa-eye"></i></button>
-          <button (click)="updateAdresse(adresse)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button (click)="toggleUpdateAdresseForm(adresse)"><i class="fa-solid fa-pen-to-square"></i></button>
           <button id="searchButton" (click)="deleteAdresse(adresse.id_adresse)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>
@@ -132,6 +133,128 @@
 
 
 </div>
+
+
+
+
+<!-- Gestion  form ajout   d'une nouvelle adresse -->
+<div class="usercard2"  *ngIf="showAddAdresseForm" >
+
+  <button id="searchButton" (click)="toggleAddAdresseForm()">Retour</button>
+
+  
+  <form >
+    <div class="row mt-3">
+      <div class="col-3"></div>
+      <div class="col form-floating mb-3">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="name" placeholder="Nom" [(ngModel)]="adresse.rue_numero" name="rue_numero" autofocus required>
+          <label for="name">rue & numero</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="number" class="form-control" name="logo"  [(ngModel)]="adresse.code_postal" name="code_posta">
+          <label for="logo">Code postal</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="id" [(ngModel)]="adresse.localite" name="localite">
+          <label for="logo">localite</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="id" [(ngModel)]="adresse.pays" name="pays">
+          <label for="logo">Pays</label>
+        </div>
+    
+        <div class="align-right">
+          <button type="submit" id="searchButton" (click)="addAdresse(adresse)">Ajouter</button>
+        </div>
+      </div>
+      <div class="col-3"></div>
+    </div>
+  </form>
+
+
+<!-- Gestion notif-->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <div class="alert alert-success" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+      
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+<!-- Gestion  Update  adresse -->
+<div class="usercard2"    *ngIf="showUpdateAdresseForm" >
+
+ 
+
+  <div class="update-form" *ngIf="AdresseToUpdate" >
+    <h2>Modifier Institution</h2>
+    <button id="searchButton" (click)="toggleAddAdresseForm()">Retour</button>
+
+    <form (ngSubmit)="updateAdresse(AdresseToUpdate)" #updateForm="ngForm">
+      <div class="form-group">
+        <label for="name">Rue & numero :</label>
+        <input type="text" class="form-control" id="rue_numero" name="rue_numero" [(ngModel)]="AdresseToUpdate.rue_numero" required>
+      </div>
+      <div class="form-group">
+        <label for="logo">CP :</label>
+        <input type="number" class="form-control" id="code_postal" name="code_postal" [(ngModel)]="AdresseToUpdate.code_postal" required>
+      </div>
+      <div class="form-group">
+        <label for="idAdresse">Localité :</label>
+        <input type="text" class="form-control" id="localite" name="localite" [(ngModel)]="AdresseToUpdate.localite" required>
+      </div>
+      <div class="form-group">
+        <label for="idAdresse">Pays :</label>
+        <input type="text" class="form-control" id="pays" name="pays" [(ngModel)]="AdresseToUpdate.pays" required>
+      </div>
+      <button type="submit" id="searchButton" >Enregistrer</button>
+    </form>
+  </div>
+  
+  
+
+
+
+<!-- Gestion notif-->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <div class="alert alert-success" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+      
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
 
 
 

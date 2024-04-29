@@ -253,7 +253,7 @@ public function updateInstitution($institution)
 
         $prep->execute();
     } catch (PDOException $e) {
-        throw $e; // Propager l'exception pour la gestion des erreurs
+        throw new Exception("Erreur lors de la mise à jour de institution.", 0, $e);
     } finally {
         $prep = null; // Libérer la ressource PDOStatement
     }
@@ -286,7 +286,7 @@ public function addInstitution($institution)
     
         } catch (PDOException $e) {
             // En cas d'erreur, renvoyer une réponse d'erreur
-            throw $e;
+            throw new Exception("Erreur lors de l'ajout institution'.", 0, $e);
             return false;
         }
     
