@@ -1,9 +1,9 @@
 
-<div class="body">
+<div class="body"    *ngIf="!showAddImageForm && !showUpdateImageForm">
 
   <div class="usercard"  *ngIf="!selectedImage || !userDetailVisible[selectedImage.id_image]">
     <h2>Liste des Images</h2>
-     <button class="searchButton">Ajouter une Image</button>
+    <button id="searchButton" (click)="toggleAddImageForm()">Ajouter une image</button>
 
     <!-- Formulaire de recherche -->
    <form (ngSubmit)="searchImageByname(searchTerm)" class="search-container" #searchForm="ngForm">
@@ -20,7 +20,7 @@
         <img [src]="image.url_image" class="custom-image" alt="{{ image.nom }} Logo">
         <div class="button-container">
           <button (click)="selectImage(image.id_image)"><i class="fa-solid fa-eye"></i></button>
-          <button (click)="updateImage(image)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button (click)="toggleUpdateImageForm(image)"><i class="fa-solid fa-pen-to-square"></i></button>
           <button  id="searchButton" (click)="deleteImage(image.id_image)"><i class="fa-solid fa-trash"></i></button>
         </div>
       </div>
@@ -64,7 +64,7 @@
             <img [src]="image.url_image" class="custom-image" alt="{{ image.nom }} Logo">
             <div class="button-container">
               <button (click)="selectImage(image.id_image)"><i class="fa-solid fa-eye"></i></button>
-              <button (click)="updateImage(image)"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button (click)="toggleUpdateImageForm(image)"><i class="fa-solid fa-pen-to-square"></i></button>
               <button  id="searchButton" (click)="deleteImage(image.id_image)"><i class="fa-solid fa-trash"></i></button>
             </div>
           </div>
@@ -108,6 +108,116 @@
 
 
 </div>
+
+
+
+<!-- Gestion  form ajout -->
+<div class="usercard2"  *ngIf="showAddImageForm" >
+
+  <button id="searchButton" (click)="toggleAddImageForm()">Retour</button>
+
+  
+  <form >
+    <div class="row mt-3">
+      <div class="col-3"></div>
+      <div class="col form-floating mb-3">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="name" placeholder="Nom" [(ngModel)]="image.nom" name="nom" autofocus required>
+          <label for="name">Nom</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="url_image"  [(ngModel)]="image.url_image" name="url_image">
+          <label for="logo">Url image</label>
+        </div>
+    
+        <p style="color: red;">{{errorMessage}}</p>
+        <div class="align-right">
+          <button type="submit" id="searchButton" (click)="addImage(image)">Ajouter</button>
+        </div>
+      </div>
+      <div class="col-3"></div>
+    </div>
+  </form>
+
+
+<!-- Gestion notif-->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <div class="alert alert-success" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+      
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+<!-- Gestion  Update  instit -->
+<div class="usercard2"    *ngIf="showUpdateImageForm" >
+
+ 
+
+
+  <div class="update-form" *ngIf="ImageToUpdate" >
+    <h2>Modifier Image</h2>
+    <button id="searchButton" (click)="toggleAddImageForm()">Retour</button>
+
+    <form (ngSubmit)="updateImage(ImageToUpdate)" #updateForm="ngForm">
+      <div class="form-group">
+        <label for="name">Nom :</label>
+        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="ImageToUpdate.nom" required>
+      </div>
+      <div class="form-group">
+        <label for="logo">URL Image :</label>
+        <input type="text" class="form-control" id="url_image" name="url_image" [(ngModel)]="ImageToUpdate.url_image" required>
+      </div>
+      <button type="submit" id="searchButton" >Enregistrer</button>
+    </form>
+  </div>
+  
+  
+
+
+
+<!-- Gestion notif-->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <div class="alert alert-success" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+      
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
 
 
 

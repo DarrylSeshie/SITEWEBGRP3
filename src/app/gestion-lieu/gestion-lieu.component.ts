@@ -3,6 +3,8 @@ import { Lieu } from '../models/lieu.model';// un service a besoin de son model
 import { Observable } from 'rxjs';
 import { LieuService } from '../services/lieu.service';
 
+
+
 declare const bootstrap: any;
 @Component({
   selector: 'app-gestion-lieu',
@@ -21,12 +23,27 @@ export class GestionLieuComponent {
   searchTerm: string = '';
   showSearchResults: boolean = false; 
   userDetailVisible: { [key: number]: boolean } = {};
+  showAddLieuForm: boolean = false;
+  showUpdateLieuForm :boolean = false;
   
   // message de notifs
   successMessage: string = '';
   errorMessage: string = '';
 
 
+
+  lieu: Lieu = {
+    id_lieu: -1,
+    nom: '',
+    batiment: '',
+    locaux: '',
+    id_institution: -1,
+    id_adresse: -1,
+    
+  };
+
+
+  LieuToUpdate: Lieu | null = null;
   constructor(private lieuService: LieuService) { }
 
   ngOnInit(): void {
@@ -37,6 +54,24 @@ export class GestionLieuComponent {
   this.lieux = this.lieuService.getLieux(this.currentPage, this.pageSize);
   this.showSearchResults = false;
   }
+
+
+  
+  toggleAddLieuForm(): void {
+    if (this.showAddLieuForm || this.showUpdateLieuForm) {
+      this.showAddLieuForm = false;
+      this.showUpdateLieuForm = false;
+    } else {
+      this.showAddLieuForm = true;
+    }
+  }
+
+  toggleUpdateLieuForm(Lieu: Lieu) {
+    this.LieuToUpdate = Lieu;
+    this.showUpdateLieuForm = true;
+    this.showAddLieuForm = false; // Assurez-vous que le formulaire d'ajout est masqué
+  }
+
 
   
   nextPage() {
@@ -119,46 +154,34 @@ export class GestionLieuComponent {
     );
   }
 
-  updateLieu(lieu: Lieu) {
-    this.lieuService.updateLieu(lieu).subscribe(
+  updateLieu(LieuToUpdate: Lieu) {
+  
+    this.lieuService.updateLieu(LieuToUpdate).subscribe(
       () => {
-        this.loadLieux(); // Recharger la liste des utilisateurs après la mise à jour
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Lieu modifié avec succès.';
-        this.errorMessage = ''; // Réinitialiser le message d'erreur
+        this.loadLieux();
+        this.showSuccessToast('Lieu modifiée avec succès.');
+        this.LieuToUpdate = null;
       },
-      error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        console.error('Error updating user:', error);
-        this.errorMessage = 'Erreur lors de la modification de lieu : ' + error.message;
-        this.successMessage = ''; // Réinitialiser le message de succès
+      (error) => {
+        console.error('Error updating Lieu:', error);
+        this.showErrorToast('Erreur lors de la modification de lieu.');
       }
     );
   }
 
   // Cette méthode doit être liée à un événement de formulaire pour ajouter un utilisateur
   addLieu(lieu: Lieu) {
-    this.lieuService.addLieu(lieu).subscribe(
+  
+    this.lieuService.updateLieu(lieu).subscribe(
       () => {
-        this.loadLieux(); // Recharger la liste des utilisateurs après ajout
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Lieu ajouté avec succès.';
-        this.errorMessage = ''; 
-       
+        this.loadLieux();
+        this.showSuccessToast('Lieu modifiée avec succès.');
+        this.toggleAddLieuForm();
       },
-      error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        console.error('Error adding user:', error);
-        this.errorMessage = 'Erreur lors de l\'ajout de lieu : ' + error.message;
-        this.successMessage = ''; // Réinitialiser le message de succès
+      (error) => {
+        console.error('Error updating Lieu:', error);
+        this.showErrorToast('Erreur lors de la modification de lieu.');
+        this.loadLieux();
       }
     );
   }
@@ -174,6 +197,23 @@ export class GestionLieuComponent {
         console.error('Error fetching user:', error);
       }
     );
+  }
+
+
+  showSuccessToast(message: string) {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.successMessage = message;
+    this.errorMessage = '';
+  }
+
+   showErrorToast(message: string) {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.errorMessage = message;
+    this.successMessage = '';
   }
 
 }

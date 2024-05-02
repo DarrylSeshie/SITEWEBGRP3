@@ -8,6 +8,24 @@
    
   }
 
+  
+  .usercard2 {
+    box-sizing: border-box;
+    width: 70%;
+    margin: 20px auto;
+    padding: 10px 30px;
+    box-shadow: lightgray 4px 4px 20px;
+    margin-top: 150px;
+    
+   
+    p {
+      font-weight: 300;
+      font-size: 16px;
+    }
+   
+  }
+
+
   .buttonadd{
     padding: 8px 16px;
     background-color: #800860; /* Couleur de fond du bouton (bleu par défaut) */

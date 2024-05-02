@@ -171,14 +171,13 @@ public function deleteLieu($id)
 
 public function updateLieu($lieu)
 {
-    $sql = "UPDATE lieu SET 
-            nom = :nom,
+    $sql = "UPDATE lieu
+            SET  nom = :nom,
             batiment = :batiment,
             locaux = :locaux,
             id_institution = :id_institution,
             id_adresse = :id_adresse
             WHERE id_lieu = :id";
-
     try {
         $prep = $this->db->prepare($sql);
 
@@ -186,8 +185,8 @@ public function updateLieu($lieu)
         $prep->bindParam(':nom', $lieu->getNom(), PDO::PARAM_STR);
         $prep->bindParam(':batiment', $lieu->getBatiment(), PDO::PARAM_STR);
         $prep->bindParam(':locaux', $lieu->getLocaux(), PDO::PARAM_STR);
-        $prep->bindParam(':id_institution', $lieu->getIdInstitution(), PDO::PARAM_INT);
-        $prep->bindParam(':id_adresse', $lieu->getIdAdresse(), PDO::PARAM_INT);
+        $prep->bindParam(':id_institution', $lieu->getInstitution()->getIdInstitution(), PDO::PARAM_INT);
+        $prep->bindParam(':id_adresse', $lieu->getAdresse()->getIdAdresse(), PDO::PARAM_INT);
         $prep->bindParam(':id', $lieu->getIdLieu(), PDO::PARAM_INT); // ID de l'lieu à mettre à jour
 
         $prep->execute();
@@ -197,6 +196,7 @@ public function updateLieu($lieu)
         $prep = null; // Libérer la ressource PDOStatement
     }
 }
+
 
 
 
@@ -217,17 +217,17 @@ public function addLieu($lieu)
 
         $prep->execute();
 
-        $lieu->setIdLieu($this->db->lastInsertId());
+        $lieuID = $this->db->lastInsertId();
+
+        $lieu->setIdLieu
+        ($lieuID);
+        return true;
         
-        // Si vous avez besoin d'associer des objets Adresse et Institution au Lieu après l'insertion
-        // vous pouvez le faire ici en utilisant les méthodes de votre modèle de données.
-        // Exemple : $lieu->setAdresse($adresse); $lieu->setInstitution($institution);
 
     } catch (PDOException $e) {
         throw $e;
-    } finally {
-        $prep = null;
-    }
+        return false ;
+    } 
 }
 
 }

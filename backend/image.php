@@ -48,18 +48,36 @@ if ($http_method === "GET") {
         echo json_encode($imgs);
     }
 } elseif ($http_method === "POST") {
-    // Requête POST pour ajouter un nouvel utilisateur
-    $jsonStr = file_get_contents('php://input');
-    $imgArray = json_decode($jsonStr, true);
-    $img = new Image($imgArray);
+     // Récupérer les données JSON et l'URL de l'image
+$jsonStr = file_get_contents('php://input');
+$imageArray = json_decode($jsonStr, true);
+
+if (!empty($imageArray)) {
+    // Créer un nouvel objet Image à partir des données JSON
+    $image = new Image($imageArray);
+
+    // Récupérer l'URL de l'image depuis les données JSON
+    $imageUrl = $imageArray['url_image'];
+
+    // Stocker l'URL de l'image dans l'objet Image (si besoin)
+    $image->setUrlImage($imageUrl);
 
     try {
-        $imageManager->addImage($img); 
-        echo json_encode($img); // Répondre avec les données de l'utilisateur ajouté
+        // Ajouter l'image à la base de données via le gestionnaire
+        $imageManager->addImage($image);
+
+        // Répondre avec les données de l'image ajoutée
+        echo json_encode($image);
     } catch (PDOException $e) {
+        // En cas d'erreur PDO, renvoyer un code HTTP 500 avec un message d'erreur
         http_response_code(500);
-        echo json_encode(array("error" => $e->getMessage()));
+        echo json_encode(array("error" => "Erreur lors de l'ajout de l'image : " . $e->getMessage()));
     }
+} else {
+    // Si les données JSON sont vides ou invalides
+    http_response_code(400);
+    echo json_encode(array("error" => "Données JSON invalides pour l'ajout d'image "));
+}
 } elseif ($http_method === "PUT" || $http_method === "PATCH") {
     // Requête PUT ou PATCH pour mettre à jour un utilisateur existant
     $jsonStr = file_get_contents('php://input');

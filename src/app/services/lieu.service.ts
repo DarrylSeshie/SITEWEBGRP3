@@ -32,15 +32,17 @@ export class LieuService {
 
 
 
+
+
   searchLieuxByName2(page: number, pageSize: number, search: string): Observable<Lieu[]> {
     const url = `${this.apiUrl}?page=${page}&pageSize=${pageSize}&search=${search}`;
     return this.http.get<Lieu[]>(url);
   }
 
 
-  updateLieu(updatedLieu: Lieu): Observable<Lieu> {
-    const url = `${this.apiUrl}/${updatedLieu.id_lieu}`;
-    return this.http.put<Lieu>(url, updatedLieu);
+  updateLieu(updateLieu: Lieu): Observable<Lieu> {
+    const url = `${this.apiUrl}/${updateLieu.id_lieu}`;
+    return this.http.put<Lieu>(url, updateLieu);
   }
 
   deleteLieu(id: number): Observable<any> {

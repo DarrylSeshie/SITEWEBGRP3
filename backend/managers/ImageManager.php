@@ -136,7 +136,7 @@ public function deleteImage($id)
 {
     $sql = "UPDATE image SET 
             nom = :nom,
-            url_image = :url_image,
+            url_image = :url_image
             WHERE id_image = :id";
 
     try {
@@ -158,27 +158,27 @@ public function deleteImage($id)
 
 public function addImage($img)
 {
-    $sql = "INSERT INTO image (nom, url_image, id_adresse) 
-            VALUES (:nom, :url_image, :id_adresse)";
+    $sql = "INSERT INTO image ( url_image,nom) 
+                VALUES (:url_image,:nom)";
 
     try {
         $prep = $this->db->prepare($sql);
 
-        $nom = $img->getNom();
-        $url_image = $img->getUrlImage();
-        $id_adresse = $img->getIdAdresse(); 
-
-        $prep->bindParam(':nom', $nom, PDO::PARAM_STR);
-        $prep->bindParam(':url_image', $url_image, PDO::PARAM_STR);
-        $prep->bindParam(':id_adresse', $id_adresse, PDO::PARAM_INT);
+        $prep->bindParam(':url_image', $img->getUrlImage(), PDO::PARAM_STR);
+        $prep->bindParam(':nom', $img->getNom(), PDO::PARAM_STR);
+      
 
         $prep->execute();
 
-        $img->setIdImage($this->db->lastInsertId()); 
+        $imgId = $this->db->lastInsertId();
+        $img->setId
+        ($imgId);
+     
+        return true; // Succès
     } catch (PDOException $e) {
-        throw $e;
-    } finally {
-        $prep = null;
+       // En cas d'erreur, renvoyer une réponse d'erreur
+       throw new Exception("Erreur lors de l'ajout image'.", 0, $e);
+       return false;
     }
 }
 

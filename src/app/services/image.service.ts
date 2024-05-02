@@ -28,8 +28,8 @@ export class ImageService {
   }
   
  
-  addImage(newImageId: Image): Observable<Image> {
-    return this.http.post<Image>(this.apiUrl, newImageId);
+  addImage(newImage: Image): Observable<Image> {
+    return this.http.post<Image>(this.apiUrl, newImage);
   }
 
 

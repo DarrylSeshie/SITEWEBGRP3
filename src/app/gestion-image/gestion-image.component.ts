@@ -21,17 +21,46 @@ export class GestionImageComponent {
   showSearchResults: boolean = false; 
   showDefaultImages: boolean = true;
   userDetailVisible: { [key: number]: boolean } = {};
+  showAddImageForm: boolean = false;
+  showUpdateImageForm :boolean = false;
 
   // message de notifs
   successMessage: string = '';
   errorMessage: string = '';
 
+
+  image: Image = {
+    id_image: -1,
+    nom: '',
+    url_image: '',
+
+  };
+
+
+  ImageToUpdate: Image | null = null;
   constructor(private imageService:ImageService) { }
 
   ngOnInit(): void {
     this.loadImages();
   }
   
+
+  
+  toggleAddImageForm(): void {
+    if (this.showAddImageForm || this.showUpdateImageForm) {
+      this.showAddImageForm = false;
+      this.showUpdateImageForm = false;
+    } else {
+      this.showAddImageForm = true;
+    }
+  }
+
+  toggleUpdateImageForm(image: Image) {
+    this.ImageToUpdate = image;
+    this.showUpdateImageForm = true;
+    this.showAddImageForm = false; // Assurez-vous que le formulaire d'ajout est masqué
+  }
+
 
   loadImages():void {
   this.images = this.imageService.getImages(this.currentPage, this.pageSize);
@@ -120,23 +149,16 @@ export class GestionImageComponent {
     );
   }
 
-  updateImage(image: Image) {
-    this.imageService.updateImage(image).subscribe(
+  updateImage(ImageToUpdate: Image) {
+    this.imageService.updateImage(ImageToUpdate).subscribe(
       () => {
-        this.loadImages(); // Recharger la liste des utilisateurs après la mise à jour
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Image modifié avec succès.';
-        this.errorMessage = ''; // Réinitialiser le message d'erreur
+        this.loadImages();
+        this.showSuccessToast('Image modifiée avec succès.');
+        this.ImageToUpdate = null;
       },
-      error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        console.error('Error updating user:', error);
-        this.errorMessage = 'Erreur lors de la modification de l\'image: ' + error.message;
-        this.successMessage = ''; // Réinitialiser le message de succès
+      (error) => {
+        console.error('Error updating image:', error);
+        this.showErrorToast('Erreur lors de la modification de l\'image.');
       }
     );
   }
@@ -145,21 +167,17 @@ export class GestionImageComponent {
    
     this.imageService.addImage(image).subscribe(
       () => {
-        this.loadImages(); // Recharger la liste des utilisateurs après ajout
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Image ajouté avec succès.';
-        this.errorMessage = ''; 
+        this.image.url_image = ''; 
+        this.loadImages();
+        this.showSuccessToast('Image ajoutée avec succès.');
+        this.toggleAddImageForm();
+        
        
       },
-      error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        console.error('Error adding user:', error);
-        this.errorMessage = 'Erreur lors de l\'ajout de l\'image : ' + error.message;
-        this.successMessage = ''; // Réinitialiser le message de succès
+      (error) => {
+        console.error('Error adding image:', error);
+        this.showErrorToast('Erreur lors de l\'ajout de l\'image.');
+        this.loadImages();
       }
     );
   }
@@ -174,6 +192,22 @@ export class GestionImageComponent {
         console.error('Error fetching user:', error);
       }
     );
+  }
+
+  private showSuccessToast(message: string) {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.successMessage = message;
+    this.errorMessage = '';
+  }
+
+  private showErrorToast(message: string) {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.errorMessage = message;
+    this.successMessage = '';
   }
 
 }
