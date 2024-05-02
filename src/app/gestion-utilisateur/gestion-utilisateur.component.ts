@@ -166,6 +166,7 @@ export class GestionUtilisateurComponent implements OnInit{
         toastBootstrap.show();
         this.successMessage = 'Utilisateur modifié avec succès.';
         this.errorMessage = ''; // Réinitialiser le message d'erreur
+        this.toggleAddUserForm();
       },
       error => {
         const toastElement = document.getElementById('liveToast');
@@ -188,7 +189,8 @@ export class GestionUtilisateurComponent implements OnInit{
         const toastBootstrap = new bootstrap.Toast(toastElement);
         toastBootstrap.show();
         this.successMessage = 'Utilisateur ajouté avec succès.';
-        this.errorMessage = ''; 
+        this.errorMessage = '';
+        this.toggleAddUserForm(); 
        
       },
       error => {

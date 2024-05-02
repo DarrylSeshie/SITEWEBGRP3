@@ -22,6 +22,8 @@ export class GestionFormateurComponent {
   searchTerm: string = '';
   showSearchResults: boolean = false; 
   userDetailVisible: { [key: number]: boolean } = {};
+  showAddUserForm: boolean = false;
+  showUpdateUserForm :boolean = false;
 
 
    // message de notifs
@@ -29,6 +31,26 @@ export class GestionFormateurComponent {
    errorMessage: string = '';
  
 
+
+   
+  user: User = {
+    id_utilisateur: -1, 
+    civilite: '',        
+    nom: '',             
+    prenom: '',          
+    email: '',           
+    mot_de_passe: '',    
+    gsm: '',             
+    TVA: 'VIDE',            
+    profession: '',     
+    gsm_pro: 'VIDE',        
+    email_pro: 'VIDE',      
+    id_role: 3,         
+    id_institution: -1,  
+    id_adresse: -1
+  };
+
+  UserToUpdate: User | null = null;
   constructor(private formateurService: FormateurService) { }
 
   ngOnInit(): void {
@@ -41,6 +63,22 @@ export class GestionFormateurComponent {
   this.showSearchResults = false;
   }
 
+
+   
+  toggleAddUserForm(): void {
+    if (this.showAddUserForm || this.showUpdateUserForm) {
+      this.showAddUserForm = false;
+      this.showUpdateUserForm = false;
+    } else {
+      this.showAddUserForm = true;
+    }
+  }
+
+  toggleUpdateUserForm(User: User) {
+    this.UserToUpdate = User;
+    this.showUpdateUserForm = true;
+    this.showAddUserForm = false; // Assurez-vous que le formulaire d'ajout est masqué
+  }
   
   nextPage() {
     this.currentPage++;
@@ -134,6 +172,7 @@ export class GestionFormateurComponent {
         toastBootstrap.show();
         this.successMessage = 'Formateur modifié avec succès.';
         this.errorMessage = ''; // Réinitialiser le message d'erreur
+        this.toggleAddUserForm();
       },
       error => {
         const toastElement = document.getElementById('liveToast');
@@ -147,16 +186,17 @@ export class GestionFormateurComponent {
   }
 
   // Cette méthode doit être liée à un événement de formulaire pour ajouter un utilisateur
+
   addUser(user: User) {
-   
     this.formateurService.addFormateur(user).subscribe(
       () => {
         this.loadUsers(); // Recharger la liste des utilisateurs après ajout
         const toastElement = document.getElementById('liveToast');
         const toastBootstrap = new bootstrap.Toast(toastElement);
         toastBootstrap.show();
-        this.successMessage = 'Formateur ajouté avec succès.';
+        this.successMessage = 'Utilisateur ajouté avec succès.';
         this.errorMessage = ''; 
+        this.toggleAddUserForm();
        
       },
       error => {
@@ -164,11 +204,12 @@ export class GestionFormateurComponent {
         const toastBootstrap = new bootstrap.Toast(toastElement);
         toastBootstrap.show();
         console.error('Error adding user:', error);
-        this.errorMessage = 'Erreur lors de l\'ajout du formateur: ' + error.message;
+        this.errorMessage = 'Erreur lors de l\'ajout de l\'utilisateur : ' + error.message;
         this.successMessage = ''; // Réinitialiser le message de succès
       }
     );
   }
+
 
   selectUser(userId: number) {
     this.formateurService.getFormateurById(userId).subscribe(

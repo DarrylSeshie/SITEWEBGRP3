@@ -155,6 +155,7 @@ export class GestionImageComponent {
         this.loadImages();
         this.showSuccessToast('Image modifiée avec succès.');
         this.ImageToUpdate = null;
+        this.toggleAddImageForm();
       },
       (error) => {
         console.error('Error updating image:', error);

@@ -9,6 +9,7 @@ import { Formateur } from '../models/formateur.model';
 export class FormateurService {
 
   private apiUrl = 'http://localhost/PROJET_ceREF/backend/formateur.php'; // URL de votre API pour les utilisateurs
+  private apiUrl2 = 'http://localhost/PROJET_ceREF/backend/user.php';
 
   constructor(private http: HttpClient) { } 
 
@@ -28,7 +29,7 @@ export class FormateurService {
   
  
   addFormateur(newFormateur: Formateur): Observable<Formateur> {
-    return this.http.post<Formateur>(this.apiUrl, newFormateur);
+    return this.http.post<Formateur>(this.apiUrl2, newFormateur);
   }
 
 
@@ -40,7 +41,7 @@ export class FormateurService {
 
 
   updateFormateur(updatedFormateur: Formateur): Observable<Formateur> {
-    const url = `${this.apiUrl}/${updatedFormateur.id_utilisateur}`;
+    const url = `${this.apiUrl2}/${updatedFormateur.id_utilisateur}`;
     return this.http.put<Formateur>(url, updatedFormateur);
   }
 

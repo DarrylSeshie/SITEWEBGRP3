@@ -175,6 +175,7 @@ export class GestionFormationComponent {
         toastBootstrap.show();
         this.successMessage = 'Formation modifié avec succès.';
         this.errorMessage = ''; // Réinitialiser le message d'erreur
+        this.toggleAddProduitForm();
       },
       error => {
         const toastElement = document.getElementById('liveToast');
@@ -196,6 +197,7 @@ export class GestionFormationComponent {
         toastBootstrap.show();
         this.successMessage = 'Formation ajouté avec succès.';
         this.errorMessage = ''; 
+        this.toggleAddProduitForm();
        
       },
       error => {
