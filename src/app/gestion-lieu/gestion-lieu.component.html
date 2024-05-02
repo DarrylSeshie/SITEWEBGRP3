@@ -155,23 +155,23 @@
       <div class="col form-floating mb-3">
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="name" placeholder="Nom" [(ngModel)]="lieu.nom" name="nom" autofocus required>
-          <label for="logo">Nom</label>
+          <label for="Nom">Nom</label>
         </div>
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="batiment"  [(ngModel)]="lieu.batiment" name="batiment">
-          <label for="logo">Batimant</label>
+          <label for="Batimant">Batimant</label>
         </div>
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="locaux" [(ngModel)]="lieu.locaux" name="locaux">
-          <label for="logo">locale</label>
+          <label for="locale">locale</label>
         </div>
         <div class="form-floating mb-3">
           <input type="number"  class="form-control" id="id_institution" [(ngModel)]="lieu.id_institution" name="id_institution">
-          <label for="logo">code institution</label>
+          <label for="code institution">code institution</label>
         </div>
         <div class="form-floating mb-3">
           <input type="number" class="form-control" id="id_adresse" [(ngModel)]="lieu.id_adresse" name="id_adresse">
-          <label for="logo">code Adresse</label>
+          <label for="code Adresse">code Adresse</label>
         </div>
     
         <div class="align-right">
@@ -220,23 +220,23 @@
 
     <form (ngSubmit)="updateLieu(LieuToUpdate)" #updateForm="ngForm">
       <div class="form-group">
-        <label for="name">Nom :</label>
+        <label for="Nom">Nom :</label>
         <input type="text" class="form-control" id="rue_numero" name="rue_numero" [(ngModel)]="LieuToUpdate.nom" required>
       </div>
       <div class="form-group">
-        <label for="logo">Batiment :</label>
+        <label for="Batiment">Batiment :</label>
         <input type="text" class="form-control" id="batiment" name="batiment" [(ngModel)]="LieuToUpdate.batiment" required>
       </div>
       <div class="form-group">
-        <label for="idLieu">Locale :</label>
+        <label for="Locale">Locale :</label>
         <input type="text" class="form-control" id="locaux" name="locaux" [(ngModel)]="LieuToUpdate.locaux" required>
       </div>
       <div class="form-group">
-        <label for="idLieu">code institution :</label>
+        <label for="code institution">code institution :</label>
         <input type="number" class="form-control" id="id_institution" name="id_institution" [(ngModel)]="LieuToUpdate.id_institution" required>
       </div>
       <div class="form-group">
-        <label for="idLieu">code adresse :</label>
+        <label for="code adresse">code adresse :</label>
         <input type="number" class="form-control" id="id_adresse" name="id_adresse" [(ngModel)]="LieuToUpdate.id_adresse" required>
       </div>
       <button type="submit" id="searchButton" >Enregistrer</button>

@@ -1,10 +1,10 @@
-<div class="body">
+<div class="body"    *ngIf="!showAddProduitForm && !showUpdateProduitForm" >
 
 
 
   <div *ngIf="!selectedFormation || !userDetailVisible[selectedFormation.id_produit]" class="usercard" >
       <h2>Liste des formations / journeés</h2>
-      <button class="buttonadd">Ajouter une formation</button>
+      <button id="searchButton" (click)="toggleAddProduitForm()">Ajouter une Formation</button>
 
        <!-- Formulaire de recherche -->
        <form (ngSubmit)="searchFormationsByname(searchTerm)" class="search-container" #searchForm="ngForm">
@@ -33,7 +33,7 @@
         <td> <img [src]="produit.image?.url_image" class="custom-image" ></td>
         <td>
          <button (click)="selectFormation(produit.id_produit)"><i class="fa-solid fa-eye"></i></button>
-         <button (click)="updateFormation(produit)"><i class="fa-solid fa-pen-to-square"></i></button>
+         <button  (click)="toggleUpdateProduitForm(produit)"><i class="fa-solid fa-pen-to-square"></i></button>
           <button  id="searchButton"  (click)="deleteFormation(produit.id_produit)"><i class="fa-solid fa-trash"></i></button>
           
         </td>
@@ -150,4 +150,214 @@
 
 
 </div>
+
+
+
+
+<!-- Gestion  form ajout de formation -->
+<div class="usercard2"  *ngIf="showAddProduitForm" >
+
+  <button id="searchButton" (click)="toggleAddProduitForm()">Retour</button>
+
+  
+  <form >
+    <div class="row mt-3">
+      <div class="col-3"></div>
+      <div class="col form-floating mb-3">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="titre" placeholder="Nom" [(ngModel)]="produit.titre" name="titre" autofocus required>
+          <label for="name">titre</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="sous_titre"  [(ngModel)]="produit.sous_titre" name="sous_titre">
+          <label for="logo">sous_titre</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="date" class="form-control" id="date_debut" [(ngModel)]="produit.date_debut" name="date_debut">
+          <label for="Date debut">Date debut</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="date" class="form-control" id="date_fin" placeholder="date_fin" [(ngModel)]="produit.date_fin" name="date_fin" autofocus required>
+          <label for="date fin">date fin</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="date" class="form-control" id="date_fin_inscription" placeholder="date_fin_inscription" [(ngModel)]="produit.date_fin_inscription" name="date_fin_inscription" autofocus required>
+          <label for="date fin inscription">date fin inscription</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="descriptif" placeholder="descriptif" [(ngModel)]="produit.descriptif" name="descriptif" autofocus required>
+          <label for="description">description</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="objectif" placeholder="objectif" [(ngModel)]="produit.objectif" name="objectif" autofocus required>
+          <label for="objectif">objectif</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="contenu" placeholder="contenu" [(ngModel)]="produit.contenu" name="contenu" autofocus required>
+          <label for="contenu">contenu</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="methodologie" placeholder="methodologie" [(ngModel)]="produit.methodologie" name="methodologie" autofocus required>
+          <label for="methodologie">methodologie</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="public_cible" placeholder="public_cible" [(ngModel)]="produit.public_cible" name="public_cible" autofocus required>
+          <label for="public cible">public cible</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="number" max="1000" class="form-control" id="prix" placeholder="prix" [(ngModel)]="produit.prix" name="prix" autofocus required>
+          <label for="prix">prix</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="number" class="form-control" id="id_image" placeholder="id_image" [(ngModel)]="produit.id_image" name="id_image" autofocus required>
+          <label for="id_image">id_image</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="number" class="form-control" id="id_lieu" placeholder="id_lieu" [(ngModel)]="produit.id_lieu" name="id_lieu" autofocus required>
+          <label for="id_lieu">id_lieu</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="number" max="2" class="form-control" id="id_type_produit" placeholder="id_type_produit" [(ngModel)]="produit.id_type_produit" name="id_type_produit" autofocus required>
+          <label for="type produit">type produit</label>
+        </div>
+    
+        <div class="align-right">
+          <button type="submit" id="searchButton" (click)="addFormation(produit)">Ajouter</button>
+        </div>
+      </div>
+      <div class="col-3"></div>
+    </div>
+  </form>
+  
+<!-- Gestion notif-->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <div class="alert alert-success" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+      
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- Gestion  Update  instit -->
+<div class="usercard2"    *ngIf="showUpdateProduitForm" >
+
+ 
+
+
+  <div class="update-form" *ngIf="ProduitToUpdate" >
+    <h2>Modifier Produit</h2>
+    <button id="searchButton" (click)="toggleAddProduitForm()">Retour</button>
+
+    <form (ngSubmit)="updateFormation(ProduitToUpdate)" #updateForm="ngForm">
+      <div class="form-group">
+        <label for="titre">titre</label>
+        <input type="text" class="form-control" id="titre"  [(ngModel)]="ProduitToUpdate.titre" name="titre" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="sous_titre">sous_titre</label>
+        <input type="text" class="form-control" id="sous_titre"  [(ngModel)]="ProduitToUpdate.sous_titre" name="sous_titre">
+      </div>
+      <div class="form-group">
+        <label for="Date debut">Date debut</label>
+        <input type="date" class="form-control" id="date_debut" [(ngModel)]="ProduitToUpdate.date_debut" name="date_debut">
+
+      </div>
+      <div class="form-group">
+        <label for="date fin">date fin</label>
+        <input type="date" class="form-control" id="date_fin"  [(ngModel)]="ProduitToUpdate.date_fin" name="date_fin" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="date fin inscription">date fin inscription</label>
+        <input type="date" class="form-control" id="date_fin_inscription"  [(ngModel)]="ProduitToUpdate.date_fin_inscription" name="date_fin_inscription" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="description">description</label>
+        <input type="text" class="form-control" id="descriptif"  [(ngModel)]="ProduitToUpdate.descriptif" name="descriptif" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="objectif">objectif</label>
+        <input type="text" class="form-control" id="objectif" [(ngModel)]="ProduitToUpdate.objectif" name="objectif" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="contenu">contenu</label>
+        <input type="text" class="form-control" id="contenu"  [(ngModel)]="ProduitToUpdate.contenu" name="contenu" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="methodologie">methodologie</label>
+        <input type="text" class="form-control" id="methodologie"  [(ngModel)]="ProduitToUpdate.methodologie" name="methodologie" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="public cible">public cible</label>
+        <input type="text" class="form-control" id="public_cible"  [(ngModel)]="ProduitToUpdate.public_cible" name="public_cible" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="prix">prix</label>
+        <input type="number"  class="form-control" id="prix"  [(ngModel)]="ProduitToUpdate.prix" name="prix" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="id_image">id_image</label>
+        <input type="number" class="form-control" id="id_image"  [(ngModel)]="ProduitToUpdate.id_image" name="id_image" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="id_lieu">id_lieu</label>
+        <input type="number" class="form-control" id="id_lieu"  [(ngModel)]="ProduitToUpdate.id_lieu" name="id_lieu" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="type produit">type produit</label>
+        <input type="number"  class="form-control" id="id_type_produit"  [(ngModel)]="ProduitToUpdate.id_type_produit" name="id_type_produit" autofocus required>
+      </div>
+      <button type="submit" id="searchButton" >Enregistrer</button>
+    </form>
+  </div>
+  
+  
+
+
+
+<!-- Gestion notif-->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <div class="alert alert-success" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+      
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
 

@@ -22,11 +22,36 @@ export class GestionFormationComponent {
   searchTerm: string = '';
   showSearchResults: boolean = false; 
   userDetailVisible: { [key: number]: boolean } = {};
+  showAddProduitForm: boolean = false;
+  showUpdateProduitForm :boolean = false;
 
 
   // message de notifs
   successMessage: string = '';
   errorMessage: string = '';
+
+
+
+  produit: Formation = {
+    id_produit: -1,
+    titre: '',
+    sous_titre: '',
+    date_debut: new Date,
+    date_fin: new Date,
+    date_fin_inscription: new Date,
+    descriptif: '',
+    objectif: '',
+    contenu: '',
+    methodologie: '',
+    public_cible: '',
+    prix: 0.00,
+    id_image: -1,
+    id_lieu: -1,
+    id_type_produit: 1
+  };
+
+
+  ProduitToUpdate: Formation | null = null;
   constructor(private formationService:FormationService) { }
 
   ngOnInit(): void {
@@ -37,6 +62,24 @@ export class GestionFormationComponent {
   loadFormations():void {
   this.Formations = this.formationService.getFormations(this.currentPage, this.pageSize);
   this.showSearchResults = false;
+  }
+
+
+
+  
+  toggleAddProduitForm(): void {
+    if (this.showAddProduitForm || this.showUpdateProduitForm) {
+      this.showAddProduitForm = false;
+      this.showUpdateProduitForm = false;
+    } else {
+      this.showAddProduitForm = true;
+    }
+  }
+
+  toggleUpdateProduitForm(Produit: Formation) {
+    this.ProduitToUpdate = Produit;
+    this.showUpdateProduitForm = true;
+    this.showAddProduitForm = false; // Assurez-vous que le formulaire d'ajout est masqué
   }
 
   
@@ -123,8 +166,8 @@ export class GestionFormationComponent {
 
 
 
-  updateFormation(formation: Formation) {
-    this.formationService.updateFormation(formation).subscribe(
+  updateFormation(ProduitToUpdate: Formation) {
+    this.formationService.updateFormation(ProduitToUpdate).subscribe(
       () => {
         this.loadFormations(); // Recharger la liste des utilisateurs après la mise à jour
         const toastElement = document.getElementById('liveToast');
@@ -178,6 +221,24 @@ export class GestionFormationComponent {
         console.error('Error fetching user:', error);
       }
     );
+  }
+
+
+  
+  private showSuccessToast(message: string) {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.successMessage = message;
+    this.errorMessage = '';
+  }
+
+  private showErrorToast(message: string) {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.errorMessage = message;
+    this.successMessage = '';
   }
 }
 
