@@ -33,7 +33,7 @@
         <td> <img [src]="produit.image?.url_image" class="custom-image" ></td>
         <td>
          <button (click)="selectFormation(produit.id_produit)"><i class="fa-solid fa-eye"></i></button>
-         <button  (click)="toggleUpdateProduitForm(produit)"><i class="fa-solid fa-pen-to-square"></i></button>
+         <button   (click)="toggleUpdateProduitForm(produit)"><i class="fa-solid fa-pen-to-square"></i></button>
           <button  id="searchButton"  (click)="deleteFormation(produit.id_produit)"><i class="fa-solid fa-trash"></i></button>
           
         </td>
@@ -89,7 +89,7 @@
         <td> <img [src]="produit.image?.url_image" class="custom-image" ></td>
         <td>
           <button (click)="selectFormation(produit.id_produit)"><i class="fa-solid fa-eye"></i></button>
-          <button (click)="updateFormation(produit)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button  (click)="toggleUpdateProduitForm(produit)"><i class="fa-solid fa-pen-to-square"></i></button>
            <button  id="searchButton"  (click)="deleteFormation(produit.id_produit)"><i class="fa-solid fa-trash"></i></button>
         </td>
          </tr>
@@ -159,7 +159,7 @@
 
   <button id="searchButton" (click)="toggleAddProduitForm()">Retour</button>
 
-  
+
   <form >
     <div class="row mt-3">
       <div class="col-3"></div>
@@ -220,7 +220,7 @@
           <input type="number" max="2" class="form-control" id="id_type_produit" placeholder="id_type_produit" [(ngModel)]="produit.id_type_produit" name="id_type_produit" autofocus required>
           <label for="type produit">type produit</label>
         </div>
-    
+
         <div class="align-right">
           <button type="submit" id="searchButton" (click)="addFormation(produit)">Ajouter</button>
         </div>
@@ -228,7 +228,7 @@
       <div class="col-3"></div>
     </div>
   </form>
-  
+
 <!-- Gestion notif-->
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
   <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -242,7 +242,7 @@
       <div class="alert alert-success" *ngIf="successMessage">
         {{ successMessage }}
       </div>
-      
+
       <div class="alert alert-danger" *ngIf="errorMessage">
         {{ errorMessage }}
       </div>
@@ -263,7 +263,7 @@
 <!-- Gestion  Update  instit -->
 <div class="usercard2"    *ngIf="showUpdateProduitForm" >
 
- 
+
 
 
   <div class="update-form" *ngIf="ProduitToUpdate" >
@@ -331,8 +331,8 @@
       <button type="submit" id="searchButton" >Enregistrer</button>
     </form>
   </div>
-  
-  
+
+
 
 
 
@@ -349,7 +349,7 @@
       <div class="alert alert-success" *ngIf="successMessage">
         {{ successMessage }}
       </div>
-      
+
       <div class="alert alert-danger" *ngIf="errorMessage">
         {{ errorMessage }}
       </div>
@@ -357,7 +357,3 @@
   </div>
 </div>
 </div>
-
-
-
-

@@ -52,23 +52,18 @@ if ($http_method === "GET") {
         echo json_encode($users);
     }
 } elseif ($http_method === "POST") {
-   
-        // Requête POST pour ajouter un nouvel utilisateur
-        $jsonStr = file_get_contents('php://input');
-        $userArray = json_decode($jsonStr, true);
-    
-        try {
-            $user = new User($userArray);
-            
-            // Utilisez UserManager pour ajouter l'utilisateur avec l'institution associée
-            $userManager->addUser($user); 
-            // Ajoutez également la logique pour associer l'utilisateur à l'institution dans votre base de données
-            
-            echo json_encode($user); // Répondre avec les données de l'utilisateur ajouté
-        } catch (Exception $e) {
-            http_response_code(500);
-            echo json_encode(array("error" => $e->getMessage()));
-        }
+    // Requête POST pour ajouter un nouvel utilisateur
+    $jsonStr = file_get_contents('php://input');
+    $userArray = json_decode($jsonStr, true);
+    $user = new User($userArray);
+
+    try {
+        $userManager->addUser($user); // Utilisez la méthode addUser pour insérer l'utilisateur
+        echo json_encode($user); // Répondre avec les données de l'utilisateur ajouté
+    } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(array("error" => $e->getMessage()));
+    }
     
 } elseif ($http_method === "PUT" || $http_method === "PATCH") {
     // Requête PUT ou PATCH pour mettre à jour un utilisateur existant

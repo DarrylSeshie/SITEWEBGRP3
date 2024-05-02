@@ -1,4 +1,4 @@
-import { Component, OnInit , ElementRef, ViewChild  } from '@angular/core';
+import { Component, OnInit   } from '@angular/core';
 import { UserService } from '../services/user.service'; // import des services (mehode) et model
 import { User } from '../models/user.model';// un service a besoin de son model
 import { Observable } from 'rxjs';
@@ -21,12 +21,31 @@ export class GestionUtilisateurComponent implements OnInit{
   searchTerm: string = '';
   showSearchResults: boolean = false; 
   userDetailVisible: { [key: number]: boolean } = {};
+  showAddUserForm: boolean = false;
+  showUpdateUserForm :boolean = false;
 
   // message de notifs
   successMessage: string = '';
   errorMessage: string = '';
 
+  user: User = {
+    id_utilisateur: -1, 
+    civilite: '',        
+    nom: '',             
+    prenom: '',          
+    email: '',           
+    mot_de_passe: '',    
+    gsm: '',             
+    TVA: '',            
+    profession: '',     
+    gsm_pro: '',        
+    email_pro: '',      
+    id_role: 4,         
+    id_institution: -1,  
+    id_adresse: -1
+  };
 
+  UserToUpdate: User | null = null;
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
@@ -39,6 +58,22 @@ export class GestionUtilisateurComponent implements OnInit{
   this.showSearchResults = false;
   }
 
+
+  
+  toggleAddUserForm(): void {
+    if (this.showAddUserForm || this.showUpdateUserForm) {
+      this.showAddUserForm = false;
+      this.showUpdateUserForm = false;
+    } else {
+      this.showAddUserForm = true;
+    }
+  }
+
+  toggleUpdateUserForm(User: User) {
+    this.UserToUpdate = User;
+    this.showUpdateUserForm = true;
+    this.showAddUserForm = false; // Assurez-vous que le formulaire d'ajout est masqué
+  }
   
   nextPage() {
     this.currentPage++;
@@ -122,8 +157,8 @@ export class GestionUtilisateurComponent implements OnInit{
   }
 
   
-  updateUser(user: User) {
-    this.userService.updateUser(user).subscribe(
+  updateUser(UserToUpdate: User) {
+    this.userService.updateUser(UserToUpdate).subscribe(
       () => {
         this.loadUsers(); // Recharger la liste des utilisateurs après la mise à jour
         const toastElement = document.getElementById('liveToast');
@@ -187,6 +222,20 @@ export class GestionUtilisateurComponent implements OnInit{
   }
 
 
+
+  showToast(message: string, type: string): void {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+
+    if (type === 'success') {
+      this.successMessage = message;
+      this.errorMessage = ''; // Réinitialiser le message d'erreur
+    } else if (type === 'danger') {
+      this.errorMessage = message;
+      this.successMessage = ''; // Réinitialiser le message de succès
+    }
+  }
 
 
 }

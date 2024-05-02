@@ -182,12 +182,12 @@ public function updateLieu($lieu)
         $prep = $this->db->prepare($sql);
 
         // Liaison des paramètres avec les valeurs de l'objet Lieu
-        $prep->bindParam(':nom', $lieu->getNom(), PDO::PARAM_STR);
-        $prep->bindParam(':batiment', $lieu->getBatiment(), PDO::PARAM_STR);
-        $prep->bindParam(':locaux', $lieu->getLocaux(), PDO::PARAM_STR);
-        $prep->bindParam(':id_institution', $lieu->getInstitution()->getIdInstitution(), PDO::PARAM_INT);
-        $prep->bindParam(':id_adresse', $lieu->getAdresse()->getIdAdresse(), PDO::PARAM_INT);
-        $prep->bindParam(':id', $lieu->getIdLieu(), PDO::PARAM_INT); // ID de l'lieu à mettre à jour
+        $prep->bindValue(':nom', $lieu->getNom(), PDO::PARAM_STR);
+        $prep->bindValue(':batiment', $lieu->getBatiment(), PDO::PARAM_STR);
+        $prep->bindValue(':locaux', $lieu->getLocaux(), PDO::PARAM_STR);
+        $prep->bindValue(':id_institution', $lieu->getIdInstitution(), PDO::PARAM_INT);
+        $prep->bindValue(':id_adresse', $lieu->getIdAdresse(), PDO::PARAM_INT);
+        $prep->bindValue(':id', $lieu->getIdLieu(), PDO::PARAM_INT); // ID de l'lieu à mettre à jour
 
         $prep->execute();
     } catch (PDOException $e) {

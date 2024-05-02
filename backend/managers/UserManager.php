@@ -152,48 +152,7 @@ public function getUsersByName(string $nom): ?User {
         $prep = null; // Libérer la ressource PDOStatement
     }
 }
-// refaire cette methode car elle marche mais ya des erreur de memoi on dirait 
-/*public function selectUserById($userId) {
-    try {
-        $sql = "SELECT u.*, a.*, i.*, r.*
-                FROM Utilisateur u
-                LEFT JOIN Adresse a ON u.id_adresse = a.id_adresse
-                LEFT JOIN Institution i ON u.id_institution = i.id_institution
-                LEFT JOIN Role r ON u.id_role = r.id_role
-                WHERE u.id_utilisateur = :userId";
 
-        // Préparation de la requête
-        $prep = $this->db->prepare($sql);
-        $prep->bindParam(':userId', $userId, PDO::PARAM_INT);
-        $prep->execute();
-
-        // Récupération des résultats
-        $result = $prep->fetch(PDO::FETCH_ASSOC);
-
-        // Si aucun résultat n'est trouvé, retourner null
-        if (!$result) {
-            return null;
-        }
-
-        // Création d'une nouvelle instance de User avec les données récupérées
-        $user = new User($result);
-
-        // Création des objets Adresse, Institution et Role et affectation aux propriétés correspondantes
-        $user->setAddress(new Adresse($result));
-        $user->setInstitution(new Institution($result));
-        $user->setRole(new Role($result));
-
-        return $user;
-    } catch (PDOException $e) {
-       
-        echo "Erreur SQL : " . $e->getMessage();
-        return null;
-    } catch (Exception $e) {
-        echo "Erreur inattendue : " . $e->getMessage();
-        return null;
-    }
-}
-*/
 
 
 
@@ -367,19 +326,19 @@ public function addUser($user)
         $prep = $this->db->prepare($sql);
 
         // Liaison des paramètres avec les valeurs de l'objet User
-        $prep->bindParam(':civilite', $user->getCivilite(), PDO::PARAM_STR);
-        $prep->bindParam(':nom', $user->getNom(), PDO::PARAM_STR);
-        $prep->bindParam(':prenom', $user->getPrenom(), PDO::PARAM_STR);
-        $prep->bindParam(':email', $user->getEmail(), PDO::PARAM_STR);
-        $prep->bindParam(':mot_de_passe', $user->getMotDePasse(), PDO::PARAM_STR);
-        $prep->bindParam(':gsm', $user->getGsm(), PDO::PARAM_STR);
-        $prep->bindParam(':TVA', $user->getTva(), PDO::PARAM_STR);
-        $prep->bindParam(':profession', $user->getProfession(), PDO::PARAM_STR);
-        $prep->bindParam(':gsm_pro', $user->getGsmPro(), PDO::PARAM_STR);
-        $prep->bindParam(':email_pro', $user->getEmailPro(), PDO::PARAM_STR);
-        $prep->bindParam(':id_role', $user->getIdRole(), PDO::PARAM_INT);
-        $prep->bindParam(':id_institution', $user->getIdInstitution(), PDO::PARAM_INT);
-        $prep->bindParam(':id_adresse', $user->getIdAdresse(), PDO::PARAM_INT);
+        $prep->bindValue(':civilite', $user->getCivilite(), PDO::PARAM_STR);
+        $prep->bindValue(':nom', $user->getNom(), PDO::PARAM_STR);
+        $prep->bindValue(':prenom', $user->getPrenom(), PDO::PARAM_STR);
+        $prep->bindValue(':email', $user->getEmail(), PDO::PARAM_STR);
+        $prep->bindValue(':mot_de_passe', $user->getMotDePasse(), PDO::PARAM_STR);
+        $prep->bindValue(':gsm', $user->getGsm(), PDO::PARAM_STR);
+        $prep->bindValue(':TVA', $user->getTva(), PDO::PARAM_STR);
+        $prep->bindValue(':profession', $user->getProfession(), PDO::PARAM_STR);
+        $prep->bindValue(':gsm_pro', $user->getGsmPro(), PDO::PARAM_STR);
+        $prep->bindValue(':email_pro', $user->getEmailPro(), PDO::PARAM_STR);
+        $prep->bindValue(':id_role', $user->getIdRole(), PDO::PARAM_INT);
+        $prep->bindValue(':id_institution', $user->getIdInstitution(), PDO::PARAM_INT);
+        $prep->bindValue(':id_adresse', $user->getIdAdresse(), PDO::PARAM_INT);
 
         $prep->execute();
 

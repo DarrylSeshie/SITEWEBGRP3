@@ -94,26 +94,6 @@ class FormationManager
 
     
 
-   /* public function getProduitsByName($page, $pageSize, $nom)
-    {
-        $produits = [];
-        $offset = ($page - 1) * $pageSize;
-
-        $sql = "SELECT * FROM produit WHERE titre LIKE :nom OR sous_titre LIKE :nom LIMIT :offset, :pageSize";
-        $prep = $this->db->prepare($sql);
-        $prep->bindParam(':offset', $offset, PDO::PARAM_INT);
-        $prep->bindParam(':pageSize', $pageSize, PDO::PARAM_INT);
-        $prep->bindValue(':nom', '%' . $nom . '%', PDO::PARAM_STR);
-        $prep->execute();
-        $result = $prep->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach ($result as $produitData) {
-            $produit = new Formation($produitData);
-            $produits[] = $produit;
-        }
-
-        return $produits;
-    }*/
 
 
 
@@ -391,31 +371,6 @@ class FormationManager
 
     
  
- 
-
-
-
-
-
-
-
-
-
-
-   /* public function selectProduitById($prodId)
-    {
-        $sql = "SELECT * FROM produit WHERE id_produit = :prodId";
-        $prep = $this->db->prepare($sql);
-        $prep->bindParam(':prodId', $prodId, PDO::PARAM_INT);
-        $prep->execute();
-        $produitData = $prep->fetch(PDO::FETCH_ASSOC);
-
-        if (!$produitData) {
-            return null; // Aucun produit trouvé avec cet ID
-        }
-
-        return new Formation($produitData);
-    }*/
 
     public function deleteProduit($id)
     {

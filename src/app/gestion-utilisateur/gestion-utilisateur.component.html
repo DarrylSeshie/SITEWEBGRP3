@@ -1,12 +1,12 @@
 
   
 
-<div class="body">
+<div class="body"  *ngIf="!showAddUserForm && !showUpdateUserForm">
   
  
   <div *ngIf="!selectedUser || !userDetailVisible[selectedUser.id_utilisateur]" class="usercard" >  <!-- affichage sans detail + search -->
     <h2>Liste des clients</h2>
-  <button class="buttonadd"  ><i class="fa-solid fa-user-plus"></i></button>
+  <button id="searchButton" (click)="toggleAddUserForm()"><i class="fa-solid fa-user-plus"></i></button>
 
   <!-- Formulaire de recherche -->
   <form (ngSubmit)="searchUsersByname(searchTerm)" class="search-container" #searchForm="ngForm">
@@ -35,7 +35,7 @@
         <td>{{ user.gsm }}</td>
         <td>
          <button   (click)="selectUser(user.id_utilisateur)"><i class="fa-solid fa-eye"></i></button>
-          <button (click)="updateUser(user)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button  (click)="toggleUpdateUserForm(user)"><i class="fa-solid fa-pen-to-square"></i></button>
           <button id="searchButton"  class="--bs-dark-bg-subtle" (click)="deleteUser(user.id_utilisateur)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>
@@ -43,7 +43,7 @@
   </table>
 
 
-<!-- Gestion notif-->
+  <!-- Gestion notif-->
   <div class="toast-container position-fixed bottom-0 end-0 p-3">
     <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
       <div class="toast-header">
@@ -90,7 +90,7 @@
         <td>{{ user.gsm }}</td>
         <td>
           <button  (click)="selectUser(user.id_utilisateur)"><i class="fa-solid fa-eye"></i></button>
-          <button (click)="updateUser(user)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button (click)="toggleUpdateUserForm(user)"><i class="fa-solid fa-pen-to-square"></i></button>
           <button id="searchButton" class="--bs-dark-bg-subtle" (click)="deleteUser(user.id_utilisateur)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>
@@ -145,7 +145,198 @@
  <button id="searchButton" (click)="toggleDetails(selectedUser)">
   {{ userDetailVisible[selectedUser.id_utilisateur] ? '' : '' }}<i class="fa-solid fa-eye-slash"></i>
   </button>
+  </div>
+
 </div>
+
+
+
+
+<!-- Gestion  form ajout de formation -->
+<div class="usercard2"  *ngIf="showAddUserForm" >
+
+  <button id="searchButton" (click)="toggleAddUserForm()">Retour</button>
+
+  
+  <form >
+    <div class="row mt-3">
+      <div class="col-3"></div>
+      <div class="col form-floating mb-3">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="civilite" placeholder="civilite" [(ngModel)]="user.civilite" name="civilite" autofocus required>
+          <label for="civilite">civilite</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="nom"  [(ngModel)]="user.nom" name="nom">
+          <label for="nom">nom</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="prenom" [(ngModel)]="user.prenom" name="prenom">
+          <label for="prenom">prenom</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="email" placeholder="email" [(ngModel)]="user.email" name="email" autofocus required>
+          <label for="date fin">email</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control" id="mot_de_passe" placeholder="mot_de_passe" [(ngModel)]="user.mot_de_passe" name="mot_de_passe" autofocus required>
+          <label for="mot_de_passe">MDP</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="tel" class="form-control" id="gsm" placeholder="gsm" [(ngModel)]="user.gsm" name="gsm" autofocus required>
+          <label for="tel">Numero</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="TVA" placeholder="TVA" [(ngModel)]="user.TVA" name="TVA" >
+          <label for="TVA">TVA</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="profession" placeholder="profession" [(ngModel)]="user.profession" name="profession" autofocus required>
+          <label for="profession">profession</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="tel" class="form-control" id="gsm_pro" placeholder="gsm_pro" [(ngModel)]="user.gsm_pro" name="gsm_pro" >
+          <label for="gsm_pro">gsm_pro</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="email_pro" placeholder="email_pro" [(ngModel)]="user.email_pro" name="email_pro" >
+          <label for="email_pro">email_pro</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="number"  class="form-control" id="id_adresse" placeholder="id_adresse" [(ngModel)]="user.id_adresse" name="id_adresse" autofocus required>
+          <label for="id_adresse">id_adresse</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="number" class="form-control" id="id_institution" placeholder="id_institution" [(ngModel)]="user.id_institution" name="id_institution" autofocus required>
+          <label for="id_institution">id_institution</label>
+        </div>
+       
+    
+        <div class="align-right">
+          <button type="submit" id="searchButton" (click)="addUser(user)">Ajouter</button>
+        </div>
+      </div>
+      <div class="col-3"></div>
+    </div>
+  </form>
+  
+<!-- Gestion notif-->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <div class="alert alert-success" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+      
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- Gestion  Update  instit -->
+<div class="usercard2"    *ngIf="showUpdateUserForm" >
+
+ 
+
+
+  <div class="update-form" *ngIf="UserToUpdate" >
+    <h2>Modifier User</h2>
+    <button id="searchButton" (click)="toggleAddUserForm()">Retour</button>
+
+    <form (ngSubmit)="updateUser(UserToUpdate)" #updateForm="ngForm">
+      <div class="form-group">
+        <label for="civilite">civilite</label>
+        <input type="text" class="form-control" id="civilite" placeholder="civilite" [(ngModel)]="UserToUpdate.civilite" name="civilite" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="nom">nom</label>
+        <input type="text" class="form-control" id="nom"  [(ngModel)]="UserToUpdate.nom" name="nom">
+      </div>
+      <div class="form-group">
+        <label for="prenom">prenom</label>
+        <input type="text" class="form-control" id="prenom" [(ngModel)]="UserToUpdate.prenom" name="prenom">
+
+      </div>
+      <div class="form-group">
+        <label for="email">email</label>
+        <input type="text" class="form-control" id="email"  [(ngModel)]="UserToUpdate.email" name="email" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="tel">Numero</label>
+        <input type="tel" class="form-control" id="gsm" [(ngModel)]="UserToUpdate.gsm" name="gsm" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="TVA">TVA</label>
+        <input type="text" class="form-control" id="TVA"  [(ngModel)]="UserToUpdate.TVA" name="TVA" >
+      </div>
+      <div class="form-group">
+        <label for="profession">profession</label>
+        <input type="text" class="form-control" id="profession"  [(ngModel)]="UserToUpdate.profession" name="profession" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="gsm_pro">gsm_pro</label>
+        <input type="text" class="form-control" id="gsm_pro" [(ngModel)]="UserToUpdate.gsm_pro" name="gsm_pro" >
+      </div>
+      <div class="form-group">
+        <label for="email_pro">email_pro</label>
+        <input type="text" class="form-control" id="email_pro"  [(ngModel)]="UserToUpdate.email_pro" name="email_pro" >
+      </div>
+      <div class="form-group">
+        <label for="id_adresse">id_adresse</label>
+        <input type="number"  class="form-control" id="id_adresse"  [(ngModel)]="UserToUpdate.id_adresse" name="id_adresse" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="id_institution">id_institution</label>
+        <input type="number" class="form-control" id="id_institution"  [(ngModel)]="UserToUpdate.id_institution" name="id_institution" autofocus required>
+      </div>
+      <button type="submit" id="searchButton" >Enregistrer</button>
+    </form>
+  </div>
+  
+  
+
+
+
+<!-- Gestion notif-->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <div class="alert alert-success" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+      
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
 
 
 

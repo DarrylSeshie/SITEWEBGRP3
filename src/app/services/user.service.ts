@@ -24,11 +24,11 @@ export class UserService {
     return this.http.get<User>( 'http://localhost/PROJET_ceREF/backend/user.php' + `?id=${userId}` );
   }
 
-  
-  
-  addUser(newUser: User): Observable<User> {
-    return this.http.post<User>(this.apiUrl, newUser);
+  addUser(newUserId: User): Observable<User> {
+    return this.http.post<User>(this.apiUrl, newUserId);
   }
+  
+
 
   searchUsersByName2(page: number, pageSize: number, search: string): Observable<User[]> {
     const url = `${this.apiUrl}?page=${page}&pageSize=${pageSize}&search=${search}`;
@@ -40,6 +40,7 @@ export class UserService {
     const url = `${this.apiUrl}/${updatedUser.id_utilisateur}`;
     return this.http.put<User>(url, updatedUser);
   }
+  
 
   deleteUser(id: number): Observable<any> {
      return this.http.delete("http://localhost/PROJET_ceREF/backend/user.php?id=" + id);
