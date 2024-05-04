@@ -126,7 +126,7 @@ InstitutionToUpdate: Institution | null = null;
         () => {
           this.loadInstitutions();
           this.showSuccessToast('Institution modifiée avec succès.');
-          this.InstitutionToUpdate = null;
+         // this.InstitutionToUpdate = null;
         },
         (error) => {
           console.error('Error updating institution:', error);
@@ -135,6 +135,7 @@ InstitutionToUpdate: Institution | null = null;
       );
     }
 
+ 
   // Cette méthode doit être liée à un événement de formulaire pour ajouter un utilisateur
   addInstitution(institution: Institution) {
     this.institutionService.addInstitution(institution).subscribe(
@@ -142,7 +143,6 @@ InstitutionToUpdate: Institution | null = null;
         this.institution.logo = ''; 
         this.loadInstitutions();
         this.showSuccessToast('Institution ajoutée avec succès.');
-        this.toggleAddInstitutionForm();
         
        
       },
@@ -155,6 +155,7 @@ InstitutionToUpdate: Institution | null = null;
     
     
   }
+
 
 
   

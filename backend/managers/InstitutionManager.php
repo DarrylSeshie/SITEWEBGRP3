@@ -246,19 +246,18 @@ public function updateInstitution($institution)
         $prep = $this->db->prepare($sql);
 
         // Liaison des paramètres avec les valeurs de l'objet Institution
-        $prep->bindParam(':nom', $institution->getNom(), PDO::PARAM_STR);
-        $prep->bindParam(':logo', $institution->getLogo(), PDO::PARAM_STR);
-        $prep->bindParam(':id_adresse', $institution->getAdresse()->getIdAdresse(), PDO::PARAM_INT);
-        $prep->bindParam(':id', $institution->getIdinstitution(), PDO::PARAM_INT);
+        $prep->bindValue(':nom', $institution->getNom(), PDO::PARAM_STR);
+        $prep->bindValue(':logo', $institution->getLogo(), PDO::PARAM_STR);
+        $prep->bindValue(':id_adresse', $institution->getAdresse()->getIdAdresse(), PDO::PARAM_INT);
+        $prep->bindValue(':id', $institution->getIdinstitution(), PDO::PARAM_INT);
 
         $prep->execute();
     } catch (PDOException $e) {
-        throw new Exception("Erreur lors de la mise à jour de institution.", 0, $e);
+        throw $e;
     } finally {
         $prep = null; // Libérer la ressource PDOStatement
     }
 }
-
 
 
 public function addInstitution($institution)
@@ -272,15 +271,14 @@ public function addInstitution($institution)
             $prep = $this->db->prepare($sql);
     
             // Liaison des paramètres avec les valeurs de l'objet Institution
-            $prep->bindParam(':nom', $institution->getNom(), PDO::PARAM_STR);
-            $prep->bindParam(':logo', $institution->getLogo(), PDO::PARAM_STR);
-            $prep->bindParam(':id_adresse', $institution->getIdAdresse(), PDO::PARAM_INT);
+            $prep->bindValue(':nom', $institution->getNom(), PDO::PARAM_STR);
+            $prep->bindValue(':logo', $institution->getLogo(), PDO::PARAM_STR);
+            $prep->bindValue(':id_adresse', $institution->getIdAdresse(), PDO::PARAM_INT);
     
             $prep->execute();
     
             // Définir l'ID de l'institution avec l'ID généré par la base de données
-            $institutionId = $this->db->lastInsertId();
-            $institution->setId($institutionId);
+            $institution->setIdinstitution( $this->db->lastInsertId() );
     
             return true; // Succès
     

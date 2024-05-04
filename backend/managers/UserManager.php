@@ -350,4 +350,28 @@ public function addUser($user)
     }
 }
 
+
+
+
+public function count()
+{
+    $sql = "SELECT COUNT(*) FROM Utilisateur";
+
+    try {
+        $prep = $this->db->prepare($sql);
+        $prep->execute();
+        
+        $result = $prep->fetch(PDO::FETCH_ASSOC);
+
+        if ($result && isset($result['total'])) {
+            return intval($result['total']); 
+        } else {
+            return 0; // Retourner 0 si aucun résultat n'est trouvé
+        }
+    } catch (PDOException $e) {
+
+        throw $e;
+    }
+}
+
 }

@@ -26,7 +26,17 @@ if ($http_method === "GET") {
 
         $users = $userManager->getUsersByname2($page, $pageSize, $search);
         echo json_encode($users);
-    } elseif (isset($_GET['id'])) {
+    }   elseif (isset($_GET['count'])) {
+        // Requête GET pour obtenir le nombre total d'utilisateurs
+        try {
+            $totalUsers = $userManager->count();
+            echo json_encode(array("total_users" => $totalUsers));
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(array("error" => $e->getMessage()));
+        }
+    }
+    elseif (isset($_GET['id'])) {
         // Requête GET pour récupérer un utilisateur par ID
         $id = $_GET['id'];
         try {

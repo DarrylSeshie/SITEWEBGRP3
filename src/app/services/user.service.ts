@@ -12,7 +12,12 @@ export class UserService {
 
   constructor(private http: HttpClient) { } 
 
-  
+  getTotalUsersCount(): Observable<number> {
+    const url = `${this.apiUrl}?count`;
+
+    return this.http.get<number>(url);
+  }
+
 
   getUsers(page: number, pageSize: number): Observable<User[]> {
     const url = `${this.apiUrl}?page=${page}&pageSize=${pageSize}`;
