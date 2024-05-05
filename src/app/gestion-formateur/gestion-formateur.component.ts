@@ -166,21 +166,12 @@ export class GestionFormateurComponent {
   updateUser(user: User) {
     this.formateurService.updateFormateur(user).subscribe(
       () => {
-        this.loadUsers(); // Recharger la liste des utilisateurs après la mise à jour
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Formateur modifié avec succès.';
-        this.errorMessage = ''; // Réinitialiser le message d'erreur
-        this.toggleAddUserForm();
+        this.loadUsers();
+        this.showSuccessToast('formateur modifiée avec succès.'); 
       },
       error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
         console.error('Error updating user:', error);
-        this.errorMessage = 'Erreur lors de la modification du formateur : ' + error.message;
-        this.successMessage = ''; // Réinitialiser le message de succès
+        this.showErrorToast('Erreur lors de la modification du formateur.');
       }
     );
   }
@@ -191,21 +182,12 @@ export class GestionFormateurComponent {
     this.formateurService.addFormateur(user).subscribe(
       () => {
         this.loadUsers(); // Recharger la liste des utilisateurs après ajout
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Utilisateur ajouté avec succès.';
-        this.errorMessage = ''; 
-        this.toggleAddUserForm();
+        this.showSuccessToast('formateur ajoutée avec succès.');
        
       },
       error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
         console.error('Error adding user:', error);
-        this.errorMessage = 'Erreur lors de l\'ajout de l\'utilisateur : ' + error.message;
-        this.successMessage = ''; // Réinitialiser le message de succès
+        this.showErrorToast('Erreur lors de l\'ajout du formateur');
       }
     );
   }
@@ -222,5 +204,23 @@ export class GestionFormateurComponent {
         console.error('Error fetching user:', error);
       }
     );
+  }
+
+
+  
+  private showSuccessToast(message: string) {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.successMessage = message;
+    this.errorMessage = '';
+  }
+
+  private showErrorToast(message: string) {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.errorMessage = message;
+    this.successMessage = '';
   }
 }

@@ -36,10 +36,10 @@ export class GestionUtilisateurComponent implements OnInit{
     email: '',           
     mot_de_passe: '',    
     gsm: '',             
-    TVA: '',            
+    TVA: 'VIDE',            
     profession: '',     
-    gsm_pro: '',        
-    email_pro: '',      
+    gsm_pro: 'VIDE',        
+    email_pro: 'VIDE',      
     id_role: 4,         
     id_institution: -1,  
     id_adresse: -1
@@ -160,21 +160,15 @@ export class GestionUtilisateurComponent implements OnInit{
   updateUser(UserToUpdate: User) {
     this.userService.updateUser(UserToUpdate).subscribe(
       () => {
-        this.loadUsers(); // Recharger la liste des utilisateurs après la mise à jour
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Utilisateur modifié avec succès.';
-        this.errorMessage = ''; // Réinitialiser le message d'erreur
-        this.toggleAddUserForm();
+        this.loadUsers();
+        this.showSuccessToast('client modifiée avec succès.'); // Recharger la liste des utilisateurs après la mise à jour
+        
       },
       error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
+       
         console.error('Error updating user:', error);
-        this.errorMessage = 'Erreur lors de la modification de l\'utilisateur : ' + error.message;
-        this.successMessage = ''; // Réinitialiser le message de succès
+        this.showErrorToast('Erreur lors de la modification du client.');
+      
       }
     );
     
@@ -185,21 +179,12 @@ export class GestionUtilisateurComponent implements OnInit{
     this.userService.addUser(user).subscribe(
       () => {
         this.loadUsers(); // Recharger la liste des utilisateurs après ajout
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Utilisateur ajouté avec succès.';
-        this.errorMessage = '';
-        this.toggleAddUserForm(); 
+        this.showSuccessToast('Client ajoutée avec succès.');
        
       },
       error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
         console.error('Error adding user:', error);
-        this.errorMessage = 'Erreur lors de l\'ajout de l\'utilisateur : ' + error.message;
-        this.successMessage = ''; // Réinitialiser le message de succès
+        this.showErrorToast('Erreur lors de l\'ajout du client');
       }
     );
   }
@@ -225,18 +210,20 @@ export class GestionUtilisateurComponent implements OnInit{
 
 
 
-  showToast(message: string, type: string): void {
+  private showSuccessToast(message: string) {
     const toastElement = document.getElementById('liveToast');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
+    this.successMessage = message;
+    this.errorMessage = '';
+  }
 
-    if (type === 'success') {
-      this.successMessage = message;
-      this.errorMessage = ''; // Réinitialiser le message d'erreur
-    } else if (type === 'danger') {
-      this.errorMessage = message;
-      this.successMessage = ''; // Réinitialiser le message de succès
-    }
+  private showErrorToast(message: string) {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.errorMessage = message;
+    this.successMessage = '';
   }
 
 

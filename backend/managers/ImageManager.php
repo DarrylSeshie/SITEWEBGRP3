@@ -134,8 +134,8 @@ public function deleteImage($id)
 
   public function updateImage($img)
 {
-    $sql = "UPDATE image SET 
-            nom = :nom,
+    $sql = "UPDATE image 
+    SET nom = :nom,
             url_image = :url_image
             WHERE id_image = :id";
 
@@ -143,9 +143,9 @@ public function deleteImage($id)
         $prep = $this->db->prepare($sql);
 
         // Liaison des paramètres avec les valeurs de l'objet Adresse
-        $prep->bindParam(':url_image', $img->getUrlImage(), PDO::PARAM_STR);
-        $prep->bindParam(':nom', $img->getNom(), PDO::PARAM_STR);
-        $prep->bindParam(':id', $img->getIdImage(), PDO::PARAM_INT); 
+        $prep->bindValue(':url_image', $img->getUrlImage(), PDO::PARAM_STR);
+        $prep->bindValue(':nom', $img->getNom(), PDO::PARAM_STR);
+        $prep->bindValue(':id', $img->getIdImage(), PDO::PARAM_INT); 
 
         $prep->execute();
     } catch (PDOException $e) {
@@ -164,15 +164,15 @@ public function addImage($img)
     try {
         $prep = $this->db->prepare($sql);
 
-        $prep->bindParam(':url_image', $img->getUrlImage(), PDO::PARAM_STR);
-        $prep->bindParam(':nom', $img->getNom(), PDO::PARAM_STR);
+        $prep->bindValue(':url_image', $img->getUrlImage(), PDO::PARAM_STR);
+        $prep->bindValue(':nom', $img->getNom(), PDO::PARAM_STR);
       
 
         $prep->execute();
 
-        $imgId = $this->db->lastInsertId();
-        $img->setId
-        ($imgId);
+        
+        $img->setIdImage($this->db->lastInsertId());
+        
      
         return true; // Succès
     } catch (PDOException $e) {

@@ -160,7 +160,7 @@ export class GestionLieuComponent {
       () => {
         this.loadLieux();
         this.showSuccessToast('Lieu modifiée avec succès.');
-        this.LieuToUpdate = null;
+        //this.LieuToUpdate = null;
       },
       (error) => {
         console.error('Error updating Lieu:', error);
@@ -176,12 +176,10 @@ export class GestionLieuComponent {
       () => {
         this.loadLieux();
         this.showSuccessToast('Lieu modifiée avec succès.');
-        this.toggleAddLieuForm();
       },
       (error) => {
         console.error('Error updating Lieu:', error);
         this.showErrorToast('Erreur lors de la modification de lieu.');
-        this.loadLieux();
       }
     );
   }

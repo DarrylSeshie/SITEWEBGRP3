@@ -148,8 +148,7 @@ export class GestionAdresseComponent {
       () => {
         this.loadAdresses();
         this.showSuccessToast('Adresse modifiée avec succès.');
-        this.AdresseToUpdate = null;
-        this.toggleAddAdresseForm();
+       this.AdresseToUpdate = AdresseToUpdate ;
       },
       (error) => {
         console.error('Error updating Adresse:', error);
@@ -162,22 +161,16 @@ export class GestionAdresseComponent {
   addAdresse(adresse: Adresse) {
     this.adresseService.addAdresse(adresse).subscribe(
       () => {
-        this.loadAdresses(); // Recharger la liste des utilisateurs après ajout
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Adresse ajouté avec succès.';
-        this.errorMessage = ''; 
-        this.toggleAddAdresseForm();
+        
+        this.loadAdresses();
+        this.showSuccessToast('Adresse ajoutée avec succès.');
+        
        
       },
-      error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        console.error('Error adding user:', error);
-        this.errorMessage = 'Erreur lors de l\'ajout de la Adresse : ' + error.message;
-        this.successMessage = ''; // Réinitialiser le message de succès
+      (error) => {
+        console.error('Error adding Adresse:', error);
+        this.showErrorToast('Erreur lors de l\'ajout de l\'Adresse.');
+        this.loadAdresses();
       }
     );
   }

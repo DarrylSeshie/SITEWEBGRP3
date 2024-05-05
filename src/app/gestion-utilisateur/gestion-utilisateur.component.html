@@ -167,11 +167,11 @@
           <label for="civilite">civilite</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="nom"  [(ngModel)]="user.nom" name="nom">
+          <input type="text" class="form-control" id="nom"  [(ngModel)]="user.nom" name="nom" autofocus required>
           <label for="nom">nom</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="prenom" [(ngModel)]="user.prenom" name="prenom">
+          <input type="text" class="form-control" id="prenom" [(ngModel)]="user.prenom" name="prenom" autofocus required>
           <label for="prenom">prenom</label>
         </div>
         <div class="form-floating mb-3">
@@ -187,7 +187,7 @@
           <label for="tel">Numero</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="TVA" placeholder="TVA" [(ngModel)]="user.TVA" name="TVA" >
+          <input type="text" class="form-control" id="TVA" placeholder="TVA" [(ngModel)]="user.TVA" name="TVA" autofocus required>
           <label for="TVA">TVA</label>
         </div>
         <div class="form-floating mb-3">
@@ -195,11 +195,11 @@
           <label for="profession">profession</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="tel" class="form-control" id="gsm_pro" placeholder="gsm_pro" [(ngModel)]="user.gsm_pro" name="gsm_pro" >
+          <input type="tel" class="form-control" id="gsm_pro" placeholder="gsm_pro" [(ngModel)]="user.gsm_pro" name="gsm_pro" autofocus required>
           <label for="gsm_pro">gsm_pro</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="email_pro" placeholder="email_pro" [(ngModel)]="user.email_pro" name="email_pro" >
+          <input type="email" class="form-control" id="email_pro" placeholder="email_pro" [(ngModel)]="user.email_pro" name="email_pro" autofocus required>
           <label for="email_pro">email_pro</label>
         </div>
         <div class="form-floating mb-3">
@@ -213,7 +213,7 @@
        
     
         <div class="align-right">
-          <button type="submit" id="searchButton" (click)="addUser(user)">Ajouter</button>
+          <button type="submit" id="searchButton" (click)="addUser(user)"    (click)="toggleAddUserForm()">Ajouter</button>
         </div>
       </div>
       <div class="col-3"></div>
@@ -272,7 +272,7 @@
       </div>
       <div class="form-group">
         <label for="prenom">prenom</label>
-        <input type="text" class="form-control" id="prenom" [(ngModel)]="UserToUpdate.prenom" name="prenom">
+        <input type="text" class="form-control" id="prenom" [(ngModel)]="UserToUpdate.prenom" name="prenom" required>
 
       </div>
       <div class="form-group">
@@ -285,19 +285,19 @@
       </div>
       <div class="form-group">
         <label for="TVA">TVA</label>
-        <input type="text" class="form-control" id="TVA"  [(ngModel)]="UserToUpdate.TVA" name="TVA" >
+        <input type="text" class="form-control" id="TVA"  [(ngModel)]="UserToUpdate.TVA" name="TVA"autofocus  required>
       </div>
       <div class="form-group">
         <label for="profession">profession</label>
         <input type="text" class="form-control" id="profession"  [(ngModel)]="UserToUpdate.profession" name="profession" autofocus required>
       </div>
       <div class="form-group">
-        <label for="gsm_pro">gsm_pro</label>
-        <input type="text" class="form-control" id="gsm_pro" [(ngModel)]="UserToUpdate.gsm_pro" name="gsm_pro" >
+        <label for="email_pro">Email Professionnel</label>
+        <input type="text" class="form-control" id="email_pro" [(ngModel)]="UserToUpdate.email_pro" name="email_pro">
       </div>
       <div class="form-group">
-        <label for="email_pro">email_pro</label>
-        <input type="text" class="form-control" id="email_pro"  [(ngModel)]="UserToUpdate.email_pro" name="email_pro" >
+        <label for="gsm_pro">GSM Professionnel</label>
+        <input type="text" class="form-control" id="gsm_pro" [(ngModel)]="UserToUpdate.gsm_pro" name="gsm_pro">
       </div>
       <div class="form-group">
         <label for="id_adresse">id_adresse</label>

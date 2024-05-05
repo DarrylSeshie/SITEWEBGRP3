@@ -269,51 +269,51 @@ public function selectUserById($userId)
     }
   }
 
-
   public function updateUser($user)
-{
-    $sql = "UPDATE Utilisateur SET 
-            civilite = :civilite,
-            nom = :nom,
-            prenom = :prenom,
-            email = :email,
-            mot_de_passe = :mot_de_passe,
-            gsm = :gsm,
-            TVA = :TVA,
-            profession = :profession,
-            gsm_pro = :gsm_pro,
-            email_pro = :email_pro,
-            id_role = :id_role,
-            id_institution = :id_institution,
-            id_adresse = :id_adresse
-            WHERE id_utilisateur = :id";
-
-    try {
-        $prep = $this->db->prepare($sql);
-
-        // Liaison des paramètres avec les valeurs de l'objet User
-        $prep->bindParam(':civilite', $user->getCivilite(), PDO::PARAM_STR);
-        $prep->bindParam(':nom', $user->getNom(), PDO::PARAM_STR);
-        $prep->bindParam(':prenom', $user->getPrenom(), PDO::PARAM_STR);
-        $prep->bindParam(':email', $user->getEmail(), PDO::PARAM_STR);
-        $prep->bindParam(':mot_de_passe', $user->getMotDePasse(), PDO::PARAM_STR);
-        $prep->bindParam(':gsm', $user->getGsm(), PDO::PARAM_STR);
-        $prep->bindParam(':TVA', $user->getTva(), PDO::PARAM_STR);
-        $prep->bindParam(':profession', $user->getProfession(), PDO::PARAM_STR);
-        $prep->bindParam(':gsm_pro', $user->getGsmPro(), PDO::PARAM_STR);
-        $prep->bindParam(':email_pro', $user->getEmailPro(), PDO::PARAM_STR);
-        $prep->bindParam(':id_role', $user->getIdRole(), PDO::PARAM_INT);
-        $prep->bindParam(':id_institution', $user->getIdInstitution(), PDO::PARAM_INT);
-        $prep->bindParam(':id_adresse', $user->getIdAdresse(), PDO::PARAM_INT);
-        $prep->bindParam(':id', $user->getId(), PDO::PARAM_INT); // ID de l'utilisateur à mettre à jour
-
-        $prep->execute();
-    } catch (PDOException $e) {
-        throw $e; // Propager l'exception pour la gestion des erreurs
-    } finally {
-        $prep = null; // Libérer la ressource PDOStatement
-    }
-}
+  {
+      $sql = "UPDATE Utilisateur 
+              SET civilite = :civilite,
+                  nom = :nom,
+                  prenom = :prenom,
+                  email = :email,
+                  mot_de_passe = :mot_de_passe,
+                  gsm = :gsm,
+                  TVA = :TVA,
+                  profession = :profession,
+                  gsm_pro = :gsm_pro,
+                  email_pro = :email_pro,
+                  id_role = :id_role,
+                  id_institution = :id_institution,
+                  id_adresse = :id_adresse
+              WHERE id_utilisateur = :id";
+  
+      try {
+          $prep = $this->db->prepare($sql);
+  
+          $prep->bindValue(':civilite', $user->getCivilite(), PDO::PARAM_STR);
+          $prep->bindValue(':nom', $user->getNom(), PDO::PARAM_STR);
+          $prep->bindValue(':prenom', $user->getPrenom(), PDO::PARAM_STR);
+          $prep->bindValue(':email', $user->getEmail(), PDO::PARAM_STR);
+          $prep->bindValue(':mot_de_passe', $user->getMotDePasse(), PDO::PARAM_STR);
+          $prep->bindValue(':gsm', $user->getGsm(), PDO::PARAM_STR);
+          $prep->bindValue(':TVA', $user->getTVA(), PDO::PARAM_STR);
+          $prep->bindValue(':profession', $user->getProfession(), PDO::PARAM_STR);
+          $prep->bindValue(':gsm_pro', $user->getGsmPro(), PDO::PARAM_STR);
+          $prep->bindValue(':email_pro', $user->getEmailPro(), PDO::PARAM_STR);
+          $prep->bindValue(':id_role', $user->getRole()->getIdRole(), PDO::PARAM_INT);
+          $prep->bindValue(':id_institution', $user->getInstitution()->getIdInstitution(), PDO::PARAM_INT);
+          $prep->bindValue(':id_adresse', $user->getAddress()->getIdAdresse(), PDO::PARAM_INT);
+          $prep->bindValue(':id', $user->getId(), PDO::PARAM_INT);
+  
+          $prep->execute();
+      } catch (PDOException $e) {
+          // Gérer l'erreur (exemple: journalisation, affichage d'un message d'erreur)
+          echo "Erreur lors de la mise à jour de l'utilisateur : " . $e->getMessage();
+          // Vous pouvez également utiliser un système de journalisation pour enregistrer l'erreur
+          // ex: $logger->error('Erreur lors de la mise à jour de l\'utilisateur : ' . $e->getMessage());
+      }
+  }
+  
 
 
 
@@ -332,7 +332,7 @@ public function addUser($user)
         $prep->bindValue(':email', $user->getEmail(), PDO::PARAM_STR);
         $prep->bindValue(':mot_de_passe', $user->getMotDePasse(), PDO::PARAM_STR);
         $prep->bindValue(':gsm', $user->getGsm(), PDO::PARAM_STR);
-        $prep->bindValue(':TVA', $user->getTva(), PDO::PARAM_STR);
+        $prep->bindValue(':TVA', $user->getTVA(), PDO::PARAM_STR);
         $prep->bindValue(':profession', $user->getProfession(), PDO::PARAM_STR);
         $prep->bindValue(':gsm_pro', $user->getGsmPro(), PDO::PARAM_STR);
         $prep->bindValue(':email_pro', $user->getEmailPro(), PDO::PARAM_STR);
@@ -343,11 +343,11 @@ public function addUser($user)
         $prep->execute();
 
         $user->setId($this->db->lastInsertId());
+        return true; // Succès
     } catch (PDOException $e) {
         throw $e;
-    } finally {
-        $prep = null;
-    }
+        return false;
+    } 
 }
 
 

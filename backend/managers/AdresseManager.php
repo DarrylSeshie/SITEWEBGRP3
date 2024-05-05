@@ -139,8 +139,8 @@ public function deleteAdresse($id)
 
   public function updateAdresse($adresse)
 {
-    $sql = "UPDATE adresse SET 
-            rue_numero = :rue_numero,
+    $sql = "UPDATE adresse 
+    SET rue_numero = :rue_numero,
             code_postal = :code_postal,
             localite = :localite,
             pays = :pays
@@ -150,11 +150,11 @@ public function deleteAdresse($id)
         $prep = $this->db->prepare($sql);
 
         // Liaison des paramètres avec les valeurs de l'objet Adresse
-        $prep->bindParam(':rue_numero', $adresse->getRueNumero(), PDO::PARAM_STR);
-        $prep->bindParam(':code_postal', $adresse->getCodePostal(), PDO::PARAM_STR);
-        $prep->bindParam(':localite', $adresse->getLocalite(), PDO::PARAM_STR);
-        $prep->bindParam(':pays', $adresse->getPays(), PDO::PARAM_STR);
-        $prep->bindParam(':id', $adresse->getIdAdresse(), PDO::PARAM_INT); 
+        $prep->bindValue(':rue_numero', $adresse->getRueNumero(), PDO::PARAM_STR);
+        $prep->bindValue(':code_postal', $adresse->getCodePostal(), PDO::PARAM_STR);
+        $prep->bindValue(':localite', $adresse->getLocalite(), PDO::PARAM_STR);
+        $prep->bindValue(':pays', $adresse->getPays(), PDO::PARAM_STR);
+        $prep->bindValue(':id', $adresse->getIdAdresse(), PDO::PARAM_INT); 
 
         $prep->execute();
     } catch (PDOException $e) {
@@ -175,14 +175,14 @@ public function addAdresse($adresse)
         $prep = $this->db->prepare($sql);
 
         // Liaison des paramètres avec les valeurs de l'objet Adresse
-        $prep->bindParam(':rueNumero', $adresse->getRueNumero(), PDO::PARAM_STR);
-        $prep->bindParam(':codePostal', $adresse->getCodePostal(), PDO::PARAM_INT);
-        $prep->bindParam(':localite', $adresse->getLocalite(), PDO::PARAM_STR);
-        $prep->bindParam(':pays', $adresse->getPays(), PDO::PARAM_STR);
+        $prep->bindValue(':rueNumero', $adresse->getRueNumero(), PDO::PARAM_STR);
+        $prep->bindValue(':codePostal', $adresse->getCodePostal(), PDO::PARAM_INT);
+        $prep->bindValue(':localite', $adresse->getLocalite(), PDO::PARAM_STR);
+        $prep->bindValue(':pays', $adresse->getPays(), PDO::PARAM_STR);
 
         $prep->execute();
 
-        $adresse->setId($this->db->lastInsertId());
+        $adresse->setIdAdresse($this->db->lastInsertId());
     } catch (PDOException $e) {
         throw $e;
     } finally {

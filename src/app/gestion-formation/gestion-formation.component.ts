@@ -170,20 +170,13 @@ export class GestionFormationComponent {
     this.formationService.updateFormation(ProduitToUpdate).subscribe(
       () => {
         this.loadFormations(); // Recharger la liste des utilisateurs après la mise à jour
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Formation modifié avec succès.';
-        this.errorMessage = ''; // Réinitialiser le message d'erreur
-        this.toggleAddProduitForm();
+        this.showSuccessToast('Formation modifiée avec succès.');
       },
       error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
+        
+       
         console.error('Error updating user:', error);
-        this.errorMessage = 'Erreur lors de la modification de la formation : ' + error.message;
-        this.successMessage = ''; // Réinitialiser le message de succès
+        this.showErrorToast('Erreur lors de la modification de la formation.');
       }
     ); 
   }
@@ -192,21 +185,13 @@ export class GestionFormationComponent {
     this.formationService.addFormation(formation).subscribe(
       () => {
         this.loadFormations(); // Recharger la liste des utilisateurs après ajout
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Formation ajouté avec succès.';
-        this.errorMessage = ''; 
-        this.toggleAddProduitForm();
+        this.showSuccessToast('Formation ajoutée avec succès.');
        
       },
       error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        console.error('Error adding user:', error);
-        this.errorMessage = 'Erreur lors de l\'ajout de la formation : ' + error.message;
-        this.successMessage = ''; // Réinitialiser le message de succès
+        console.error('Error adding formation:', error);
+        this.showErrorToast('Erreur lors de l\'ajout de la formation');
+        this.loadFormations();
       }
     );
   }

@@ -249,7 +249,7 @@ public function updateInstitution($institution)
         $prep->bindValue(':nom', $institution->getNom(), PDO::PARAM_STR);
         $prep->bindValue(':logo', $institution->getLogo(), PDO::PARAM_STR);
         $prep->bindValue(':id_adresse', $institution->getAdresse()->getIdAdresse(), PDO::PARAM_INT);
-        $prep->bindValue(':id', $institution->getIdinstitution(), PDO::PARAM_INT);
+        $prep->bindValue(':id', $institution->getIdInstitution(), PDO::PARAM_INT);
 
         $prep->execute();
     } catch (PDOException $e) {
@@ -278,7 +278,7 @@ public function addInstitution($institution)
             $prep->execute();
     
             // Définir l'ID de l'institution avec l'ID généré par la base de données
-            $institution->setIdinstitution( $this->db->lastInsertId() );
+            $institution->setIdInstitution( $this->db->lastInsertId() );
     
             return true; // Succès
     

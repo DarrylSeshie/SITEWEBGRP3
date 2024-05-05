@@ -132,7 +132,7 @@
     
         <p style="color: red;">{{errorMessage}}</p>
         <div class="align-right">
-          <button type="submit" id="searchButton" (click)="addImage(image)">Ajouter</button>
+          <button type="submit" id="searchButton" (click)="addImage(image)"  (click)="toggleAddImageForm()">Ajouter</button>
         </div>
       </div>
       <div class="col-3"></div>
@@ -187,7 +187,7 @@
         <label for="logo">URL Image :</label>
         <input type="text" class="form-control" id="url_image" name="url_image" [(ngModel)]="ImageToUpdate.url_image" required>
       </div>
-      <button type="submit" id="searchButton" >Enregistrer</button>
+      <button type="submit" id="searchButton"  >Enregistrer</button>
     </form>
   </div>
   

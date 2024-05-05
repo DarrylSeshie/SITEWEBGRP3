@@ -40,11 +40,14 @@ export class UserService {
     return this.http.get<User[]>(url);
   }
 
+
   
   updateUser(updatedUser: User): Observable<User> {
     const url = `${this.apiUrl}/${updatedUser.id_utilisateur}`;
     return this.http.put<User>(url, updatedUser);
   }
+  
+  
   
 
   deleteUser(id: number): Observable<any> {

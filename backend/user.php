@@ -66,7 +66,7 @@ if ($http_method === "GET") {
     $jsonStr = file_get_contents('php://input');
     $userArray = json_decode($jsonStr, true);
     $user = new User($userArray);
-
+    if (!empty($userArray)) {
     try {
         $userManager->addUser($user); // Utilisez la méthode addUser pour insérer l'utilisateur
         echo json_encode($user); // Répondre avec les données de l'utilisateur ajouté
@@ -74,6 +74,11 @@ if ($http_method === "GET") {
         http_response_code(500);
         echo json_encode(array("error" => $e->getMessage()));
     }
+} else {
+    // Si les données JSON sont vides ou invalides
+    http_response_code(400);
+    echo json_encode(array("error" => "Données JSON invalides pour l'ajout d'user"));
+}
     
 } elseif ($http_method === "PUT" || $http_method === "PATCH") {
     // Requête PUT ou PATCH pour mettre à jour un utilisateur existant

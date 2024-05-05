@@ -1,5 +1,5 @@
 <?php
-require_once 'models/Adresse.class.php';
+//require_once 'models/Adresse.class.php';
 require_once 'models/Institution.class.php';
 require_once 'models/Lieu.class.php';
 require_once 'managers/DBManager.php';

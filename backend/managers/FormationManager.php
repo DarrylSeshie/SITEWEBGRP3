@@ -431,7 +431,7 @@ class FormationManager
     {
         $sql = "INSERT INTO produit (titre, sous_titre, date_debut, date_fin, date_fin_inscription, descriptif, objectif, contenu, methodologie, public_cible, prix, id_image, id_lieu, id_type_produit) 
             VALUES (:titre, :sous_titre, :date_debut, :date_fin, :date_fin_inscription, :descriptif, :objectif, :contenu, :methodologie, :public_cible, :prix, :id_image, :id_lieu, :id_type_produit)";
-
+ try {
         $prep = $this->db->prepare($sql);
 
         // Liaison des paramètres avec les valeurs de l'objet Produit
@@ -452,7 +452,14 @@ class FormationManager
 
         $prep->execute();
 
-        $prod->setIdProduit($this->db->lastInsertId()); // Définit l'ID du produit inséré dans l'objet Produit
+        
+        $prod->setIdProduit($this->db->lastInsertId());
+        return true;  // Définit l'ID du produit inséré dans l'objet Produit
+    } catch (PDOException $e) {
+        // En cas d'erreur, renvoyer une réponse d'erreur
+        throw $e;
+        return false;
+    }
     }
 }
 

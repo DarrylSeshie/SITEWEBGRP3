@@ -154,8 +154,8 @@ export class GestionImageComponent {
       () => {
         this.loadImages();
         this.showSuccessToast('Image modifiée avec succès.');
-        this.ImageToUpdate = null;
-        this.toggleAddImageForm();
+       // this.ImageToUpdate = null;
+        
       },
       (error) => {
         console.error('Error updating image:', error);
@@ -171,7 +171,7 @@ export class GestionImageComponent {
         this.image.url_image = ''; 
         this.loadImages();
         this.showSuccessToast('Image ajoutée avec succès.');
-        this.toggleAddImageForm();
+        
         
        
       },

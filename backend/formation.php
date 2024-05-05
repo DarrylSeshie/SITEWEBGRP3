@@ -62,16 +62,23 @@ if ($http_method === "GET") {
 } elseif ($http_method === "POST") {
     // Requête POST pour ajouter un nouvel utilisateur
     $jsonStr = file_get_contents('php://input');
-    $lieuArray = json_decode($jsonStr, true);
-    $lieu = new Formation($lieuArray);
+    $prodArray = json_decode($jsonStr, true);
+
+    if (!empty($prodArray)) {
+    $prod = new Formation($prodArray);
 
     try {
-        $lieuManager->addProduit($lieu); // Utilisez la méthode addUser pour insérer l'utilisateur
-        echo json_encode($lieu); // Répondre avec les données de l'utilisateur ajouté
+        $lieuManager->addProduit($prod); // Utilisez la méthode addUser pour insérer l'utilisateur
+        echo json_encode($prod); // Répondre avec les données de l'utilisateur ajouté
     } catch (PDOException $e) {
         http_response_code(500);
-        echo json_encode(array("error" => $e->getMessage()));
+        echo json_encode(array("error" => "Erreur lors de l'ajout de formation : " . $e->getMessage()));
     }
+} else {
+    // Si les données JSON sont vides ou invalides
+    http_response_code(400);
+    echo json_encode(array("error" => "Données JSON invalides pour l'ajout formation"));
+}
 } elseif ($http_method === "PUT" || $http_method === "PATCH") {
     // Requête PUT ou PATCH pour mettre à jour un utilisateur existant
     $jsonStr = file_get_contents('php://input');
