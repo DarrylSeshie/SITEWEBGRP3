@@ -173,6 +173,7 @@ export class GestionLieuComponent {
       () => {
         this.loadLieux();
         this.showSuccessToast('Lieu ajouté avec succès.');
+        
       },
       (error) => {
         console.error('Error adding lieu:', error);

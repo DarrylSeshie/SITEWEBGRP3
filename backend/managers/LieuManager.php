@@ -193,34 +193,52 @@ public function deleteLieu($id)
 
 
   
-
 public function updateLieu($lieu)
 {
+    // Requête SQL avec jointures pour récupérer les données de l'institution et de l'adresse liées au lieu
     $sql = "UPDATE lieu
-            SET  nom = :nom,
-            batiment = :batiment,
-            locaux = :locaux,
-            id_institution = :id_institution,
-            id_adresse = :id_adresse
-            WHERE id_lieu = :id";
+            LEFT JOIN institution ON lieu.id_institution = institution.id_institution
+            LEFT JOIN adresse ON lieu.id_adresse = adresse.id_adresse
+            SET lieu.nom = :nom,
+                lieu.batiment = :batiment,
+                lieu.locaux = :locaux,
+                lieu.id_institution = :id_institution,
+                lieu.id_adresse = :id_adresse,
+                institution.nom = :institution_nom,
+                institution.logo = :institution_logo,
+                institution.id_adresse = :institution_id_adresse,
+                adresse.rue_numero = :rue_numero,
+                adresse.code_postal = :code_postal,
+                adresse.localite = :localite,
+                adresse.pays = :pays
+            WHERE lieu.id_lieu = :id";
+
     try {
         $prep = $this->db->prepare($sql);
 
-        // Liaison des paramètres avec les valeurs de l'objet Lieu
+        // Liaison des paramètres avec les valeurs de l'objet Lieu et ses relations (Institution et Adresse)
         $prep->bindValue(':nom', $lieu->getNom(), PDO::PARAM_STR);
         $prep->bindValue(':batiment', $lieu->getBatiment(), PDO::PARAM_STR);
         $prep->bindValue(':locaux', $lieu->getLocaux(), PDO::PARAM_STR);
         $prep->bindValue(':id_institution', $lieu->getInstitution()->getIdInstitution(), PDO::PARAM_INT);
-        $prep->bindValue(':id_adresse', $lieu-> getAdresse()->getIdAdresse(), PDO::PARAM_INT);
+        $prep->bindValue(':id_adresse', $lieu->getAdresse()->getIdAdresse(), PDO::PARAM_INT);
+        $prep->bindValue(':institution_nom', $lieu->getInstitution()->getNom(), PDO::PARAM_STR);
+        $prep->bindValue(':institution_logo', $lieu->getInstitution()->getLogo(), PDO::PARAM_STR);
+        $prep->bindValue(':institution_id_adresse', $lieu->getInstitution()->getIdAdresse(), PDO::PARAM_INT);
+        $prep->bindValue(':rue_numero', $lieu->getAdresse()->getRueNumero(), PDO::PARAM_STR);
+        $prep->bindValue(':code_postal', $lieu->getAdresse()->getCodePostal(), PDO::PARAM_STR);
+        $prep->bindValue(':localite', $lieu->getAdresse()->getLocalite(), PDO::PARAM_STR);
+        $prep->bindValue(':pays', $lieu->getAdresse()->getPays(), PDO::PARAM_STR);
         $prep->bindValue(':id', $lieu->getIdLieu(), PDO::PARAM_INT); // ID de l'lieu à mettre à jour
 
         $prep->execute();
     } catch (PDOException $e) {
-        throw $e; 
+        throw $e;
     } finally {
         $prep = null; // Libérer la ressource PDOStatement
     }
 }
+
 
 
 
@@ -238,15 +256,15 @@ public function addLieu($lieu)
         $nom = $lieu->getNom();
         $batiment = $lieu->getBatiment();
         $locaux = $lieu->getLocaux();
-        $idInstitution = $lieu->getInstitution()->getIdInstitution();
-        $idAdresse = $lieu->getAdresse()->getIdAdresse();
+        $idInstitution = $lieu->getIdInstitution();
+        $idAdresse = $lieu->getIdAdresse();
 
         // Liaison des paramètres avec les valeurs récupérées
-        $prep->bindParam(':nom', $nom, PDO::PARAM_STR);
-        $prep->bindParam(':batiment', $batiment, PDO::PARAM_STR);
-        $prep->bindParam(':locaux', $locaux, PDO::PARAM_STR);
-        $prep->bindParam(':id_institution', $idInstitution, PDO::PARAM_INT);
-        $prep->bindParam(':id_adresse', $idAdresse, PDO::PARAM_INT);
+        $prep->bindValue(':nom', $nom, PDO::PARAM_STR);
+        $prep->bindValue(':batiment', $batiment, PDO::PARAM_STR);
+        $prep->bindValue(':locaux', $locaux, PDO::PARAM_STR);
+        $prep->bindValue(':id_institution', $idInstitution, PDO::PARAM_INT);
+        $prep->bindValue(':id_adresse', $idAdresse, PDO::PARAM_INT);
 
         $prep->execute();
 
