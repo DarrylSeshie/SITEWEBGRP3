@@ -12,6 +12,7 @@ import { GestionAdresseComponent } from './gestion-adresse/gestion-adresse.compo
 import { InscriptionFormationComponent } from './inscription-formation/inscription-formation.component';
 import { VoirFormationsComponent } from './voir-formations/voir-formations.component';
 import { VoirProfilComponent } from './voir-profil/voir-profil.component';
+import { GestionnaireComponent } from './gestionnaire/gestionnaire.component';
 
 
 
@@ -39,9 +40,9 @@ const routes: Routes = [
     {
       path: 'gestionlieux', component: GestionLieuComponent
     },
-    /*{
-      path: 'gestion', component: GestionnaireComponent
-    }, */
+    {
+      path: 'gestionRole', component: GestionnaireComponent
+    }, 
     {
       path: 'gestionadresses', component: GestionAdresseComponent
     },

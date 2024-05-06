@@ -9,6 +9,7 @@ import { User } from '../models/user.model';
 export class UserService {
 
   private apiUrl = 'http://localhost/PROJET_ceREF/backend/user.php'; // URL de votre API pour les utilisateurs
+  private apiUrl2 = 'http://localhost/PROJET_ceREF/backend/user2.php';
 
   constructor(private http: HttpClient) { } 
 
@@ -44,6 +45,12 @@ export class UserService {
   
   updateUser(updatedUser: User): Observable<User> {
     const url = `${this.apiUrl}/${updatedUser.id_utilisateur}`;
+    return this.http.put<User>(url, updatedUser);
+  }
+
+  
+  updateRole(updatedUser: User): Observable<User> {
+    const url = `${this.apiUrl2}/${updatedUser.id_utilisateur}`;
     return this.http.put<User>(url, updatedUser);
   }
   

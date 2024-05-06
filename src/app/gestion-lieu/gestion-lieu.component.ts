@@ -38,10 +38,8 @@ export class GestionLieuComponent {
     batiment: '',
     locaux: '',
     id_institution: -1,
-    id_adresse: -1,
-    
+    id_adresse: -1
   };
-
 
   LieuToUpdate: Lieu | null = null;
   constructor(private lieuService: LieuService) { }
@@ -171,15 +169,14 @@ export class GestionLieuComponent {
 
   // Cette méthode doit être liée à un événement de formulaire pour ajouter un utilisateur
   addLieu(lieu: Lieu) {
-  
-    this.lieuService.updateLieu(lieu).subscribe(
+    this.lieuService.addLieu(lieu).subscribe(
       () => {
         this.loadLieux();
-        this.showSuccessToast('Lieu modifiée avec succès.');
+        this.showSuccessToast('Lieu ajouté avec succès.');
       },
       (error) => {
-        console.error('Error updating Lieu:', error);
-        this.showErrorToast('Erreur lors de la modification de lieu.');
+        console.error('Error adding lieu:', error);
+        this.showErrorToast('Erreur lors de l\'ajout du lieu.');
       }
     );
   }

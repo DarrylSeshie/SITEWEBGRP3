@@ -1,10 +1,232 @@
-.contenairButton{
-    display: flex; /* Utilisation de Flexbox */
-    flex-direction: column; /* Aligner les éléments en colonne */
-    align-items: center; /* Centrer les éléments horizontalement */
-    justify-content: center; /* Centrer les éléments verticalement */
-    
+
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content:end;
+    margin-top: 20px;
+
+   
+  }
+
+  .usercard2 {
+    box-sizing: border-box;
+    width: 30%;
+    margin: 20px auto;
+    padding: 10px 30px;
+    box-shadow: lightgray 4px 4px 20px;
+    margin-top: 150px;
+    display: flex; /* Activer le modèle de boîte flexible */
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center; /* Centrer verticalement */
+  
+    /* Style pour les paragraphes à l'intérieur de .usercard2 */
+    p {
+      font-weight: 300;
+      font-size: 16px;
+    }
+  
+    /* Style pour les options survolées dans les selects à l'intérieur de .usercard2 */
+    select option:hover {
+      background-color: #800860; /* Couleur de fond au survol */
+      color: black; /* Couleur du texte au survol */
+    }
+  }
+  
+  
+
+  .buttonadd{
+    padding: 8px 16px;
+    background-color: #800860; /* Couleur de fond du bouton (bleu par défaut) */
+    color: black; /* Couleur du texte */
+    border: 1,5 solid #800860 ;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Style du champ de saisie */
+  #searchInput {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+    margin-right: 5px;
+  }
+  
+  /* Style du bouton de recherche */
+  #searchButton {
+    padding: 8px 16px;
+    background-color: #800860; /* Couleur de fond du bouton (bleu par défaut) */
+    color: white; /* Couleur du texte */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+ 
+  
+
+  .button-container {
+    text-align: center; 
 }
 
+.button-container button {
+    display: inline-block; 
+    padding: 10px 20px; 
+    margin-right: 10px; 
+}
+
+.button-container button:last-child {
+    margin-right: 0; 
+}
+
+  h2{
+    text-align: center;
+    font-family: 'Helvetica Neue', Arial, sans-serif; 
+   
+    font-size: 24px; 
+    font-weight: bold; 
+    color: #333;
+  }
+  h3{
+    text-align: center;
+    font-family: 'Helvetica Neue', Arial, sans-serif; 
+   
+    font-size: 24px; 
+    font-weight: bold; 
+    color: #333;
+  }
+  .body{
+    margin-top: 150px;
+  }
+ 
+  .detailView{
+    box-sizing: border-box;
+    width: 50%;
+    margin: 20px auto;
+    padding: 10px 30px;
+    box-shadow: lightgray 4px 4px 20px;
+    
+   
+    p {
+      font-weight: 300;
+      font-size: 16px;
+    }
+    button {
+      background-color: transparent;
+      box-sizing: border-box;
+      padding: 5px 10px;
+      border: none;
+      box-shadow: lightgray 3px 3px 7px;
+      margin-right: 20px;
+      outline: none;
+      font-size: 14px;
+      font-weight: 500;
+      &:active {
+        transform: translate(1px, 1px);
+        box-shadow: lightgray 0 0 5px;
+      }
+    }
+  
+  }
+
+
+  
+.usercard {
+  box-sizing: border-box;
+  width: 70%;
+  margin: 20px auto;
+  padding: 10px 30px;
+  box-shadow: lightgray 4px 4px 20px;
+  
+ 
+  p {
+    font-weight: 300;
+    font-size: 16px;
+  }
+  button {
+    background-color: transparent;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    border: none;
+    box-shadow: lightgray 3px 3px 7px;
+    margin-right: 20px;
+    outline: none;
+    font-size: 14px;
+    font-weight: 500;
+    &:active {
+      transform: translate(1px, 1px);
+      box-shadow: lightgray 0 0 5px;
+    }
+  }
+}
+
+
+
+
+
+
+  
+@media screen  and (max-width: 1024px)
+{
+
+
+ nav
+ {
+     width: auto;
+     text-align: left;
+ }
+  
+ nav ul
+ {
+     flex-direction: column;
+ }
+ nav li
+ {
+     padding-left: 4px;
+ }
+ 
+ nav a
+ {
+     font-size: 1.1em;
+ }
+
+ .affichage{
+  display: none;
+}
+
+
+
+.usercard {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 20px auto;
+  padding: 10px 30px;
+  box-shadow: lightgray 4px 4px 20px;
+  
+ 
+  p {
+    font-weight: 300;
+    font-size: 16px;
+  }
+  button {
+    background-color: transparent;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    border: none;
+    box-shadow: lightgray 3px 3px 7px;
+    margin-right: 20px;
+    outline: none;
+    font-size: 14px;
+    font-weight: 500;
+    &:active {
+      transform: translate(1px, 1px);
+      box-shadow: lightgray 0 0 5px;
+    }
+  }
+}
+
+
+
+
+}
 
 
