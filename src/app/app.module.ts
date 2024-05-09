@@ -30,6 +30,7 @@ import { InscriptionFormationComponent } from './inscription-formation/inscripti
 import { VoirProfileService } from './services/voirProfile.service';
 import { RoleService } from './services/role.service';
 import { BackupService } from './services/backup.service';
+import { BackupComponent } from './backup/backup.component';
 
 
 
@@ -49,7 +50,8 @@ import { BackupService } from './services/backup.service';
     GestionAdresseComponent,
     VoirFormationsComponent,
     VoirProfilComponent,
-    InscriptionFormationComponent
+    InscriptionFormationComponent,
+    BackupComponent
     
   ],
   imports: [
