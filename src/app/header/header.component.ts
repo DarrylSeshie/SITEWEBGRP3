@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 //import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
+import { BackupService } from '../services/backup.service';
 
+declare const bootstrap: any;
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -10,8 +12,12 @@ import { User } from '../models/user.model';
 })
 export class HeaderComponent implements OnInit {
   connectedUser: User | null = null; // Utilisateur connecté (initialisé à null par défaut)
+  successMessage: string = '';
+  errorMessage: string = '';
 
-  constructor(/*private authService: AuthService,*/ private userService: UserService) {}
+  exportedData: any;
+
+  constructor(/*private authService: AuthService,*/ private userService: UserService,private backupService: BackupService) {}
 
   ngOnInit(): void {
   //  const token = this.authService.getToken();
@@ -36,4 +42,40 @@ export class HeaderComponent implements OnInit {
     this.connectedUser = null; // Réinitialiser l'utilisateur connecté
     // Rediriger l'utilisateur vers la page de connexion ou autre action
   }*/
+
+
+  
+  exportDb(): void {
+    this.backupService.exportDatabase().subscribe(
+      (data) => {
+        console.log('Réponse du serveur :', data);
+        this.exportedData = data; // Afficher la réponse dans le template
+        this.showSuccessToast('sauvgarde avec succès.'); 
+      },
+      (error) => {
+        console.error('Erreur lors de l\'export de la base de données :', error);
+        this.showErrorToast('Erreur lors de la sauvegarde.');
+        // Gérer l'erreur ici
+      }
+    );
+  }
+ 
+  
+
+  
+  private showSuccessToast(message: string) {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.successMessage = message;
+    this.errorMessage = '';
+  }
+
+  private showErrorToast(message: string) {
+    const toastElement = document.getElementById('liveToast');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.errorMessage = message;
+    this.successMessage = '';
+  }
 }

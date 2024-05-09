@@ -27,7 +27,7 @@
                   <h5 class="card-title" id="txtFinInscription">{{ formation.titre }}</h5>
                   <p class="card-text">{{ formation.descriptif }}</p>
                   <p class="card-text">{{ formation.public_cible }}</p>
-                  <p class="card-text">Date :{{ formation.date_fin  | date:'dd MMMM yyyy'}}</p>
+                  <p class="card-text">Date :{{ formation.date_fin }}</p>
                   <p class="card-text"><small class="text-muted"  > <div id="txtFinInscription">{{ getCountdown(formation.date_fin_inscription.toString())}} </div></small></p>
                 </div>
               </div>
