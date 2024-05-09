@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : ven. 26 avr. 2024 à 23:52
--- Version du serveur : 10.4.27-MariaDB
--- Version de PHP : 8.2.0
+-- Généré le : jeu. 09 mai 2024 à 20:23
+-- Version du serveur : 10.4.32-MariaDB
+-- Version de PHP : 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -40,7 +40,7 @@ CREATE TABLE `adresse` (
 --
 
 INSERT INTO `adresse` (`id_adresse`, `rue_numero`, `code_postal`, `localite`, `pays`) VALUES
-(1, 'Trieu Kaisin 136 ', 6061, 'Charleroi', 'Belgique'),
+(1, 'Trieu Kaisin 1745', 6061, 'Charleroi', 'Belgique'),
 (2, 'Chauss de binche 159 ', 7000, 'Mons', 'Belgique'),
 (3, 'Bd Dolez 32 ', 7000, 'Mons', 'Belgique'),
 (4, '123 Rue Principale', 1000, 'Bruxelles', 'Belgique'),
@@ -56,7 +56,9 @@ INSERT INTO `adresse` (`id_adresse`, `rue_numero`, `code_postal`, `localite`, `p
 (14, '1 Rue Principale', 1000, 'Bruxelles', 'Belgique'),
 (15, '45 Avenue Centrale', 2000, 'Anvers', 'Belgique'),
 (16, '78 Boulevard Central', 3000, 'Louvain', 'Belgique'),
-(17, '10 Rue du Centre', 4000, 'Liège', 'Belgique');
+(17, '10 Rue du Centre', 4000, 'Liège', 'Belgique'),
+(18, 'Trieu Kaisin 136 ', 6062, 'Charleroi', 'Belgique'),
+(22, 'Chaussée de charleroi', 4444, 'Neigerrr', 'Belgique');
 
 -- --------------------------------------------------------
 
@@ -135,10 +137,17 @@ CREATE TABLE `image` (
 
 INSERT INTO `image` (`id_image`, `url_image`, `nom`) VALUES
 (1, 'https://www.helha.be/app/uploads/2022/05/vignette-helha2.jpg', 'Image Helha 1'),
-(2, 'https://www.bde-group.be/wp-content/uploads/2017/11/Image1-300x169.png', 'Image BDE Group'),
+(2, 'https://www.bde-group.be/wp-content/uploads/2017/11/Image1-300x169.png', 'Image BDE Groud'),
 (3, 'https://pbs.twimg.com/profile_images/651375653082652672/fEr3_2_M_400x400.png', 'Twitter Profile Image'),
 (4, 'https://www.helha.be/app/uploads/2022/07/dernierjourdecours-PUB.jpg', 'Dernier Jour de Cours'),
-(5, 'https://www.helha.be/app/uploads/2023/09/Ecrire-a-la-HELHa-ConnectED.png', 'Ecrire à la HELHa ConnectED');
+(5, 'https://www.helha.be/app/uploads/2023/09/Ecrire-a-la-HELHa-ConnectED.png', 'Ecrire à la HELHa ConnectED'),
+(12, 'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/311.jpg', 'union'),
+(13, 'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/316.jpg', 'meditaion'),
+(14, 'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/324.jpg', 'bandage'),
+(15, 'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/349.jpg', 'mal de dos'),
+(16, 'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/355.jpg', 'huile'),
+(17, 'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/314.jpg', 'secour'),
+(18, 'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/305.jpg', 'icon');
 
 -- --------------------------------------------------------
 
@@ -158,14 +167,16 @@ CREATE TABLE `institution` (
 --
 
 INSERT INTO `institution` (`id_institution`, `nom`, `logo`, `id_adresse`) VALUES
-(1, 'Helha', 'https://www.helha.be/app/uploads/2022/05/vignette-helha2.jpg', 1),
+(1, 'Helha2', 'https://www.helha.be/app/uploads/2022/05/vignette-helha2.jpg', 1),
 (2, 'Umons', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 3),
 (3, 'UNamur', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 4),
 (4, 'ULiege', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 10),
 (5, 'ULB', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 11),
 (6, 'HEH', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 8),
 (7, 'ULouvain la Neuve', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 3),
-(8, 'UGI', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 14);
+(8, 'UGI', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 14),
+(55, 'HDE100', 'https://i.pinimg.com/originals/fd/71/cc/fd71cc920df96dfb498587b177d3c658.png', 14),
+(56, 'LoyalBnnn', 'https://i.pinimg.com/originals/fd/71/cc/fd71cc920df96dfb498587b177d3c658.png', 14);
 
 -- --------------------------------------------------------
 
@@ -187,14 +198,11 @@ CREATE TABLE `lieu` (
 --
 
 INSERT INTO `lieu` (`id_lieu`, `nom`, `batiment`, `locaux`, `id_institution`, `id_adresse`) VALUES
-(1, 'Helha_montignie', 'Batiment A', 'E206', 1, 1),
+(1, 'Helha_montignie1', 'Batiment A', 'E206', 1, 1),
 (2, 'Helha_Mons', 'Batiment B', 'B201', 1, 2),
 (3, 'Umons', 'Batiment C', 'Locaux C', 2, 3),
 (4, 'Helha_gilly', 'Batiment A', 'E206', 1, 4),
-(5, 'HEH_', 'Batiment B', 'B201', 4, 5),
-(6, 'Umons', 'Batiment C', 'Locaux C', 5, 6),
-(8, 'Helha_gilly', 'Batiment A', 'E206', 1, 7),
-(9, 'HEH_', 'Batiment B', 'B201', 4, 8);
+(5, 'HEH_', 'Batiment B', 'B201', 4, 5);
 
 -- --------------------------------------------------------
 
@@ -260,16 +268,16 @@ CREATE TABLE `produit` (
 --
 
 INSERT INTO `produit` (`id_produit`, `titre`, `sous_titre`, `date_debut`, `date_fin`, `date_fin_inscription`, `descriptif`, `objectif`, `contenu`, `methodologie`, `public_cible`, `prix`, `id_image`, `id_lieu`, `id_type_produit`) VALUES
-(1, 'F02', 'Accompagner l\'etudiant infirmier en stage ', '2024-05-01', '2024-05-10', '2024-04-25', 'Adopter la posture de refecrence/coach en equipe...', 'Devenir pro', 'Contenu de la formation 1', 'Méthodologie de la formation 1', 'Etudiant', 10, 2, 1, 1),
-(2, 'R03', 'Solliciter l\'expression des émotion', '2024-05-09', '2024-05-10', '2024-05-25', 'Solliciter l\'expression des émotions chez les patients et résidents par le biais du journal créatif', 'Objectif de la formation 2', 'Contenu de la formation 2', 'Méthodologie de la formation 2', 'Etudiant', 12, 4, 1, 1),
+(1, 'F02', 'Accompagner l\'etudiant infirmier en stage ', '2024-05-20', '2024-05-23', '2024-05-16', 'Adopter la posture de refecrence/coach en equipe...', 'Devenir pro', 'Contenu de la formation 1', 'Méthodologie de la formation 1', 'Etudiant', 10, 17, 1, 1),
+(2, 'R03', 'Solliciter l\'expression des émotion', '2024-05-23', '2024-05-30', '2024-05-21', 'Solliciter l\'expression des émotions chez les patients et résidents par le biais du journal créatif', 'Objectif de la formation 2', 'Contenu de la formation 2', 'Méthodologie de la formation 2', 'Etudiant', 12, 16, 1, 1),
 (3, 'Formation 3', 'Description de la formation 3', '2024-07-01', '2024-07-10', '2024-06-25', 'Ceci est le descriptif de la formation 3', 'Objectif de la formation 3', 'Contenu de la formation 3', 'Méthodologie de la formation 3', 'Public cible de la formation 3', 20, 3, 1, 1),
 (4, 'Formation 4', 'Description de la formation 4', '2024-08-01', '2024-08-10', '2024-07-25', 'Ceci est le descriptif de la formation 4', 'Objectif de la formation 4', 'Contenu de la formation 4', 'Méthodologie de la formation 4', 'Public cible de la formation 4', 11, 4, 1, 1),
 (5, 'Formation 5', 'Description de la formation 5', '2024-09-01', '2024-09-10', '2024-08-25', 'Ceci est le descriptif de la formation 5', 'Objectif de la formation 5', 'Contenu de la formation 5', 'Méthodologie de la formation 5', 'Public cible de la formation 5', 5, 5, 1, 1),
-(6, 'Q08', 'Initiation à l\'evaluation des apt pro', '2024-05-15', '2024-05-15', '2024-05-10', 'Il est parfois difficile d\'evaluer les aptitude professionelles de maniere objective .\r\nla methode ESAP change la donne.', 'Objectif de la journée 1', 'Contenu de la journée 1', 'Méthodologie de la journée 1', 'Travailleur', 50, 5, 1, 2),
-(7, 'Journée 2', 'Description de la journée 2', '2024-06-15', '2024-06-15', '2024-06-10', 'Ceci est le descriptif de la journée 2', 'Objectif de la journée 2', 'Contenu de la journée 2', 'Méthodologie de la journée 2', 'Public cible de la journée 2', 60, 4, 1, 2),
+(6, 'Q08', 'Initiation à l\'evaluation des apt pro', '2024-05-15', '2024-05-17', '2024-05-12', 'Il est parfois difficile d\'evaluer les aptitude professionelles de maniere objective .\r\nla methode ESAP change la donne.', 'Objectif de la journée 1', 'Contenu de la journée 1', 'Méthodologie de la journée 1', 'Travailleur', 50, 13, 1, 2),
+(7, 'Journée 2', 'Description de la journée 2', '2024-06-15', '2024-06-15', '2024-06-10', 'Ceci est le descriptif de la journée 2', 'Objectif de la journée 2', 'Contenu de la journée 2', 'Méthodologie de la journée 2', 'Public cible de la journée 2', 60, 18, 1, 2),
 (8, 'Journée 3', 'Description de la journée 3', '2024-07-15', '2024-07-15', '2024-07-10', 'Ceci est le descriptif de la journée 3', 'Objectif de la journée 3', 'Contenu de la journée 3', 'Méthodologie de la journée 3', 'Public cible de la journée 3', 55, 3, 1, 2),
 (9, 'Journée 4', 'Description de la journée 4', '2024-08-15', '2024-08-15', '2024-08-10', 'Ceci est le descriptif de la journée 4', 'Objectif de la journée 4', 'Contenu de la journée 4', 'Méthodologie de la journée 4', 'Public cible de la journée 4', 65, 2, 1, 2),
-(10, 'Journée 5', 'Description de la journée 5', '2024-09-15', '2024-09-15', '2024-09-10', 'Ceci est le descriptif de la journée 5', 'Objectif de la journée 5', 'Contenu de la journée 5', 'Méthodologie de la journée 5', 'Public cible de la journée 5', 70, 1, 1, 2);
+(10, ' 66 Days', 'Description de la journée 5', '2024-09-15', '2024-09-15', '2024-09-10', 'Ceci est le descriptif de la journée 6', 'Objectif de la journée 6', 'Contenu de la journée 5', 'Méthodologie de la journée 5', 'Public cible de la journée 5', 705, 1, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -341,11 +349,11 @@ CREATE TABLE `utilisateur` (
 INSERT INTO `utilisateur` (`id_utilisateur`, `civilite`, `nom`, `prenom`, `email`, `mot_de_passe`, `gsm`, `TVA`, `profession`, `gsm_pro`, `email_pro`, `id_role`, `id_institution`, `id_adresse`) VALUES
 (1, 'M.', 'Stoffel', 'Jean-Francois', 'stoffeljf@helha.be', 'AdminHelha1234', '048xxxxxx', 'BE123456789', 'Ingénieur', '987654321', 'stoffeljf@gmail.com', 1, 1, 5),
 (2, 'M.', 'Seshie', 'The_D', 'TheD@helha.be', 'AdminHelha1234', '048xxxxxx', 'BE123456789', 'Etudiant', '987654321', 'Thed_y@gmail.com', 1, 1, 1),
-(3, 'M.', 'Sirjacjk', 'celestin', 'Sceles@helha.be', 'AdminHelha1234', '048xxxxxx', 'BE123456789', 'Etudiant', '987654321', 'celestinio@gmail.com', 2, 1, 12),
+(3, 'MR', 'Sirjacjk', 'celestin', 'Sceles@helha.be', 'AdminHelha1234', '048xxxxxx', 'BE123456789', 'Etudiant', '987654321', 'celestinio@gmail.com', 2, 1, 12),
 (4, 'M.', 'Lamdine', 'Houssam', 'houss@helha.be', 'AdminHelha1234', '048xxxxxx', 'BE123456789', 'Etudiant', '987654321', 'hou@gmail.com', 2, 1, 12),
-(5, 'M.', 'Kawas', 'Helmajdi', 'Kw@helha.be', 'AdminHelha1234', '048xxxxxx', 'BE123456789', 'Professeur', '987654321', 'Kasw@gmail.com', 3, 1, 13),
-(6, 'M.', 'Dupont', 'Jean', 'jean.dupont@example.com', 'mdp123', '123456789', 'BE123456789', 'Ingénieur', '987654321', 'jeandupont@pro.com', 4, 1, 1),
-(7, 'Mme', 'Martin', 'Sophie', 'sophie.martin@example.com', 'password456', '987654321', 'BE987654321', 'Développeur', '123456789', 'sophiemartin@pro.com', 4, 1, 2),
+(5, 'M.', 'Kawas', 'Helmajdi', 'Kw@helha.be', 'AdminHelha1234', '048xxxxxx', 'BE123456789', 'Professeur', '987654321', 'Kasw@gmail.com', 4, 1, 13),
+(6, 'M.', 'Dupont', 'Jean', 'jean.dupont@example.com', 'mdp123', '123456789', 'BE123456789', 'Ingénieur', '987654321', 'jeandupont@pro.com', 3, 1, 1),
+(7, 'Mme', 'Martin', 'Sophie', 'sophie.martin@example.com', 'password456', '987654321', 'BE987654321', 'Développeur', '123456789', 'sophiemartin@pro.com', 3, 1, 2),
 (8, 'M.', 'Lefevre', 'Pierre', 'pierre.lefevre@example.com', 'securepwd789', '789456123', 'BE789456123', 'Architecte', '654987321', 'pierrelefevre@pro.com', 4, 1, 3),
 (9, 'Mme', 'Dubois', 'Marie', 'marie.dubois@example.com', 'pass123', '654789321', 'BE654789321', 'Consultant', '987654123', 'mariedubois@pro.com', 4, 1, 4),
 (10, 'M.', 'Leroy', 'Thomas', 'thomas.leroy@example.com', 'password789', '456123789', 'BE456123789', 'Analyste', '321987654', 'thomasleroy@pro.com', 4, 1, 5),
@@ -402,7 +410,12 @@ INSERT INTO `utilisateur` (`id_utilisateur`, `civilite`, `nom`, `prenom`, `email
 (63, 'Mlle', 'Lefevre', 'Sophie', 'sophie.lefevre@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
 (64, 'M.', 'Dupont', 'Jean', 'jean.dupont@example.com', 'motdepasse123', '0612345678', 'BE123456789', 'Médecin généraliste', '0478901234', 'jean.dupont@clinique.com', 4, 1, 2),
 (65, 'Mme', 'Martin', 'Marie', 'marie.martin@example.com', 'password456', '0712345678', 'FR987654321', 'Infirmière', '0498765432', 'marie.martin@hopital.fr', 4, 2, 2),
-(66, 'M.', 'Durand', 'Pierre', 'pierre.durand@example.com', 'securepwd789', '0487654321', 'LU456789123', 'Chirurgien orthopédiste', '0456789012', 'pierre.durand@clinique.lu', 4, 1, 3);
+(66, 'M.', 'Durand', 'Pierre', 'pierre.durand@example.com', 'securepwd789', '0487654321', 'LU456789123', 'Chirurgien orthopédiste', '0456789012', 'pierre.durand@clinique.lu', 4, 1, 3),
+(75, 'Mme', 'Joosten', 'Bakoro', 'bernard.kokou1998@gmail.com', 'hudfsokfdsf', '0483574178', 'Be5899641', 'Etudiante', '0478956231', 'diara@gmail.com', 4, 6, 5),
+(76, 'Mme', 'Joosten', 'Bakoro', 'bernard.kokou1998@gmail.com', 'hudfsokfdsf', '0483574178', 'Be5899641', 'Etudiante', '0478956231', 'diara@gmail.com', 4, 3, 5),
+(80, 'Mme', 'worldNet', 'Bakoro', 'espoirdaryl3@gmail.com', 'dhfgjhgj', '0483574178', 'BE77895641', 'levele', '0478956231', 'diara@gmail.com', 4, 1, 14),
+(85, 'Mme', 'Diarra', 'wooo', 'espoirdaryl3@gmail.com', 'rhtdfggdhghfd', '0483574178', 'BE77895641', 'levele', '0478956231', 'espo@gmail.com', 4, 1, 1),
+(86, 'MR', 'mama', 'Bakoro', 'gnongbediarra188@gmail.com', 'gdfjhnlkm', '0483574178', 'Be5899641', 'Etudiante', '0478956231', 'party@gmail.com', 4, 1, 5);
 
 --
 -- Index pour les tables déchargées
@@ -494,31 +507,31 @@ ALTER TABLE `utilisateur`
 -- AUTO_INCREMENT pour la table `adresse`
 --
 ALTER TABLE `adresse`
-  MODIFY `id_adresse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_adresse` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT pour la table `image`
 --
 ALTER TABLE `image`
-  MODIFY `id_image` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_image` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT pour la table `institution`
 --
 ALTER TABLE `institution`
-  MODIFY `id_institution` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_institution` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT pour la table `lieu`
 --
 ALTER TABLE `lieu`
-  MODIFY `id_lieu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_lieu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pour la table `produit`
 --
 ALTER TABLE `produit`
-  MODIFY `id_produit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_produit` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT pour la table `role`
@@ -536,7 +549,7 @@ ALTER TABLE `typeproduit`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
 
 --
 -- Contraintes pour les tables déchargées
