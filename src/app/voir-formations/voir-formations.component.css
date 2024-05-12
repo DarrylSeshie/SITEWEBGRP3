@@ -61,3 +61,16 @@ body, html {
     color: rgb(70, 67, 67); 
     margin-bottom: 10px; 
 }
+ul li {
+    display: flex;
+    align-items: center; /* Keeps items vertically aligned */
+    justify-content: space-between; /* Distributes space between text and button */
+    margin-bottom: 5px; /* Adds space between list items */
+}
+
+.btn-danger {
+    font-size: 0.7rem; /* Smaller font size for the button */
+    padding: 0.2rem 0.4rem; /* Reduced padding to make button smaller */
+    line-height: 1; /* Adjust line height for better fit */
+    vertical-align: middle; /* Align button vertically */
+}
