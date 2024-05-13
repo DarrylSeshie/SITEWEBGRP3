@@ -25,11 +25,17 @@
                 <img [src]="formation.image?.url_image" class="card-img-top" alt="Formation Image">
                 <div class="card-body">
                   <h5 class="card-title" id="txtFinInscription">{{ formation.titre }}</h5>
-                  <p class="card-text">{{ formation.descriptif }}</p>
-                  <p class="card-text">{{ formation.public_cible }}</p>
-                  <p class="card-text">Date :{{ formation.date_fin }}</p>
+                  <p class="card-text">Description: {{ formation.descriptif }}</p>
+                  <p class="card-text">Sous titre: {{ formation.sous_titre }}</p>
+                  <p class="card-text">Lieu: {{ formation.lieu?.nom }}</p>
+                  <p class="card-text">Public: {{ formation.public_cible }}</p>
+                  <p class="card-text">Prix: {{ formation.prix }}  €</p>
+                  <p class="card-text">Date: {{ formation.date_fin | date:"d-MM-yyyy" }}</p>
                   <p class="card-text"><small class="text-muted"  > <div id="txtFinInscription">{{ getCountdown(formation.date_fin_inscription.toString())}} </div></small></p>
+                  <button routerLink="/inscription-formation" *ngIf="!isRegistrationClosed(formation.date_fin_inscription.toString())" id="searchButton">S'inscrire</button>
+
                 </div>
+                
               </div>
                 
             

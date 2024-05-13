@@ -77,14 +77,12 @@ export class GestionUtilisateurComponent implements OnInit{
   
   nextPage() {
     this.currentPage++;
-    console.log('Current Page:', this.currentPage);
     this.loadUsers();
   }
   
   previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
-      console.log('Current Page:', this.currentPage);
       this.loadUsers();
     }
   }
@@ -138,20 +136,11 @@ export class GestionUtilisateurComponent implements OnInit{
     this.userService.deleteUser(userId).subscribe(
       () => {
         this.loadUsers(); 
-        // Afficher le toast de confirmation
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        this.successMessage = 'Utilisateur supprimer avec succès.';
-        this.errorMessage = ''; 
+        this.showSuccessToast('client supprimer avec succès.'); 
       },
       error => {
-        const toastElement = document.getElementById('liveToast');
-        const toastBootstrap = new bootstrap.Toast(toastElement);
-        toastBootstrap.show();
-        console.error('Error deleting user:', error);
-        this.errorMessage = 'Erreur de suppression de l\'utilisateur car celui ci est affilié à un evenement  ';
-        this.successMessage = '';
+       console.log('Delete User Error : ',error);
+        this.showErrorToast('Erreur lors de la suppression du client; celui ci est affilié à un evenement');
       }
     );
   }
@@ -197,7 +186,6 @@ export class GestionUtilisateurComponent implements OnInit{
     this.userService.getUserById(userId).subscribe(
       user => {
         this.selectedUser = user;
-        console.log('selectedUser:', this.selectedUser);
         // Toggle the visibility of user details
         this.toggleDetails(user);
 

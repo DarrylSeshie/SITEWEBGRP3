@@ -62,14 +62,14 @@ export class GestionnaireComponent implements OnInit{
   
   nextPage() {
     this.currentPage++;
-    console.log('Current Page:', this.currentPage);
+   // console.log('Current Page:', this.currentPage);
     this.loadUsers();
   }
   
   previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
-      console.log('Current Page:', this.currentPage);
+    //  console.log('Current Page:', this.currentPage);
       this.loadUsers();
     }
   }
@@ -142,7 +142,6 @@ export class GestionnaireComponent implements OnInit{
     this.userService.getUserById(userId).subscribe(
       user => {
         this.selectedUser = user;
-        console.log('selectedUser:', this.selectedUser);
         // Toggle the visibility of user details
         this.toggleDetails(user);
 

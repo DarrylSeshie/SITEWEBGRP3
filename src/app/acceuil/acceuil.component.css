@@ -60,6 +60,14 @@ body {
     box-shadow: black 3px 3px 20px; /* Supprimer toute ombre en focus ou actif */
   }
 
+  #searchButton {
+    padding: 8px 16px;
+    background-color: #800860; /* Couleur de fond du bouton (bleu par défaut) */
+    color: white; /* Couleur du texte */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
 
   .body {
     

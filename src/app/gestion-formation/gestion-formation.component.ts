@@ -85,14 +85,14 @@ export class GestionFormationComponent {
   
   nextPage() {
     this.currentPage++;
-    console.log('Current Page:', this.currentPage);
+   // console.log('Current Page:', this.currentPage);
     this.loadFormations();
   }
   
   previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
-      console.log('Current Page:', this.currentPage);
+     // console.log('Current Page:', this.currentPage);
       this.loadFormations();
     }
   }

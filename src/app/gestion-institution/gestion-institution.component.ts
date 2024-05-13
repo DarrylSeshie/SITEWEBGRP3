@@ -70,14 +70,14 @@ InstitutionToUpdate: Institution | null = null;
 
   nextPage() {
     this.currentPage++;
-    console.log('Current Page:', this.currentPage);
+   // console.log('Current Page:', this.currentPage);
     this.loadInstitutions();
   }
   
   previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
-      console.log('Current Page:', this.currentPage);
+    //  console.log('Current Page:', this.currentPage);
       this.loadInstitutions();
     }
   }

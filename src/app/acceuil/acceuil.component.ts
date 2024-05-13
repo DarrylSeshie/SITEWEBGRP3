@@ -61,4 +61,11 @@ export class AcceuilComponent implements OnInit, OnDestroy{
     return `Fin d'inscription dans : ${days} jours, ${hours} heures, ${minutes} minutes, ${seconds} secondes `;
   }
 
+
+  isRegistrationClosed(dateFinInscription: string): boolean {
+    const now = new Date();
+    const targetDate = new Date(dateFinInscription);
+    return now >= targetDate; // Returns true if the current date is past the target date
+  }
+
 }
