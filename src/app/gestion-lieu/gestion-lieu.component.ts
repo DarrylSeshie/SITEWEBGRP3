@@ -105,7 +105,7 @@ export class GestionLieuComponent {
       this.lieux2.subscribe(
         (users) => {
           if (users.length === 0) {
-            const toastElement = document.getElementById('liveToastSuccess');
+            const toastElement = document.getElementById('liveToastSuccessl');
             const toastBootstrap = new bootstrap.Toast(toastElement);
             toastBootstrap.show();
             this.successMessage = 'Aucun utilisateur trouvé pour ce nom ';
@@ -114,7 +114,7 @@ export class GestionLieuComponent {
           }
         },
         (error) => {
-          const toastElement = document.getElementById('liveToastError');
+          const toastElement = document.getElementById('liveToastErrorl');
           const toastBootstrap = new bootstrap.Toast(toastElement);
           toastBootstrap.show();
           console.error('Error search user:', error);
@@ -135,14 +135,14 @@ export class GestionLieuComponent {
       () => {
         this.loadLieux(); 
         // Afficher le toast de confirmation
-        const toastElement = document.getElementById('liveToastSuccess');
+        const toastElement = document.getElementById('liveToastSuccessl');
         const toastBootstrap = new bootstrap.Toast(toastElement);
         toastBootstrap.show();
         this.successMessage = 'Lieu supprimer avec succès.';
         this.errorMessage = ''; 
       },
       error => {
-        const toastElement = document.getElementById('liveToastError');
+        const toastElement = document.getElementById('liveToastErrorl');
         const toastBootstrap = new bootstrap.Toast(toastElement);
         toastBootstrap.show();
         console.error('Error deleting user:', error);
@@ -198,14 +198,14 @@ export class GestionLieuComponent {
 
   private showSuccessToast(message: string) {
     this.successMessage = message;
-    const toastElement = document.getElementById('liveToastSuccess');
+    const toastElement = document.getElementById('liveToastSuccessl');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
     this.errorMessage = '';
   }
 
   private showErrorToast(message: string) {
-    const toastElement = document.getElementById('liveToastError');
+    const toastElement = document.getElementById('liveToastErrorl');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
     this.errorMessage = message;

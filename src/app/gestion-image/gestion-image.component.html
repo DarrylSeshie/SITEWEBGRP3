@@ -103,12 +103,12 @@
       <div class="col-3"></div>
       <div class="col form-floating mb-3">
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="name" placeholder="Nom" [(ngModel)]="image.nom" name="nom" autofocus required>
-          <label for="name">Nom</label>
+          <input type="text" class="form-control" id="nom" placeholder="Nom" [(ngModel)]="image.nom" name="nom" autofocus required>
+          <label for="nom">Nom</label>
         </div>
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="url_image"  [(ngModel)]="image.url_image" name="url_image">
-          <label for="logo">Url image</label>
+          <label for="url_image">Url image</label>
         </div>
     
         <p style="color: red;">{{errorMessage}}</p>
@@ -142,11 +142,11 @@
 
     <form (ngSubmit)="updateImage(ImageToUpdate)" #updateForm="ngForm">
       <div class="form-group">
-        <label for="name">Nom :</label>
-        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="ImageToUpdate.nom" required>
+        <label for="nom">Nom :</label>
+        <input type="text" class="form-control" id="nom" name="nom" [(ngModel)]="ImageToUpdate.nom" required>
       </div>
       <div class="form-group">
-        <label for="logo">URL Image :</label>
+        <label for="url_image">URL Image :</label>
         <input type="text" class="form-control" id="url_image" name="url_image" [(ngModel)]="ImageToUpdate.url_image" required>
       </div>
       <button type="submit" id="searchButton"  >Enregistrer</button>
@@ -163,7 +163,7 @@
 
 <!-- Gestion notif-->
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div id="liveToastSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+  <div id="liveToastSuccessi" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
       <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
       <strong class="me-auto">ceREF</strong>
@@ -176,7 +176,7 @@
       </div>
     </div>
   </div>
-  <div id="liveToastError" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+  <div id="liveToastErrori" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
       <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
       <strong class="me-auto">ceREF</strong>

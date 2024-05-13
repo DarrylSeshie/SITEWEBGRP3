@@ -130,19 +130,19 @@
       <div class="col form-floating mb-3">
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="rue_numero" placeholder="Nom" [(ngModel)]="adresse.rue_numero" name="rue_numero" autofocus required>
-          <label for="logo">rue & numero</label>
+          <label for="rue_numero">rue & numero</label>
         </div>
         <div class="form-floating mb-3">
           <input type="number" class="form-control" id="code_postal"  [(ngModel)]="adresse.code_postal" name="code_postal">
-          <label for="logo">Code postal</label>
+          <label for="code_postal">Code postal</label>
         </div>
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="localite" [(ngModel)]="adresse.localite" name="localite">
-          <label for="logo">localite</label>
+          <label for="localite">localite</label>
         </div>
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="pays" [(ngModel)]="adresse.pays" name="pays">
-          <label for="logo">Pays</label>
+          <label for="pays">Pays</label>
         </div>
     
         <div class="align-right">
@@ -172,19 +172,19 @@
 
     <form (ngSubmit)="updateAdresse(AdresseToUpdate)" #updateForm="ngForm">
       <div class="form-group">
-        <label for="name">Rue & numero :</label>
+        <label for="rue_numero">Rue & numero :</label>
         <input type="text" class="form-control" id="rue_numero" name="rue_numero" [(ngModel)]="AdresseToUpdate.rue_numero" required>
       </div>
       <div class="form-group">
-        <label for="logo">CP :</label>
+        <label for="code_postal">CP :</label>
         <input type="number" class="form-control" id="code_postal" name="code_postal" [(ngModel)]="AdresseToUpdate.code_postal" required>
       </div>
       <div class="form-group">
-        <label for="idAdresse">Localité :</label>
+        <label for="localite">Localité :</label>
         <input type="text" class="form-control" id="localite" name="localite" [(ngModel)]="AdresseToUpdate.localite" required>
       </div>
       <div class="form-group">
-        <label for="idAdresse">Pays :</label>
+        <label for="pays">Pays :</label>
         <input type="text" class="form-control" id="pays" name="pays" [(ngModel)]="AdresseToUpdate.pays" required>
       </div>
       <button type="submit" id="searchButton" >Enregistrer</button>
@@ -200,7 +200,7 @@
 
 <!-- Gestion notif-->
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div id="liveToastSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+  <div id="liveToastSucces" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
       <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
       <strong class="me-auto">ceREF</strong>
@@ -213,7 +213,7 @@
       </div>
     </div>
   </div>
-  <div id="liveToastError" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+  <div id="liveToastErro" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
       <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
       <strong class="me-auto">ceREF</strong>

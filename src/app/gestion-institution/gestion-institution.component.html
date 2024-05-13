@@ -118,16 +118,16 @@
       <div class="col-3"></div>
       <div class="col form-floating mb-3">
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="name" placeholder="Nom" [(ngModel)]="institution.nom" name="nom" autofocus required>
-          <label for="name">Nom</label>
+          <input type="text" class="form-control" id="nom" placeholder="Nom" [(ngModel)]="institution.nom" name="nom" autofocus required>
+          <label for="nom">Nom</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" name="logo"  [(ngModel)]="institution.logo" name="logo">
+          <input type="text" class="form-control" name="logo" id="logo"  [(ngModel)]="institution.logo" name="logo" autofocus required>
           <label for="logo">Url image</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="number" class="form-control" id="id" [(ngModel)]="institution.id_adresse" name="id_adresse">
-          <label for="logo">id</label>
+          <input type="number" class="form-control" id="id_adresse" [(ngModel)]="institution.id_adresse" name="id_adresse" autofocus required>
+          <label for="id_adresse">id</label>
         </div>
     
         <p style="color: red;">{{errorMessage}}</p>
@@ -161,8 +161,8 @@
 
     <form (ngSubmit)="updateInstitution(InstitutionToUpdate)" #updateForm="ngForm">
       <div class="form-group">
-        <label for="name">Nom :</label>
-        <input type="text" class="form-control" id="name" name="name" [(ngModel)]="InstitutionToUpdate.nom" required>
+        <label for="nom">Nom :</label>
+        <input type="text" class="form-control" id="nom" name="nom" [(ngModel)]="InstitutionToUpdate.nom" required>
       </div>
       <div class="form-group">
         <label for="logo">URL Image :</label>
@@ -186,7 +186,7 @@
 
 <!-- Gestion notif-->
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div id="liveToastSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+  <div id="liveToastSuccessa" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
       <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
       <strong class="me-auto">ceREF</strong>
@@ -199,7 +199,7 @@
       </div>
     </div>
   </div>
-  <div id="liveToastError" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+  <div id="liveToastErrora" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
       <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
       <strong class="me-auto">ceREF</strong>

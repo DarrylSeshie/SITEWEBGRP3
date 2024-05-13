@@ -93,7 +93,7 @@ export class GestionnaireComponent implements OnInit{
       this.users2.subscribe(
         (users) => {
           if (users.length === 0) {
-            const toastElement = document.getElementById('liveToastSuccess');
+            const toastElement = document.getElementById('liveToastSuccessrr');
             const toastBootstrap = new bootstrap.Toast(toastElement);
             toastBootstrap.show();
             this.successMessage = 'Aucun utilisateur trouvé pour ce nom ';
@@ -102,7 +102,7 @@ export class GestionnaireComponent implements OnInit{
           }
         },
         (error) => {
-          const toastElement = document.getElementById('liveToastError');
+          const toastElement = document.getElementById('liveToastErrorrr');
           const toastBootstrap = new bootstrap.Toast(toastElement);
           toastBootstrap.show();
           console.error('Error search user:', error);
@@ -124,13 +124,13 @@ export class GestionnaireComponent implements OnInit{
     this.userService.updateRole(UserToUpdate).subscribe(
       () => {
         this.loadUsers();
-        this.showSuccessToast('client modifiée avec succès.'); 
+        this.showSuccessToast('Role changer avec succès.'); 
         
       },
       error => {
        
         console.error('Error updating user:', error);
-        this.showErrorToast('Erreur lors de la modification du client.');
+        this.showErrorToast('Erreur lors du changement de role.');
       
       }
     );
@@ -156,14 +156,14 @@ export class GestionnaireComponent implements OnInit{
 
   private showSuccessToast(message: string) {
     this.successMessage = message;
-    const toastElement = document.getElementById('liveToastSuccess');
+    const toastElement = document.getElementById('liveToastSuccessrr');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
     this.errorMessage = '';
   }
 
   private showErrorToast(message: string) {
-    const toastElement = document.getElementById('liveToastError');
+    const toastElement = document.getElementById('liveToastErrorrr');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
     this.errorMessage = message;

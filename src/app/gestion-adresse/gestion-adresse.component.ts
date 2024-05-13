@@ -105,7 +105,7 @@ export class GestionAdresseComponent {
       this.Adresses2.subscribe(
         (users) => {
           if (users.length === 0) {
-            const toastElement = document.getElementById('liveToastSuccess');
+            const toastElement = document.getElementById('liveToastSucces');
             const toastBootstrap = new bootstrap.Toast(toastElement);
             toastBootstrap.show();
             this.successMessage = 'Aucun utilisateur trouvé pour ce nom ';
@@ -114,7 +114,7 @@ export class GestionAdresseComponent {
           }
         },
         (error) => {
-          const toastElement = document.getElementById('liveToastError');
+          const toastElement = document.getElementById('liveToastErro');
           const toastBootstrap = new bootstrap.Toast(toastElement);
           toastBootstrap.show();
           console.error('Error search user:', error);
@@ -192,14 +192,14 @@ export class GestionAdresseComponent {
 
   private showSuccessToast(message: string) {
     this.successMessage = message;
-    const toastElement = document.getElementById('liveToastSuccess');
+    const toastElement = document.getElementById('liveToastSucces');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
     this.errorMessage = '';
   }
 
   private showErrorToast(message: string) {
-    const toastElement = document.getElementById('liveToastError');
+    const toastElement = document.getElementById('liveToastErro');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
     this.errorMessage = message;

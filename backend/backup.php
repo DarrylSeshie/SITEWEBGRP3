@@ -19,12 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 
 // Informations de connexion à la base de données
-$dbHost = '127.0.0.1';
-$dbUsername = 'root';
-$dbPassword = '';
-$dbName = 'ceref';
-$backup_file = 'C:/backup_ceref/backup.sql';
-$command = "mysqldump -u {$dbUsername} -p{$dbPassword} -host {$dbHost} {$dbName} > {$backup_file}"; // Commande de sauvegarde (utilisation de mysqldump)
+
+//$command = "mysqldump -u {$dbUsername} -p{$dbPassword} -host {$dbHost} {$dbName} > {$backup_file}"; // Commande de sauvegarde (utilisation de mysqldump)
+$command = "C:/xampp/mysql/bin/mysqldump -u root  ceref > C:/backup_ceref/backup.sql";
 
    
     // Exécuter la commande de sauvegarde
