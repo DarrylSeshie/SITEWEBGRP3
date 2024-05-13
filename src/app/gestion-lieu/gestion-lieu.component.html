@@ -40,28 +40,7 @@
 
 
 
-  
-<!-- Gestion notif-->
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
-      <strong class="me-auto">ceREF</strong>
-      <small>Maintenant</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-      <div class="alert alert-success" *ngIf="successMessage">
-        {{ successMessage }}
-      </div>
-      
-      <div class="alert alert-danger" *ngIf="errorMessage">
-        {{ errorMessage }}
-      </div>
-    </div>
-  </div>
-</div>
-
+ 
 
   
 <!-- Section des résultats de recherche -->
@@ -183,25 +162,7 @@
 
 
 <!-- Gestion notif-->
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
-      <strong class="me-auto">ceREF</strong>
-      <small>Maintenant</small>
-      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-    </div>
-    <div class="toast-body">
-      <div class="alert alert-success" *ngIf="successMessage">
-        {{ successMessage }}
-      </div>
-      
-      <div class="alert alert-danger" *ngIf="errorMessage">
-        {{ errorMessage }}
-      </div>
-    </div>
-  </div>
-</div>
+
 </div>
 
 
@@ -247,8 +208,15 @@
 
 
 <!-- Gestion notif-->
+
+</div>
+
+
+
+
+<!-- Gestion notif-->
 <div class="toast-container position-fixed bottom-0 end-0 p-3">
-  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+  <div id="liveToastSuccess" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
       <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
       <strong class="me-auto">ceREF</strong>
@@ -256,19 +224,23 @@
       <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
     </div>
     <div class="toast-body">
-      <div class="alert alert-success" *ngIf="successMessage">
+      <div class="alert alert-success">
         {{ successMessage }}
       </div>
-      
-      <div class="alert alert-danger" *ngIf="errorMessage">
+    </div>
+  </div>
+  <div id="liveToastError" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">      
+      <div class="alert alert-danger">
         {{ errorMessage }}
       </div>
     </div>
   </div>
 </div>
-</div>
-
-
-
-
 

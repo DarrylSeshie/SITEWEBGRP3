@@ -105,7 +105,7 @@ export class GestionAdresseComponent {
       this.Adresses2.subscribe(
         (users) => {
           if (users.length === 0) {
-            const toastElement = document.getElementById('liveToast');
+            const toastElement = document.getElementById('liveToastSuccess');
             const toastBootstrap = new bootstrap.Toast(toastElement);
             toastBootstrap.show();
             this.successMessage = 'Aucun utilisateur trouvé pour ce nom ';
@@ -114,7 +114,7 @@ export class GestionAdresseComponent {
           }
         },
         (error) => {
-          const toastElement = document.getElementById('liveToast');
+          const toastElement = document.getElementById('liveToastError');
           const toastBootstrap = new bootstrap.Toast(toastElement);
           toastBootstrap.show();
           console.error('Error search user:', error);
@@ -190,16 +190,16 @@ export class GestionAdresseComponent {
   }
 
 
-  showSuccessToast(message: string) {
-    const toastElement = document.getElementById('liveToast');
+  private showSuccessToast(message: string) {
+    this.successMessage = message;
+    const toastElement = document.getElementById('liveToastSuccess');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
-    this.successMessage = message;
     this.errorMessage = '';
   }
 
-   showErrorToast(message: string) {
-    const toastElement = document.getElementById('liveToast');
+  private showErrorToast(message: string) {
+    const toastElement = document.getElementById('liveToastError');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
     this.errorMessage = message;

@@ -36,7 +36,7 @@ $command = "mysqldump -u {$dbUsername} -p{$dbPassword} -host {$dbHost} {$dbName}
         echo json_encode(['message' => 'Export de la base de données réussi']);
     } else {
         // Échec de l'exportation
-        http_response_code(200);
+        http_response_code(500);
         echo json_encode(['message' => 'Échec de l\'export de la base de données']);
     }
 

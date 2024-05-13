@@ -93,7 +93,7 @@ export class GestionnaireComponent implements OnInit{
       this.users2.subscribe(
         (users) => {
           if (users.length === 0) {
-            const toastElement = document.getElementById('liveToast');
+            const toastElement = document.getElementById('liveToastSuccess');
             const toastBootstrap = new bootstrap.Toast(toastElement);
             toastBootstrap.show();
             this.successMessage = 'Aucun utilisateur trouvé pour ce nom ';
@@ -102,7 +102,7 @@ export class GestionnaireComponent implements OnInit{
           }
         },
         (error) => {
-          const toastElement = document.getElementById('liveToast');
+          const toastElement = document.getElementById('liveToastError');
           const toastBootstrap = new bootstrap.Toast(toastElement);
           toastBootstrap.show();
           console.error('Error search user:', error);
@@ -155,15 +155,15 @@ export class GestionnaireComponent implements OnInit{
 
 
   private showSuccessToast(message: string) {
-    const toastElement = document.getElementById('liveToast');
+    this.successMessage = message;
+    const toastElement = document.getElementById('liveToastSuccess');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
-    this.successMessage = message;
     this.errorMessage = '';
   }
 
   private showErrorToast(message: string) {
-    const toastElement = document.getElementById('liveToast');
+    const toastElement = document.getElementById('liveToastError');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
     this.errorMessage = message;

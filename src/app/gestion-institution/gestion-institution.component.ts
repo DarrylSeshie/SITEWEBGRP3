@@ -2,7 +2,7 @@ import { Component ,OnInit } from '@angular/core';
 import { InstitutionService } from '../services/institution.service';
 import { Observable } from 'rxjs';
 import { Institution } from '../models/institution.model';
-import { Adresse } from '../models/adresse.model';
+
 
 
 declare const bootstrap: any;
@@ -189,18 +189,19 @@ InstitutionToUpdate: Institution | null = null;
 
 
   private showSuccessToast(message: string) {
-    const toastElement = document.getElementById('liveToast');
+    this.successMessage = message;
+    const toastElement = document.getElementById('liveToastSuccess');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
-    this.successMessage = message;
     this.errorMessage = '';
   }
 
   private showErrorToast(message: string) {
-    const toastElement = document.getElementById('liveToast');
+    const toastElement = document.getElementById('liveToastError');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
     this.errorMessage = message;
     this.successMessage = '';
   }
+
 }

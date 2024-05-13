@@ -62,17 +62,17 @@ export class HeaderComponent implements OnInit {
  
   
 
-  
+ 
   private showSuccessToast(message: string) {
-    const toastElement = document.getElementById('liveToast');
+    this.successMessage = message;
+    const toastElement = document.getElementById('liveToastSuccess');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
-    this.successMessage = message;
     this.errorMessage = '';
   }
 
   private showErrorToast(message: string) {
-    const toastElement = document.getElementById('liveToast');
+    const toastElement = document.getElementById('liveToastError');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
     this.errorMessage = message;
