@@ -20,7 +20,9 @@ export class ImageService {
     return this.http.get<Image[]>(url);
   }
 
-   
+  uploadFile(fileData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/upload`, fileData);
+  }
 
    
   getImageById(imageId: number): Observable<Image> {

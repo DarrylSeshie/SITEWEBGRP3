@@ -179,6 +179,7 @@ export class GestionImageComponent {
         console.error('Error adding image:', error);
         this.showErrorToast('Erreur lors de l\'ajout de l\'image.');
         this.loadImages();
+        console.error(error.error); 
       }
     );
   }
@@ -210,6 +211,29 @@ export class GestionImageComponent {
     this.errorMessage = message;
     this.successMessage = '';
   }
+
+
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      // Appeler votre API pour télécharger le fichier
+      this.imageService.uploadFile(formData).subscribe(
+        (response) => {
+          // Suppose que la réponse contient l'URL de l'image
+          this.image.url_image = response.imageUrl;
+          this.addImage(this.image); // Appel pour sauvegarder l'image avec l'URL
+        },
+        (error) => {
+          console.error('Error uploading file:', error);
+          this.showErrorToast('Erreur lors du chargement de l\'image.');
+        }
+      );
+    }
+  }
+  
 
 
 }

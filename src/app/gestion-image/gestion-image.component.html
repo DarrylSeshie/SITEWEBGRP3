@@ -103,12 +103,14 @@
       <div class="col-3"></div>
       <div class="col form-floating mb-3">
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="nom" placeholder="Nom" [(ngModel)]="image.nom" name="nom" autofocus required>
+          <input type="text" class="form-control" id="nom" placeholder="Nom" [(ngModel)]="image.nom" name="nom"  required>
           <label for="nom">Nom</label>
         </div>
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="url_image"  [(ngModel)]="image.url_image" name="url_image">
           <label for="url_image">Url image</label>
+          <!-- <input type="file" class="form-control" id="fileInput" (change)="onFileSelected($event)" accept="image/*"  required>
+          <label for="fileInput">Sélectionner une image</label>-->
         </div>
     
         <p style="color: red;">{{errorMessage}}</p>
