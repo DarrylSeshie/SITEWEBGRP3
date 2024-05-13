@@ -106,21 +106,14 @@ export class GestionUtilisateurComponent implements OnInit{
       this.users2.subscribe(
         (users) => {
           if (users.length === 0) {
-            const toastElement = document.getElementById('liveToast');
-            const toastBootstrap = new bootstrap.Toast(toastElement);
-            toastBootstrap.show();
-            this.successMessage = 'Aucun utilisateur trouvé pour ce nom ';
-            this.errorMessage = ''; 
+           
+            this.showSuccessToast('Aucun utilisateur trouvé pour ce nom');  
            
           }
         },
         (error) => {
-          const toastElement = document.getElementById('liveToast');
-          const toastBootstrap = new bootstrap.Toast(toastElement);
-          toastBootstrap.show();
           console.error('Error search user:', error);
-          this.errorMessage = 'Erreur de recherche , vous avez mal encodez  ';
-          this.successMessage = '';
+          this.showErrorToast('Erreur de recherche , vous avez mal encodez');
         }
       );
     } else {
@@ -199,15 +192,15 @@ export class GestionUtilisateurComponent implements OnInit{
 
 
   private showSuccessToast(message: string) {
-    const toastElement = document.getElementById('liveToast');
+    this.successMessage = message;
+    const toastElement = document.getElementById('liveToastSuccess');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
-    this.successMessage = message;
     this.errorMessage = '';
   }
 
   private showErrorToast(message: string) {
-    const toastElement = document.getElementById('liveToast');
+    const toastElement = document.getElementById('liveToastError');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
     this.errorMessage = message;

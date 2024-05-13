@@ -24,18 +24,19 @@ $dbUsername = 'root';
 $dbPassword = '';
 $dbName = 'ceref';
 $backup_file = 'C:/backup_ceref/backup.sql';
-$command = "mysqldump --user={$dbUsername} --password={$dbPassword} --host={$dbHost} {$dbName} > {$backup_file}"; // Commande de sauvegarde (utilisation de mysqldump)
+$command = "mysqldump -u {$dbUsername} -p{$dbPassword} -host {$dbHost} {$dbName} > {$backup_file}"; // Commande de sauvegarde (utilisation de mysqldump)
 
    
     // Exécuter la commande de sauvegarde
     exec($command, $output, $returnVar);
+    
     if ($returnVar === 0) {
         // Exportation réussie
         http_response_code(200);
         echo json_encode(['message' => 'Export de la base de données réussi']);
     } else {
         // Échec de l'exportation
-        http_response_code(500);
+        http_response_code(200);
         echo json_encode(['message' => 'Échec de l\'export de la base de données']);
     }
 
