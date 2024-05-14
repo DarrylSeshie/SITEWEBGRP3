@@ -78,7 +78,9 @@ export class UserService {
       return this.http.get<User>( 'http://localhost/PROJET_ceREF/backend/user.php' + `?id_institution=${institutionId}` );
     }
 
-
+    checkLogin(username: string, password: string): Observable<any> {
+      return this.http.post("http://localhost/PROJET_ceREF/backend/user3.php", { username: username, password: password });
+    }
   
 
   

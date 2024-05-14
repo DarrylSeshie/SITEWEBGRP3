@@ -514,4 +514,25 @@ public function count()
     }
 }
 
+public function checkUser($username)
+  {
+    $user = null;
+    $sql = "SELECT * from utilisateur where email=:email";
+    try {
+      $prep = $this->db->prepare($sql);
+      $prep->bindParam(':email', $username, PDO::PARAM_STR);
+      $prep->execute();
+      $userArr = $prep->fetch(PDO::FETCH_ASSOC);
+      $user = new User($userArr);
+    } catch (PDOException $e) {
+      die($e->getMessage());
+    } finally {
+      $prep = null;
+    }
+    return $user;
+  }
+
 }
+
+
+

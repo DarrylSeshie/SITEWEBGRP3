@@ -5,6 +5,7 @@ require_once 'models/Institution.class.php';
 require_once 'models/Role.class.php';
 require_once 'managers/DBManager.php';
 require_once 'managers/UserManager.php';
+require_once 'jwt_utils.php';
 // Assurez-vous que le nom du fichier correspond au nom de classe UserManager
 
 $dbManager = new DBManager();
@@ -114,4 +115,5 @@ if ($http_method === "GET") {
     http_response_code(400);
     echo json_encode(array("error" => "Méthode non implémentée"));
 }
+
 ?>

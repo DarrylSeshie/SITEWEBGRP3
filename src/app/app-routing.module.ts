@@ -13,6 +13,7 @@ import { InscriptionFormationComponent } from './inscription-formation/inscripti
 import { VoirFormationsComponent } from './voir-formations/voir-formations.component';
 import { VoirProfilComponent } from './voir-profil/voir-profil.component';
 import { GestionnaireComponent } from './gestionnaire/gestionnaire.component';
+import { ConnexionComponent } from './connexion/connexion.component';
 
 
 
@@ -55,6 +56,9 @@ const routes: Routes = [
     },
     {
       path: 'voir-profil', component: VoirProfilComponent
+    },
+    {
+      path: '', component: ConnexionComponent
     }
 
 
