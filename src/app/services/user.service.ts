@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
+import { CookieService } from 'ngx-cookie-service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ export class UserService {
   private apiUrl = 'http://localhost/PROJET_ceREF/backend/user.php'; // URL de votre API pour les utilisateurs
   private apiUrl2 = 'http://localhost/PROJET_ceREF/backend/user2.php';
 
-  constructor(private http: HttpClient) { } 
+  constructor(private http: HttpClient , private cookieService: CookieService) { } 
 
   getTotalUsersCount(): Observable<number> {
     const url = `${this.apiUrl}?count`;
@@ -82,7 +84,30 @@ export class UserService {
       return this.http.post("http://localhost/PROJET_ceREF/backend/user3.php", { username: username, password: password });
     }
   
-
+    private getToken(): string {
+      const token = localStorage.getItem('token');
+      console.log("Retrieved token from localStorage:", token);  // Affiche le token récupéré pour le débogage
+      return token ? token : '';
+    }
+  
+    protected getHeaders(): HttpHeaders {
+      const token = this.getToken();
+      if (!token) {
+        // Gérer le cas où il n'y a pas de token
+        console.error("No token available");
+        return new HttpHeaders();  // Retourne des headers vides ou avec un contenu minimal
+      }
+      return new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      });
+    }
+  
+    getProtectedData() {
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${this.cookieService.get('token')}`
+      });
+      return this.http.get('url-protégée', { headers });
+    }
   
 
   

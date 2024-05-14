@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'; // importer une seul fois
+import { CookieService } from 'ngx-cookie-service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -74,7 +75,8 @@ import { ConnexionComponent } from './connexion/connexion.component';
     FormationService,
     TypeProduitService,
     RoleService,
-    BackupService
+    BackupService,
+    CookieService
     
     
   ], 
