@@ -21,7 +21,7 @@
           </li>
 
                                                     <!-- Attention Ici bas modif pour -->
-            <li class="nav-item" *ngIf="connectedUser?.id_role == 1 || connectedUser?.id_role== 2"> <!-- permet d'avoir le user connecter et son role et afficher l'option gestion -->
+            <li class="nav-item" *ngIf="connectedUser?.id_role == null || connectedUser?.id_role== 2"> <!-- permet d'avoir le user connecter et son role et afficher l'option gestion -->
             <a class="nav-link"   data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="fa-solid fa-gear"></i> Gestion</a>
           </li>
         </ul>

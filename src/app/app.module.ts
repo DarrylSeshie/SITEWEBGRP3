@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http'; // importer une seul fois
 import { CookieService } from 'ngx-cookie-service';
 import { RouterOutlet } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -63,7 +64,8 @@ import { ConnexionComponent } from './connexion/connexion.component';
     HttpClientModule,
     AppRoutingModule,
     FormsModule ,
-    RouterOutlet
+    RouterOutlet,
+    ReactiveFormsModule
    
   ],
   providers: [ // ajt tout les service  cree ici ici
