@@ -3,6 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import { CookieService } from 'ngx-cookie-service';
+import { jwtDecode } from "jwt-decode";
+import { tap } from 'rxjs/operators';
+//import jwtDecode from 'jwt-decode';
 
 
 @Injectable({
@@ -28,8 +31,10 @@ export class UserService {
   }
 
   
+  
   getUserById(userId: number): Observable<User> {
-    return this.http.get<User>( 'http://localhost/PROJET_ceREF/backend/user.php' + `?id=${userId}` );
+    const headers = this.getHeaders();
+    return this.http.get<User>(`http://localhost/PROJET_ceREF/backend/user.php?id=${userId}`, { headers });
   }
 
   addUser(newUserId: User): Observable<User> {
@@ -45,9 +50,15 @@ export class UserService {
 
 
   
-  updateUser(updatedUser: User): Observable<User> {
+  /*updateUser(updatedUser: User): Observable<User> {
     const url = `${this.apiUrl}/${updatedUser.id_utilisateur}`;
     return this.http.put<User>(url, updatedUser);
+  }*/
+
+  updateUser(updatedUser: User): Observable<User> {
+    const headers = this.getHeaders();
+    const url = `${this.apiUrl}/${updatedUser.id_utilisateur}`;
+    return this.http.put<User>(url, updatedUser, { headers });
   }
 
   
@@ -57,12 +68,15 @@ export class UserService {
   }
   
   
-  
-
   deleteUser(id: number): Observable<any> {
+    const headers = this.getHeaders();
+    return this.http.delete(`http://localhost/PROJET_ceREF/backend/user.php?id=${id}`, { headers });
+  }
+
+  /*deleteUser(id: number): Observable<any> {
      return this.http.delete("http://localhost/PROJET_ceREF/backend/user.php?id=" + id);
    
-  }
+  }*/
 
 
     // Méthode pour récupérer une adresse par son ID
@@ -80,14 +94,36 @@ export class UserService {
       return this.http.get<User>( 'http://localhost/PROJET_ceREF/backend/user.php' + `?id_institution=${institutionId}` );
     }
 
-    checkLogin(username: string, password: string): Observable<any> {
+   /* checkLogin(username: string, password: string): Observable<any> {
       return this.http.post("http://localhost/PROJET_ceREF/backend/user3.php", { username: username, password: password });
+    }*/
+
+    checkLogin(username: string, password: string): Observable<any> {
+      return this.http.post<{token: string}>("http://localhost/PROJET_ceREF/backend/user3.php", { username, password })
+        .pipe(
+          tap(response => {
+            if (response && response.token) {
+              localStorage.setItem('token', response.token);  // Enregistrement du token
+              console.log("Token saved:", response.token);
+            } else {
+              console.error("No token received");
+            }
+          })
+        );
     }
   
-    private getToken(): string {
+     /*getToken(): string {
       const token = localStorage.getItem('token');
       console.log("Retrieved token from localStorage:", token);  // Affiche le token récupéré pour le débogage
       return token ? token : '';
+    }*/
+    getToken(): string {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.error("No token found in localStorage.");
+        return ''; // Assurez-vous que cela est géré adéquatement là où getToken est appelé.
+      }
+      return token;
     }
   
     protected getHeaders(): HttpHeaders {
@@ -109,7 +145,19 @@ export class UserService {
       return this.http.get('url-protégée', { headers });
     }
   
-
+    decodeToken(): any {
+      const token = this.getToken();
+      if (!token) {
+        console.error("No token available or token is invalid");
+        return null;
+      }
+      try {
+        return jwtDecode<any>(token);
+      } catch (error) {
+        console.error("Error decoding token:", error);
+        return null;
+      }
+    }
   
 
 

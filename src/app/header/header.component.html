@@ -21,7 +21,7 @@
           </li>
 
                                                     <!-- Attention Ici bas modif pour -->
-            <li class="nav-item" *ngIf="connectedUser?.id_role == null || connectedUser?.id_role== 2"> <!-- permet d'avoir le user connecter et son role et afficher l'option gestion -->
+            <li class="nav-item" *ngIf="connectedUser?.id_role == 1 || connectedUser?.id_role== 2"> <!-- permet d'avoir le user connecter et son role et afficher l'option gestion -->
             <a class="nav-link"   data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions"><i class="fa-solid fa-gear"></i> Gestion</a>
           </li>
         </ul>
@@ -34,7 +34,7 @@
       
      
       <li class="nav-item">
-        <a class="nav-link" ><i class="fa-solid fa-right-from-bracket"></i></a> <!-- Mettre la methode pour deco -->
+        <a class="nav-link"  (click)="logout()"><i class="fa-solid fa-right-from-bracket"></i></a> <!-- Mettre la methode pour deco -->
       </li>
 
      
@@ -68,8 +68,8 @@
       <div class="gestionOption" routerLink="/gestionlieux">Gestion des lieux</div>
       <div class="gestionOption" routerLink="/gestionimages">Gestion d'images</div>
        <!-- option admin a cachez plus tard en fcn du role -->
-      <div *ngIf="connectedUser?.id_role == null" class="gestionOption" routerLink="/gestionRole">Gestion des roles</div><!-- permet d'afficher l'option gestion role aux Admin -->
-      <button *ngIf="connectedUser?.id_role == null" class="gestionOption" (click)="exportDb()">Sauvegarde des données</button> <!-- permet d'afficher l'option effectuer des sauv aux Admin -->
+      <div *ngIf="connectedUser?.id_role == 1" class="gestionOption" routerLink="/gestionRole">Gestion des roles</div><!-- permet d'afficher l'option gestion role aux Admin -->
+      <button *ngIf="connectedUser?.id_role == 1" class="gestionOption" (click)="exportDb()">Sauvegarde des données</button> <!-- permet d'afficher l'option effectuer des sauv aux Admin -->
        <br><br><br>
       
        <p>Cher gestionnaire /admin,<br>

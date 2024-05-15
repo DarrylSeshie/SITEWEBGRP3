@@ -15,7 +15,7 @@ export const authGuard: CanActivateFn = (route, state) => {
     return true;
   } else {
     inject(CookieService).delete("token");
-    inject(Router).navigate(["/login"]);
+    inject(Router).navigate(["/"]);
     return false;
   }
 };
