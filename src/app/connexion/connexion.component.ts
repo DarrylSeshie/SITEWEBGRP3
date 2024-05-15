@@ -15,7 +15,7 @@ export class ConnexionComponent {
 
   constructor(private service: UserService, private cookieService: CookieService, private router: Router) { }
 
-  checkLogin(username: string, password: string) {
+  /*checkLogin(username: string, password: string) {
     this.service.checkLogin(username, password).subscribe({
       next: (token) => {
         this.cookieService.set("token", token.access_token);
@@ -23,6 +23,20 @@ export class ConnexionComponent {
       },
       error: (errorMsg) => { this.errorMsg = errorMsg.error.error; },
       complete: () => { }
+    });
+  }*/
+
+  checkLogin(username: string, password: string) {
+    this.service.checkLogin(username, password).subscribe({
+      next: (token) => {
+        this.cookieService.set("token", token.access_token);
+        this.service.setLoggedIn(true); // S'assurer que ceci est bien appelé
+        this.router.navigate(["/acceuil"]);
+      },
+      error: (errorMsg) => {
+        this.errorMsg = errorMsg.error.error;
+        this.service.setLoggedIn(false); // Également important pour réinitialiser l'état
+      }
     });
   }
   

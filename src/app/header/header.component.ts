@@ -4,6 +4,7 @@ import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 import { BackupService } from '../services/backup.service';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 declare const bootstrap: any;
 @Component({
@@ -18,7 +19,7 @@ export class HeaderComponent implements OnInit {
 
   exportedData: any;
 
-  constructor(private router: Router, private userService: UserService ,private backupService: BackupService) {}
+  constructor(private router: Router, private userService: UserService ,private backupService: BackupService,private cookieService: CookieService) {}
 
   ngOnInit(): void {
     this.loadCurrentUser();
@@ -41,9 +42,15 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  logout(): void {
+ /* logout(): void {
     localStorage.removeItem('token');
     this.connectedUser = null; // Réinitialiser l'utilisateur connecté
+    this.router.navigate(['/']); // Redirige vers la page de connexion
+  }*/
+
+  logout(): void {
+    this.cookieService.delete('token'); // Supprime le token du cookie
+    this.userService.logout(); // Mise à jour de l'état de connexion dans AuthService
     this.router.navigate(['/']); // Redirige vers la page de connexion
   }
 

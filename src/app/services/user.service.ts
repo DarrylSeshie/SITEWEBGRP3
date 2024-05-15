@@ -6,12 +6,21 @@ import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from "jwt-decode";
 import { tap } from 'rxjs/operators';
 //import jwtDecode from 'jwt-decode';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private loggedIn = new BehaviorSubject<boolean>(false);
+  get isLoggedIn() {
+    return this.loggedIn.asObservable(); // Renvoie un observable pour réagir aux changements
+  }
+
+  setLoggedIn(value: boolean) {
+    this.loggedIn.next(value); // Met à jour l'état de connexion
+  }
 
   private apiUrl = 'http://localhost/PROJET_ceREF/backend/user.php'; // URL de votre API pour les utilisateurs
   private apiUrl2 = 'http://localhost/PROJET_ceREF/backend/user2.php';
@@ -159,6 +168,9 @@ export class UserService {
       }
     }
   
+    logout() {
+      this.loggedIn.next(false); // Réinitialise l'état de connexion à false
+    }
 
 
 

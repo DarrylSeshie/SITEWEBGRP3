@@ -20,7 +20,7 @@ function generateJWT($username)
 {
     global $jwt_secretKey, $jwt_serverName, $jwt_algorithm;
     $issuedAt = new DateTimeImmutable();
-    $expire = $issuedAt->modify('+10 minutes')->getTimestamp();
+    $expire = $issuedAt->modify('+1 minutes')->getTimestamp();
 
     $data = [
         'iat' => $issuedAt->getTimestamp(),    // Issued at: time when the token was generated
