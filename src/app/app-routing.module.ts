@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { authGuard } from './auth.guard'; 
+
 import { GestionFormateurComponent } from './gestion-formateur/gestion-formateur.component';
 import { GestionFormationComponent } from './gestion-formation/gestion-formation.component';
 import { GestionImageComponent } from './gestion-image/gestion-image.component';
@@ -22,50 +24,44 @@ const routes: Routes = [
   /*Indiquez les routes a suivre*/ 
   
     {
-      path:'acceuil', component: AcceuilComponent // par defaut elle affiche le component acceuils
+      path:'acceuil', component: AcceuilComponent , canActivate: [authGuard] 
+    },  
+    {
+      path: 'gestionformateurs', component: GestionFormateurComponent , canActivate: [authGuard]
     },
     {
-      path: 'gestionformateurs', component: GestionFormateurComponent
+      path: 'gestionformations', component: GestionFormationComponent , canActivate: [authGuard]
     },
     {
-      path: 'gestionformations', component: GestionFormationComponent
+      path: 'gestionimages', component: GestionImageComponent , canActivate: [authGuard]
     },
     {
-      path: 'gestionimages', component: GestionImageComponent
+      path: 'gestionutilisateurs', component: GestionUtilisateurComponent, canActivate: [authGuard]
     },
     {
-      path: 'gestionutilisateurs', component: GestionUtilisateurComponent
+      path: 'gestioninstitutions', component: GestionInstitutionComponent , canActivate: [authGuard]
     },
     {
-      path: 'gestioninstitutions', component: GestionInstitutionComponent
+      path: 'gestionlieux', component: GestionLieuComponent , canActivate: [authGuard]
     },
     {
-      path: 'gestionlieux', component: GestionLieuComponent
-    },
-    {
-      path: 'gestionRole', component: GestionnaireComponent
+      path: 'gestionRole', component: GestionnaireComponent , canActivate: [authGuard]
     }, 
     {
-      path: 'gestionadresses', component: GestionAdresseComponent
+      path: 'gestionadresses', component: GestionAdresseComponent , canActivate: [authGuard]
     },
     {
-      path: 'inscription-formation', component: InscriptionFormationComponent
+      path: 'inscription-formation', component: InscriptionFormationComponent , canActivate: [authGuard]
     },
     {
-      path: 'voir-formations', component: VoirFormationsComponent
+      path: 'voir-formations', component: VoirFormationsComponent , canActivate: [authGuard]
     },
     {
-      path: 'voir-profil', component: VoirProfilComponent
+      path: 'voir-profil', component: VoirProfilComponent , canActivate: [authGuard]
     },
     {
-      path: '', component: ConnexionComponent
+      path: '', component: ConnexionComponent  // par defaut elle affiche le component login
     }
-
-
-    
-
-
-
   
 ];
 

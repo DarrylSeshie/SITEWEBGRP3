@@ -18,18 +18,11 @@ export class ConnexionComponent {
   checkLogin(username: string, password: string) {
     this.service.checkLogin(username, password).subscribe({
       next: (token) => {
-        // Assurer que le token est correctement reçu et a une propriété access_token
-        if (token && token.access_token) {
-          this.cookieService.set("token", token.access_token, 1, "/", undefined, true, "Strict");
-          this.router.navigate(["/acceuil"]);
-        } else {
-          // Gérer l'absence de token ou une structure inattendue
-          this.errorMsg = "Token invalide ou absent dans la réponse.";
-        }
+        this.cookieService.set("token", token.access_token);
+        this.router.navigate(["/acceuil"]);
       },
-      error: (errorResponse) => {
-        this.errorMsg = errorResponse.error.error || 'Une erreur est survenue';
-      }
+      error: (errorMsg) => { this.errorMsg = errorMsg.error.error; },
+      complete: () => { }
     });
   }
   

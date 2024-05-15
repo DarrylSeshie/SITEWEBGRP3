@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { UserService } from './services/user.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,9 +18,10 @@ export class AppComponent {
     this.service.checkLogin(username, password).subscribe({
       next: (token) => {
         this.cookieService.set("token", token.access_token);
-        this.router.navigate(["/"]);
+        this.router.navigate(["/acceuil"]);
       },
       error: (errorMsg) => { this.errorMsg = errorMsg.error.error; },
+     
       complete: () => { }
     });
   }
