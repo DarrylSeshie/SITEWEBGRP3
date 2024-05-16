@@ -48,10 +48,14 @@ export class UserService {
     return this.http.get<User>(`http://localhost/PROJET_ceREF/backend/user.php?id=${userId}`);
   }
 
+
   getUserByEmail(userEmail: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl3}?email=${userEmail}`).pipe(
-      catchError(this.handleError)
-    );
+    const token = this.cookieService.get('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<User>(`${this.apiUrl}?email=${userEmail}`, { headers })
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
 
@@ -99,17 +103,18 @@ export class UserService {
       return this.http.get<User>( 'http://localhost/PROJET_ceREF/backend/user.php' + `?id_institution=${institutionId}` );
     }
 
+
     checkLogin(username: string, password: string): Observable<any> {
-      return this.http.post<{token: string}>("http://localhost/PROJET_ceREF/backend/user3.php", { username, password })
+      return this.http.post<{ access_token: string }>(this.apiUrl3, { username, password })
         .pipe(
           tap(response => {
-            if (response && response.token) {
-              localStorage.setItem('token', response.token);  // Enregistrement du token
-              console.log("Token saved:", response.token);
+            if (response && response.access_token) {
+              this.cookieService.set("token", response.access_token);
             } else {
               console.error("No token received");
             }
-          })
+          }),
+          catchError(this.handleError)
         );
     }
   
@@ -130,14 +135,14 @@ export class UserService {
       this.loggedIn.next(false); // Réinitialise l'état de connexion à false
     }
 
+
     validateJwt(token: string): Observable<any> {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get<any>(this.apiUrlJwt, { headers }).pipe(
-        map(response => {
-          return jwtDecode(token); // Décoder le token JWT
-        }),
-        catchError(this.handleError)
-      );
+      return this.http.get<any>(`${this.apiUrlJwt}`, { headers })
+        .pipe(
+          map(response => jwtDecode(token)),
+          catchError(this.handleError)
+        );
     }
 
     private handleError(error: any) {

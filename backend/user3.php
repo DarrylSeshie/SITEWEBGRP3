@@ -14,7 +14,7 @@ $userManager = new UserManager($connexion);
 
 $http_method = $_SERVER['REQUEST_METHOD'];
 header('Access-Control-Allow-Origin: http://localhost:4200');
-header('Access-Control-Allow-Headers: *');
+header('Access-Control-Allow-Headers: Content-Type, Authorization');
 header('Access-Control-Allow-Methods: OPTIONS, GET, POST, DELETE, PUT');
 header('Content-Type: application/json');
 
@@ -50,27 +50,27 @@ try {
 
     } elseif ($http_method === "OPTIONS") {
         http_response_code(200);
-    }elseif($http_method === "GET"){
-        $id = $_GET['email'];
+    } elseif ($http_method === "GET") {
+        $token = validateJWT(); // Validate JWT and get the token payload
+        $email = $token->email; // Get the email from the decoded token
         try {
-            $user = $userManager->selectUserByEmail($id);
+            $user = $userManager->selectUserByEmail($email);
             if ($user) {
                 http_response_code(200);
-                echo json_encode($user);
+                echo json_encode($user); // Return a single user object
             } else {
                 http_response_code(404);
-                echo json_encode(array("error" => "Utilisateur non trouvé"));
+                echo json_encode(["error" => "Utilisateur non trouvé"]);
             }
         } catch (PDOException $e) {
             http_response_code(500);
-            echo json_encode(array("error" => $e->getMessage()));
+            echo json_encode(["error" => $e->getMessage()]);
         }
-
-    }
-     else {
+    } else {
         http_response_code(405);
         echo json_encode(["error" => "Method not implemented"]);
     }
+
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(["error" => $e->getMessage()]);
