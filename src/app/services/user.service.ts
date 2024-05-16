@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from "jwt-decode";
 import { tap } from 'rxjs/operators';
 //import jwtDecode from 'jwt-decode';
 import { BehaviorSubject } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError,map  } from 'rxjs/operators';
 
 
 @Injectable({
@@ -24,6 +25,8 @@ export class UserService {
 
   private apiUrl = 'http://localhost/PROJET_ceREF/backend/user.php'; // URL de votre API pour les utilisateurs
   private apiUrl2 = 'http://localhost/PROJET_ceREF/backend/user2.php';
+  private apiUrl3 = 'http://localhost/PROJET_ceREF/backend/user3.php';
+  private apiUrlJwt = 'http://localhost/PROJET_ceREF/backend/jwt_utils.php' ;
 
   constructor(private http: HttpClient , private cookieService: CookieService) { } 
 
@@ -35,16 +38,22 @@ export class UserService {
 
 
   getUsers(page: number, pageSize: number): Observable<User[]> {
+    const token = this.cookieService.get("token");
     const url = `${this.apiUrl}?page=${page}&pageSize=${pageSize}`;
     return this.http.get<User[]>(url);
+    
+  }
+ 
+  getUserById(userId: number): Observable<User> {
+    return this.http.get<User>(`http://localhost/PROJET_ceREF/backend/user.php?id=${userId}`);
   }
 
-  
-  
-  getUserById(userId: number): Observable<User> {
-    const headers = this.getHeaders();
-    return this.http.get<User>(`http://localhost/PROJET_ceREF/backend/user.php?id=${userId}`, { headers });
+  getUserByEmail(userEmail: string): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl3}?email=${userEmail}`).pipe(
+      catchError(this.handleError)
+    );
   }
+
 
   addUser(newUserId: User): Observable<User> {
     return this.http.post<User>(this.apiUrl, newUserId);
@@ -58,16 +67,10 @@ export class UserService {
   }
 
 
-  
-  /*updateUser(updatedUser: User): Observable<User> {
-    const url = `${this.apiUrl}/${updatedUser.id_utilisateur}`;
-    return this.http.put<User>(url, updatedUser);
-  }*/
-
   updateUser(updatedUser: User): Observable<User> {
     const headers = this.getHeaders();
     const url = `${this.apiUrl}/${updatedUser.id_utilisateur}`;
-    return this.http.put<User>(url, updatedUser, { headers });
+    return this.http.put<User>(url, updatedUser);
   }
 
   
@@ -78,15 +81,8 @@ export class UserService {
   
   
   deleteUser(id: number): Observable<any> {
-    const headers = this.getHeaders();
-    return this.http.delete(`http://localhost/PROJET_ceREF/backend/user.php?id=${id}`, { headers });
+    return this.http.delete(`http://localhost/PROJET_ceREF/backend/user.php?id=${id}`);
   }
-
-  /*deleteUser(id: number): Observable<any> {
-     return this.http.delete("http://localhost/PROJET_ceREF/backend/user.php?id=" + id);
-   
-  }*/
-
 
     // Méthode pour récupérer une adresse par son ID
     getAdresseById(adresseId: number): Observable<User> {
@@ -103,10 +99,6 @@ export class UserService {
       return this.http.get<User>( 'http://localhost/PROJET_ceREF/backend/user.php' + `?id_institution=${institutionId}` );
     }
 
-   /* checkLogin(username: string, password: string): Observable<any> {
-      return this.http.post("http://localhost/PROJET_ceREF/backend/user3.php", { username: username, password: password });
-    }*/
-
     checkLogin(username: string, password: string): Observable<any> {
       return this.http.post<{token: string}>("http://localhost/PROJET_ceREF/backend/user3.php", { username, password })
         .pipe(
@@ -121,22 +113,8 @@ export class UserService {
         );
     }
   
-     /*getToken(): string {
-      const token = localStorage.getItem('token');
-      console.log("Retrieved token from localStorage:", token);  // Affiche le token récupéré pour le débogage
-      return token ? token : '';
-    }*/
-    getToken(): string {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        console.error("No token found in localStorage.");
-        return ''; // Assurez-vous que cela est géré adéquatement là où getToken est appelé.
-      }
-      return token;
-    }
-  
     protected getHeaders(): HttpHeaders {
-      const token = this.getToken();
+      const token = this.cookieService.get("token");
       if (!token) {
         // Gérer le cas où il n'y a pas de token
         console.error("No token available");
@@ -147,32 +125,25 @@ export class UserService {
       });
     }
   
-    getProtectedData() {
-      const headers = new HttpHeaders({
-        'Authorization': `Bearer ${this.cookieService.get('token')}`
-      });
-      return this.http.get('url-protégée', { headers });
-    }
-  
-    decodeToken(): any {
-      const token = this.getToken();
-      if (!token) {
-        console.error("No token available or token is invalid");
-        return null;
-      }
-      try {
-        return jwtDecode<any>(token);
-      } catch (error) {
-        console.error("Error decoding token:", error);
-        return null;
-      }
-    }
   
     logout() {
       this.loggedIn.next(false); // Réinitialise l'état de connexion à false
     }
 
+    validateJwt(token: string): Observable<any> {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get<any>(this.apiUrlJwt, { headers }).pipe(
+        map(response => {
+          return jwtDecode(token); // Décoder le token JWT
+        }),
+        catchError(this.handleError)
+      );
+    }
 
+    private handleError(error: any) {
+      console.error('An error occurred', error);
+      return throwError(error.message || error);
+    }
 
 
 

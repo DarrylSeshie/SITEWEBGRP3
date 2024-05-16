@@ -229,12 +229,12 @@ public function getUsersByName(string $nom): ?User {
   /**
    * @param User $user
    */
- public function selectUserById2($userId)
+ public function selectUserByEmail($userEmail)
 {
-    $sql = "SELECT * FROM Utilisateur WHERE id_utilisateur = :userId";
+    $sql = "SELECT * FROM Utilisateur WHERE email = :userEmail";
     try {
         $prep = $this->db->prepare($sql);
-        $prep->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $prep->bindParam(':userEmail', $userEmail, PDO::PARAM_INT);
         $prep->execute();
 
         $userData = $prep->fetch(PDO::FETCH_ASSOC);

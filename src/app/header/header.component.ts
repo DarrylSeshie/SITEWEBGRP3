@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-//import { AuthService } from '../services/auth.service';
 import { UserService } from '../services/user.service';
 import { User } from '../models/user.model';
 import { BackupService } from '../services/backup.service';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+
 
 declare const bootstrap: any;
 @Component({
@@ -26,27 +26,29 @@ export class HeaderComponent implements OnInit {
   }
 
   loadCurrentUser(): void {
-    const token = this.userService.getToken();
+    const token = this.cookieService.get("token");
+
     if (token) {
-      const decodedToken = this.userService.decodeToken();
-      const userId = decodedToken.userId; // Assurez-vous que cette clé correspond à ce que renvoie le token
-  
-      this.userService.getUserById(userId).subscribe(
-        (user: User) => {
-          this.connectedUser = user;
+      this.userService.validateJwt(token).subscribe(
+        decodedToken => {
+          const userEmail = decodedToken.email; // Assurez-vous que cette clé correspond à ce que renvoie le token
+          this.userService.getUserByEmail(userEmail).subscribe(
+            (user: User) => {
+              this.connectedUser = user;
+            },
+            (error) => {
+              console.error('Erreur lors de la récupération des informations de utilisateur :', error);
+            }
+          );
         },
         (error) => {
-          console.error('Erreur lors de la récupération des informations de utilisateur :', error);
+          console.error('Erreur lors de la validation du token :', error);
         }
       );
     }
   }
 
- /* logout(): void {
-    localStorage.removeItem('token');
-    this.connectedUser = null; // Réinitialiser l'utilisateur connecté
-    this.router.navigate(['/']); // Redirige vers la page de connexion
-  }*/
+
 
   logout(): void {
     this.cookieService.delete('token'); // Supprime le token du cookie

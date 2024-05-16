@@ -50,7 +50,24 @@ try {
 
     } elseif ($http_method === "OPTIONS") {
         http_response_code(200);
-    } else {
+    }elseif($http_method === "GET"){
+        $id = $_GET['email'];
+        try {
+            $user = $userManager->selectUserByEmail($id);
+            if ($user) {
+                http_response_code(200);
+                echo json_encode($user);
+            } else {
+                http_response_code(404);
+                echo json_encode(array("error" => "Utilisateur non trouvé"));
+            }
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(array("error" => $e->getMessage()));
+        }
+
+    }
+     else {
         http_response_code(405);
         echo json_encode(["error" => "Method not implemented"]);
     }

@@ -1,5 +1,12 @@
 <?php
 
+
+$http_method = $_SERVER['REQUEST_METHOD'];
+header('Access-Control-Allow-Origin: http://localhost:4200');
+header('Access-Control-Allow-Headers: *');
+header('Access-Control-Allow-Methods: OPTIONS, GET, POST, DELETE, PUT');
+header('Content-Type: application/json');
+
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 
