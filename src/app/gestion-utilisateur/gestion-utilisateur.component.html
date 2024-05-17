@@ -5,7 +5,7 @@
   
  
   <div *ngIf="!selectedUser || !userDetailVisible[selectedUser.id_utilisateur]" class="usercard" >  <!-- affichage sans detail + search -->
-    <h2>Liste des clients</h2>
+    <div id="searchButton2" >   <h2>Liste des clients</h2>  Total: {{totalUsers}}</div>
   <button id="searchButton" (click)="toggleAddUserForm()"><i class="fa-solid fa-user-plus"></i></button>
 
   <!-- Formulaire de recherche -->
@@ -13,6 +13,8 @@
     <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Rechercher par nom..." />
     <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
   </form>
+  <br>
+ 
 
   <!-- Tableau des utilisateurs -->
   <table class="table table-striped mt-3" *ngIf="!(showSearchResults && (users | async)?.length)">

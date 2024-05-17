@@ -30,11 +30,14 @@ if ($http_method === "GET") {
     }   elseif (isset($_GET['count'])) {
         // Requête GET pour obtenir le nombre total d'utilisateurs
         try {
+        
             $totalUsers = $userManager->count();
-            echo json_encode(array("total_users" => $totalUsers));
+    
+            http_response_code(200);
+            echo json_encode(['total' => $totalUsers]);
         } catch (PDOException $e) {
             http_response_code(500);
-            echo json_encode(array("error" => $e->getMessage()));
+            echo json_encode(["error" => $e->getMessage()]);
         }
     }
     elseif (isset($_GET['id'])) {

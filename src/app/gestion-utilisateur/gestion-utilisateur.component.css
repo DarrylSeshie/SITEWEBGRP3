@@ -53,6 +53,15 @@
     cursor: pointer;
   }
  
+  #searchButton2 {
+    padding: 8px 16px;
+    text-align: center;
+    background-color: #f0eaee; /* Couleur de fond du bouton (bleu par défaut) */
+    color: black; /* Couleur du texte */
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
   
 
   .button-container {

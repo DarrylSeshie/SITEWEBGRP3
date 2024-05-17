@@ -23,6 +23,8 @@ export class GestionUtilisateurComponent implements OnInit{
   userDetailVisible: { [key: number]: boolean } = {};
   showAddUserForm: boolean = false;
   showUpdateUserForm :boolean = false;
+  totalUsers!: number;
+  
 
   // message de notifs
   successMessage: string = '';
@@ -50,6 +52,9 @@ export class GestionUtilisateurComponent implements OnInit{
 
   ngOnInit(): void {
     this.loadUsers();
+    this.loadCount();
+
+   
   }
 
   loadUsers() {
@@ -58,7 +63,16 @@ export class GestionUtilisateurComponent implements OnInit{
   this.showSearchResults = false;
   }
 
-
+loadCount() {
+  this.userService.getTotalUsersCount().subscribe(
+    total => {
+      this.totalUsers = total;
+    },
+    error => {
+      console.error('Error fetching total users count:', error);
+    }
+  );
+}
   
   toggleAddUserForm(): void {
     if (this.showAddUserForm || this.showUpdateUserForm) {
@@ -135,8 +149,10 @@ export class GestionUtilisateurComponent implements OnInit{
     // Appel du service pour supprimer l'utilisateur
     this.userService.deleteUser(userId).subscribe(
       () => {
+        this.totalUsers -- ;// retire 1 user et refresh
         this.loadUsers(); 
         this.showSuccessToast('client supprimer avec succès.'); 
+        
       },
       error => {
        console.log('Delete User Error : ',error);
