@@ -21,7 +21,7 @@ $jwt_serverName = "localhost";
 $jwt_algorithm = "HS512";
 
 
-function generateJWT($username)
+function generateJWT($username, $userId)
 {
   global $jwt_secretKey;
   global $jwt_serverName;
@@ -34,6 +34,7 @@ function generateJWT($username)
         'iss' => $jwt_serverName,              // Issuer
         'nbf' => $issuedAt->getTimestamp(),    // Not before
         'exp' => $expire,                      // Expire
+        'userId' => $userId,
         'email' => $username,                  // User name
     ];
 

@@ -622,6 +622,16 @@ public function checkUser($username)
     return $user;
   }
 
+  public function getUserIdByUsername($username)
+    {
+        $sql = "SELECT id_utilisateur FROM utilisateur WHERE email = :email";
+        $prep = $this->db->prepare($sql);
+        $prep->bindParam(':email', $username, PDO::PARAM_STR);
+        $prep->execute();
+        $result = $prep->fetch(PDO::FETCH_ASSOC);
+        return ($result) ? $result['id_utilisateur'] : null;
+    }
+
 }
 
 

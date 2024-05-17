@@ -43,38 +43,38 @@ try {
             http_response_code(401);
             echo json_encode(["error" => "Bad username/password"]);
             exit;
-        }
+        } else $userId = $userManager->getUserIdByUsername($username);
+        if ($userId !== null) {
 
-        $token = generateJWT($username);
-        echo json_encode(["access_token" => $token]);
+            $token = generateJWT($username, $userId);
+            echo json_encode(["access_token" => $token]);
+        }
 
     } elseif ($http_method === "OPTIONS") {
         http_response_code(200);
     } elseif ($http_method === "GET") {
         if (isset($_GET['email'])) {
-        $token = validateJWT(); // Validate JWT and get the token payload
-        $email = $token->email; // Get the email from the decoded token
-        try {
-            $user = $userManager->selectUserByEmail($email);
-            if ($user) {
-                http_response_code(200);
-                echo json_encode($user); // Return a single user object
-            } else {
-                http_response_code(404);
-                echo json_encode(array("error" => "Utilisateur non trouvé"));
+            $token = validateJWT(); // Validate JWT and get the token payload
+            $email = $token->email; // Get the email from the decoded token
+            try {
+                $user = $userManager->selectUserByEmail($email);
+                if ($user) {
+                    http_response_code(200);
+                    echo json_encode($user); // Return a single user object
+                } else {
+                    http_response_code(404);
+                    echo json_encode(array("error" => "Utilisateur non trouvé"));
+                }
+            } catch (PDOException $e) {
+                http_response_code(500);
+                echo json_encode(array("error" => $e->getMessage()));
             }
-        } catch (PDOException $e) {
-            http_response_code(500);
-            echo json_encode(array("error" => $e->getMessage()));
         }
-    }
     } else {
         http_response_code(405);
         echo json_encode(["error" => "Method not implemented"]);
     }
-
 } catch (Exception $e) {
     http_response_code(500);
     echo json_encode(["error" => $e->getMessage()]);
 }
-?>
