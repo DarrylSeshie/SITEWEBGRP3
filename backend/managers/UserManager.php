@@ -113,7 +113,7 @@ class UserManager
   
   
 
-
+/*
 public function getUsersByname2($page, $pageSize,$nom)
 { 
 
@@ -184,7 +184,112 @@ public function getUsersByName(string $nom): ?User {
         $prep = null;
     }
 }
- 
+ */
+
+
+
+ public function getUsersByname2($page, $pageSize, $nom)
+{
+    $users = [];
+
+    // Calculer le décalage (offset) en fonction du numéro de page et de la taille de la page
+    $offset = ($page - 1) * $pageSize;
+
+    // Requête SQL avec jointures pour récupérer les utilisateurs avec leurs informations complètes
+    $sql = "
+        SELECT
+            u.id_utilisateur,
+            u.civilite,
+            u.nom,
+            u.prenom,
+            u.email,
+            u.mot_de_passe,
+            u.gsm,
+            u.TVA,
+            u.profession,
+            u.gsm_pro,
+            u.email_pro,
+            u.id_role,
+            u.id_institution,
+            u.id_adresse,
+            a.rue_numero AS adresse_rue_numero,
+            a.code_postal AS adresse_code_postal,
+            a.localite AS adresse_localite,
+            a.pays AS adresse_pays,
+            i.nom AS institution_nom,
+            i.logo AS institution_logo,
+            i.id_adresse AS institution_id_adresse,
+            r.nom AS role_nom
+        FROM
+            utilisateur u
+        LEFT JOIN
+            Adresse a ON u.id_adresse = a.id_adresse
+        LEFT JOIN
+            institution i ON u.id_institution = i.id_institution
+        LEFT JOIN
+            role r ON u.id_role = r.id_role
+        WHERE
+            u.nom LIKE :nom
+        LIMIT :offset, :pageSize
+    ";
+
+    try {
+        $prep = $this->db->prepare($sql);
+        $prep->bindParam(':offset', $offset, PDO::PARAM_INT);
+        $prep->bindParam(':pageSize', $pageSize, PDO::PARAM_INT);
+        $prep->bindValue(':nom', '%' . $nom . '%', PDO::PARAM_STR);
+        $prep->execute();
+        $result = $prep->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($result as $userData) {
+            // Créer un nouvel objet User en utilisant les données récupérées
+            $user = new User([
+                'id_utilisateur' => $userData['id_utilisateur'],
+                'civilite' => $userData['civilite'],
+                'nom' => $userData['nom'],
+                'prenom' => $userData['prenom'],
+                'email' => $userData['email'],
+                'mot_de_passe' => $userData['mot_de_passe'],
+                'gsm' => $userData['gsm'],
+                'TVA' => $userData['TVA'],
+                'profession' => $userData['profession'],
+                'gsm_pro' => $userData['gsm_pro'],
+                'email_pro' => $userData['email_pro'],
+                'id_role' => $userData['id_role'],
+                'id_institution' => $userData['id_institution'],
+                'id_adresse' => $userData['id_adresse'],
+                'adresse' => [
+                    'id_adresse' => $userData['id_adresse'],
+                    'rue_numero' => $userData['adresse_rue_numero'],
+                    'code_postal' => $userData['adresse_code_postal'],
+                    'localite' => $userData['adresse_localite'],
+                    'pays' => $userData['adresse_pays']
+                ],
+                'institution' => [
+                    'id_institution' => $userData['id_institution'],
+                    'nom' => $userData['institution_nom'],
+                    'logo' => $userData['institution_logo'],
+                    'id_adresse' => $userData['institution_id_adresse']
+                ],
+                'role' => [
+                    'id_role' => $userData['id_role'],
+                    'nom' => $userData['role_nom']
+                ]
+            ]);
+
+            // Ajouter l'objet User créé au tableau $users
+            $users[] = $user;
+        }
+    } catch (PDOException $e) {
+        // Gérer l'erreur de requête SQL
+        throw $e;
+    } finally {
+        $prep = null; // Libérer la ressource PDOStatement
+    }
+
+    return $users;
+}
+
 
 
   /**
