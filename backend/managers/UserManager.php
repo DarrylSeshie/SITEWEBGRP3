@@ -586,26 +586,21 @@ public function addUser($user)
 }
 
 
-
-
 public function count()
 {
-    $sql = "SELECT COUNT(*) FROM Utilisateur";
+    $sql = "SELECT COUNT(*) AS total FROM utilisateur";
 
     try {
         $prep = $this->db->prepare($sql);
         $prep->execute();
         
         $result = $prep->fetch(PDO::FETCH_ASSOC);
+        return $result['total']; // Retourner le nombre total d'utilisateurs
 
-        if ($result && isset($result['total'])) {
-            return intval($result['total']); 
-        } else {
-            return 0; // Retourner 0 si aucun résultat n'est trouvé
-        }
     } catch (PDOException $e) {
-
         throw $e;
+    } finally {
+        $prep = null; // Libérer la ressource PDOStatement
     }
 }
 

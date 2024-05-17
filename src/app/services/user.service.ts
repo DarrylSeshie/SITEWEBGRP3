@@ -39,10 +39,18 @@ export class UserService {
 
   constructor(private http: HttpClient , private cookieService: CookieService) { } 
 
-  getTotalUsersCount(): Observable<number> {
+ /* getTotalUsersCount(): Observable<number> {
     const url = `${this.apiUrl}?count`;
 
     return this.http.get<number>(url);
+  }*/
+
+  getTotalUsersCount(): Observable<number> {
+    const url = `${this.apiUrl}?count`;
+
+    return this.http.get<{ total: number }>(url).pipe(
+      map(response => response.total)
+    );
   }
 
 
