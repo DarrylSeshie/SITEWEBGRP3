@@ -49,8 +49,9 @@ export class UserService {
   }
 
 
-  getUserByEmail(userEmail: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl3}?email=${userEmail}` )
+  getUserByEmail(userEmail: string,token: string): Observable<User> {
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get<User>(`${this.apiUrl3}?email=${userEmail}` ,{ headers })
       .pipe(
         catchError(this.handleError)
       );

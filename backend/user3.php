@@ -1,6 +1,9 @@
 <?php
 require_once 'vendor/autoload.php';
 require_once 'models/User.class.php';
+require_once 'models/Adresse.class.php';
+require_once 'models/Institution.class.php';
+require_once 'models/Role.class.php';
 require_once 'managers/DBManager.php';
 require_once 'managers/UserManager.php';
 require_once 'jwt_utils.php';
@@ -51,7 +54,7 @@ try {
     } elseif ($http_method === "OPTIONS") {
         http_response_code(200);
     } elseif ($http_method === "GET") {
-        if (isset($_GET['search'])) {
+        if (isset($_GET['email'])) {
         $token = validateJWT(); // Validate JWT and get the token payload
         $email = $token->email; // Get the email from the decoded token
         try {
@@ -61,11 +64,11 @@ try {
                 echo json_encode($user); // Return a single user object
             } else {
                 http_response_code(404);
-                echo json_encode(["error" => "Utilisateur non trouvé"]);
+                echo json_encode(array("error" => "Utilisateur non trouvé"));
             }
         } catch (PDOException $e) {
             http_response_code(500);
-            echo json_encode(["error" => $e->getMessage()]);
+            echo json_encode(array("error" => $e->getMessage()));
         }
     }
     } else {
