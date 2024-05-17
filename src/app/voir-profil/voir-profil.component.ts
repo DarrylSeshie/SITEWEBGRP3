@@ -1,15 +1,25 @@
-
 import { Component, OnInit } from '@angular/core';
-import { UserProfile } from '../models/voirProfile.model';// un service a besoin de son model
-import { Observable } from 'rxjs';
-import { FormateurService } from '../services/formateur.service';
 import { UserService } from '../services/user.service';
+import { User } from '../models/user.model';
 
 @Component({
   selector: 'app-voir-profil',
   templateUrl: './voir-profil.component.html',
-  styleUrl: './voir-profil.component.css'
+  styleUrls: ['./voir-profil.component.css']
 })
-export class VoirProfilComponent {
+export class VoirProfilComponent implements OnInit {
+  utilisateur: User | null = null; // Initialisation à null
 
+  constructor(private userService: UserService) { }
+
+  ngOnInit(): void {
+    this.userService.getUtilisateur().subscribe(
+      (data: User) => {
+        this.utilisateur = data;
+      },
+      error => {
+        console.log('Erreur lors de la récupération des données utilisateur : ', error);
+      }
+    );
+  }
 }

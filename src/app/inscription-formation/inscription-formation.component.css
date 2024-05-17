@@ -1,39 +1,75 @@
 .register-form {
   
-    width: 100%;
-    max-width: 100%; 
-    padding: 15px;
-    margin: auto;
-    border: 1px solid #dee2e6;
-    border-radius: .25rem;
-    background-color: white;
+  width: 100%;
+  max-width: 100%; 
+  padding: 15px;
+  margin: auto;
+  border: 1px solid #dee2e6;
+  border-radius: .25rem;
+  background-color: white;
 
-  }
-  .register-form img {
-    width: 72px;
-    height: 72px;
-    margin: 0 auto 10px;
-    display: block;
-  }
-  .register-form h4 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  .register-form .form-control {
-    position: relative;
-    box-sizing: border-box;
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
-  }
-  .register-form .form-control:focus {
-    z-index: 2;
-  }
-  .register-form .register-btn {
-    width: 100%;
-    padding: 8px;
-    margin-top: 10px;
-  }
-  .gray-bg container{
-    background-color: #f0eaee;
+}
+.register-form img {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 10px;
+  display: block;
+}
+.register-form h4 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.register-form .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.register-form .form-control:focus {
+  z-index: 2;
+}
+.register-form .register-btn {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+}
+.gray-bg container{
+  background-color: #f0eaee;
+}
+
+* {
+box-sizing: border-box;
+}
+
+#myInput {
+background-image: url('/css/searchicon.png');
+background-position: 10px 12px;
+background-repeat: no-repeat;
+width: 100%;
+font-size: 16px;
+padding: 12px 20px 12px 40px;
+border: 1px solid #ddd;
+margin-bottom: 12px;
+}
+
+#myUL {
+list-style-type: none;
+padding: 0;
+margin: 0;
+}
+
+#myUL li a {
+border: 1px solid #ddd;
+margin-top: -1px; /* Prevent double borders */
+background-color: #f6f6f6;
+padding: 12px;
+text-decoration: none;
+font-size: 18px;
+color: black;
+display: block;
+}
+
+#myUL li a:hover:not(.header) {
+background-color: #eee;
 }

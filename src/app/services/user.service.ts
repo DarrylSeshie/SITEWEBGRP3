@@ -14,6 +14,15 @@ import { catchError,map  } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserService {
+  getUtilisateur(): Observable<User> {
+    const userIdString = localStorage.getItem('userId'); // Récupère la valeur de localStorage
+    if (userIdString) {
+      const userId = parseInt(userIdString, 10); // Convertit en nombre entier
+      return this.getUserById(userId); // Renvoie l'appel à getUserById avec l'ID
+    } else {
+      throw new Error('userId n\'a pas été trouvé dans le localStorage'); // Gère le cas où userId n'est pas défini
+    }
+  }
   private loggedIn = new BehaviorSubject<boolean>(false);
   get isLoggedIn() {
     return this.loggedIn.asObservable(); // Renvoie un observable pour réagir aux changements

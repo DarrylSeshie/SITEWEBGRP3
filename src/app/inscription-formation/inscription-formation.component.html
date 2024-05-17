@@ -1,32 +1,58 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+
 <div class="container gray-bg" style="margin-top: 100px;">
-    <div class="row">
-      <div class="col-md-6 offset-md-3">
-        <div class="register-form mt-5 p-4">
-          <h4>Inscrivez-vous à nos formation</h4>
-          <form action="" class="row g-3">
-            <div class="col-12">
-                <label for="formation">Liste des formations</label>
-                <select name="formation" class="form-control" id="formation">
-                  <option value="">Choisissez une formation...</option>
-                  <option value="formation1">Formation 1</option>
-                  <option value="formation2">Formation 2</option>
-                  <option value="formation3">Formation 3</option>
-                  <option value="formation4">Formation 4</option>
-                </select>
-              </div>
-              
-            <div class="col-12">
-              <button type="submit" class="btn  register-btn" style="background-color: #7a055b; color: white;">S'inscrire</button>
-            </div>
-          </form>
-          <hr class="mt-4">
-          <div class="col-12">
-            <p class="text-center mb-0">Bienvenue dans nos formations !</p>
-          </div>
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="register-form mt-5 p-4">
+        <h4>Inscrivez-vous à nos formations</h4>
+        <input id="myInput"  type="text" [(ngModel)]="filterValue" placeholder="Recherchez une formation..." title="Recherchez une formation">
+
+        <ul class="form-control" id="myUL" style="max-height: 300px; overflow-y: auto;">
+          <li *ngFor="let formation of formations">
+            <a href="#" *ngIf="formation.titre.toLowerCase().includes(filterValue.toLowerCase())">{{ formation.titre }}</a>
+          </li>
+        </ul>
+        <br>
+        <div class="col-12">
+          <button type="button" class="btn register-btn" style="background-color: #7a055b; color: white;" (click)="inscrire()">S'inscrire</button>
+        </div>
+        <hr class="mt-4">
+        <div class="col-12">
+          <p class="text-center mb-0">Bienvenue dans nos formations !</p>
         </div>
       </div>
     </div>
   </div>
+</div>
+ <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script src="scripts.js"></script>
+
+
+<script>
+function filterOptions() {
+    var input, filter, ul, li, a, i, txtValue;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    ul = document.getElementById("myUL");
+    li = ul.getElementsByTagName("li");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByTagName("a")[0];
+        txtValue = a.getAttribute("data-value");
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
+}
+
+function selectFormation(formation) {
+    document.getElementById("myInput").value = formation.titre;
+   
+}
+</script>
+

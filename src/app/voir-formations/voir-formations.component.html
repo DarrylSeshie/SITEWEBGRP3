@@ -8,55 +8,66 @@
     <title>Vos Formations</title>
 </head>
 <body class="body">
-    <div class="container-fluid p-5">
-        <h2 class="text-center mb-4">Vos Formations</h2>
-        <div class="row">
-            <div class="col-lg-4 mb-3">
-                <div class="card formation-card">
-                    <div class="card-body">
-                        <h5 class="card-title text-uppercase">Formations en cours</h5>
-                        <h3 class="card-text">3 Formations</h3>
-                        <ul class="list-unstyled">
-                            <div>
-                                <ul>T07 Plaie en soins </ul>
-                                <ul>T07 Plaie en soins </ul>
-                                <ul>T07 Plaie en soins </ul>
-                            </div>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-3">
-                <div class="card formation-card">
-                    <div class="card-body">
-                        <h5 class="card-title text-uppercase">Formations passées</h5>
-                        <h3 class="card-text">3 Formations</h3>
-                        <ul class="list-unstyled">
-                            <div>
-                                <ul>T07 Plaie en soins </ul>
-                                <ul>T07 Plaie en soins </ul>
-                                <ul>T07 Plaie en soins </ul>
-                            </div>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 mb-3">
-                <div class="card formation-card">
-                    <div class="card-body">
-                        <h5 class="card-title text-uppercase">Formations futures</h5>
-                        <h3 class="card-text">4 Formations</h3>
-                        <ul class="list-unstyled">
-                            <div>
-                                <li>T07 Plaie en soins <button class="btn btn-danger">Annuler</button></li>
-                                <li>T07 Plaie en soins <button class="btn btn-danger">Annuler</button></li>
-                                <li>T07 Plaie en soins <button class="btn btn-danger">Annuler</button></li>
-                            </div>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>    
+  <br>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light custom-nav">
+    <div class="container d-flex">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <button (click)="selectMenu('leila')" class="btn btn-sm btn-outline-secondary me-2" type="button"><h4>Formations futurs</h4></button>
+        </li>
+        <li class="nav-item">
+          <button (click)="selectMenu('hind')" class="btn btn-sm btn-outline-secondary me-2" type="button"><h4>Formations passees</h4></button>
+        </li>
+        <li class="nav-item">
+          <button (click)="selectMenu('wafae')" class="btn btn-sm btn-outline-secondary me-2" type="button"><h4>Formation en cours</h4></button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="content">
+    <div *ngIf="selectedMenu === 'leila'" class="partie1">
+      <h2 class="text-center mt-2">3 Formation futurs</h2>
+    </div>
+    <div *ngIf="selectedMenu === 'leila'" class="partie2">
+      <p class="formation-item">-Formation en présentiel 
+        <button class="btn btn-light annule-btn" type="button">annule</button>
+      </p><br>
+      <p class="formation-item">-Formation en présentiel 
+        <button class="btn btn-light annule-btn" type="button">annule</button>
+      </p><br>
+      <p class="formation-item">-Formation en présentiel 
+        <button class="btn btn-light annule-btn" type="button">annule</button>
+      </p><br>
+      <p class="formation-item">-Formation en présentiel 
+        <button class="btn btn-light annule-btn" type="button">annule</button>
+      </p><br>
+      <p class="formation-item">-Formation en présentiel 
+        <button class="btn btn-light annule-btn" type="button">annule</button>
+      </p><br>
+    </div>
+
+    <div *ngIf="selectedMenu === 'hind'" class="partie1">
+      <h2 class="text-center mt-2">3 Formation passees</h2>
+    </div>
+    <div *ngIf="selectedMenu === 'hind'" class="partie2">
+      <p class="text-center">-Formations en e-learning </p><br>
+      <p class="text-center">-Formations en e-learning </p><br>
+      <p class="text-center">-Formations en e-learning </p><br>
+      <p class="text-center">-Formations en e-learning </p><br>
+      <p class="text-center">-Formations en e-learning </p><br>
+    </div>
+
+    <div *ngIf="selectedMenu === 'wafae'" class="partie1">
+      <h2 class="text-center mt-2">3 Formation en cours</h2>
+    </div>
+    <div *ngIf="selectedMenu === 'wafae'" class="partie2">
+      <p class="text-center">-Formations en blended-learning</p><br>
+      <p class="text-center">-Formations en blended-learning</p><br>
+      <p class="text-center">-Formations en blended-learning</p><br>
+      <p class="text-center">-Formations en blended-learning</p><br>
+      <p class="text-center">-Formations en blended-learning</p><br>
+    </div>
+  </div>
 </body>
 </html>

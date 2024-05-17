@@ -1,76 +1,75 @@
-.body{
-    margin-top: 150px;
-}
-/*.formation-title {
-    color:black;
-    padding: 10px;
-    border-radius: 0.25rem;
-    margin-bottom: 1rem;
-}
-
-.list-group-item {
-   background-color: #f8f9fa;
-    border: 1px solid #e9ecef;
-}
-
-.formation-section {
-    margin-bottom: 2rem;
-}*/
-body, html {
-    height: 100%;
-    margin: 0;
+.custom-nav {
+    width: 70%;
+    margin: 0 auto;
     background-color: #f0eaee;
-}
-
-.container-fluid {
-    height: 100%;
+  }
+  
+  .custom-nav .nav-item {
+    flex: 1;
+    text-align: center;
+    background-color: #f0eaee;
+  }
+  
+  button {
+    width: 280px;
+    height: 47px;
+  }
+  
+  nav {
+    background-color: #f0eaee;
+  }
+  
+  body {
+    background-color: #f0eaee;
+  }
+  
+  .content {
+    background-color: white;
+    width: 400px;
+    height: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
-    justify-content: center;
-}
-
-.formation-card {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border: none; 
-    border-radius: 0.5rem; 
-}
-
-.formation-card .card-title {
-    color: #7a055b; 
-}
-
-.formation-card .card-text {
-    font-weight: bold;
-    margin-bottom: 1rem;
-}
-
-@media (min-width: 992px) {
-    .container-fluid {
-        padding: 2rem;
-    }
-}
-
-
-@media (max-width: 991px) {
-    .formation-card {
-        margin: 0 15px; 
-    }
-}
-.description{
-    font-size: 1.0rem; 
-    color: rgb(70, 67, 67); 
-    margin-bottom: 10px; 
-}
-ul li {
-    display: flex;
-    align-items: center; /* Keeps items vertically aligned */
-    justify-content: space-between; /* Distributes space between text and button */
-    margin-bottom: 5px; /* Adds space between list items */
-}
-
-.btn-danger {
-    font-size: 0.7rem; /* Smaller font size for the button */
-    padding: 0.2rem 0.4rem; /* Reduced padding to make button smaller */
-    line-height: 1; /* Adjust line height for better fit */
-    vertical-align: middle; /* Align button vertically */
+    justify-content: flex-start;
+    border-radius: 7px;
+    margin-top: 120px; /* Adjust margin-top to create space between nav and content */
+  }
+  
+  .partie1 {
+    height: 80px;
+    background-color: #c99bb8;
+  }
+  
+  .partie2 {
+    padding: 10px;
+    overflow-y: auto;
+    max-height: 320px;
+    background-color: #f0eaee;
+  }
+  
+  .formation-item {
+    margin-top: 10px;
+    position: relative;
+  }
+  
+  .annule-btn {
+    width: 100px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 30px;
+  }
+  
+  .text-center {
+    text-align: center;
+  }
+  
+  .mt-2 {
+    margin-top: 10px;
+  }
+.body{
+    margin-top: 150px;
 }
