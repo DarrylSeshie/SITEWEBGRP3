@@ -8,9 +8,6 @@ require_once 'managers/DBManager.php';
 require_once 'managers/UserManager.php';
 require_once 'jwt_utils.php';
 
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
-
 $dbManager = new DBManager();
 $connexion = $dbManager->connect();
 $userManager = new UserManager($connexion);
