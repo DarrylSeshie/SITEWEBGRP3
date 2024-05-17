@@ -226,7 +226,7 @@ public function selectUserByEmail($userEmail)
     LEFT JOIN
         role r ON u.id_role = r.id_role
     WHERE
-       u.email = :userEmail LIMIT 1
+       u.email = :userEmail 
 ";
 
     try {
@@ -282,11 +282,6 @@ public function selectUserByEmail($userEmail)
         $prep = null; // Libérer la ressource PDOStatement
     }
 }
-
-
-
-
-
 
 
 

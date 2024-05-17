@@ -13,7 +13,7 @@ declare const bootstrap: any;
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  connectedUser: User | null = null;// Utilisateur connecté (initialisé à null par défaut)
+  connectedUser!: User;// Utilisateur connecté (initialisé à null par défaut)
   successMessage: string = '';
   errorMessage: string = '';
 
@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
 
   loadCurrentUser(): void {
     const token = this.cookieService.get("token");
-  
+
     if (token) {
       console.log('Token trouvé:', token);
       this.userService.validateJwt(token).subscribe(
@@ -39,12 +39,12 @@ export class HeaderComponent implements OnInit {
               console.log('Utilisateur trouvé:', user);
               this.connectedUser = user;
             },
-            (error) => {
-              console.error('Erreur lors de la récupération des informations de utilisateur :', error);
+            error => {
+              console.error('Erreur lors de la récupération des informations de l\'utilisateur :', error);
             }
           );
         },
-        (error) => {
+        error => {
           console.error('Erreur lors de la validation du token :', error);
         }
       );

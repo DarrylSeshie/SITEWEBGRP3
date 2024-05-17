@@ -51,6 +51,7 @@ try {
     } elseif ($http_method === "OPTIONS") {
         http_response_code(200);
     } elseif ($http_method === "GET") {
+        if (isset($_GET['search'])) {
         $token = validateJWT(); // Validate JWT and get the token payload
         $email = $token->email; // Get the email from the decoded token
         try {
@@ -66,6 +67,7 @@ try {
             http_response_code(500);
             echo json_encode(["error" => $e->getMessage()]);
         }
+    }
     } else {
         http_response_code(405);
         echo json_encode(["error" => "Method not implemented"]);

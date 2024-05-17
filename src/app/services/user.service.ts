@@ -50,14 +50,13 @@ export class UserService {
 
 
   getUserByEmail(userEmail: string): Observable<User> {
-    const token = this.cookieService.get('token');
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get<User>(`${this.apiUrl}?email=${userEmail}`, { headers })
+    return this.http.get<User>(`${this.apiUrl3}?email=${userEmail}` )
       .pipe(
         catchError(this.handleError)
       );
   }
 
+  
 
   addUser(newUserId: User): Observable<User> {
     return this.http.post<User>(this.apiUrl, newUserId);
