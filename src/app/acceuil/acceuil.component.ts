@@ -1,16 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy,AfterViewInit } from '@angular/core';
 import { FormationService } from '../services/formation.service';
 import { Observable, Subscription, interval } from 'rxjs';
 import { Formation } from '../models/formation.model';
 import { shareReplay } from 'rxjs/operators';
 
 
+declare var bootstrap: any;
 @Component({
   selector: 'app-acceuil',
   templateUrl: './acceuil.component.html',
   styleUrl: './acceuil.component.css'
 })
-export class AcceuilComponent implements OnInit, OnDestroy{
+export class AcceuilComponent implements OnInit, OnDestroy,AfterViewInit{
 
   Formations!: Observable<Formation[]>;
   private countdownIntervalSubscription: Subscription | undefined;
@@ -29,6 +30,24 @@ export class AcceuilComponent implements OnInit, OnDestroy{
         shareReplay(1) // Mettre à jour les données et les réutiliser
       );
     });
+  }
+  ngAfterViewInit(): void {
+    // Initialisez Bootstrap JavaScript ici
+
+    const accordionElement = document.getElementById('accordionExample');
+    if (accordionElement) {
+      const bootstrapAccordion = new bootstrap.Collapse(accordionElement, {
+        toggle: true
+      });
+    }
+
+    // Exemple pour le carrousel
+    const carouselElement = document.getElementById('carouselExampleSlidesOnly');
+    if (carouselElement) {
+      const bootstrapCarousel = new bootstrap.Carousel(carouselElement, {
+        interval: 4000
+      });
+    }
   }
     
 
