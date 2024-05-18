@@ -9,14 +9,18 @@
 
  
 <div class="usercard" *ngIf="!selectedInstitution || !userDetailVisible[selectedInstitution.id_institution]">
-  <h2>Liste des Institutions</h2>
-  <button id="searchButton" (click)="toggleAddInstitutionForm()">Ajouter une institution</button>
-
-  <!-- Formulaire de recherche -->
-  <form (ngSubmit)="searchInstitutionByname(searchTerm)" class="search-container" #searchForm="ngForm">
-    <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Recherche par nom..." />
-    <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-  </form>
+  <div id="searchButton2" >   <h2>Liste des institutions</h2>  Total: {{totalUsers}}</div>
+  <div class="contenaireHautPage">
+      <div>  <button id="searchButton" (click)="toggleAddInstitutionForm()">Ajouter une institution</button>
+      </div>
+       <div>
+        <!-- Formulaire de recherche -->
+      <form (ngSubmit)="searchInstitutionByname(searchTerm)" class="search-container" #searchForm="ngForm">
+       <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Recherche par nom..." />
+        <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </form>
+     </div>
+  </div>
 
   <!-- Tableau des utilisateurs -->
   <table class="table table-striped mt-3" *ngIf="!(showSearchResults && ( institutions | async)?.length)">
@@ -109,7 +113,7 @@
 
 <!-- Gestion  form ajout -->
 <div class="usercard2"  *ngIf="showAddInstitutionForm" >
-
+<h2>Ajout d'institution</h2>
   <button id="searchButton" (click)="toggleAddInstitutionForm()">Retour</button>
 
   

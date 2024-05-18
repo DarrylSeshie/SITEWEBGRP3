@@ -16,7 +16,7 @@ export class GestionFormationComponent {
   
   selectedFormation!: Formation; 
   currentPage: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 3;
   Formations!: Observable<Formation[]>;
   Formations2!: Observable<Formation[]>;
   searchTerm: string = '';
@@ -24,6 +24,7 @@ export class GestionFormationComponent {
   userDetailVisible: { [key: number]: boolean } = {};
   showAddProduitForm: boolean = false;
   showUpdateProduitForm :boolean = false;
+  totalUsers!: number;
 
 
   // message de notifs
@@ -56,6 +57,7 @@ export class GestionFormationComponent {
 
   ngOnInit(): void {
     this.loadFormations();
+    this.loadCount();
   }
   
 
@@ -64,6 +66,17 @@ export class GestionFormationComponent {
   this.showSearchResults = false;
   }
 
+   
+loadCount() {
+  this.formationService.getTotalUsersCount().subscribe(
+    total => {
+      this.totalUsers = total;
+    },
+    error => {
+      console.error('Error fetching total users count:', error);
+    }
+  );
+}
 
 
   
@@ -84,9 +97,11 @@ export class GestionFormationComponent {
 
   
   nextPage() {
-    this.currentPage++;
-   // console.log('Current Page:', this.currentPage);
-    this.loadFormations();
+    const totalPages = Math.ceil(this.totalUsers / this.pageSize);
+    if (this.currentPage < totalPages) {
+      this.currentPage++;
+      this.loadFormations();
+    }
   }
   
   previousPage() {
@@ -145,6 +160,7 @@ export class GestionFormationComponent {
     // Appel du service pour supprimer l'utilisateur
     this.formationService.deleteFormation(formationId).subscribe(
       () => {
+        this.totalUsers -- ;
         this.loadFormations(); 
         // Afficher le toast de confirmation
         const toastElement = document.getElementById('liveToastSuccesso');
@@ -184,6 +200,7 @@ export class GestionFormationComponent {
   addFormation(formation: Formation) {
     this.formationService.addFormation(formation).subscribe(
       () => {
+        this.totalUsers ++ ;
         this.loadFormations(); // Recharger la liste des utilisateurs après ajout
         this.showSuccessToast('Formation ajoutée avec succès.');
        

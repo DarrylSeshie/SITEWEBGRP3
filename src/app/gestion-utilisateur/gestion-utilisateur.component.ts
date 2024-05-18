@@ -90,8 +90,11 @@ loadCount() {
   }
   
   nextPage() {
-    this.currentPage++;
-    this.loadUsers();
+    const totalPages = Math.ceil(this.totalUsers / this.pageSize);
+    if (this.currentPage < totalPages) {
+      this.currentPage++;
+      this.loadUsers();
+    }
   }
   
   previousPage() {
@@ -183,6 +186,7 @@ loadCount() {
   addUser(user: User) {
     this.userService.addUser(user).subscribe(
       () => {
+        this.totalUsers ++ ;
         this.loadUsers(); // Recharger la liste des utilisateurs après ajout
         this.showSuccessToast('Client ajoutée avec succès.');
        

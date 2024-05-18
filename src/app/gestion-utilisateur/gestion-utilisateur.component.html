@@ -6,14 +6,17 @@
  
   <div *ngIf="!selectedUser || !userDetailVisible[selectedUser.id_utilisateur]" class="usercard" >  <!-- affichage sans detail + search -->
     <div id="searchButton2" >   <h2>Liste des clients</h2>  Total: {{totalUsers}}</div>
-  <button id="searchButton" (click)="toggleAddUserForm()"><i class="fa-solid fa-user-plus"></i></button>
 
-  <!-- Formulaire de recherche -->
-  <form (ngSubmit)="searchUsersByname(searchTerm)" class="search-container" #searchForm="ngForm">
-    <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Rechercher par nom..." />
-    <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-  </form>
-  <br>
+  <div class="contenaireHautPage">
+    <div> <button id="searchButton" (click)="toggleAddUserForm()"><i class="fa-solid fa-user-plus"></i></button></div>
+    <div> <!-- Formulaire de recherche -->
+      <form (ngSubmit)="searchUsersByname(searchTerm)" class="search-container" #searchForm="ngForm">
+      <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Rechercher par nom..." />
+      <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </form>
+      </div>
+    
+  </div>
  
 
   <!-- Tableau des utilisateurs -->
@@ -134,7 +137,8 @@
 
 <!-- Gestion  form ajout de formation -->
 <div class="usercard2"  *ngIf="showAddUserForm" >
-
+  
+  <h2>Ajout un client </h2>
   <button id="searchButton" (click)="toggleAddUserForm()">Retour</button>
 
   
@@ -218,7 +222,7 @@
 
 
   <div class="update-form" *ngIf="UserToUpdate" >
-    <h2>Modifier User</h2>
+    <h2>Modifier client</h2>
     <button id="searchButton" (click)="toggleAddUserForm()">Retour</button>
 
     <form (ngSubmit)="updateUser(UserToUpdate)" #updateForm="ngForm">

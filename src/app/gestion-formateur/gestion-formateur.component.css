@@ -7,7 +7,11 @@
 
    
   }
-
+  .contenaireHautPage{
+    display: flex;
+    align-items: center; /* Pour centrer verticalement les éléments si nécessaire */
+    justify-content: space-between;
+  }
 
   
   .usercard2 {
@@ -16,7 +20,7 @@
     margin: 20px auto;
     padding: 10px 30px;
     box-shadow: lightgray 4px 4px 20px;
-    margin-top: 150px;
+    margin-top: 130px;
     
    
     p {
@@ -104,9 +108,19 @@
     margin-right: 0; 
 }
 
+#searchButton2 {
+  padding: 8px 16px;
+  text-align: center;
+  background-color: #f0eaee; /* Couleur de fond du bouton (bleu par défaut) */
+  color: black; /* Couleur du texte */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 
 .body{
-  margin-top: 150px;
+  margin-top: 120px;
 } 
   
   .detailView {

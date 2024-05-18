@@ -15,7 +15,7 @@
     margin: 20px auto;
     padding: 10px 30px;
     box-shadow: lightgray 4px 4px 20px;
-    margin-top: 150px;
+    margin-top: 130px;
     
    
     p {
@@ -95,9 +95,15 @@
     color: #333;
   }
   .body{
-    margin-top: 150px;
+    margin-top: 120px;
   }
  
+
+  .contenaireHautPage{
+    display: flex;
+    align-items: center; /* Pour centrer verticalement les éléments si nécessaire */
+    justify-content: space-between;
+  }
   .detailView{
     box-sizing: border-box;
     width: 50%;

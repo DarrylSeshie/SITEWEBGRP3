@@ -2,33 +2,41 @@
 <div class="body"    *ngIf="!showAddImageForm && !showUpdateImageForm">
 
   <div class="usercard"  *ngIf="!selectedImage || !userDetailVisible[selectedImage.id_image]">
-    <h2>Liste des Images</h2>
-    <button id="searchButton" (click)="toggleAddImageForm()">Ajouter une image</button>
-
-    <!-- Formulaire de recherche -->
+    <div id="searchButton2" >   <h2>Liste des images</h2>  Total: {{totalUsers}}</div><br>
+    <div class="contenaireHautPage">
+    <div>    <button id="searchButton" (click)="toggleAddImageForm()">Ajouter une image</button>
+      </div>
+    <div>
+     <!-- Formulaire de recherche -->
    <form (ngSubmit)="searchImageByname(searchTerm)" class="search-container" #searchForm="ngForm">
     <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Recherche par nom..." />
     <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
    </form>
-
+   </div>
+    </div>
+    <br> <br>
     <!-- affichage des images -->
 
+   <div >
     <div id="contenaireImage"   *ngIf="!(showSearchResults && ( images | async)?.length)">
-    <div class="row">
-    <ng-container *ngFor="let image of images | async; let i = index">
-      <div class="col-md-4">
-        <img [src]="image.url_image" class="custom-image" alt="{{ image.nom }} Logo">
-        <div class="button-container">
-          <button (click)="selectImage(image.id_image)"><i class="fa-solid fa-eye"></i></button>
-          <button (click)="toggleUpdateImageForm(image)"><i class="fa-solid fa-pen-to-square"></i></button>
-          <button  id="searchButton" (click)="deleteImage(image.id_image)"><i class="fa-solid fa-trash"></i></button>
+      <div class="row">
+       
+      <ng-container *ngFor="let image of images | async; let i = index">
+        <div class="col-md-4">
+          <img [src]="image.url_image" class="custom-image" alt="{{ image.nom }} Logo">
+          <div class="button-container">
+            <button (click)="selectImage(image.id_image)"><i class="fa-solid fa-eye"></i></button>
+            <button (click)="toggleUpdateImageForm(image)"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button  id="searchButton" (click)="deleteImage(image.id_image)"><i class="fa-solid fa-trash"></i></button>
+          </div>
+          <br><br>
         </div>
+        <!-- Ajouter une nouvelle ligne après chaque 3ème élément -->
+        <div *ngIf="(i + 1) % 3 === 0" class="w-100"></div>
+       </ng-container>
+       </div>
       </div>
-      <!-- Ajouter une nouvelle ligne après chaque 3ème élément -->
-      <div *ngIf="(i + 1) % 3 === 0" class="w-100"></div>
-     </ng-container>
-     </div>
-    </div>
+   </div>
 
 
     
@@ -79,8 +87,9 @@
     <img class="logoImage" [src]="selectedImage.url_image" class="card-img-top" alt="{{ selectedImage.nom }} Logo">
     <div class="card-body">
       <h5 class="card-title">{{ selectedImage.nom }}</h5>
+     <small> N° {{ selectedImage.id_image }}</small> <br>
       <button id="searchButton" (click)="toggleDetails(selectedImage)"><i class="fa-solid fa-eye-slash"></i>
-        {{ userDetailVisible[selectedImage.id_image] ? '' : '' }}
+        {{ userDetailVisible[selectedImage.id_image] ? '' : '' }}  
       </button>
     </div>
    </div>
@@ -94,7 +103,7 @@
 
 <!-- Gestion  form ajout -->
 <div class="usercard2"  *ngIf="showAddImageForm" >
-
+  <h2>Ajout image</h2>
   <button id="searchButton" (click)="toggleAddImageForm()">Retour</button>
 
   

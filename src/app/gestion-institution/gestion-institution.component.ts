@@ -14,7 +14,7 @@ declare const bootstrap: any;
 export class GestionInstitutionComponent  implements OnInit{
   selectedInstitution!: Institution; // Stocke l'utilisateur sélectionné
   currentPage: number = 1;
-  pageSize: number = 10;
+  pageSize: number = 8;
   institutions!: Observable<Institution[]>;
   institutions2!: Observable<Institution[]>;
   searchTerm: string = '';
@@ -22,6 +22,7 @@ export class GestionInstitutionComponent  implements OnInit{
   userDetailVisible: { [key: number]: boolean } = {};
   showAddInstitutionForm: boolean = false;
   showUpdateInstitutionForm :boolean = false;
+  totalUsers!: number;
 
   // message de notifs
   successMessage: string = '';
@@ -43,11 +44,24 @@ InstitutionToUpdate: Institution | null = null;
 
   ngOnInit(): void {
     this.loadInstitutions();
+    this.loadCount();
+    
   }
 
   loadInstitutions() {
   this.institutions = this.institutionService.getInstitutions(this.currentPage, this.pageSize);
   this.showSearchResults = false;
+  }
+  loadCount() {
+    this.institutionService.getTotalUsersCount().subscribe(
+      total => {
+        this.totalUsers = total;
+      
+      },
+      error => {
+        console.error('Error fetching total users count:', error);
+      }
+    );
   }
 
   
@@ -69,9 +83,11 @@ InstitutionToUpdate: Institution | null = null;
 
 
   nextPage() {
-    this.currentPage++;
-   // console.log('Current Page:', this.currentPage);
-    this.loadInstitutions();
+    const totalPages = Math.ceil(this.totalUsers / this.pageSize);
+    if (this.currentPage < totalPages) {
+      this.currentPage++;
+      this.loadInstitutions();
+    }
   }
   
   previousPage() {
@@ -141,6 +157,7 @@ InstitutionToUpdate: Institution | null = null;
     this.institutionService.addInstitution(institution).subscribe(
       () => {
         this.institution.logo = ''; 
+        this.totalUsers ++ ;
         this.loadInstitutions();
         this.showSuccessToast('Institution ajoutée avec succès.');
         
@@ -162,6 +179,7 @@ InstitutionToUpdate: Institution | null = null;
  deleteInstitution(institutionId: number) {
   this.institutionService.deleteInstitution(institutionId).subscribe(
     () => {
+      this.totalUsers -- ;
       this.loadInstitutions();
       this.showSuccessToast('Institution supprimée avec succès.');
     },

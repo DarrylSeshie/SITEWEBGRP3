@@ -24,6 +24,7 @@ export class GestionFormateurComponent {
   userDetailVisible: { [key: number]: boolean } = {};
   showAddUserForm: boolean = false;
   showUpdateUserForm :boolean = false;
+  totalUsers!: number;
 
 
    // message de notifs
@@ -55,6 +56,7 @@ export class GestionFormateurComponent {
 
   ngOnInit(): void {
     this.loadUsers();
+    this.loadCount();
   }
 
   loadUsers() {
@@ -63,6 +65,17 @@ export class GestionFormateurComponent {
   this.showSearchResults = false;
   }
 
+  
+loadCount() {
+  this.formateurService.getTotalUsersCount().subscribe(
+    total => {
+      this.totalUsers = total;
+    },
+    error => {
+      console.error('Error fetching total users count:', error);
+    }
+  );
+}
 
    
   toggleAddUserForm(): void {
@@ -81,9 +94,11 @@ export class GestionFormateurComponent {
   }
   
   nextPage() {
-    this.currentPage++;
-   // console.log('Current Page:', this.currentPage);
-    this.loadUsers();
+    const totalPages = Math.ceil(this.totalUsers / this.pageSize);
+    if (this.currentPage < totalPages) {
+      this.currentPage++;
+      this.loadUsers();
+    }
   }
   
   previousPage() {
@@ -141,6 +156,7 @@ export class GestionFormateurComponent {
     // Appel du service pour supprimer l'utilisateur
     this.formateurService.deleteFormateur(userId).subscribe(
       () => {
+        this.totalUsers -- ;// retire 1 user et refresh
         this.loadUsers(); 
         // Afficher le toast de confirmation
         const toastElement = document.getElementById('liveToastSucce');
@@ -181,6 +197,7 @@ export class GestionFormateurComponent {
   addUser(user: User) {
     this.formateurService.addFormateur(user).subscribe(
       () => {
+        this.totalUsers ++ ;
         this.loadUsers(); // Recharger la liste des utilisateurs après ajout
         this.showSuccessToast('formateur ajoutée avec succès.');
        

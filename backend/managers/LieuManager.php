@@ -75,6 +75,26 @@ class LieuManager
       return $lieux;
   }
   
+
+ 
+  public function count()
+  {
+      $sql = "SELECT COUNT(*) AS total FROM lieu";
+  
+      try {
+          $prep = $this->db->prepare($sql);
+          $prep->execute();
+          
+          $result = $prep->fetch(PDO::FETCH_ASSOC);
+          return $result['total']; // Retourner le nombre total d'utilisateurs
+  
+      } catch (PDOException $e) {
+          throw $e;
+      } finally {
+          $prep = null; // Libérer la ressource PDOStatement
+      }
+  }
+
 public function getLieuByname2($page, $pageSize,$nom)
 { 
 

@@ -4,15 +4,16 @@
 
 
 <div class="usercard"  *ngIf="!selectedLieu || !userDetailVisible[selectedLieu.id_lieu]" >
-  <h2>Liste des lieux</h2>
-  <button id="searchButton" (click)="toggleAddLieuForm()">Ajouter lieu</button>
-
-  <!-- Formulaire de recherche -->
-  <form (ngSubmit)="searchLieuByname(searchTerm)" class="search-container" #searchForm="ngForm">
-    <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Rechercher par nom..." />
-    <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-  </form>
-
+  <div id="searchButton2" >   <h2>Liste des lieux</h2>  Total: {{totalUsers}}</div>
+  <div class="contenaireHautPage">
+      <div>  <button id="searchButton" (click)="toggleAddLieuForm()">Ajouter lieu</button>
+      </div>
+      <div> <!-- Formulaire de recherche -->
+       <form (ngSubmit)="searchLieuByname(searchTerm)" class="search-container" #searchForm="ngForm">
+        <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Rechercher par nom..." />
+        <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+       </form></div>
+    </div>
   <!-- Tableau des utilisateurs -->
   <table class="table table-striped mt-3" *ngIf="!(showSearchResults && ( lieux | async)?.length)">
     <thead>
@@ -124,7 +125,7 @@
 
 <!-- Gestion  form ajout   d'une nouvelle lieu -->
 <div class="usercard2"  *ngIf="showAddLieuForm" >
-
+  <h2>Ajout lieu</h2>
   <button id="searchButton" (click)="toggleAddLieuForm()">Retour</button>
 
   <form (ngSubmit)="addLieu(lieu)" class="mt-3">
@@ -175,7 +176,7 @@
  
 
   <div class="update-form" *ngIf="LieuToUpdate" >
-    <h2>Modifier Lieu</h2>
+    <h2>Modifier lieu</h2>
     <button id="searchButton" (click)="toggleAddLieuForm()">Retour</button>
 
     <form (ngSubmit)="updateLieu(LieuToUpdate)" #updateForm="ngForm">

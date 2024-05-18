@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable,map } from 'rxjs';
 import { Image } from '../models/image.model';
 
 @Injectable({
@@ -20,6 +20,13 @@ export class ImageService {
     return this.http.get<Image[]>(url);
   }
 
+  getTotalUsersCount(): Observable<number> {
+    const url = `${this.apiUrl}?count`;
+
+    return this.http.get<{ total: number }>(url).pipe(
+      map(response => response.total)
+    );
+  }
   uploadFile(fileData: FormData): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/upload`, fileData);
   }

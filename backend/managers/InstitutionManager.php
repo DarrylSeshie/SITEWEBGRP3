@@ -72,6 +72,25 @@ class InstitutionManager
   }
   
 
+   
+public function count()
+{
+    $sql = "SELECT COUNT(*) AS total FROM institution ";
+
+    try {
+        $prep = $this->db->prepare($sql);
+        $prep->execute();
+        
+        $result = $prep->fetch(PDO::FETCH_ASSOC);
+        return $result['total']; // Retourner le nombre total d'utilisateurs
+
+    } catch (PDOException $e) {
+        throw $e;
+    } finally {
+        $prep = null; // Libérer la ressource PDOStatement
+    }
+}
+
 public function getInstitutionsByName($page, $pageSize,$nom)
 { 
 

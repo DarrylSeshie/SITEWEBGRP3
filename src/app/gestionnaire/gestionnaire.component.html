@@ -5,13 +5,26 @@
   
  
     <div *ngIf="!selectedUser || !userDetailVisible[selectedUser.id_utilisateur]" class="usercard" >  <!-- affichage sans detail + search -->
-      <h2>Liste des utilisateurs</h2>
+      <div id="searchButton2" >   <h2>Liste des utilisateurs</h2>  Total: {{totalUsers}}</div><br>
+
+      <div class="contenaireHautPage">
+      <div>
+        <!-- Pagination -->
   
-    <!-- Formulaire de recherche -->
-    <form (ngSubmit)="searchUsersByname(searchTerm)" class="search-container" #searchForm="ngForm">
+       <div class="button-container">
+       <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
+        <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
+      </div>
+      </div>
+
+    <div>
+     <!-- Formulaire de recherche -->
+     <form (ngSubmit)="searchUsersByname(searchTerm)" class="search-container" #searchForm="ngForm">
       <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Rechercher par nom..." />
       <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-    </form>
+     </form>
+     </div>
+    </div>
   
     <!-- Tableau des utilisateurs -->
     <table class="table table-striped mt-3" *ngIf="!(showSearchResults && (users | async)?.length)">
@@ -85,13 +98,12 @@
   
   
   
+   <!-- Pagination -->
   
-    <!-- Pagination -->
-  
-    <div class="button-container">
-      <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
-      <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
-    </div>
+   <div class="button-container">
+    <button id="searchButton" (click)="previousPage()" [disabled]="currentPage === 1"><i class="fa-solid fa-circle-chevron-left"></i></button>
+    <button id="searchButton" (click)="nextPage()"><i class="fa-solid fa-circle-chevron-right"></i></button>
+  </div>
    
    </div>
   
@@ -143,12 +155,12 @@
   
   
     <div class="update-form" *ngIf="UserToUpdate" >
-      <h2>Changer role de l'utilisateur</h2>
-       <button id="searchButton" (click)="toggleAddUserForm()"><i class="fa-solid fa-circle-chevron-left"></i></button> 
+      <h2 id="searchButton2">Changer role utilisateur</h2>
+      
   
       <form (ngSubmit)="updateUser(UserToUpdate)" #updateForm="ngForm">
         <div class="form-group">
-            <label for="id_role">Rôle</label>
+          <br> <label for="id_role">Rôle</label>
             <select class="form-control" id="id_role" [(ngModel)]="UserToUpdate.id_role" name="id_role" required>
               <option value="1">Admin</option>
               <option value="2">Gestionnaire</option>
@@ -158,8 +170,18 @@
             
         </div>
         <br>
-        <button type="submit" id="searchButton"  >Enregistrer</button>
+        <div class="contenaireHautPage">
+          
+          <div><button id="searchButton" (click)="toggleAddUserForm()"><i class="fa-solid fa-circle-chevron-left"></i></button> </div>
+          <div>  <button type="submit" id="searchButton"  >Enregistrer</button></div>
+          
+        </div>
+
+        
+      
       </form>
+
+     
     </div>
     
     

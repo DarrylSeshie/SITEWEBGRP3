@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable,map } from 'rxjs';
 import { Formateur } from '../models/formateur.model';
 
 @Injectable({
@@ -20,6 +20,13 @@ export class FormateurService {
   getUsers(page: number, pageSize: number): Observable<Formateur[]> {
     const url = `${this.apiUrl}?page=${page}&pageSize=${pageSize}`;
     return this.http.get<Formateur[]>(url);
+  }
+  getTotalUsersCount(): Observable<number> {
+    const url = `${this.apiUrl}?count`;
+
+    return this.http.get<{ total: number }>(url).pipe(
+      map(response => response.total)
+    );
   }
 
    

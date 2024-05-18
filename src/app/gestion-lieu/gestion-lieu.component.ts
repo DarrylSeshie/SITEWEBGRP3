@@ -25,6 +25,7 @@ export class GestionLieuComponent {
   userDetailVisible: { [key: number]: boolean } = {};
   showAddLieuForm: boolean = false;
   showUpdateLieuForm :boolean = false;
+  totalUsers!: number;
   
   // message de notifs
   successMessage: string = '';
@@ -46,6 +47,7 @@ export class GestionLieuComponent {
 
   ngOnInit(): void {
     this.loadLieux();
+    this.loadCount();
   }
 
   loadLieux() {
@@ -63,6 +65,17 @@ export class GestionLieuComponent {
       this.showAddLieuForm = true;
     }
   }
+   
+loadCount() {
+  this.lieuService.getTotalUsersCount().subscribe(
+    total => {
+      this.totalUsers = total;
+    },
+    error => {
+      console.error('Error fetching total users count:', error);
+    }
+  );
+}
 
   toggleUpdateLieuForm(Lieu: Lieu) {
     this.LieuToUpdate = Lieu;
@@ -71,13 +84,13 @@ export class GestionLieuComponent {
   }
 
 
-  
   nextPage() {
-    this.currentPage++;
-   // console.log('Current Page:', this.currentPage);
-    this.loadLieux();
+    const totalPages = Math.ceil(this.totalUsers / this.pageSize);
+    if (this.currentPage < totalPages) {
+      this.currentPage++;
+      this.loadLieux();
+    }
   }
-  
   previousPage() {
     if (this.currentPage > 1) {
       this.currentPage--;
@@ -133,6 +146,7 @@ export class GestionLieuComponent {
     // Appel du service pour supprimer l'utilisateur
     this.lieuService.deleteLieu(lieuId).subscribe(
       () => {
+        this.totalUsers -- ;
         this.loadLieux(); 
         // Afficher le toast de confirmation
         const toastElement = document.getElementById('liveToastSuccessl');
@@ -171,6 +185,7 @@ export class GestionLieuComponent {
   addLieu(lieu: Lieu) {
     this.lieuService.addLieu(lieu).subscribe(
       () => {
+        this.totalUsers ++ ;
         this.loadLieux();
         this.showSuccessToast('Lieu ajouté avec succès.');
         

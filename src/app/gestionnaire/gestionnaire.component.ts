@@ -15,7 +15,7 @@ export class GestionnaireComponent implements OnInit{
 
   selectedUser!: User; // Stocke l'utilisateur sélectionné
   currentPage: number = 1;
-  pageSize: number = 20;
+  pageSize: number = 18;
   users!: Observable<User[]>;
   users2!: Observable<User[]>;
   searchTerm: string = '';
@@ -23,6 +23,7 @@ export class GestionnaireComponent implements OnInit{
   userDetailVisible: { [key: number]: boolean } = {};
   showAddUserForm: boolean = false;
   showUpdateUserForm :boolean = false;
+  totalUsers!: number;
 
   // message de notifs
   successMessage: string = '';
@@ -35,7 +36,20 @@ export class GestionnaireComponent implements OnInit{
 
   ngOnInit(): void {
     this.loadUsers();
+    this.loadCount();
   }
+  
+loadCount() {
+  this.userService.getTotalUsersCount().subscribe(
+    total => {
+      this.totalUsers = total;
+    },
+    error => {
+      console.error('Error fetching total users count:', error);
+    }
+  );
+}
+  
 
   loadUsers() {
   //  this.users = this.userService.getUsers();
@@ -61,9 +75,11 @@ export class GestionnaireComponent implements OnInit{
   }
   
   nextPage() {
-    this.currentPage++;
-   // console.log('Current Page:', this.currentPage);
-    this.loadUsers();
+    const totalPages = Math.ceil(this.totalUsers / this.pageSize);
+    if (this.currentPage < totalPages) {
+      this.currentPage++;
+      this.loadUsers();
+    }
   }
   
   previousPage() {

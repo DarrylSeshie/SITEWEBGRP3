@@ -21,6 +21,14 @@ export class FormationService {
     return this.http.get<Formation[]>(url);
   }
 
+  getTotalUsersCount(): Observable<number> {
+    const url = `${this.apiUrl}?count`;
+
+    return this.http.get<{ total: number }>(url).pipe(
+      map(response => response.total)
+    );
+  }
+
    
 
    

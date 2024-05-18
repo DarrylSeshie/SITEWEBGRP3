@@ -14,7 +14,7 @@ export class GestionImageComponent {
   
   selectedImage!: Image; // Stocke l'utilisateur sélectionné
   currentPage: number = 1;
-  pageSize: number = 9;
+  pageSize: number = 6;
   images!: Observable<Image[]>;
   images2!: Observable<Image[]>;
   searchTerm: string = '';
@@ -23,7 +23,7 @@ export class GestionImageComponent {
   userDetailVisible: { [key: number]: boolean } = {};
   showAddImageForm: boolean = false;
   showUpdateImageForm :boolean = false;
-
+  totalUsers!: number;
   // message de notifs
   successMessage: string = '';
   errorMessage: string = '';
@@ -42,8 +42,20 @@ export class GestionImageComponent {
 
   ngOnInit(): void {
     this.loadImages();
+    this.loadCount();
   }
   
+    
+loadCount() {
+  this.imageService.getTotalUsersCount().subscribe(
+    total => {
+      this.totalUsers = total;
+    },
+    error => {
+      console.error('Error fetching total users count:', error);
+    }
+  );
+}
 
   
   toggleAddImageForm(): void {
@@ -70,9 +82,11 @@ export class GestionImageComponent {
 
   
   nextPage() {
-    this.currentPage++;
-    //console.log('Current Page:', this.currentPage);
-    this.loadImages();
+    const totalPages = Math.ceil(this.totalUsers / this.pageSize);
+    if (this.currentPage < totalPages) {
+      this.currentPage++;
+      this.loadImages();
+    }
   }
   
   previousPage() {
@@ -130,6 +144,7 @@ export class GestionImageComponent {
     // Appel du service pour supprimer l'utilisateur
     this.imageService.deleteImage(imageId).subscribe(
       () => {
+        this.totalUsers -- ;
         this.loadImages(); 
         // Afficher le toast de confirmation
         const toastElement = document.getElementById('liveToastSuccessi');
@@ -169,6 +184,7 @@ export class GestionImageComponent {
     this.imageService.addImage(image).subscribe(
       () => {
         this.image.url_image = ''; 
+        this.totalUsers ++ ;
         this.loadImages();
         this.showSuccessToast('Image ajoutée avec succès.');
         

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable ,map} from 'rxjs';
 import { Lieu } from '../models/lieu.model';
 
 @Injectable({
@@ -18,6 +18,13 @@ export class LieuService {
   getLieux(page: number, pageSize: number): Observable<Lieu[]> {
     const url = `${this.apiUrl}?page=${page}&pageSize=${pageSize}`;
     return this.http.get<Lieu[]>(url);
+  }
+  getTotalUsersCount(): Observable<number> {
+    const url = `${this.apiUrl}?count`;
+
+    return this.http.get<{ total: number }>(url).pipe(
+      map(response => response.total)
+    );
   }
 
    

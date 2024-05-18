@@ -3,15 +3,16 @@
 
 
   <div *ngIf="!selectedFormation || !userDetailVisible[selectedFormation.id_produit]" class="usercard" >
-      <h2>Liste des formations / journeés</h2>
-      <button id="searchButton" (click)="toggleAddProduitForm()">Ajouter une Formation</button>
-
-       <!-- Formulaire de recherche -->
-       <form (ngSubmit)="searchFormationsByname(searchTerm)" class="search-container" #searchForm="ngForm">
-    <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Rechercher par titre..." />
-    <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-        </form>
-
+    <div id="searchButton2" >   <h2>Liste des formations & journées</h2>  Total: {{totalUsers}}</div>
+    <div class="contenaireHautPage">
+      <div> <button id="searchButton" (click)="toggleAddProduitForm()">Ajouter une Formation</button></div>
+      <div>
+      <!-- Formulaire de recherche -->
+         <form (ngSubmit)="searchFormationsByname(searchTerm)" class="search-container" #searchForm="ngForm">
+        <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Rechercher par titre..." />
+        <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+        </form></div>
+      </div>
       <!-- Tableau des Formations -->
        <table class="table table-striped mt-3" *ngIf="!(showSearchResults && ( Formations | async)?.length)">
     <thead>
@@ -112,9 +113,10 @@
           <p>Type: {{ selectedFormation.typeProduit?.nom }}</p>
           <p>Public: {{ selectedFormation.public_cible }}</p>
           <p>Prix: {{ selectedFormation.prix }}</p>
+          <p>Fin d'inscription: {{ selectedFormation.date_fin_inscription }}</p>
           
   
-          <p class="card-text"><small class="text-body-secondary"> <p>Fin d'inscription: {{ selectedFormation.date_fin_inscription }}</p></small></p>
+          <p class="card-text"><small class="text-body-secondary"> N° {{selectedFormation.id_produit}} </small></p>
         </div>
       </div>
     </div>
@@ -136,7 +138,7 @@
 
 <!-- Gestion  form ajout de formation -->
 <div class="usercard2"  *ngIf="showAddProduitForm" >
-
+  <h2>Ajout Formation ou produit </h2>
   <button id="searchButton" (click)="toggleAddProduitForm()">Retour</button>
 
 
@@ -228,7 +230,7 @@
 
 
   <div class="update-form" *ngIf="ProduitToUpdate" >
-    <h2>Modifier Produit</h2>
+    <h2>Modifier formation ou produit</h2>
     <button id="searchButton" (click)="toggleAddProduitForm()">Retour</button>
 
     <form (ngSubmit)="updateFormation(ProduitToUpdate)" #updateForm="ngForm">

@@ -41,7 +41,20 @@ if ($http_method === "GET") {
             http_response_code(500);
             echo json_encode(array("error" => $e->getMessage()));
         }
-    } else {
+    } 
+    elseif (isset($_GET['count'])) {
+        // Requête GET pour obtenir le nombre total d'utilisateurs
+        try {
+        
+            $totalUsers = $formateurManager->count();
+    
+            http_response_code(200);
+            echo json_encode(['total' => $totalUsers]);
+        } catch (PDOException $e) {
+            http_response_code(500);
+            echo json_encode(["error" => $e->getMessage()]);
+        }
+    }else {
         // Requête GET pour récupérer tous les utilisateurs avec pagination
         $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
         $pageSize = isset($_GET['pageSize']) ? intval($_GET['pageSize']) : 10;

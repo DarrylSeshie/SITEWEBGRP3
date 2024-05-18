@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable,map } from 'rxjs';
 import { Adresse } from '../models/adresse.model';
 
 @Injectable({
@@ -20,7 +20,13 @@ export class AdresseService {
     return this.http.get<Adresse[]>(url);
   }
 
-   
+  getTotalUsersCount(): Observable<number> {
+    const url = `${this.apiUrl}?count`;
+
+    return this.http.get<{ total: number }>(url).pipe(
+      map(response => response.total)
+    );
+  }
 
    
   getAdresseById(adresseId: number): Observable<Adresse> {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 09 mai 2024 à 20:23
+-- Généré le : sam. 18 mai 2024 à 18:41
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -40,25 +40,23 @@ CREATE TABLE `adresse` (
 --
 
 INSERT INTO `adresse` (`id_adresse`, `rue_numero`, `code_postal`, `localite`, `pays`) VALUES
-(1, 'Trieu Kaisin 1745', 6061, 'Charleroi', 'Belgique'),
+(1, 'Bd Tirou 15', 6000, 'Charleroi', 'Belgique'),
 (2, 'Chauss de binche 159 ', 7000, 'Mons', 'Belgique'),
 (3, 'Bd Dolez 32 ', 7000, 'Mons', 'Belgique'),
 (4, '123 Rue Principale', 1000, 'Bruxelles', 'Belgique'),
 (5, '456 Avenue Centrale', 2000, 'Anvers', 'Belgique'),
 (6, '784 Boulevard Central', 3000, 'Louvain', 'Belgique'),
 (7, '123 Rue du Centre', 4000, 'Liège', 'Belgique'),
-(8, 'Bd Dolez 39 ', 7000, 'Mons', 'Belgique'),
-(9, '123 Rue Principale', 1000, 'Bruxelles', 'Belgique'),
-(10, '456 Avenue Centrale', 2000, 'Anvers', 'Belgique'),
-(11, '789 Boulevard Central', 3000, 'Louvain', 'Belgique'),
+(8, 'Bd Dolez 39 ', 6000, 'Charleroi', 'Belgique'),
+(10, '45 Avenue Europe', 1000, 'Bruxelles', 'Belgique'),
+(11, '1089 Boulevard Gauche', 3000, 'Louvain', 'Belgique'),
 (12, '108 Rue du Centre', 4000, 'Liège', 'Belgique'),
-(13, 'Bd Dolez 35 ', 7000, 'Mons', 'Belgique'),
-(14, '1 Rue Principale', 1000, 'Bruxelles', 'Belgique'),
-(15, '45 Avenue Centrale', 2000, 'Anvers', 'Belgique'),
-(16, '78 Boulevard Central', 3000, 'Louvain', 'Belgique'),
-(17, '10 Rue du Centre', 4000, 'Liège', 'Belgique'),
-(18, 'Trieu Kaisin 136 ', 6062, 'Charleroi', 'Belgique'),
-(22, 'Chaussée de charleroi', 4444, 'Neigerrr', 'Belgique');
+(13, '3  Bd Marie Louis ', 7000, 'Mons', 'Belgique'),
+(14, '1 Rue Boordelen', 1200, 'Bruxelles', 'Belgique'),
+(15, '45 JustermanWoorld', 2000, 'Anvers', 'Belgique'),
+(16, '41  Central parc Est', 3000, 'Louvain', 'Belgique'),
+(18, '136 Trieu Kaisin ', 6061, 'Montignie Sur Sambre', 'Belgique'),
+(22, '120 Chaussée de charleroi', 6000, 'Charleroi', 'Belgique');
 
 -- --------------------------------------------------------
 
@@ -135,8 +133,19 @@ CREATE TABLE `image` (
 -- Déchargement des données de la table `image`
 --
 
-INSERT INTO `image` VALUES (1,'https://www.helha.be/app/uploads/2022/05/vignette-helha2.jpg','Image Helha '),(2,'https://www.bde-group.be/wp-content/uploads/2017/11/Image1-300x169.png','Image BDE Groud'),(3,'https://pbs.twimg.com/profile_images/651375653082652672/fEr3_2_M_400x400.png','Twitter Profile Image'),(4,'https://www.helha.be/app/uploads/2022/07/dernierjourdecours-PUB.jpg','Dernier Jour de Cours'),(5,'https://www.helha.be/app/uploads/2023/09/Ecrire-a-la-HELHa-ConnectED.png','Ecrire à la HELHa ConnectED'),(12,'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/311.jpg','union'),(13,'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/316.jpg','meditaion'),(14,'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/324.jpg','bandage'),(15,'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/349.jpg','mal de dos'),(16,'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/355.jpg','huile'),(17,'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/314.jpg','secour'),(18,'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/305.jpg','icon');
-
+INSERT INTO `image` (`id_image`, `url_image`, `nom`) VALUES
+(1, 'https://www.helha.be/app/uploads/2022/05/vignette-helha2.jpg', 'Image Helha '),
+(2, 'https://www.bde-group.be/wp-content/uploads/2017/11/Image1-300x169.png', 'Image BDE Groud'),
+(3, 'https://pbs.twimg.com/profile_images/651375653082652672/fEr3_2_M_400x400.png', 'Twitter Profile Image'),
+(4, 'https://www.helha.be/app/uploads/2022/07/dernierjourdecours-PUB.jpg', 'Dernier Jour de Cours'),
+(5, 'https://www.helha.be/app/uploads/2023/09/Ecrire-a-la-HELHa-ConnectED.png', 'Ecrire à la HELHa ConnectED'),
+(12, 'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/311.jpg', 'union'),
+(13, 'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/316.jpg', 'meditaion'),
+(14, 'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/324.jpg', 'bandage'),
+(15, 'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/349.jpg', 'mal de dos'),
+(16, 'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/355.jpg', 'huile'),
+(17, 'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/314.jpg', 'secour'),
+(18, 'https://cermed.helha.be/wp-content/plugins/helha/uploads/colloque/305.jpg', 'icon');
 
 -- --------------------------------------------------------
 
@@ -156,16 +165,14 @@ CREATE TABLE `institution` (
 --
 
 INSERT INTO `institution` (`id_institution`, `nom`, `logo`, `id_adresse`) VALUES
-(1, 'Helha2', 'https://www.helha.be/app/uploads/2022/05/vignette-helha2.jpg', 1),
+(1, 'Helha', 'https://www.helha.be/app/uploads/2022/05/vignette-helha2.jpg', 1),
 (2, 'Umons', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 3),
-(3, 'UNamur', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 4),
-(4, 'ULiege', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 10),
-(5, 'ULB', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 11),
-(6, 'HEH', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 8),
-(7, 'ULouvain la Neuve', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 3),
-(8, 'UGI', 'https://i.ytimg.com/vi/hpfYij7Wx0k/maxresdefault.jpg', 14),
-(55, 'HDE100', 'https://i.pinimg.com/originals/fd/71/cc/fd71cc920df96dfb498587b177d3c658.png', 14),
-(56, 'LoyalBnnn', 'https://i.pinimg.com/originals/fd/71/cc/fd71cc920df96dfb498587b177d3c658.png', 14);
+(3, 'UNamur', 'https://pbs.twimg.com/profile_images/1261898496799657984/0LXybiZu_400x400.jpg', 4),
+(4, 'ULiege', 'https://www.uliege.be/plugins/ULiegePlugin/images/uLiegeLogo.jpg', 10),
+(5, 'ULB', 'https://logowik.com/content/uploads/images/free-university-of-brussels-ulb4361.jpg', 11),
+(6, 'HEH', 'https://www.heh.be/design/logo_HEH.png', 8),
+(7, 'UCLouvain', 'https://sites.uclouvain.be/louvaingamelab/assets/images/logo-uclouvain-2021.webp', 3),
+(8, 'Ucharleroi', 'https://campusucharleroi.be/wp-content/uploads/2023/04/Logo-CampusUCharleroi_2023_300l.jpg', 14);
 
 -- --------------------------------------------------------
 
@@ -187,11 +194,14 @@ CREATE TABLE `lieu` (
 --
 
 INSERT INTO `lieu` (`id_lieu`, `nom`, `batiment`, `locaux`, `id_institution`, `id_adresse`) VALUES
-(1, 'Helha_montignie1', 'Batiment A', 'E206', 1, 1),
+(1, 'Helha_montignie', 'Batiment A', 'E206', 1, 1),
 (2, 'Helha_Mons', 'Batiment B', 'B201', 1, 2),
 (3, 'Umons', 'Batiment C', 'Locaux C', 2, 3),
-(4, 'Helha_gilly', 'Batiment A', 'E206', 1, 4),
-(5, 'HEH_', 'Batiment B', 'B201', 4, 5);
+(4, 'Helha_gilly', 'Batiment G', 'G2', 1, 4),
+(5, 'HEH', 'Batiment H', 'H207', 4, 5),
+(14, 'Ucharleroi', 'Batiment7', '126', 8, 6),
+(15, 'Uliege', 'Batiment2', 'B120', 4, 7),
+(16, 'Unamur', 'Batiment LBN', 'N26', 7, 7);
 
 -- --------------------------------------------------------
 
@@ -319,7 +329,7 @@ CREATE TABLE `utilisateur` (
   `civilite` varchar(50) NOT NULL,
   `nom` varchar(50) NOT NULL,
   `prenom` varchar(50) NOT NULL,
-  `email` varchar(100) NOT NULL UNIQUE,
+  `email` varchar(100) NOT NULL,
   `mot_de_passe` varchar(50) NOT NULL,
   `gsm` varchar(50) NOT NULL,
   `TVA` varchar(100) DEFAULT 'VIDE',
@@ -341,30 +351,27 @@ INSERT INTO `utilisateur` (`id_utilisateur`, `civilite`, `nom`, `prenom`, `email
 (3, 'MR', 'Sirjacjk', 'celestin', 'Sceles@helha.be', 'AdminHelha1234', '048xxxxxx', 'BE123456789', 'Etudiant', '987654321', 'celestinio@gmail.com', 2, 1, 12),
 (4, 'M.', 'Lamdine', 'Houssam', 'houss@helha.be', 'AdminHelha1234', '048xxxxxx', 'BE123456789', 'Etudiant', '987654321', 'hou@gmail.com', 4, 1, 12),
 (5, 'M.', 'Kawas', 'Helmajdi', 'Kw@helha.be', 'AdminHelha1234', '048xxxxxx', 'BE123456789', 'Professeur', '987654321', 'Kasw@gmail.com', 3, 1, 13),
-(6, 'M.', 'Dupont', 'Jean', 'jean.dupont@example.com', 'mdp123', '123456789', 'BE123456789', 'Ingénieur', '987654321', 'jeandupont@pro.com', 3, 1, 1),
-(7, 'Mme', 'Martin', 'Sophie', 'sophie.martin@example.com', 'password456', '987654321', 'BE987654321', 'Développeur', '123456789', 'sophiemartin@pro.com', 3, 1, 2),
 (8, 'M.', 'Lefevre', 'Pierre', 'pierre.lefevre@example.com', 'securepwd789', '789456123', 'BE789456123', 'Architecte', '654987321', 'pierrelefevre@pro.com', 4, 1, 3),
 (9, 'Mme', 'Dubois', 'Marie', 'marie.dubois@example.com', 'pass123', '654789321', 'BE654789321', 'Consultant', '987654123', 'mariedubois@pro.com', 4, 1, 4),
 (10, 'M.', 'Leroy', 'Thomas', 'thomas.leroy@example.com', 'password789', '456123789', 'BE456123789', 'Analyste', '321987654', 'thomasleroy@pro.com', 4, 1, 5),
 (11, 'Mme', 'Moreau', 'Laura', 'laura.moreau@example.com', 'mdp456', '321654987', 'BE321654987', 'Designer', '654321987', 'lauramoreau@pro.com', 4, 1, 6),
 (12, 'M.', 'Garcia', 'Antoine', 'antoine.garcia@example.com', 'pass789', '789321654', 'BE789321654', 'Ingénieur', '456987321', 'antoinegarcia@pro.com', 4, 1, 7),
 (13, 'Mme', 'Roux', 'Julie', 'julie.roux@example.com', 'securepwd123', '987321654', 'BE987321654', 'Développeur', '321654987', 'julieroux@pro.com', 4, 1, 8),
-(14, 'M.', 'Petit', 'Luc', 'luc.petit@example.com', 'mdp789', '654987321', 'BE654987321', 'Consultant', '987321654', 'lucpetit@pro.com', 4, 1, 9),
-(15, 'Mme', 'Sanchez', 'Emma', 'emma.sanchez@example.com', 'password123', '321987654', 'BE321987654', 'Analyste', '654123987', 'emmasanchez@pro.com', 4, 1, 10),
-(16, 'Mlle', 'Alary', 'MrProf', 'alary.prof@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 2, 2, 4),
-(17, 'Mme', 'Legrand', 'Olivier', 'legrand.moreau@example.com', 'password789', '0687654321', 'IT987654321', 'Sage-femme', '0487654321', 'j.moreau@clinique.it', 2, 1, 4),
+(15, 'Mme', 'Sanchez', 'Emma', 'emma.sanchez@example.com', 'password123', '321987654', 'BE321987654', 'Analyste', '654123987', 'emmasanchez@pro.com', 3, 1, 10),
+(16, 'Mlle', 'Alary', 'MrProf', 'alary.prof@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 3, 2, 4),
+(17, 'Mme', 'Legrand', 'Olivier', 'legrand.moreau@example.com', 'password789', '0687654321', 'IT987654321', 'Sage-femme', '0487654321', 'j.moreau@clinique.it', 3, 1, 4),
 (18, 'M.', 'Theodor', 'Antoine', 'theodor.g@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2),
 (19, 'Mr', 'Roux', 'Dupied', 'Dupier.roux@example.com', 'mdp789012', '0612345678', 'PT456789123', 'Dentiste', '0478901234', 'l.roux@dental.pt', 2, 2, 4),
-(20, 'Mme', 'Malangro', 'Claire', 'Malangro.ly@example.com', 'password123', '0734567890', 'CH987654321', 'Pharmacienne', '0490123456', 'c.leroy@pharma.ch', 2, 2, 4),
+(20, 'Mme', 'Malangro', 'Claire', 'Malangro.ly@example.com', 'password123', '0734567890', 'CH987654321', 'Pharmacienne', '0490123456', 'c.leroy@pharma.ch', 3, 2, 4),
 (21, 'M.', 'Som', 'Antoine', 'Som.g6@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2),
 (22, 'Mr', 'Alleby', 'Luc', 'Alleby@example.com', 'mdp789012', '0612345678', 'PT456789123', 'Dentiste', '0478901234', 'l.roux@dental.pt', 4, 2, 4),
 (23, 'Mme', 'Diarra', 'Claire', 'Diarra@example.com', 'password123', '0734567890', 'CH987654321', 'Pharmacienne', '0490123456', 'c.leroy@pharma.ch', 4, 2, 4),
 (24, 'M.', 'Sanchez', 'Pedro', 'Pedro.sanchez@example.com', 'pwd987654', '0790123456', 'AT321987654', 'Médecin urgentiste', '0487654321', 'c.sanchez@hopital.at', 4, 1, 2),
-(25, 'M.', 'Kenko', 'Grace', 'Grace.Kenko@gmail.com', 'motdepasse123', '0612345678', 'BE123456789', 'Médecin généraliste', '0478901234', 'jean.dupont@clinique.com', 4, 1, 2),
+(25, 'M.', 'Kenko', 'Grace', 'Grace.Kenko@gmail.com', 'motdepasse123', '0612345678', 'BE123456789', 'Médecin généraliste', '0478901234', 'jean.dupont@clinique.com', 3, 1, 2),
 (26, 'Mlle', 'Mapuntopu', 'Sophie', 'sophie.pu@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 2, 2, 4),
 (27, 'Mme', 'Scaut', 'Sherazade', 'Scaut.Ss@example.com', 'password789', '0687654321', 'IT987654321', 'Sage-femme', '0487654321', 'j.moreau@clinique.it', 2, 1, 4),
 (28, 'Mlle.', 'Slimani', 'Lina', 'SlimanLia@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2),
-(29, 'Mr', 'Botoyu', 'Ezeckiel', 'Botoyu@example.com', 'mdp789012', '0612345678', 'PT456789123', 'Dentiste', '0478901234', 'l.roux@dental.pt', 2, 2, 4),
+(29, 'Mr', 'Botoyu', 'Ezeckiel', 'Botoyu@example.com', 'mdp789012', '0612345678', 'PT456789123', 'Dentiste', '0478901234', 'l.roux@dental.pt', 3, 2, 4),
 (30, 'Mme', 'Valentino', 'Claire', 'Valentino.Clr@example.com', 'password123', '0734567890', 'CH987654321', 'Pharmacienne', '0490123456', 'c.leroy@pharma.ch', 2, 2, 4),
 (31, 'Mlle', 'Gohu', 'Michelle', 'Gohu.arafat@example.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
 (32, 'M.', 'Seddoh', 'Jean', 'jean.seddoh@example.com', 'motdepasse123', '0612345678', 'BE123456789', 'Médecin généraliste', '0478901234', 'jean.dupont@clinique.com', 4, 1, 2),
@@ -375,11 +382,12 @@ INSERT INTO `utilisateur` (`id_utilisateur`, `civilite`, `nom`, `prenom`, `email
 (37, 'M.', 'Africano', 'Gloria', 'gloglo.Af@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2),
 (38, 'Mr', 'Milano', 'Luc', 'luc.mila@example.com', 'mdp789012', '0612345678', 'PT456789123', 'Dentiste', '0478901234', 'l.roux@dental.pt', 4, 2, 4),
 (39, 'Mme', 'Paya', 'team', 'Team.paya@example.com', 'password123', '0734567890', 'CH987654321', 'Pharmacienne', '0490123456', 'c.leroy@pharma.ch', 4, 2, 4),
-(40, 'M.', 'Anani', 'Shalom', 'Shalom.anani@gmail.com', 'pwd987654', '0790123456', 'AT321987654', 'Médecin urgentiste', '0487654321', 'c.sanchez@hopital.at', 4, 1, 2),
+(40, 'M.', 'Anani', 'Shalom', 'Shalom.anani@gmail.com', 'pwd987654', '0790123456', 'AT321987654', 'Médecin urgentiste', '0487654321', 'c.sanchez@hopital.at', 3, 1, 2),
 (41, 'M.', 'Danne', 'Soanne', 'Soanne.LPB@example.com', 'motdepasse123', '0612345678', 'BE123456789', 'Médecin généraliste', '0478901234', 'jean.dupont@clinique.com', 4, 1, 2),
-(42, 'Mlle', 'Seshie', 'Jeremie', 'Jeremie.Seshie@gmail.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 2, 2, 4),
+(42, 'Mlle', 'Seshie', 'Jeremie', 'Jeremie.Seshie@gmail.com', 'pass123word', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
 (43, 'Mme', 'Mani', 'Super', 'Mani@example.com', 'password789', '0687654321', 'IT987654321', 'Sage-femme', '0487654321', 'j.moreau@clinique.it', 2, 1, 4),
-(44, 'M.', 'Gilber', 'Antoinette', 'antoinette@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2);
+(44, 'M.', 'Gilber', 'Antoinette', 'antoinette@example.com', 'securepwd987', '0756789012', 'NL123456789', 'Psychiatre', '0456789012', 'antoine.garcia@hopital.nl', 4, 1, 2),
+(87, 'Mme', 'Gnombe', 'Diarra', 'DiarraGb@helha.be', 'Diarra', '0483574178', 'Be5899641', 'Etudiante', 'VIDE', 'VIDE', 4, 5, 14);
 
 --
 -- Index pour les tables déchargées
@@ -459,6 +467,7 @@ ALTER TABLE `typeproduit`
 --
 ALTER TABLE `utilisateur`
   ADD PRIMARY KEY (`id_utilisateur`),
+  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `id_role` (`id_role`),
   ADD KEY `id_institution` (`id_institution`),
   ADD KEY `id_adresse` (`id_adresse`);
@@ -489,7 +498,7 @@ ALTER TABLE `institution`
 -- AUTO_INCREMENT pour la table `lieu`
 --
 ALTER TABLE `lieu`
-  MODIFY `id_lieu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id_lieu` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT pour la table `produit`
@@ -513,7 +522,7 @@ ALTER TABLE `typeproduit`
 -- AUTO_INCREMENT pour la table `utilisateur`
 --
 ALTER TABLE `utilisateur`
-  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=87;
+  MODIFY `id_utilisateur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
 
 --
 -- Contraintes pour les tables déchargées

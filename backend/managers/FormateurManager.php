@@ -111,6 +111,28 @@ class FormateurManager
   
       return $users;
   }
+
+
+
+
+  
+public function count()
+{
+    $sql = "SELECT COUNT(*) AS total FROM utilisateur WHERE  id_role = 3";
+
+    try {
+        $prep = $this->db->prepare($sql);
+        $prep->execute();
+        
+        $result = $prep->fetch(PDO::FETCH_ASSOC);
+        return $result['total']; // Retourner le nombre total d'utilisateurs
+
+    } catch (PDOException $e) {
+        throw $e;
+    } finally {
+        $prep = null; // Libérer la ressource PDOStatement
+    }
+}
   
   
 public function getFormateursByname2($page, $pageSize,$nom)

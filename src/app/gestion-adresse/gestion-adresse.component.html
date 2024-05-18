@@ -3,14 +3,18 @@
 <div class="body"  *ngIf="!showAddAdresseForm && !showUpdateAdresseForm" >
 
 <div  *ngIf="!selectedAdresse || !userDetailVisible[selectedAdresse.id_adresse]" class="usercard">
-  <h2>Liste des adresses</h2>
-  <button id="searchButton" (click)="toggleAddAdresseForm()" >Ajouter une adresse</button>
-
-  <!-- Formulaire de recherche -->
-  <form (ngSubmit)="searchAdresseByname(searchTerm)" class="search-container" #searchForm="ngForm">
+  <div id="searchButton2" >   <h2>Liste d'adresses</h2>  Total: {{totalUsers}}</div>
+  <div class="contenaireHautPage">
+    <div>  <button id="searchButton" (click)="toggleAddAdresseForm()" >Ajouter une adresse</button>
+    </div>
+    <div>
+    <!-- Formulaire de recherche -->
+   <form (ngSubmit)="searchAdresseByname(searchTerm)" class="search-container" #searchForm="ngForm">
     <input id="searchInput" type="text" [(ngModel)]="searchTerm" name="searchTerm" placeholder="Entrez un code postal..." />
     <button id="searchButton" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
-  </form>
+     </form>
+   </div>
+  </div>
 
   <!-- Tableau des utilisateurs -->
   <table class="table table-striped mt-3" *ngIf="!(showSearchResults && ( Adresses | async)?.length)">
@@ -120,7 +124,7 @@
 
 <!-- Gestion  form ajout   d'une nouvelle adresse -->
 <div class="usercard2"  *ngIf="showAddAdresseForm" >
-
+  <h2>Ajout d'adresse</h2>
   <button id="searchButton" (click)="toggleAddAdresseForm()">Retour</button>
 
   
@@ -167,7 +171,7 @@
  
 
   <div class="update-form" *ngIf="AdresseToUpdate" >
-    <h2>Modifier Institution</h2>
+    <h2>Modifier adresse</h2>
     <button id="searchButton" (click)="toggleAddAdresseForm()">Retour</button>
 
     <form (ngSubmit)="updateAdresse(AdresseToUpdate)" #updateForm="ngForm">

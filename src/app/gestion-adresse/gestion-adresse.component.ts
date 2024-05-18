@@ -23,6 +23,7 @@ export class GestionAdresseComponent {
   userDetailVisible: { [key: number]: boolean } = {};
   showAddAdresseForm: boolean = false;
   showUpdateAdresseForm :boolean = false;
+  totalUsers!: number;
 
 
     // message de notifs
@@ -48,12 +49,24 @@ export class GestionAdresseComponent {
 
   ngOnInit(): void {
     this.loadAdresses();
+    this.loadCount();
   }
 
   loadAdresses() {
   this.Adresses = this.adresseService.getAdresses(this.currentPage, this.pageSize);
   this.showSearchResults = false;
   }
+    
+loadCount() {
+  this.adresseService.getTotalUsersCount().subscribe(
+    total => {
+      this.totalUsers = total;
+    },
+    error => {
+      console.error('Error fetching total users count:', error);
+    }
+  );
+}
 
   
 
@@ -73,9 +86,11 @@ export class GestionAdresseComponent {
   }
 
   nextPage() {
-    this.currentPage++;
-   // console.log('Current Page:', this.currentPage);
-    this.loadAdresses();
+    const totalPages = Math.ceil(this.totalUsers / this.pageSize);
+    if (this.currentPage < totalPages) {
+      this.currentPage++;
+      this.loadAdresses();
+    }
   }
   
   previousPage() {
@@ -132,6 +147,7 @@ export class GestionAdresseComponent {
   deleteAdresse(adresseId: number) {
     this.adresseService.deleteAdresse(adresseId).subscribe(
       () => {
+        this.totalUsers -- ;
         this.loadAdresses();
         this.showSuccessToast('Adresse supprimée avec succès.');
       },
@@ -161,7 +177,7 @@ export class GestionAdresseComponent {
   addAdresse(adresse: Adresse) {
     this.adresseService.addAdresse(adresse).subscribe(
       () => {
-        
+        this.totalUsers ++ ;
         this.loadAdresses();
         this.showSuccessToast('Adresse ajoutée avec succès.');
         
