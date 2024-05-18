@@ -13,6 +13,8 @@ declare const bootstrap: any;
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  isLoggedIn$ = this.userService.isLoggedIn;
+
   connectedUser: User | null = null// Utilisateur connecté (initialisé à null par défaut)
   successMessage: string = '';
   errorMessage: string = '';
@@ -23,6 +25,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCurrentUser();
+    this.userService.checkToken();
   }
 
   loadCurrentUser(): void {

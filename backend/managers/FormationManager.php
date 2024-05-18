@@ -24,13 +24,16 @@ class FormationManager
         l.id_adresse AS lieu_id_adresse,
         i.url_image AS image_url_image,
         i.nom AS image_nom,
-        t.nom AS typeproduit_nom
+        t.nom AS typeproduit_nom,
+        d.id_utilisateur AS id_formateur
     FROM
         produit p
     LEFT JOIN
         lieu l ON p.id_lieu = l.id_lieu
     LEFT JOIN
         image i ON p.id_image = i.id_image
+    LEFT JOIN
+        donne d ON p.id_produit = d.id_produit /*  la jointure fais bugger affichage*/
     LEFT JOIN
         typeproduit t ON p.id_type_produit = t.id_type_produit
      LIMIT :offset, :pageSize";
@@ -62,6 +65,7 @@ class FormationManager
             $prod->setIdImage($prodData["id_image"]);
             $prod->setIdLieu($prodData["id_lieu"]);
             $prod->setIdTypeProduit($prodData["id_type_produit"]);
+            $prod->setIdFormateur($prodData["id_formateur"]);
 
             // Création des objets associés (Lieu, Image, TypeProduit)
             $lieu = new Lieu();
@@ -438,15 +442,41 @@ public function count()
         $prep->bindValue(':id', $prod->getIdProduit(), PDO::PARAM_INT);
 
         $prep->execute();
+
+  // Mettre à jour la relation dans la table donne
+  $sqlCheck = "SELECT COUNT(*) FROM donne WHERE id_produit = :id_produit";
+  $prepCheck = $this->db->prepare($sqlCheck);
+  $prepCheck->bindValue(':id_produit', $prod->getIdProduit(), PDO::PARAM_INT);
+  $prepCheck->execute();
+  $exists = $prepCheck->fetchColumn() > 0;
+
+  if ($exists) {
+    $sqlUpdateDonne = "UPDATE donne SET id_utilisateur = :id_utilisateur WHERE id_produit = :id_produit";
+    $prepUpdateDonne = $this->db->prepare($sqlUpdateDonne);
+    $prepUpdateDonne->bindValue(':id_utilisateur', $prod->getIdFormateur(), PDO::PARAM_INT);
+    $prepUpdateDonne->bindValue(':id_produit', $prod->getIdProduit(), PDO::PARAM_INT);
+    $prepUpdateDonne->execute();
+} else {
+    $sqlInsertDonne = "INSERT INTO donne (id_utilisateur, id_produit) VALUES (:id_utilisateur, :id_produit)";
+    $prepInsertDonne = $this->db->prepare($sqlInsertDonne);
+    $prepInsertDonne->bindValue(':id_utilisateur', $prod->getIdFormateur(), PDO::PARAM_INT);
+    $prepInsertDonne->bindValue(':id_produit', $prod->getIdProduit(), PDO::PARAM_INT);
+    $prepInsertDonne->execute();
+}
+
+
     } catch (PDOException $e) {
         throw $e; // Propager l'exception pour la gestion des erreurs
     } finally {
         $prep = null; // Libérer la ressource PDOStatement
+        $prepCheck = null;
+        $prepUpdateDonne = null;
+        $prepInsertDonne = null;
     }
     }
 
     
-    public function addProduit($prod)
+    public function addProduit($prod,$idFormateur)
     {
         $sql = "INSERT INTO produit (titre, sous_titre, date_debut, date_fin, date_fin_inscription, descriptif, objectif, contenu, methodologie, public_cible, prix, id_image, id_lieu, id_type_produit) 
             VALUES (:titre, :sous_titre, :date_debut, :date_fin, :date_fin_inscription, :descriptif, :objectif, :contenu, :methodologie, :public_cible, :prix, :id_image, :id_lieu, :id_type_produit)";
@@ -471,14 +501,34 @@ public function count()
 
         $prep->execute();
 
-        
+
+
         $prod->setIdProduit($this->db->lastInsertId());
+        $idProduit = $prod->getIdProduit();
+
+        // Insérer dans la table donne
+        $sqlDonne = "INSERT INTO donne (id_utilisateur, id_produit) VALUES (:id_utilisateur, :id_produit)";
+        $prepDonne = $this->db->prepare($sqlDonne);
+        $prepDonne->bindValue(':id_utilisateur', $idFormateur, PDO::PARAM_INT);
+        $prepDonne->bindValue(':id_produit', $idProduit, PDO::PARAM_INT);
+        $prepDonne->execute();
+
+
+
+
+        
+      //  $prod->setIdProduit($this->db->lastInsertId());
         return true;  // Définit l'ID du produit inséré dans l'objet Produit
     } catch (PDOException $e) {
         // En cas d'erreur, renvoyer une réponse d'erreur
         throw $e;
         return false;
+    }finally {
+        // Libérer les ressources
+        $prep = null;
+        $prepDonne = null;
     }
+
     }
 }
 

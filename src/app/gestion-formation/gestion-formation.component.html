@@ -2,7 +2,7 @@
 
 
 
-  <div *ngIf="!selectedFormation || !userDetailVisible[selectedFormation.id_produit]" class="usercard" >
+  <div *ngIf="!selectedFormation || !userDetailVisible[selectedFormation.id_produit]"  >
     <div id="searchButton2" >   <h2>Liste des formations & journées</h2>  Total: {{totalUsers}}</div>
     <div class="contenaireHautPage">
       <div> <button id="searchButton" (click)="toggleAddProduitForm()">Ajouter une Formation</button></div>
@@ -33,8 +33,8 @@
         <td class="affichage">{{ produit.lieu?.nom }}</td>
         <td> <img [src]="produit.image?.url_image" class="custom-image" ></td>
         <td>
-         <button (click)="selectFormation(produit.id_produit)"><i class="fa-solid fa-eye"></i></button>
-         <button   (click)="toggleUpdateProduitForm(produit)"><i class="fa-solid fa-pen-to-square"></i></button>
+         <button  id="searchButton2"  (click)="selectFormation(produit.id_produit)"><i class="fa-solid fa-eye"></i></button>
+         <button   id="searchButton2"   (click)="toggleUpdateProduitForm(produit)"><i class="fa-solid fa-pen-to-square"></i></button>
           <button  id="searchButton"  (click)="deleteFormation(produit.id_produit)"><i class="fa-solid fa-trash"></i></button>
           
         </td>
@@ -69,9 +69,9 @@
         <td class="affichage">{{ produit.lieu?.nom }}</td>
         <td> <img [src]="produit.image?.url_image" class="custom-image" ></td>
         <td>
-          <button (click)="selectFormation(produit.id_produit)"><i class="fa-solid fa-eye"></i></button>
-          <button  (click)="toggleUpdateProduitForm(produit)"><i class="fa-solid fa-pen-to-square"></i></button>
-           <button  id="searchButton"  (click)="deleteFormation(produit.id_produit)"><i class="fa-solid fa-trash"></i></button>
+          <button id="searchButton2" (click)="selectFormation(produit.id_produit)"><i class="fa-solid fa-eye"></i></button>
+          <button id="searchButton2"  (click)="toggleUpdateProduitForm(produit)"><i class="fa-solid fa-pen-to-square"></i></button>
+           <button   id="searchButton"  (click)="deleteFormation(produit.id_produit)"><i class="fa-solid fa-trash"></i></button>
         </td>
          </tr>
          </tbody>
@@ -167,7 +167,7 @@
           <label for="date_fin_inscription">date fin inscription</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="text" class="form-control" id="descriptif" placeholder="descriptif" [(ngModel)]="produit.descriptif" name="descriptif" autofocus required>
+          <input type="text"  class="form-control" id="descriptif" placeholder="descriptif" [(ngModel)]="produit.descriptif" name="descriptif" autofocus required>
           <label for="descriptif">description</label>
         </div>
         <div class="form-floating mb-3">
@@ -201,6 +201,10 @@
         <div class="form-floating mb-3">
           <input type="number" max="2" class="form-control" id="id_type_produit" placeholder="id_type_produit" [(ngModel)]="produit.id_type_produit" name="id_type_produit" autofocus required>
           <label for="id_type_produit">type produit</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="number" max="2" class="form-control" id="id_formateur" placeholder="Mettez le code du formateur" [(ngModel)]="produit.id_formateur" name="id_formateur" autofocus required>
+          <label for="id_formateur">Code du Formateur</label>
         </div>
 
         <div class="align-right">
@@ -290,6 +294,10 @@
       <div class="form-group">
         <label for="id_type_produit">type produit</label>
         <input type="number"  class="form-control" id="id_type_produit"  [(ngModel)]="ProduitToUpdate.id_type_produit" name="id_type_produit" autofocus required>
+      </div>
+      <div class="form-group">
+        <label for="id_formateur">Code du formateur</label>
+        <input type="number"  class="form-control" id="id_formateur"  [(ngModel)]="ProduitToUpdate.id_formateur" name="id_formateur" autofocus required>
       </div>
       <button type="submit" id="searchButton" >Enregistrer</button>
     </form>

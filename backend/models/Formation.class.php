@@ -23,6 +23,7 @@ class Formation {
     public $id_image;
     public $id_lieu;
     public $id_type_produit;
+    public $id_formateur;
 
     public ?Lieu $lieu;
     public ?Image $image;
@@ -48,6 +49,7 @@ class Formation {
             $this->setIdImage($array["id_image"]);
             $this->setIdLieu($array["id_lieu"]);
             $this->setIdTypeProduit($array["id_type_produit"]);
+            $this->setIdFormateur($array["id_formateur"]);
 
 
             if (isset($array['lieu'])) {
@@ -71,7 +73,14 @@ class Formation {
     }
 
 
+    public function getIdFormateur() {
+        return $this->id_formateur;
+    }
 
+    public function setIdFormateur($id_formateur) {
+        $this->id_formateur = $id_formateur;
+    }
+    
 
     public function getIdProduit() {
         return $this->id_produit;

@@ -3,19 +3,17 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from "jwt-decode"; // activer si import reussi
+import { UserService } from './services/user.service';
 
- 
+
 export const authGuard: CanActivateFn = (route, state) => {
-  const token = inject(CookieService).get("token");
-  let decoded;
-  if (token) {
-    decoded = jwtDecode(token);
-  }
-  if (decoded && decoded.exp && decoded.exp >= Math.floor(new Date().getTime() / 1000)) {
+  const userService = inject(UserService);
+  const router = inject(Router);
+
+  if (userService.isLoggedIn) {
     return true;
   } else {
-    inject(CookieService).delete("token");
-    inject(Router).navigate(["/"]);
+    userService.logout();
     return false;
   }
 };

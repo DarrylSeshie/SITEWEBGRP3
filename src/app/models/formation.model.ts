@@ -1,6 +1,7 @@
 import { Image } from '../models/image.model';
 import { Lieu } from '../models/lieu.model';
 import { TypeProduit } from '../models/typeProduit.model';
+import { User } from '../models/user.model';
 
 export interface Formation {
     id_produit: number;
@@ -18,6 +19,7 @@ export interface Formation {
     id_image: number;
     id_lieu: number;
     id_type_produit: number;
+    id_formateur: number; 
   
     // Annotations pour les relations de clés étrangères
     image?: Image; // Relation avec l'entité Image

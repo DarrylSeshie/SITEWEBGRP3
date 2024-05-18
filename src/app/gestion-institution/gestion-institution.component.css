@@ -247,6 +247,12 @@
 }
 
 
+@media (max-width: 576px) {
+  
+  .body{
+    margin-top: 160px;
+  }
+}
 
 
 

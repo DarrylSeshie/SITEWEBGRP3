@@ -8,6 +8,7 @@ import { tap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { Observable, throwError } from 'rxjs';
 import { catchError,map  } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -23,9 +24,12 @@ export class UserService {
       throw new Error('userId n\'a pas été trouvé dans le localStorage'); // Gère le cas où userId n'est pas défini
     }
   }
-  private loggedIn = new BehaviorSubject<boolean>(false);
-  get isLoggedIn() {
-    return this.loggedIn.asObservable(); // Renvoie un observable pour réagir aux changements
+
+ private loggedIn = new BehaviorSubject<boolean>(false);
+ private tokenCheckInterval: any;
+
+ get isLoggedIn() {
+    return this.loggedIn.asObservable();
   }
 
   setLoggedIn(value: boolean) {
@@ -37,13 +41,43 @@ export class UserService {
   private apiUrl3 = 'http://localhost/PROJET_ceREF/backend/user3.php';
   private apiUrlJwt = 'http://localhost/PROJET_ceREF/backend/jwt_utils.php' ;
 
-  constructor(private http: HttpClient , private cookieService: CookieService) { } 
+  constructor(private http: HttpClient , private cookieService: CookieService,private router: Router) {this.checkToken();    this.startTokenCheck();} 
 
- /* getTotalUsersCount(): Observable<number> {
-    const url = `${this.apiUrl}?count`;
+ 
+  checkToken() {
+    const token = this.cookieService.get("token");
+    let decoded: any;
+    if (token) {
+      try {
+        decoded = jwtDecode(token);
+      } catch (e) {
+        this.logout();
+      }
+    }
 
-    return this.http.get<number>(url);
-  }*/
+    if (decoded && decoded.exp && decoded.exp >= Math.floor(new Date().getTime() / 1000)) {
+      this.loggedIn.next(true);
+    } else {
+      this.logout();
+    }
+  }
+  startTokenCheck() {
+    this.tokenCheckInterval = setInterval(() => {
+      this.checkToken();
+    }, 60000); // Vérifiez toutes les minutes
+  }
+
+  stopTokenCheck() {
+    if (this.tokenCheckInterval) {
+      clearInterval(this.tokenCheckInterval);
+    }
+  }
+
+
+
+
+
+  
 
   getTotalUsersCount(): Observable<number> {
     const url = `${this.apiUrl}?count`;
@@ -149,7 +183,10 @@ export class UserService {
   
   
     logout() {
-      this.loggedIn.next(false); // Réinitialise l'état de connexion à false
+      this.cookieService.delete("token");
+      this.loggedIn.next(false);
+      this.router.navigate(['/']);
+      this.stopTokenCheck();
     }
 
 

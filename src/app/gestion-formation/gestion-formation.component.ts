@@ -48,7 +48,8 @@ export class GestionFormationComponent {
     prix: 0.00,
     id_image: -1,
     id_lieu: -1,
-    id_type_produit: 1
+    id_type_produit: 1,
+    id_formateur: -1,
   };
 
 

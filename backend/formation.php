@@ -5,6 +5,7 @@ require_once 'models/TypeProduit.class.php';
 require_once 'models/Formation.class.php';
 require_once 'managers/DBManager.php';
 require_once 'managers/FormationManager.php';
+require_once 'models/User.class.php';
 
 $dbManager = new DBManager();
 $connexion = $dbManager->connect();
@@ -79,13 +80,21 @@ if ($http_method === "GET") {
 
     if (!empty($prodArray)) {
     $prod = new Formation($prodArray);
+    $idFormateur = $prodArray['id_formateur'] ?? null;
 
-    try {
-        $lieuManager->addProduit($prod); // Utilisez la méthode addUser pour insérer l'utilisateur
+    if ($idFormateur) {
+
+
+        try {
+        $lieuManager->addProduit($prod,$idFormateur); // Utilisez la méthode addUser pour insérer l'utilisateur
         echo json_encode($prod); // Répondre avec les données de l'utilisateur ajouté
-    } catch (PDOException $e) {
+         } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(array("error" => "Erreur lors de l'ajout de formation : " . $e->getMessage()));
+        }
+    }else {
+    http_response_code(400);
+    echo json_encode(array("error" => "ID du formateur manquant"));
     }
 } else {
     // Si les données JSON sont vides ou invalides
@@ -97,6 +106,7 @@ if ($http_method === "GET") {
     $jsonStr = file_get_contents('php://input');
     $lieuArray = json_decode($jsonStr, true);
     $lieu = new Formation($lieuArray);
+    $idFormateur = $prodArray['id_formateur'] ?? null;
 
     try {
         $lieuManager->updateProduit($lieu); // Utilisez la méthode updateUser pour mettre à jour l'utilisateur

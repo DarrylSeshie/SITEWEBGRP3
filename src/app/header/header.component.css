@@ -102,6 +102,18 @@ a:hover {
  .menu{
   position: fixed;
 }
+
+@media (max-width: 576px) {
+  .offcanvas {
+    width: 50% !important; /* Réduire la largeur à 75% */
+  }
+  .offcanvas-body {
+    font-size: 0.9rem; /* Réduire la taille de la police pour économiser de l'espace */
+  }
+  .gestionOption {
+    font-size: 0.9rem; /* Réduire la taille de la police des options de gestion */
+  }
+}
  
 
 

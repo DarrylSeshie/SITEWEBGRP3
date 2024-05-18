@@ -4,7 +4,7 @@
 <div class="body"  *ngIf="!showAddUserForm && !showUpdateUserForm">
   
  
-  <div *ngIf="!selectedUser || !userDetailVisible[selectedUser.id_utilisateur]" class="usercard" >  <!-- affichage sans detail + search -->
+  <div *ngIf="!selectedUser || !userDetailVisible[selectedUser.id_utilisateur]"  >  <!-- affichage sans detail + search -->
     <div id="searchButton2" >   <h2>Liste des clients</h2>  Total: {{totalUsers}}</div>
 
   <div class="contenaireHautPage">
@@ -39,8 +39,8 @@
         <td class="affichage">{{ user.email }}</td>
         <td>{{ user.gsm }}</td>
         <td>
-         <button   (click)="selectUser(user.id_utilisateur)"><i class="fa-solid fa-eye"></i></button>
-          <button  (click)="toggleUpdateUserForm(user)"><i class="fa-solid fa-pen-to-square"></i></button>
+         <button id="searchButton2"   (click)="selectUser(user.id_utilisateur)"><i class="fa-solid fa-eye"></i></button>
+          <button id="searchButton2"   (click)="toggleUpdateUserForm(user)"><i class="fa-solid fa-pen-to-square"></i></button>
           <button id="searchButton"  class="--bs-dark-bg-subtle" (click)="deleteUser(user.id_utilisateur)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>
@@ -72,8 +72,8 @@
         <td class="affichage">{{ user.email }}</td>
         <td>{{ user.gsm }}</td>
         <td>
-          <button  (click)="selectUser(user.id_utilisateur)"><i class="fa-solid fa-eye"></i></button>
-          <button (click)="toggleUpdateUserForm(user)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button id="searchButton2" (click)="selectUser(user.id_utilisateur)"><i class="fa-solid fa-eye"></i></button>
+          <button id="searchButton2" (click)="toggleUpdateUserForm(user)"><i class="fa-solid fa-pen-to-square"></i></button>
           <button id="searchButton" class="--bs-dark-bg-subtle" (click)="deleteUser(user.id_utilisateur)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>

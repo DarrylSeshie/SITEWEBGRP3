@@ -8,7 +8,7 @@
 
 
  
-<div class="usercard" *ngIf="!selectedInstitution || !userDetailVisible[selectedInstitution.id_institution]">
+<div  *ngIf="!selectedInstitution || !userDetailVisible[selectedInstitution.id_institution]">
   <div id="searchButton2" >   <h2>Liste des institutions</h2>  Total: {{totalUsers}}</div>
   <div class="contenaireHautPage">
       <div>  <button id="searchButton" (click)="toggleAddInstitutionForm()">Ajouter une institution</button>
@@ -39,8 +39,8 @@
         <td><img class="logoInstitution" [src]="institution.logo" alt="{{ institution.nom }} Logo"></td>  
         <td>{{ institution.adresse?.rue_numero }} {{ institution.adresse?.code_postal}}, {{ institution.adresse?.pays }}</td>
         <td>
-            <button (click)="selectInstitution(institution.id_institution)"><i class="fa-solid fa-eye"></i></button>
-            <button (click)="toggleUpdateInstitutionForm(institution)"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button id="searchButton2" (click)="selectInstitution(institution.id_institution)"><i class="fa-solid fa-eye"></i></button>
+            <button id="searchButton2" (click)="toggleUpdateInstitutionForm(institution)"><i class="fa-solid fa-pen-to-square"></i></button>
             <button id="searchButton" (click)="deleteInstitution(institution.id_institution)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>
