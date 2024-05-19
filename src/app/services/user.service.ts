@@ -50,6 +50,7 @@ export class UserService {
     if (token) {
       try {
         decoded = jwtDecode(token);
+      //  this.router.navigate(['/acceuil']);// a retirer sinon a chaque refresh on aura acceuil  ou alors on garde l autre qd tu ferme onglet et tu revien y a co par defaut
       } catch (e) {
         this.logout();
       }

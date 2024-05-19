@@ -24,8 +24,7 @@ class FormationManager
         l.id_adresse AS lieu_id_adresse,
         i.url_image AS image_url_image,
         i.nom AS image_nom,
-        t.nom AS typeproduit_nom,
-        d.id_utilisateur AS id_formateur
+        t.nom AS typeproduit_nom
     FROM
         produit p
     LEFT JOIN
@@ -33,67 +32,65 @@ class FormationManager
     LEFT JOIN
         image i ON p.id_image = i.id_image
     LEFT JOIN
-        donne d ON p.id_produit = d.id_produit /*  la jointure fais bugger affichage*/
-    LEFT JOIN
         typeproduit t ON p.id_type_produit = t.id_type_produit
      LIMIT :offset, :pageSize";
+
+
      
          
         $produits = [];
-     try {
-        $prep = $this->db->prepare($sql);
-        $prep->bindParam(':offset', $offset, PDO::PARAM_INT);
-        $prep->bindParam(':pageSize', $pageSize, PDO::PARAM_INT);
-        $prep->execute();
-        $result = $prep->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $prep = $this->db->prepare($sql);
+            $prep->bindParam(':offset', $offset, PDO::PARAM_INT);
+            $prep->bindParam(':pageSize', $pageSize, PDO::PARAM_INT);
+            $prep->execute();
+            $result = $prep->fetchAll(PDO::FETCH_ASSOC);
 
-
-        foreach ($result as $prodData) {
-            $prod = new Formation();
-            $prod->setIdProduit($prodData['id_produit']);
-            $prod->setTitre($prodData["titre"]);
-            $prod->setSousTitre($prodData["sous_titre"]);
-            $prod->setDateDebut($prodData["date_debut"]);
-            $prod->setDateFin($prodData["date_fin"]);
-            $prod->setDateFinInscription($prodData["date_fin_inscription"]);
-            $prod->setDescriptif($prodData["descriptif"]);
-            $prod->setObjectif($prodData["objectif"]);
-            $prod->setContenu($prodData["contenu"]);
-            $prod->setMethodologie($prodData["methodologie"]);
-            $prod->setPublicCible($prodData["public_cible"]);
-            $prod->setPrix($prodData["prix"]);
-            $prod->setIdImage($prodData["id_image"]);
-            $prod->setIdLieu($prodData["id_lieu"]);
-            $prod->setIdTypeProduit($prodData["id_type_produit"]);
-            $prod->setIdFormateur($prodData["id_formateur"]);
-
-            // Création des objets associés (Lieu, Image, TypeProduit)
-            $lieu = new Lieu();
-            $lieu->setNom($prodData['lieu_nom']);
-            $lieu->setBatiment($prodData['lieu_locaux']);
-            $lieu->setIdInstitution($prodData['lieu_id_institution']);
-            $lieu->setIdAdresse($prodData['lieu_id_adresse']);
-            $prod->setLieu($lieu);
-
-            $image = new Image();
-            $image->setUrlImage($prodData['image_url_image']);
-            $image->setNom($prodData['image_nom']);
-            $prod->setImage($image);
-
-            $typeProduit = new TypeProduit();
-            $typeProduit->setNom($prodData['typeproduit_nom']);
-            $prod->setTypeProduit($typeProduit);
-
-            $produits[] = $prod;
+            foreach ($result as $prodData) {
+                $prod = new Formation();
+                $prod->setIdProduit($prodData['id_produit']);
+                $prod->setTitre($prodData["titre"]);
+                $prod->setSousTitre($prodData["sous_titre"]);
+                $prod->setDateDebut($prodData["date_debut"]);
+                $prod->setDateFin($prodData["date_fin"]);
+                $prod->setDateFinInscription($prodData["date_fin_inscription"]);
+                $prod->setDescriptif($prodData["descriptif"]);
+                $prod->setObjectif($prodData["objectif"]);
+                $prod->setContenu($prodData["contenu"]);
+                $prod->setMethodologie($prodData["methodologie"]);
+                $prod->setPublicCible($prodData["public_cible"]);
+                $prod->setPrix($prodData["prix"]);
+                $prod->setIdImage($prodData["id_image"]);
+                $prod->setIdLieu($prodData["id_lieu"]);
+                $prod->setIdTypeProduit($prodData["id_type_produit"]);
+              //  $prod->setIdTypeProduit($prodData["id_formateur"]);
+    
+                // Création des objets associés (Lieu, Image, TypeProduit)
+                $lieu = new Lieu();
+                $lieu->setNom($prodData['lieu_nom']);
+                $lieu->setBatiment($prodData['lieu_locaux']);
+                $lieu->setIdInstitution($prodData['lieu_id_institution']);
+                $lieu->setIdAdresse($prodData['lieu_id_adresse']);
+                $prod->setLieu($lieu);
+    
+                $image = new Image();
+                $image->setUrlImage($prodData['image_url_image']);
+                $image->setNom($prodData['image_nom']);
+                $prod->setImage($image);
+    
+                $typeProduit = new TypeProduit();
+                $typeProduit->setNom($prodData['typeproduit_nom']);
+                $prod->setTypeProduit($typeProduit);
+    
+                $produits[] = $prod;
+            }
+        } catch (PDOException $e) {
+            die($e->getMessage());
+        } finally {
+            $prep = null;
         }
-    } catch (PDOException $e) {
-        die($e->getMessage());
-    } finally {
-        $prep = null;
-    }
-
-    return $produits;
-
+    
+        return $produits;
     }
 
 

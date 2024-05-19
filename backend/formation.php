@@ -106,7 +106,7 @@ if ($http_method === "GET") {
     $jsonStr = file_get_contents('php://input');
     $lieuArray = json_decode($jsonStr, true);
     $lieu = new Formation($lieuArray);
-    $idFormateur = $prodArray['id_formateur'] ?? null;
+    //$idFormateur = $prodArray['id_formateur'] ?? null;
 
     try {
         $lieuManager->updateProduit($lieu); // Utilisez la méthode updateUser pour mettre à jour l'utilisateur
