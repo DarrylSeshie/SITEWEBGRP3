@@ -1,7 +1,7 @@
 
 <div class="body"    *ngIf="!showAddImageForm && !showUpdateImageForm">
 
-  <div class="usercard"  *ngIf="!selectedImage || !userDetailVisible[selectedImage.id_image]">
+  <div class="usercard"   *ngIf="!selectedImage || !userDetailVisible[selectedImage.id_image]">
     <div id="searchButton2" >   <h2>Liste des images</h2>  Total: {{totalUsers}}</div><br>
     <div class="contenaireHautPage">
     <div>    <button id="searchButton" (click)="toggleAddImageForm()">Ajouter une image</button>
@@ -25,8 +25,8 @@
         <div class="col-md-4">
           <img [src]="image.url_image" class="custom-image" alt="{{ image.nom }} Logo">
           <div class="button-container">
-            <button (click)="selectImage(image.id_image)"><i class="fa-solid fa-eye"></i></button>
-            <button (click)="toggleUpdateImageForm(image)"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button id="searchButton2" (click)="selectImage(image.id_image)"><i class="fa-solid fa-eye"></i></button>
+            <button id="searchButton2" (click)="toggleUpdateImageForm(image)"><i class="fa-solid fa-pen-to-square"></i></button>
             <button  id="searchButton" (click)="deleteImage(image.id_image)"><i class="fa-solid fa-trash"></i></button>
           </div>
           <br><br>
@@ -52,8 +52,8 @@
           <div class="col-md-4">
             <img [src]="image.url_image" class="custom-image" alt="{{ image.nom }} Logo">
             <div class="button-container">
-              <button (click)="selectImage(image.id_image)"><i class="fa-solid fa-eye"></i></button>
-              <button (click)="toggleUpdateImageForm(image)"><i class="fa-solid fa-pen-to-square"></i></button>
+              <button id="searchButton2" (click)="selectImage(image.id_image)"><i class="fa-solid fa-eye"></i></button>
+              <button id="searchButton2" (click)="toggleUpdateImageForm(image)"><i class="fa-solid fa-pen-to-square"></i></button>
               <button  id="searchButton" (click)="deleteImage(image.id_image)"><i class="fa-solid fa-trash"></i></button>
             </div>
           </div>

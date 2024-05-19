@@ -2,7 +2,7 @@
 
 <div class="body"  *ngIf="!showAddAdresseForm && !showUpdateAdresseForm" >
 
-<div  *ngIf="!selectedAdresse || !userDetailVisible[selectedAdresse.id_adresse]" class="usercard">
+<div  *ngIf="!selectedAdresse || !userDetailVisible[selectedAdresse.id_adresse]" >
   <div id="searchButton2" >   <h2>Liste d'adresses</h2>  Total: {{totalUsers}}</div>
   <div class="contenaireHautPage">
     <div>  <button id="searchButton" (click)="toggleAddAdresseForm()" >Ajouter une adresse</button>
@@ -23,6 +23,7 @@
         <th>Rue</th>
         <th>localite</th>
         <th>Code postal</th>
+        <th>Pays</th>
       </tr>
     </thead>
     <tbody>
@@ -32,9 +33,10 @@
         <td>{{ adresse.rue_numero }}</td>
         <td>{{ adresse.localite }}</td>
         <td>{{ adresse.code_postal }}</td>
+        <td>{{ adresse.pays }}</td>
         <td>
-            <button (click)="selectAdresse(adresse.id_adresse)"><i class="fa-solid fa-eye"></i></button>
-            <button (click)="toggleUpdateAdresseForm(adresse)"><i class="fa-solid fa-pen-to-square"></i></button>
+            <button id="searchButton2" (click)="selectAdresse(adresse.id_adresse)"><i class="fa-solid fa-eye"></i></button>
+            <button id="searchButton2" (click)="toggleUpdateAdresseForm(adresse)"><i class="fa-solid fa-pen-to-square"></i></button>
             <button id="searchButton" (click)="deleteAdresse(adresse.id_adresse)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>
@@ -55,6 +57,7 @@
         <th>Rue</th>
         <th>localite</th>
         <th>Code postal</th>
+        <th>Pays</th>
       </tr>
     </thead>
     <tbody>
@@ -63,9 +66,10 @@
         <td>{{ adresse.rue_numero }}</td>
         <td>{{ adresse.localite }}</td>
         <td>{{ adresse.code_postal }}</td>
+        <td>{{ adresse.pays }}</td>
         <td>
-          <button (click)="selectAdresse(adresse.id_adresse)"><i class="fa-solid fa-eye"></i></button>
-          <button (click)="toggleUpdateAdresseForm(adresse)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button id="searchButton2" (click)="selectAdresse(adresse.id_adresse)"><i class="fa-solid fa-eye"></i></button>
+          <button id="searchButton2" (click)="toggleUpdateAdresseForm(adresse)"><i class="fa-solid fa-pen-to-square"></i></button>
           <button id="searchButton" (click)="deleteAdresse(adresse.id_adresse)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>

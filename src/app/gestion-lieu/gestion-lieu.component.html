@@ -3,7 +3,7 @@
 <div class="body"    *ngIf="!showAddLieuForm && !showUpdateLieuForm" >
 
 
-<div class="usercard"  *ngIf="!selectedLieu || !userDetailVisible[selectedLieu.id_lieu]" >
+<div   *ngIf="!selectedLieu || !userDetailVisible[selectedLieu.id_lieu]" >
   <div id="searchButton2" >   <h2>Liste des lieux</h2>  Total: {{totalUsers}}</div>
   <div class="contenaireHautPage">
       <div>  <button id="searchButton" (click)="toggleAddLieuForm()">Ajouter lieu</button>
@@ -21,6 +21,7 @@
         <th>Nom</th>
         <th>Batiment</th>
         <th>Local</th>
+        <th>Propriétaire</th>
       </tr>
     </thead>
     <tbody>
@@ -30,9 +31,10 @@
         <td>{{ lieu.nom }}</td>
         <td>{{ lieu.batiment }}</td>
         <td>{{ lieu.locaux }}</td>
+        <td>{{ lieu.institution?.nom }}</td>
         <td>
-          <button (click)="selectLieu(lieu.id_lieu)"><i class="fa-solid fa-eye"></i></button>
-          <button (click)="toggleUpdateLieuForm(lieu)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button id="searchButton2" (click)="selectLieu(lieu.id_lieu)"><i class="fa-solid fa-eye"></i></button>
+          <button id="searchButton2" (click)="toggleUpdateLieuForm(lieu)"><i class="fa-solid fa-pen-to-square"></i></button>
           <button id="searchButton" (click)="deleteLieu(lieu.id_lieu)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>
@@ -52,6 +54,7 @@
         <th>Nom</th>
         <th>Batiment</th>
         <th>Local</th>
+        <th>Propriétaire</th>
       </tr>
     </thead>
     <tbody>
@@ -60,9 +63,10 @@
         <td>{{ lieu.nom }}</td>
         <td>{{ lieu.batiment }}</td>
         <td>{{ lieu.locaux }}</td>
+        <td>{{ lieu.institution?.nom }}</td>
         <td>
-          <button (click)="selectLieu(lieu.id_lieu)"><i class="fa-solid fa-eye"></i></button>
-          <button (click)="toggleUpdateLieuForm(lieu)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button id="searchButton2" (click)="selectLieu(lieu.id_lieu)"><i class="fa-solid fa-eye"></i></button>
+          <button id="searchButton2" (click)="toggleUpdateLieuForm(lieu)"><i class="fa-solid fa-pen-to-square"></i></button>
           <button id="searchButton" (click)="deleteLieu(lieu.id_lieu)"><i class="fa-solid fa-trash"></i></button>
         </td>
       </tr>
