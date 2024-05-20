@@ -288,57 +288,58 @@ public function count()
 
 
     
-    public function selectProduitById($prodId){
-
+    public function selectProduitById($prodId) {
         $sql = "
         SELECT
-        p.id_produit,
-        p.titre,
-        p.sous_titre,
-        p.date_debut,
-        p.date_fin,
-        p.date_fin_inscription,
-        p.descriptif,
-        p.objectif,
-        p.contenu,
-        p.methodologie,
-        p.public_cible,
-        p.prix,
-        p.id_image,
-        p.id_lieu,
-        p.id_type_produit,
-        l.nom AS lieu_nom,
-        l.batiment AS lieu_locaux,
-        l.id_institution AS lieu_id_institution,
-        l.id_adresse AS lieu_id_adresse,
-        i.url_image AS image_url_image,
-        i.nom AS image_nom,
-        t.nom AS typeproduit_nom
-    FROM
-        Produit p
-    LEFT JOIN
-        Lieu l ON p.id_lieu = l.id_lieu
-    LEFT JOIN
-        Image i ON p.id_image = i.id_image
-    LEFT JOIN
-        TypeProduit t ON p.id_type_produit = t.id_type_produit
-    WHERE
-        p.id_produit = :prodId
-    
-    ";
-    
+            p.id_produit,
+            p.titre,
+            p.sous_titre,
+            p.date_debut,
+            p.date_fin,
+            p.date_fin_inscription,
+            p.descriptif,
+            p.objectif,
+            p.contenu,
+            p.methodologie,
+            p.public_cible,
+            p.prix,
+            p.id_image,
+            p.id_lieu,
+            p.id_type_produit,
+            l.nom AS lieu_nom,
+            l.batiment AS lieu_batiment,
+            l.id_institution AS lieu_id_institution,
+            l.id_adresse AS lieu_id_adresse,
+            i.url_image AS image_url_image,
+            i.nom AS image_nom,
+            t.nom AS typeproduit_nom
+        FROM
+            Produit p
+        LEFT JOIN
+            Lieu l ON p.id_lieu = l.id_lieu
+        LEFT JOIN
+            Image i ON p.id_image = i.id_image
+        LEFT JOIN
+            TypeProduit t ON p.id_type_produit = t.id_type_produit
+        WHERE
+            p.id_produit = :prodId
+        ";
+        
         try {
             $prep = $this->db->prepare($sql);
             $prep->bindParam(':prodId', $prodId, PDO::PARAM_INT);
             $prep->execute();
-    
+            
             $formationData = $prep->fetch(PDO::FETCH_ASSOC);
-    
+            
             if (!$formationData) {
-                return null; // Aucun utilisateur trouvé avec cet ID
+                http_response_code(404);
+                echo json_encode(["error" => "Produit non trouvé"]);
+                return;
             }
-    
-            $form = new Formation([
+
+            // Utiliser l'opérateur de coalescence nulle pour gérer les clés non définies
+            $form = [
                 'id_produit' => $formationData['id_produit'],
                 'titre' => $formationData['titre'],
                 'sous_titre' => $formationData['sous_titre'],
@@ -371,20 +372,18 @@ public function count()
                     'id_type_produit' => $formationData['id_type_produit'],
                     'nom' => $formationData['typeproduit_nom'] ?? null
                 ]
-            ]);
-    
-            return $form;
+            ];
+
+            http_response_code(200);
+            header('Content-Type: application/json');
+            echo json_encode($form);
         } catch (PDOException $e) {
-            throw $e; // Propager l'exception pour la gestion des erreurs
+            http_response_code(500);
+            echo json_encode(["error" => $e->getMessage()]);
         } finally {
-            $prep = null; // Libérer la ressource PDOStatement
+            // Libérer les ressources
+            $prep = null;
         }
-
-
-
- 
-
-
     }
  
  

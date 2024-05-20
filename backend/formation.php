@@ -39,19 +39,7 @@ if ($http_method === "GET") {
     elseif (isset($_GET['id'])) {
         // Requête GET pour récupérer un utilisateur par ID
         $id = $_GET['id'];
-        try {
-            $lieu = $lieuManager->selectProduitById($id);
-            if ($lieu) {
-                http_response_code(200);
-                echo json_encode($lieu);
-            } else {
-                http_response_code(404);
-                echo json_encode(array("error" => "Lieu non trouvé"));
-            }
-        } catch (PDOException $e) {
-            http_response_code(500);
-            echo json_encode(array("error" => $e->getMessage()));
-        }
+    $lieuManager->selectProduitById($id);
     }
     elseif (isset($_GET['count'])) {
         // Requête GET pour obtenir le nombre total d'utilisateurs
@@ -106,7 +94,7 @@ if ($http_method === "GET") {
     $jsonStr = file_get_contents('php://input');
     $lieuArray = json_decode($jsonStr, true);
     $lieu = new Formation($lieuArray);
-    //$idFormateur = $prodArray['id_formateur'] ?? null;
+    $idFormateur = $prodArray['id_formateur'] ?? null;
 
     try {
         $lieuManager->updateProduit($lieu); // Utilisez la méthode updateUser pour mettre à jour l'utilisateur
