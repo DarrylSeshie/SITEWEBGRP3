@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from './auth.guard'; 
 import { roleGuard } from './role.guard'; // import guard role
 
+
 import { GestionFormateurComponent } from './gestion-formateur/gestion-formateur.component';
 import { GestionFormationComponent } from './gestion-formation/gestion-formation.component';
 import { GestionImageComponent } from './gestion-image/gestion-image.component';
@@ -17,6 +18,7 @@ import { VoirFormationsComponent } from './voir-formations/voir-formations.compo
 import { VoirProfilComponent } from './voir-profil/voir-profil.component';
 import { GestionnaireComponent } from './gestionnaire/gestionnaire.component';
 import { ConnexionComponent } from './connexion/connexion.component';
+import { adminGuard } from './admin.guard';
 
 
 
@@ -46,7 +48,7 @@ const routes: Routes = [
       path: 'gestionlieux', component: GestionLieuComponent , canActivate: [authGuard ,roleGuard]
     },
     {
-      path: 'gestionRole', component: GestionnaireComponent ,  canActivate: [authGuard ,roleGuard]
+      path: 'gestionRole', component: GestionnaireComponent ,  canActivate: [authGuard ,adminGuard]
     }, 
     {
       path: 'gestionadresses', component: GestionAdresseComponent ,  canActivate: [authGuard ,roleGuard]
