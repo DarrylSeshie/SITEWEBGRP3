@@ -5,28 +5,21 @@ require_once 'models/TypeProduit.class.php';
 require_once 'models/Formation.class.php';
 require_once 'managers/DBManager.php';
 require_once 'managers/FormationManager.php';
-
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: *");
-header("Access-Control-Allow-Methods: GET, POST, PUT, PATCH, DELETE, OPTIONS");
-header("Content-Type: application/json");
-
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    // Réponse à la requête OPTIONS pour permettre les requêtes GET, POST, PUT, PATCH, DELETE
-    http_response_code(200);
-    exit();
-}
+require_once 'models/User.class.php';
 
 $dbManager = new DBManager();
 $connexion = $dbManager->connect();
-$lieuManager = new FormationManager($connexion);
+$lieuManager = new FormationManager($connexion); 
 
 $http_method = $_SERVER['REQUEST_METHOD'];
-
+header('Access-Control-Allow-Origin: http://localhost:4200');
+header('Access-Control-Allow-Headers: *');
+header('Access-Control-Allow-Methods: OPTIONS, GET, POST, PUT, PATCH, DELETE');
+header('Content-Type: application/json');
 
 if ($http_method === "GET") {
     if (isset($_GET['search'])) {
-       
+        // Requête GET pour la recherche par nom
         $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
         $pageSize = isset($_GET['pageSize']) ? intval($_GET['pageSize']) : 10;
         $search = $_GET['search'];
@@ -34,7 +27,7 @@ if ($http_method === "GET") {
         $lieux = $lieuManager->getProduitsByname2($page, $pageSize, $search);
         echo json_encode($lieux);
     } elseif (isset($_GET['get3ProduitsByDate'])) {
-       
+        // Requête GET pour récupérer les 3 produits à venir
         try {
             $produitsAVenir = $lieuManager->get3ProduitByDate();
             echo json_encode($produitsAVenir);
@@ -42,24 +35,26 @@ if ($http_method === "GET") {
             http_response_code(500);
             echo json_encode(array("error" => $e->getMessage()));
         }
-    } elseif (isset($_GET['id'])) {
-        
+    }
+    elseif (isset($_GET['id'])) {
+        // Requête GET pour récupérer un utilisateur par ID
         $id = $_GET['id'];
+    $lieuManager->selectProduitById($id);
+    }
+    elseif (isset($_GET['count'])) {
+        // Requête GET pour obtenir le nombre total d'utilisateurs
         try {
-            $lieu = $lieuManager->selectProduitById($id);
-            if ($lieu) {
-                http_response_code(200);
-                echo json_encode($lieu);
-            } else {
-                http_response_code(404);
-                echo json_encode(array("error" => "Lieu non trouvé"));
-            }
+        
+            $totalUsers = $lieuManager->count();
+    
+            http_response_code(200);
+            echo json_encode(['total' => $totalUsers]);
         } catch (PDOException $e) {
             http_response_code(500);
-            echo json_encode(array("error" => $e->getMessage()));
+            echo json_encode(["error" => $e->getMessage()]);
         }
     } else {
-        
+        // Requête GET pour récupérer tous les utilisateurs avec pagination
         $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
         $pageSize = isset($_GET['pageSize']) ? intval($_GET['pageSize']) : 10;
 
@@ -67,54 +62,54 @@ if ($http_method === "GET") {
         echo json_encode($lieux);
     }
 } elseif ($http_method === "POST") {
-    
+    // Requête POST pour ajouter un nouvel utilisateur
     $jsonStr = file_get_contents('php://input');
     $prodArray = json_decode($jsonStr, true);
 
     if (!empty($prodArray)) {
-        
-        $required_keys = ['id_produit', 'titre', 'sous_titre', 'date_debut', 'date_fin', 'date_fin_inscription', 'descriptif', 'objectif', 'contenu', 'methodologie', 'public_cible', 'prix', 'id_image', 'id_lieu', 'id_type_produit'];
-        $missing_keys = array_diff($required_keys, array_keys($prodArray));
+    $prod = new Formation($prodArray);
+    $idFormateur = $prodArray['id_formateur'] ?? null;
 
-        if (!empty($missing_keys)) {
-            http_response_code(400);
-            echo json_encode(array("error" => "Missing required keys: " . implode(", ", $missing_keys)));
-            exit;
-        }
+    if ($idFormateur) {
 
-        $prod = new Formation($prodArray);
 
         try {
-            $lieuManager->addProduit($prod);
-            echo json_encode($prod);
-        } catch (PDOException $e) {
-            http_response_code(500);
-            echo json_encode(array("error" => "Erreur lors de l'ajout de formation : " . $e->getMessage()));
+        $lieuManager->addProduit($prod,$idFormateur); // Utilisez la méthode addUser pour insérer l'utilisateur
+        echo json_encode($prod); // Répondre avec les données de l'utilisateur ajouté
+         } catch (PDOException $e) {
+        http_response_code(500);
+        echo json_encode(array("error" => "Erreur lors de l'ajout de formation : " . $e->getMessage()));
         }
-    } else {
-        http_response_code(400);
-        echo json_encode(array("error" => "Données de formation invalides."));
+    }else {
+    http_response_code(400);
+    echo json_encode(array("error" => "ID du formateur manquant"));
     }
+} else {
+    // Si les données JSON sont vides ou invalides
+    http_response_code(400);
+    echo json_encode(array("error" => "Données JSON invalides pour l'ajout formation"));
+}
 } elseif ($http_method === "PUT" || $http_method === "PATCH") {
-  
+    // Requête PUT ou PATCH pour mettre à jour un utilisateur existant
     $jsonStr = file_get_contents('php://input');
     $lieuArray = json_decode($jsonStr, true);
     $lieu = new Formation($lieuArray);
+    $idFormateur = $prodArray['id_formateur'] ?? null;
 
     try {
-        $lieuManager->updateProduit($lieu);
-        echo json_encode($lieu);
+        $lieuManager->updateProduit($lieu); // Utilisez la méthode updateUser pour mettre à jour l'utilisateur
+        echo json_encode($lieu); // Répondre avec les données de l'utilisateur mis à jour
     } catch (PDOException $e) {
         http_response_code(500);
         echo json_encode(array("error" => $e->getMessage()));
     }
-} elseif ($http_method === "DELETE") {
-  
+}  elseif ($http_method === "DELETE") {
+    // Requête DELETE pour supprimer un lieu par ID
     $id = isset($_GET['id']) ? $_GET['id'] : null;
     if ($id !== null) {
         try {
             $lieuManager->deleteProduit($id);
-            http_response_code(204);
+            http_response_code(204); // Succès sans contenu
         } catch (PDOException $e) {
             http_response_code(500);
             echo json_encode(array("error" => "Erreur lors de la suppression du lieu : " . $e->getMessage()));
@@ -123,7 +118,9 @@ if ($http_method === "GET") {
         http_response_code(400);
         echo json_encode(array("error" => "ID du lieu non fourni"));
     }
-
+}
+ elseif ($http_method === "OPTIONS") {
+    http_response_code(200);
 } else {
     http_response_code(400);
     echo json_encode(array("error" => "Méthode non implémentée"));
