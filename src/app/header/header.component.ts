@@ -55,8 +55,8 @@ export class HeaderComponent implements OnInit {
 
 
   logout(): void {
-    this.userService.logout(); // Mise à jour de l'état de connexion dans AuthService
     this.cookieService.delete('token'); // Supprime le token du cookie
+    this.userService.logout(); // Mise à jour de l'état de connexion dans AuthService
     this.router.navigate(['/']); // Redirige vers la page de connexion
   }
 

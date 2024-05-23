@@ -3,12 +3,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { CookieService } from 'ngx-cookie-service';
 import { jwtDecode } from "jwt-decode";
-import { tap } from 'rxjs/operators';
+import { tap,switchMap } from 'rxjs/operators';
 //import jwtDecode from 'jwt-decode';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject,of } from 'rxjs';
 import { Observable, throwError } from 'rxjs';
 import { catchError,map  } from 'rxjs/operators';
 import { Router } from '@angular/router';
+
+
+
 
 
 @Injectable({
@@ -25,10 +28,11 @@ export class UserService {
     }
   }
 
- private loggedIn = new BehaviorSubject<boolean>(false);
- private tokenCheckInterval: any;
+  private loggedIn = new BehaviorSubject<boolean>(false);
+  private tokenCheckInterval: any;
+  private currentUser: User | null = null;
 
- get isLoggedIn() {
+  get isLoggedIn() {
     return this.loggedIn.asObservable();
   }
 
@@ -46,13 +50,13 @@ export class UserService {
   constructor(private http: HttpClient , private cookieService: CookieService,private router: Router) {this.checkToken();    this.startTokenCheck();} 
 
  
-  checkToken() {
+  checkToken(): void {
     const token = this.cookieService.get("token");
     let decoded: any;
     if (token) {
       try {
         decoded = jwtDecode(token);
-      //  this.router.navigate(['/acceuil']);// a retirer sinon a chaque refresh on aura acceuil  ou alors on garde l autre qd tu ferme onglet et tu revien y a co par defaut
+        this.currentUser = decoded; // Assigne les informations décodées à currentUser
       } catch (e) {
         this.logout();
       }
@@ -64,6 +68,34 @@ export class UserService {
       this.logout();
     }
   }
+  getCurrentUser(): User | null {
+    return this.currentUser;
+  }
+
+
+ 
+  loadCurrentUser(): Observable<User | null> {
+    const token = this.cookieService.get("token");
+
+    if (!token) {
+      return of(null);
+    }
+
+    return this.validateJwt(token).pipe(
+      switchMap(decodedToken => {
+        const userEmail = decodedToken.email;
+        return this.getUserByEmail(userEmail, token).pipe(
+          map((user: User) => {
+            this.currentUser = user;
+            return user;
+          }),
+          catchError(() => of(null))
+        );
+      }),
+      catchError(() => of(null))
+    );
+  }
+
   startTokenCheck() {
     this.tokenCheckInterval = setInterval(() => {
       this.checkToken();
@@ -186,6 +218,7 @@ export class UserService {
   
   
     logout() {
+      this.currentUser = null;
       this.cookieService.delete("token");
       this.loggedIn.next(false);
       this.router.navigate(['/']);

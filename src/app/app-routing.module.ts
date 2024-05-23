@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from './auth.guard'; 
+import { roleGuard } from './role.guard'; // import guard role
 
 import { GestionFormateurComponent } from './gestion-formateur/gestion-formateur.component';
 import { GestionFormationComponent } from './gestion-formation/gestion-formation.component';
@@ -27,28 +28,28 @@ const routes: Routes = [
       path:'acceuil', component: AcceuilComponent , canActivate: [authGuard] 
     },  
     {
-      path: 'gestionformateurs', component: GestionFormateurComponent , canActivate: [authGuard]
+      path: 'gestionformateurs', component: GestionFormateurComponent , canActivate: [authGuard ,roleGuard]
     },
     {
-      path: 'gestionformations', component: GestionFormationComponent , canActivate: [authGuard]
+      path: 'gestionformations', component: GestionFormationComponent ,  canActivate: [authGuard ,roleGuard]
     },
     {
-      path: 'gestionimages', component: GestionImageComponent , canActivate: [authGuard]
+      path: 'gestionimages', component: GestionImageComponent ,  canActivate: [authGuard ,roleGuard]
     },
     {
-      path: 'gestionutilisateurs', component: GestionUtilisateurComponent, canActivate: [authGuard]
+      path: 'gestionutilisateurs', component: GestionUtilisateurComponent, canActivate: [authGuard ,roleGuard]
     },
     {
-      path: 'gestioninstitutions', component: GestionInstitutionComponent , canActivate: [authGuard]
+      path: 'gestioninstitutions', component: GestionInstitutionComponent ,  canActivate: [authGuard ,roleGuard]
     },
     {
-      path: 'gestionlieux', component: GestionLieuComponent , canActivate: [authGuard]
+      path: 'gestionlieux', component: GestionLieuComponent , canActivate: [authGuard ,roleGuard]
     },
     {
-      path: 'gestionRole', component: GestionnaireComponent , canActivate: [authGuard]
+      path: 'gestionRole', component: GestionnaireComponent ,  canActivate: [authGuard ,roleGuard]
     }, 
     {
-      path: 'gestionadresses', component: GestionAdresseComponent , canActivate: [authGuard]
+      path: 'gestionadresses', component: GestionAdresseComponent ,  canActivate: [authGuard ,roleGuard]
     },
     {
       path: 'inscription-formation', component: InscriptionFormationComponent , canActivate: [authGuard]
