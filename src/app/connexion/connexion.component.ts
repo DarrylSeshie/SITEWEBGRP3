@@ -21,12 +21,13 @@ export class ConnexionComponent {
     this.service.checkLogin(username, password).subscribe({
       next: (token) => {
         this.cookieService.set("token", token.access_token);
-        this.service.setLoggedIn(true); 
+        localStorage.setItem("userId", token.userId);
+        this.service.setLoggedIn(true);
         this.router.navigate(["/acceuil"]);
       },
       error: (errorMsg) => {
         this.errorMsg = errorMsg.error.error;
-        this.service.setLoggedIn(false); 
+        this.service.setLoggedIn(false);
       }
     });
   }

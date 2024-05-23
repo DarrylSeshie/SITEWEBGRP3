@@ -40,6 +40,8 @@ export class UserService {
   private apiUrl2 = 'http://localhost/PROJET_ceREF/backend/user2.php';
   private apiUrl3 = 'http://localhost/PROJET_ceREF/backend/user3.php';
   private apiUrlJwt = 'http://localhost/PROJET_ceREF/backend/jwt_utils.php' ;
+  private apiUrlForEmail = 'http://localhost/PROJET_ceREF/backend/send_email.php';
+
 
   constructor(private http: HttpClient , private cookieService: CookieService,private router: Router) {this.checkToken();    this.startTokenCheck();} 
 
@@ -205,6 +207,11 @@ export class UserService {
       return throwError(error.message || error);
     }
 
+
+    sendErrorReport(message: string): Observable<any> {
+      const body = { message };
+      return this.http.post<any>(this.apiUrlForEmail, body);
+    }
 
 
 }

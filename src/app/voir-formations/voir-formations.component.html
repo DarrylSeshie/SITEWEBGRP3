@@ -1,73 +1,93 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="voir-formations.component.css">
-    <title>Vos Formations</title>
-</head>
 <body class="body">
-  <br>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light custom-nav">
-    <div class="container d-flex">
-      <ul class="navbar-nav mx-auto">
-        <li class="nav-item">
-          <button (click)="selectMenu('leila')" class="btn btn-sm btn-outline-secondary me-2" type="button"><h4>Formations futurs</h4></button>
-        </li>
-        <li class="nav-item">
-          <button (click)="selectMenu('hind')" class="btn btn-sm btn-outline-secondary me-2" type="button"><h4>Formations passees</h4></button>
-        </li>
-        <li class="nav-item">
-          <button (click)="selectMenu('wafae')" class="btn btn-sm btn-outline-secondary me-2" type="button"><h4>Formation en cours</h4></button>
-        </li>
-      </ul>
+    <br />
+    <nav class="navbar navbar-expand-lg navbar-light bg-light custom-nav">
+        <div class="container d-flex">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <button
+                        (click)="selectMenu('future')"
+                        class="btn btn-sm btn-outline-secondary me-2"
+                        type="button"
+                    >
+                        <h4>Formations futurs</h4>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button
+                        (click)="selectMenu('past')"
+                        class="btn btn-sm btn-outline-secondary me-2"
+                        type="button"
+                    >
+                        <h4>Formations passées</h4>
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button
+                        (click)="selectMenu('in_process')"
+                        class="btn btn-sm btn-outline-secondary me-2"
+                        type="button"
+                    >
+                        <h4>Formations en cours</h4>
+                    </button>
+                </li>
+                <li class="nav-item" *ngIf="hasRole(3)">
+                  <button (click)="selectMenu('formation')" class="btn btn-sm btn-outline-secondary me-2" type="button">
+                    <h4>Formation</h4>
+                  </button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+  
+    <div class="content">
+        <div *ngIf="selectedMenu === 'future'" class="partie1">
+            <h2 class="text-center mt-2 mb-5">Formations futurs</h2>
+            <div *ngFor="let formation of getFilteredFormations('future')">
+                <p class="formation-item">
+                    {{ formation.titre }}
+                    <button class="btn btn-light annule-btn" type="button" (click)="deleteParticipant(formation.id_produit)">
+                        Annuler
+                    </button>
+                </p>
+                <br />
+            </div>
+            <div *ngIf="getFilteredFormations('future').length === 0" class="text-center">
+                <p class="formation-item">Aucune formation future disponible.</p>
+            </div>
+        </div>
+  
+        <div *ngIf="selectedMenu === 'past'" class="partie1">
+            <h2 class="text-center mt-2 mb-5">Formations passées</h2>
+            <div *ngFor="let formation of getFilteredFormations('past')">
+                <p class="formation-item">{{ formation.titre }}</p>
+                <br />
+            </div>
+            <div *ngIf="getFilteredFormations('past').length === 0" class="text-center">
+                <p class="formation-item">Aucune formation passée disponible.</p>
+            </div>
+        </div>
+  
+        <div *ngIf="selectedMenu === 'in_process'" class="partie1">
+            <h2 class="text-center mt-2 mb-5">Formations en cours</h2>
+            <div *ngFor="let formation of getFilteredFormations('in process')">
+                <p class="formation-item">{{ formation.titre }}</p>
+                <br />
+            </div>
+            <div *ngIf="getFilteredFormations('in process').length === 0" class="text-center">
+                <p class="formation-item">Aucune formation en cours disponible.</p>
+            </div>
+        </div>
+  
+        <div *ngIf="selectedMenu === 'formation'" class="partie1">
+            <h2 class="text-center mt-2 mb-5">Formations</h2>
+            <div *ngFor="let formation of formations2">
+                <p class="formation-item">{{ formation.titre }}</p>
+                <br />
+            </div>
+            <div *ngIf="formations2.length === 0" class="text-center">
+                <p class="formation-item">Aucune formation disponible.</p>
+            </div>
+        </div>
     </div>
-  </nav>
-
-  <div class="content">
-    <div *ngIf="selectedMenu === 'leila'" class="partie1">
-      <h2 class="text-center mt-2">3 Formation futurs</h2>
-    </div>
-    <div *ngIf="selectedMenu === 'leila'" class="partie2">
-      <p class="formation-item">-Formation en présentiel 
-        <button class="btn btn-light annule-btn" type="button">annule</button>
-      </p><br>
-      <p class="formation-item">-Formation en présentiel 
-        <button class="btn btn-light annule-btn" type="button">annule</button>
-      </p><br>
-      <p class="formation-item">-Formation en présentiel 
-        <button class="btn btn-light annule-btn" type="button">annule</button>
-      </p><br>
-      <p class="formation-item">-Formation en présentiel 
-        <button class="btn btn-light annule-btn" type="button">annule</button>
-      </p><br>
-      <p class="formation-item">-Formation en présentiel 
-        <button class="btn btn-light annule-btn" type="button">annule</button>
-      </p><br>
-    </div>
-
-    <div *ngIf="selectedMenu === 'hind'" class="partie1">
-      <h2 class="text-center mt-2">3 Formation passees</h2>
-    </div>
-    <div *ngIf="selectedMenu === 'hind'" class="partie2">
-      <p class="text-center">-Formations en e-learning </p><br>
-      <p class="text-center">-Formations en e-learning </p><br>
-      <p class="text-center">-Formations en e-learning </p><br>
-      <p class="text-center">-Formations en e-learning </p><br>
-      <p class="text-center">-Formations en e-learning </p><br>
-    </div>
-
-    <div *ngIf="selectedMenu === 'wafae'" class="partie1">
-      <h2 class="text-center mt-2">3 Formation en cours</h2>
-    </div>
-    <div *ngIf="selectedMenu === 'wafae'" class="partie2">
-      <p class="text-center">-Formations en blended-learning</p><br>
-      <p class="text-center">-Formations en blended-learning</p><br>
-      <p class="text-center">-Formations en blended-learning</p><br>
-      <p class="text-center">-Formations en blended-learning</p><br>
-      <p class="text-center">-Formations en blended-learning</p><br>
-    </div>
-  </div>
-</body>
-</html>
+  </body>
+  

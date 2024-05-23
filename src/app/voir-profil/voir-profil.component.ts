@@ -9,6 +9,7 @@ import { User } from '../models/user.model';
 })
 export class VoirProfilComponent implements OnInit {
   utilisateur: User | null = null; // Initialisation à null
+  message: string = '';
 
   constructor(private userService: UserService) { }
 
@@ -21,5 +22,25 @@ export class VoirProfilComponent implements OnInit {
         console.log('Erreur lors de la récupération des données utilisateur : ', error);
       }
     );
+  }
+
+  onSubmit() {
+    if (this.message) {
+      this.userService.sendErrorReport(this.message).subscribe(
+        response => {
+          if (response) {
+            alert('Error message submitted successfully');
+            this.message = ''; // Clear the form
+          } else {
+            alert('Error submitting message: ' + response.error);
+          }
+        },
+        error => {
+          alert('An error occurred while submitting the message');
+        }
+      );
+    } else {
+      alert('Please enter a message');
+    }
   }
 }

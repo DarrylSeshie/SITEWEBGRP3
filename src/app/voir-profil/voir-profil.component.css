@@ -56,7 +56,7 @@ width: 88px;
 margin-right: 10px; /* Marge entre le label et le contenu */
 }
 .about-list label:after {
-content: "";
+/* content: ""; */
 position: absolute;
 top: 0;
 bottom: 0;

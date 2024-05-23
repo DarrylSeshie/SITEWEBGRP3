@@ -20,4 +20,5 @@ export interface User {
   adresse?: Adresse; // Type Adresse pour les détails d'adresse
   institution?: Institution; // Type Institution pour les détails de l'institution
   role?: Role; // Type Role pour les détails du rôle */
+  giografie?: string;
 }

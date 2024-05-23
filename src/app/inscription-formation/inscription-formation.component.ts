@@ -1,23 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormationService } from '../services/formation.service';
-
-interface Formation {
-  id_produit: number;
-  titre: string;
-  sous_titre: string;
-  date_debut: Date;
-  date_fin: Date;
-  date_fin_inscription: Date;
-  descriptif: string;
-  objectif: string;
-  contenu: string;
-  methodologie: string;
-  public_cible: string;
-  prix: number;
-  id_image: number;
-  id_lieu: number;
-  id_type_produit: number;
-}
+import { Formation } from '../models/formation.model';
 
 @Component({
   selector: 'app-inscription-formation',
@@ -27,17 +10,20 @@ interface Formation {
 export class InscriptionFormationComponent implements OnInit {
   formations: Formation[] = [];
   selectedFormation: Formation | null = null;
-  filterValue: string = '';  // Initialise filterValue comme une chaîne vide
+  filterValue: string = '';
+  dropdownOpen: boolean = false;
+  userId: number | null = null; // Initialize as null to handle potential absence in localStorage
 
   constructor(private formationService: FormationService) { }
 
   ngOnInit(): void {
     this.loadFormations();
+    this.loadUserId();
   }
 
   loadFormations() {
     this.formationService.getFormations(1, 10).subscribe(
-      (formations: any[]) => {
+      (formations: Formation[]) => {
         this.formations = formations.map(formation => ({
           ...formation,
           date_debut: new Date(formation.date_debut),
@@ -45,21 +31,43 @@ export class InscriptionFormationComponent implements OnInit {
           date_fin_inscription: new Date(formation.date_fin_inscription)
         }));
       },
-      (error) => {
+      (error: any) => {
         console.error('Error loading formations:', error);
       }
     );
   }
 
+  loadUserId() {
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      this.userId = parseInt(storedUserId, 10);
+    }
+  }
+
   selectFormation(formation: Formation) {
+    this.filterValue = formation.titre;
     this.selectedFormation = formation;
+    this.dropdownOpen = true;
+  }
+
+  openDropdown() {
+    this.dropdownOpen = true;
   }
 
   inscrire() {
-    if (this.selectedFormation) {
-      console.log('Inscription à la formation:', this.selectedFormation);
-      // Appel du service pour inscrire l'utilisateur à la formation
-      // this.formationService.inscrireUtilisateur(this.selectedFormation.id_produit);
+    if (this.selectedFormation && this.userId !== null) {
+      this.formationService.inscrireUtilisateur(this.selectedFormation.id_produit, this.userId).subscribe(
+        (response: any) => {
+          console.log('Inscription successful:', response);
+          this.selectedFormation = null;
+          this.filterValue = '';
+        },
+        (error: any) => {
+          console.error('Error during inscription:', error);
+        }
+      );
+    } else {
+      console.log('No formation selected or user ID is missing.');
     }
   }
 }

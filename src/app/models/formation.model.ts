@@ -1,7 +1,6 @@
 import { Image } from '../models/image.model';
 import { Lieu } from '../models/lieu.model';
 import { TypeProduit } from '../models/typeProduit.model';
-import { User } from '../models/user.model';
 
 export interface Formation {
     id_produit: number;
@@ -25,5 +24,7 @@ export interface Formation {
     image?: Image; // Relation avec l'entité Image
     lieu?: Lieu; // Relation avec l'entité Lieu
     typeProduit?: TypeProduit; // Relation avec l'entité TypeProduit
+    status?: string; // Add the status property
+    id_role?: number;
   }
   

@@ -43,11 +43,12 @@ try {
             http_response_code(401);
             echo json_encode(["error" => "Bad username/password"]);
             exit;
-        } else $userId = $userManager->getUserIdByUsername($username);
-        if ($userId !== null) {
-
-            $token = generateJWT($username, $userId);
-            echo json_encode(["access_token" => $token]);
+        } else {
+            $userId = $userManager->getUserIdByUsername($username);
+            if ($userId !== null) {
+                $token = generateJWT($username, $userId);
+                echo json_encode(["access_token" => $token, "userId" => $userId]);
+            }
         }
 
     } elseif ($http_method === "OPTIONS") {
@@ -78,3 +79,4 @@ try {
     http_response_code(500);
     echo json_encode(["error" => $e->getMessage()]);
 }
+?>
