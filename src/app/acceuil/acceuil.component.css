@@ -1,118 +1,110 @@
-.texteAcceuil{
-    text-align: center;
-    background-color: #f0eaee;
-    margin-bottom: 20px;
-    padding: 15px;
+body {
+  font-family: Arial, sans-serif;
+ /* Couleur de fond */
+
+ border-color: #7a055b; /* Couleur de la bordure */
+ outline: none; /* Supprimer la bordure de focus */
+ box-shadow: none; /* Supprimer toute ombre autour du bouton */
+
+
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa; /* Couleur de fond */
-  }
-  
-  .body{
-    margin-top: 80px;
-     
-    justify-content: center;
-    align-items: center;
-    height: 100vh; 
-  }
+.body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 70px; /* Ajuster cette valeur selon la hauteur de votre header */
  
-  
-  
- 
-  h1 {
-    font-size: 36px;
-    font-weight: bold;
-    color: #7a055b;
-    text-align: center;
-    margin-top: 20px; /* Ajustez la marge supérieure selon vos besoins */
-    margin-bottom: 20px;
-  }
+}
 
-  .imgproduit{
-    width: auto;
-    height: auto;
-    margin: 10px;
-  } 
-  #txtFinInscription{
-    color: #7a055b;
-    font-weight: bold;
-    
-    
-  }
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+  color: #7a055b;
+  text-align: center;
+  margin-top: 0; /* Ajustez la marge supérieure selon vos besoins */
+  margin-bottom: 20px;
+}
 
+.texteAcceuil {
+  text-align: center;
+  margin-bottom: 20px;
+  padding: 15px;
+}
 
-  .accordion-button:hover {
-    background-color:  #7a055b; /* Changer la couleur de fond au survol */
-    color: white; /* Changer la couleur du texte au survol */
-  }
-  
+#txtFinInscription {
+  color: #7a055b;
+  font-weight: bold;
+}
+.accordion {
+  width: 100%; /* Réduire la largeur pour éviter le débordement */
+  max-width: 1300px; /* Limite maximale pour la largeur */
+  margin: 0 auto; /* Centre horizontalement */
+}
 
-  .accordion-button {
-    background-color:#f0eaee; /* Couleur de fond */
-    color: black; /* Couleur du texte */
-    border-color: #7a055b; /* Couleur de la bordure */
-    outline: none; /* Supprimer la bordure de focus */
-    box-shadow: none; /* Supprimer toute ombre autour du bouton */
-  }
-  
-  /* Styliser la bordure lorsqu'il est en focus ou actif */
-  .accordion-button:focus,
-  .accordion-button:active {
-    border-color: #7a055b; /* Couleur de la bordure en focus ou actif */
-    box-shadow: black 3px 3px 20px; /* Supprimer toute ombre en focus ou actif */
-  }
+.accordion-body {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 5px;
+}
 
-  #searchButton {
-    padding: 8px 16px;
-    background-color: #800860; /* Couleur de fond du bouton (bleu par défaut) */
-    color: white; /* Couleur du texte */
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+.card {
+  width: 100%; /* Prendre la largeur complète disponible */
+  margin: 10px 0; /* Réduire la marge pour éviter le débordement vertical */
+   /* Réduire le padding */
+  text-align: center; /* Centre le contenu à l'intérieur de la carte */
+}
 
+.card img {
+  width: 100%; /* Ajuster la largeur de l'image pour remplir la carte */
+  height: 350px; /* Garder la proportion de l'image */
+  /* Ajuster la taille de l'image pour remplir le conteneur */
+}
 
-  
-   
-  .accordion {
-    margin-top: 0px;
-    width: 100%;
-    padding: 20px;
-    
-  }
+.accordion-button {
+  background-color: #f0eaee; /* Couleur de fond */
+  color: black; /* Couleur du texte */
+  border-color: #7a055b; /* Couleur de la bordure */
+  outline: none; /* Supprimer la bordure de focus */
+  box-shadow: none; /* Supprimer toute ombre autour du bouton */
+}
 
-  .accordion-body {
-    display: flex;
-    justify-content:center;
-    align-items:center;
-    text-align: center;
-    height: 80%;
-  } 
-  
-  /* Style pour chaque carte */
-  .card {
-    max-width: auto; /* Ajustez cette valeur selon vos besoins */
-    margin: 20px; /* Ajoute une marge autour de chaque carte */
-    padding: 20px; /* Ajoute un espace intérieur à chaque carte */
-    text-align: center; /* Centre le contenu à l'intérieur de la carte */
-    overflow: hidden; /* Masque tout contenu dépassant la limite de la carte */
-  }
-  
-  /* Style pour l'image à l'intérieur de chaque carte */
-  .card img {
-    width: 100%; /* Ajuster la largeur de l'image pour remplir la carte */
-    height: 200px; /* Définir une hauteur fixe pour la carte */
-    object-fit: cover; /* Ajuster la taille de l'image pour remplir le conteneur */
-  }
+.accordion-button:hover {
+  background-color: #7a055b; /* Changer la couleur de fond au survol */
+  color: white; /* Changer la couleur du texte au survol */
+}
 
-  
- 
-  
+.accordion-button:focus,
+.accordion-button:active {
+  border-color: #7a055b; /* Couleur de la bordure en focus ou actif */
+  box-shadow: black 3px 3px 20px; /* Supprimer toute ombre en focus ou actif */
+}
+
+#searchButton {
+  padding: 8px 16px;
+  background-color: #800860; /* Couleur de fond du bouton (bleu par défaut) */
+  color: white; /* Couleur du texte */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 @media (max-width: 576px) {
-  
-  .body{
-    margin-top: 125px;
+  .body {
+      padding-top: 80px;
+      margin-top: 100px  /* Ajuster cette valeur selon la hauteur de votre header sur les petits écrans */
+  }
+
+  .accordion {
+      width: 100%; /* Prendre toute la largeur disponible sur les petits écrans */
+  }
+
+  .card {
+      margin-top: 0px ; /* Réduire la marge pour éviter le débordement vertical */
   }
 }
