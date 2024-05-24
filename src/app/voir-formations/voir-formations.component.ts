@@ -51,6 +51,10 @@ export class VoirFormationsComponent implements OnInit {
     return this.formations.filter(formation => formation.status === status);
   }
 
+  getFilteredFormationsByRole(roleId: number): Formation[] {
+    return this.formations.filter(formation => formation.id_role === roleId);
+  }
+
   deleteParticipant(id_produit: number): void {
     this.formationService.deleteParticipant(this.userId, id_produit).subscribe(
       response => {
