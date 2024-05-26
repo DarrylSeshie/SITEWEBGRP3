@@ -4,6 +4,8 @@ import {  OnInit   } from '@angular/core';
 import { RegistrationApiService } from '../services/registration-api.service';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
+import { InstitutionService } from '../services/institution.service';
+import { Institution } from '../models/institution.model';
 declare const bootstrap: any;
 @Component({
   selector: 'app-registration-form',
@@ -31,6 +33,7 @@ export class RegistrationFormComponent implements OnInit {
     id_adresse: -1,
     id_institution: -1, 
     adresse: {
+      id_adresse: -1,
       code_postal: 0,
       rue_numero: '',
       localite: '',
@@ -41,18 +44,31 @@ export class RegistrationFormComponent implements OnInit {
     giografie: 'VIDE',
     TVA: '',
     institution: {
+      id_institution: -1,
       nom: '',
       logo: 'null',
       id_adresse: -1
       },
     role: undefined
   };
+  institutions: Institution[] = [];
 
 
 
-  constructor(private service: RegistrationApiService ,private userService: UserService,private router: Router) { }
+  constructor(private service: RegistrationApiService ,private userService: UserService,private router: Router, private institutionService: InstitutionService) { }
   ngOnInit(): void {
     this.loadCount();
+    this.loadInstitutions();
+  }
+  loadInstitutions(): void {
+    this.institutionService.getInstitutions(1, 10).subscribe(
+      (institutions) => {
+        this.institutions = institutions;
+      },
+      (error) => {
+        console.error('Error fetching institutions:', error);
+      }
+    );
   }
 
   saveUser() {
@@ -62,7 +78,7 @@ export class RegistrationFormComponent implements OnInit {
         this.addUserEvent.emit(user);
         sub.unsubscribe();
         this.showSuccessToast('Inscription avec succès.');
-        this.router.navigate(['/']);
+        
       },
       error: (error) => {
         this.errorMessage = error.error.error;

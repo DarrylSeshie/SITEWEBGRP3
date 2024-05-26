@@ -17,17 +17,8 @@ export interface User {
   id_role: number;
   id_adresse: number;
   id_institution?: number;
-  adresse?: {
-    code_postal: number;
-    rue_numero: string;
-    localite: string;
-    pays: string;
-  };
-  institution?: {
-    nom: string;
-    logo: string;
-    id_adresse: number;
-  };
+  adresse?: Adresse
+  institution?: Institution
   role?: Role;
   giografie?: string;
 }

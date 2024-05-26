@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Formation } from '../models/formation.model';
 import { TypeProduit } from '../models/typeProduit.model';
 import { TypeProduitService } from '../services/typeProduit.service';
+import { User } from '../models/user.model';
+import { FormateurService } from '../services/formateur.service';
 
 declare const bootstrap: any;
 @Component({
@@ -51,16 +53,28 @@ export class GestionFormationComponent {
     id_type_produit: 1,
     id_formateur: -1,
   };
+  formateurs : User[] = [];
 
 
   ProduitToUpdate: Formation | null = null;
-  constructor(private formationService:FormationService) { }
+  constructor(private formationService:FormationService,private formateurService: FormateurService) { }
 
   ngOnInit(): void {
     this.loadFormations();
     this.loadCount();
+    this.loadFormateurs();
   }
   
+  loadFormateurs(){
+    this.formateurService.getUsers(1, 20).subscribe(
+      (formateurs) => {
+        this.formateurs = formateurs;
+      },
+      (error) => {
+        console.error('Error fetching formateurs:', error);
+      }
+    );
+  }
 
   loadFormations():void {
   this.Formations = this.formationService.getFormations(this.currentPage, this.pageSize);
