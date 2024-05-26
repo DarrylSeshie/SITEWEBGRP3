@@ -12,6 +12,8 @@ export class VoirFormationsComponent implements OnInit {
   formations: Formation[] = [];
   formations2: Formation[] = [];
   userId: number;
+  popUpVisible: boolean = false;
+  popUpMessage: string = '';
 
   constructor(private formationService: FormationService) {
     this.userId = Number(localStorage.getItem('userId'));
@@ -55,15 +57,29 @@ export class VoirFormationsComponent implements OnInit {
     return this.formations.filter(formation => formation.id_role === roleId);
   }
 
+  getPastDonneFormations(): Formation[] {
+    return this.formations2.filter(formation => formation.status === 'past');
+  }
+
   deleteParticipant(id_produit: number): void {
     this.formationService.deleteParticipant(this.userId, id_produit).subscribe(
       response => {
         this.loadFormations(); // Refresh the list after deletion
+        this.showPopUp('Désinscription réussie !');
       },
       error => {
         console.error('Error deleting participant', error);
+        this.showPopUp('Erreur lors de la désinscription.');
       }
     );
+  }
+
+  showPopUp(message: string): void {
+    this.popUpMessage = message;
+    this.popUpVisible = true;
+    setTimeout(() => {
+      this.popUpVisible = false;
+    }, 3000); // Hide the pop-up after 3 seconds
   }
 
   hasRole(roleId: number): boolean {
