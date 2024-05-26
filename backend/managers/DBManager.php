@@ -7,7 +7,7 @@ class DBManager
   public function connect()
   {
     try {
-      $this->db = new PDO('mysql:host=127.0.0.1;dbname=ceref2' , "root", "");
+      $this->db = new PDO('mysql:host=127.0.0.1;dbname=ceref' , "root", "");
       $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
       $msg = 'ERREUR PDO dans ' . $e->getFile() . ' Ligne : ' . $e->getLine() . ' : ' . $e->getMessage();

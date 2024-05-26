@@ -9,7 +9,7 @@
                         class="btn btn-sm btn-outline-secondary me-2"
                         type="button"
                     >
-                        <h4>Formations futurs</h4>
+                        <h4>Formations futures</h4>
                     </button>
                 </li>
                 <li class="nav-item">
@@ -32,17 +32,17 @@
                 </li>
                 <li class="nav-item" *ngIf="hasRole(3)">
                   <button (click)="selectMenu('formation')" class="btn btn-sm btn-outline-secondary me-2" type="button">
-                    <h4>Formation donne</h4>
+                    <h4>Formations données</h4>
                   </button>
                 </li>
                 <li class="nav-item" *ngIf="hasRole(2)">
                     <button (click)="selectMenu('gestionnaire')" class="btn btn-sm btn-outline-secondary me-2" type="button">
-                      <h4>Formation donne</h4>
+                      <h4>Formations données</h4>
                     </button>
                   </li>
                   <li class="nav-item" *ngIf="hasRole(1)">
                     <button (click)="selectMenu('admine')" class="btn btn-sm btn-outline-secondary me-2" type="button">
-                      <h4>Formation donne</h4>
+                      <h4>Formations données</h4>
                     </button>
                   </li>
             </ul>
@@ -51,7 +51,7 @@
   
     <div class="content">
         <div *ngIf="selectedMenu === 'future'" class="partie1">
-            <h2 class="text-center mt-2 mb-5">Formations futur</h2>
+            <h2 class="text-center mt-2 mb-5">Formations futures</h2>
             <div *ngFor="let formation of getFilteredFormations('future')">
                 <p class="formation-item">
                     {{ formation.titre }}
@@ -88,35 +88,35 @@
         </div>
   
         <div *ngIf="selectedMenu === 'formation'" class="partie1">
-            <h2 class="text-center mt-2 mb-5">Formation donne</h2>
+            <h2 class="text-center mt-2 mb-5">Formations données</h2>
             <div *ngFor="let formation of getPastDonneFormations()">
                 <p class="formation-item">{{ formation.titre }}</p>
                 <br />
             </div>
             <div *ngIf="getPastDonneFormations().length === 0" class="text-center">
-                <p class="formation-item">Aucune Formation donne disponible.</p>
+                <p class="formation-item">Aucune Formation donnée disponible.</p>
             </div>
         </div>
 
         <div *ngIf="selectedMenu === 'gestionnaire'" class="partie1">
-            <h2 class="text-center mt-2 mb-5">Formation donne</h2>
+            <h2 class="text-center mt-2 mb-5">Formations données</h2>
             <div *ngFor="let formation of getFilteredFormationsByRole(2)">
               <p class="formation-item">{{ formation.titre }}</p>
               <br />
             </div>
             <div *ngIf="getFilteredFormationsByRole(2).length === 0" class="text-center">
-              <p class="formation-item">Aucune Formation donne disponible.</p>
+              <p class="formation-item">Aucune Formation donnée disponible.</p>
             </div>
           </div>
         
           <div *ngIf="selectedMenu === 'admine'" class="partie1">
-            <h2 class="text-center mt-2 mb-5">Formation donne</h2>
+            <h2 class="text-center mt-2 mb-5">Formations données</h2>
             <div *ngFor="let formation of getFilteredFormationsByRole(1)">
               <p class="formation-item">{{ formation.titre }}</p>
               <br />
             </div>
             <div *ngIf="getFilteredFormationsByRole(1).length === 0" class="text-center">
-              <p class="formation-item">Aucune Formation donne disponible.</p>
+              <p class="formation-item">Aucune Formation donnée disponible.</p>
             </div>
           </div>
     </div>
