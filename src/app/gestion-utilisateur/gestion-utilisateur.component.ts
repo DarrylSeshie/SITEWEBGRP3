@@ -1,7 +1,12 @@
-import { Component, OnInit   } from '@angular/core';
+import { Component, OnInit,EventEmitter, Output   } from '@angular/core';
 import { UserService } from '../services/user.service'; // import des services (mehode) et model
 import { User } from '../models/user.model';// un service a besoin de son model
 import { Observable } from 'rxjs';
+import { InstitutionService } from '../services/institution.service';
+import { AdresseService } from '../services/adresse.service';
+import { Institution } from '../models/institution.model';
+import { RegistrationApiService } from '../services/registration-api.service';
+import { Adresse } from '../models/adresse.model';
 
 
 
@@ -31,30 +36,70 @@ export class GestionUtilisateurComponent implements OnInit{
   errorMessage: string = '';
 
   user: User = {
-    id_utilisateur: -1, 
-    civilite: '',        
-    nom: '',             
-    prenom: '',          
-    email: '',           
-    mot_de_passe: '',    
-    gsm: '',             
-    TVA: 'VIDE',            
-    profession: '',     
-    gsm_pro: 'VIDE',        
-    email_pro: 'VIDE',      
-    id_role: 4,         
-    id_institution: -1,  
-    id_adresse: -1
+    id_utilisateur: -1,
+    civilite: '',
+    nom: '',
+    prenom: '',
+    email: '',
+    mot_de_passe: '',
+    gsm: '',
+    profession: '',
+    id_role: 4,
+    id_adresse: -1,
+    id_institution: -1, 
+    adresse: {
+      id_adresse: -1,
+      code_postal: 0,
+      rue_numero: '',
+      localite: '',
+      pays: ''
+    },
+    email_pro: 'VIDE',   
+    gsm_pro: '',
+    giografie: 'VIDE',
+    TVA: '',
+    institution: {
+      id_institution: -1,
+      nom: '',
+      logo: 'null',
+      id_adresse: -1
+      },
+    role: undefined
   };
-
+  institutions: Institution[] = [];
+  adresses : Adresse[] = [];
   UserToUpdate: User | null = null;
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,private service: RegistrationApiService,private institutionService: InstitutionService,private adresseService: AdresseService ) { }
+  @Output() addUserEvent = new EventEmitter();
 
   ngOnInit(): void {
     this.loadUsers();
     this.loadCount();
+    this.loadInstitutions();
+    this.loadAdresses();
 
    
+  }
+  loadInstitutions(): void {
+    this.institutionService.getInstitutions(1, 10).subscribe(
+      (institutions) => {
+        this.institutions = institutions;
+      },
+      (error) => {
+        console.error('Error fetching institutions:', error);
+      }
+    );
+  }
+
+  loadAdresses(): void {
+    this.adresseService.getAdresses(1, 10).subscribe(
+      (adresses) => {
+        this.adresses = adresses;
+      },
+      (error) => {
+        console.error('Error fetching adresses:', error);
+      }
+    );
   }
 
   loadUsers() {
@@ -62,6 +107,24 @@ export class GestionUtilisateurComponent implements OnInit{
   this.users = this.userService.getUsers(this.currentPage, this.pageSize);
   this.showSearchResults = false;
   }
+  saveUser() {
+    const sub = this.service.saveUser(this.user).subscribe({
+      next: (user) => {
+        this.totalUsers ++ ;
+        this.addUserEvent.emit(user);
+        sub.unsubscribe();
+        this.showSuccessToast('Inscription avec succès.');
+        
+      },
+      error: (error) => {
+        this.errorMessage = error.error.error;
+        sub.unsubscribe();
+        console.log('add User Error : ',error);
+        this.showErrorToast('Erreur lors de l\'inscription');
+      }
+    });
+  }
+
 
 loadCount() {
   this.userService.getTotalUsersCount().subscribe(

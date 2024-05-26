@@ -467,49 +467,49 @@ public function selectUserById($userId)
 
 
   public function updateUser($user)
-{
-    $sql = "UPDATE Utilisateur 
-    SET  civilite = :civilite,
-            nom = :nom,
-            prenom = :prenom,
-            email = :email,
-            mot_de_passe = :mot_de_passe,
-            gsm = :gsm,
-            TVA = :TVA,
-            profession = :profession,
-            gsm_pro = :gsm_pro,
-            email_pro = :email_pro,
-            id_role = :id_role,
-            id_institution = :id_institution,
-            id_adresse = :id_adresse
-            WHERE id_utilisateur = :id";
-
-    try {
-        $prep = $this->db->prepare($sql);
-
-        // Liaison des paramètres avec les valeurs de l'objet User
-        $prep->bindValue(':civilite', $user-> getCivilite(), PDO::PARAM_STR);
-        $prep->bindValue(':nom', $user->getNom(), PDO::PARAM_STR);
-        $prep->bindValue(':prenom', $user->getPrenom(), PDO::PARAM_STR);
-        $prep->bindValue(':email', $user->getEmail(), PDO::PARAM_STR);
-        $prep->bindValue(':mot_de_passe', $user->getMotDePasse(), PDO::PARAM_STR);
-        $prep->bindValue(':gsm', $user->getGsm(), PDO::PARAM_STR);
-        $prep->bindValue(':TVA', $user-> getTVA(), PDO::PARAM_STR);
-        $prep->bindValue(':profession', $user->getProfession(), PDO::PARAM_STR);
-        $prep->bindValue(':gsm_pro', $user->getGsmPro(), PDO::PARAM_STR);
-        $prep->bindValue(':email_pro', $user->getEmailPro(), PDO::PARAM_STR);
-        $prep->bindValue(':id_role', $user-> getRole()->getIdRole(), PDO::PARAM_INT);
-        $prep->bindValue(':id_institution', $user->getInstitution()->getIdInstitution(), PDO::PARAM_INT);
-        $prep->bindValue(':id_adresse', $user->getAddress()->getIdAdresse(), PDO::PARAM_INT);
-        $prep->bindValue(':id', $user->getId(), PDO::PARAM_INT); // ID de l'utilisateur à mettre à jour
-
-        $prep->execute();
-    } catch (PDOException $e) {
-        throw $e; // Propager l'exception pour la gestion des erreurs
-    } finally {
-        $prep = null; // Libérer la ressource PDOStatement
-    }
-}
+  {
+      $sql = "UPDATE Utilisateur 
+              SET civilite = :civilite,
+                  nom = :nom,
+                  prenom = :prenom,
+                  email = :email,
+                  mot_de_passe = :mot_de_passe,
+                  gsm = :gsm,
+                  TVA = :TVA,
+                  profession = :profession,
+                  gsm_pro = :gsm_pro,
+                  email_pro = :email_pro,
+                  id_role = :id_role,
+                  id_institution = :id_institution,
+                  id_adresse = :id_adresse
+              WHERE id_utilisateur = :id";
+  
+      try {
+          $prep = $this->db->prepare($sql);
+  
+          // Liaison des paramètres avec les valeurs de l'objet User
+          $prep->bindValue(':civilite', $user->getCivilite(), PDO::PARAM_STR);
+          $prep->bindValue(':nom', $user->getNom(), PDO::PARAM_STR);
+          $prep->bindValue(':prenom', $user->getPrenom(), PDO::PARAM_STR);
+          $prep->bindValue(':email', $user->getEmail(), PDO::PARAM_STR);
+          $prep->bindValue(':mot_de_passe', $user->getMotDePasse(), PDO::PARAM_STR);
+          $prep->bindValue(':gsm', $user->getGsm(), PDO::PARAM_STR);
+          $prep->bindValue(':TVA', $user->getTVA(), PDO::PARAM_STR);
+          $prep->bindValue(':profession', $user->getProfession(), PDO::PARAM_STR);
+          $prep->bindValue(':gsm_pro', $user->getGsmPro(), PDO::PARAM_STR);
+          $prep->bindValue(':email_pro', $user->getEmailPro(), PDO::PARAM_STR);
+          $prep->bindValue(':id_role', $user->getRole()->getIdRole(), PDO::PARAM_INT);
+          $prep->bindValue(':id_institution', $user->getInstitution()->getIdInstitution(), PDO::PARAM_INT);
+          $prep->bindValue(':id_adresse', $user->getAddress()->getIdAdresse(), PDO::PARAM_INT);
+          $prep->bindValue(':id', $user->getId(), PDO::PARAM_INT); // ID de l'utilisateur à mettre à jour
+  
+          $prep->execute();
+      } catch (PDOException $e) {
+          throw $e; // Propager l'exception pour la gestion des erreurs
+      } finally {
+          $prep = null; // Libérer la ressource PDOStatement
+      }
+  }
 
 
 public function updateRole(User $user)

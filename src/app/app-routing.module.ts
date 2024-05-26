@@ -67,7 +67,7 @@ const routes: Routes = [
       path: '', component: ConnexionComponent  // par defaut elle affiche le component login
     },
     {
-      path: 'inscription', component: RegistrationFormComponent  // par defaut elle affiche le component login
+      path: 'inscription', component: RegistrationFormComponent  
     }
   
 ];

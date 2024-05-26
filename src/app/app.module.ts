@@ -58,6 +58,7 @@ import { RegistrationFormComponent } from './registration-form/registration-form
     VoirProfilComponent,
     InscriptionFormationComponent,
     ConnexionComponent,
+    RegistrationFormComponent
     
   
   ],
@@ -68,7 +69,8 @@ import { RegistrationFormComponent } from './registration-form/registration-form
     FormsModule ,
     RouterOutlet,
     ReactiveFormsModule,
-    RegistrationFormComponent
+    
+    
    
   ],
   providers: [ // ajt tout les service  cree ici ici

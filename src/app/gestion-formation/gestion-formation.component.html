@@ -207,6 +207,12 @@
           <input type="number" max="2" class="form-control" id="id_formateur" placeholder="Mettez le code du formateur" [(ngModel)]="produit.id_formateur" name="id_formateur" autofocus required>
           <label for="id_formateur">Code du Formateur</label>
         </div>
+        <div class="form-floating mb-3">
+          <select class="form-control" id="id_formateur" [(ngModel)]="produit.id_formateur"name="id_formateur"  placeholder="Selectionner le formateur">
+            <option *ngFor="let formateur of formateurs" [value]="formateur.id_utilisateur">{{ formateur.nom }}</option>
+          </select>
+          <label for="institution">Formateur</label>
+        </div>
 
         <div class="align-right">
           <button type="submit" id="searchButton" (click)="addFormation(produit)"    (click)="toggleAddProduitForm()">Ajouter</button>
