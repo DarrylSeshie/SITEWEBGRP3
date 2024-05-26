@@ -43,7 +43,7 @@ class RegistrationManager
         //$prepUser->bindValue(':id_institution', $user->getIdInstitution(), PDO::PARAM_INT); // Cette ligne est commentée, assurez-vous qu'elle n'est pas nécessaire
         // Liaison pour l'ID de l'adresse associée à l'utilisateur
         $prepUser->bindValue(':id_adresse', $adresseId, PDO::PARAM_INT);
-        $prepUser->execute();
+        $prepUser->execute() ;
         $user->setId($this->db->lastInsertId());
 
         return true;
