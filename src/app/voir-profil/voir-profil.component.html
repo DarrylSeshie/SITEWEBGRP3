@@ -5,7 +5,6 @@
         <div class="col-lg-8">
           <div class="about-text go-to">
             <h3 class="dark-color" style="margin-top: 30px">À propos de moi</h3>
-            </h6>
             <div class="row about-list">
               <div class="col-md-6">
                 <div class="media">
@@ -49,13 +48,6 @@
                   <label>profession /</label>
                   <p>{{ utilisateur?.profession }}</p>
                 </div>
-
-                <div class="media" *ngIf="utilisateur?.id_role === 3">
-                  <label>Giografie /</label>
-                  <p>{{ utilisateur?.giografie }}</p>
-                </div>
-             
-             
               </div>
             </div>
           </div>
@@ -100,12 +92,12 @@
       <div class="modal-body">
         <form (ngSubmit)="onSubmit()" #errorForm="ngForm">
           <div class="mb-3">
-            <label for="message" class="form-label">Message</label>
+            <label for="message" class="form-label">Veuillez préciser votre nom et prénom lors du signalement de l'erreur</label>
             <textarea
               class="form-control"
               id="message"
               rows="4"
-              placeholder="Décrivez l'erreur"
+              placeholder="Nom + Prénom + Message d'erreur"
               required
               [(ngModel)]="message"
               name="message"

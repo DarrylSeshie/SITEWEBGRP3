@@ -29,7 +29,7 @@ export class VoirProfilComponent implements OnInit {
       this.userService.sendErrorReport(this.message).subscribe(
         response => {
           if (response) {
-            alert('Error message submitted successfully');
+            alert('envoyé');
             this.message = ''; // Clear the form
           } else {
             alert('Error submitting message: ' + response.error);
