@@ -34,6 +34,7 @@ import { VoirProfileService } from './services/voirProfile.service';
 import { RoleService } from './services/role.service';
 import { BackupService } from './services/backup.service';
 import { ConnexionComponent } from './connexion/connexion.component';
+import { RegistrationFormComponent } from './registration-form/registration-form.component';
 
 
 
@@ -56,7 +57,8 @@ import { ConnexionComponent } from './connexion/connexion.component';
     VoirFormationsComponent,
     VoirProfilComponent,
     InscriptionFormationComponent,
-    ConnexionComponent
+    ConnexionComponent,
+    
   
   ],
   imports: [
@@ -65,7 +67,8 @@ import { ConnexionComponent } from './connexion/connexion.component';
     AppRoutingModule,
     FormsModule ,
     RouterOutlet,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RegistrationFormComponent
    
   ],
   providers: [ // ajt tout les service  cree ici ici

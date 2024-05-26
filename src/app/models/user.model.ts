@@ -15,10 +15,17 @@ export interface User {
   gsm_pro?: string;
   email_pro?: string;
   id_role: number;
-  id_institution?: number;
   id_adresse: number;
-  adresse?: Adresse; // Type Adresse pour les détails d'adresse
-  institution?: Institution; // Type Institution pour les détails de l'institution
-  role?: Role; // Type Role pour les détails du rôle */
+  id_institution?: number;
+  adresse?: {
+    code_postal: number;
+    rue_numero: string;
+    localite: string;
+    pays: string;
+  };
+  institution?: Institution;
+  role?: Role;
   giografie?: string;
 }
+
+

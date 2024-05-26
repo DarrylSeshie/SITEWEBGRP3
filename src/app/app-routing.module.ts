@@ -19,6 +19,7 @@ import { VoirProfilComponent } from './voir-profil/voir-profil.component';
 import { GestionnaireComponent } from './gestionnaire/gestionnaire.component';
 import { ConnexionComponent } from './connexion/connexion.component';
 import { adminGuard } from './admin.guard';
+import { RegistrationFormComponent } from './registration-form/registration-form.component';
 
 
 
@@ -64,6 +65,9 @@ const routes: Routes = [
     },
     {
       path: '', component: ConnexionComponent  // par defaut elle affiche le component login
+    },
+    {
+      path: 'inscription', component: RegistrationFormComponent  // par defaut elle affiche le component login
     }
   
 ];
