@@ -23,7 +23,11 @@ export interface User {
     localite: string;
     pays: string;
   };
-  institution?: Institution;
+  institution?: {
+    nom: string;
+    logo: string;
+    id_adresse: number;
+  };
   role?: Role;
   giografie?: string;
 }

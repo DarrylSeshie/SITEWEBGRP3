@@ -9,7 +9,26 @@ class RegistrationManager
   }
 
   public function saveUser($user)
-  {
+{
+    // Vérifier si tous les champs requis sont renseignés
+    if (
+        empty($user->getCivilite()) ||
+        empty($user->getNom()) ||
+        empty($user->getPrenom()) ||
+        empty($user->getEmail()) ||
+        empty($user->getMotDePasse()) ||
+        empty($user->getGsm()) ||
+        empty($user->getTVA()) ||
+        empty($user->getProfession()) ||
+        empty($user->getAddress()->getRueNumero()) ||
+        empty($user->getAddress()->getCodePostal()) ||
+        empty($user->getAddress()->getLocalite()) ||
+        empty($user->getAddress()->getPays())
+    ) {
+        // Si un champ requis est vide, retourner false
+        return false;
+    }
+
     try {
         // Insérer l'adresse
         $sqlAdresse = "INSERT INTO Adresse (rue_numero, code_postal, localite, pays) 
@@ -22,6 +41,8 @@ class RegistrationManager
         $prepAdresse->execute();
         $adresseId = $this->db->lastInsertId();
 
+        $hashedPassword = password_hash($user->getMotDePasse(), PASSWORD_DEFAULT);
+
         // Insérer l'utilisateur avec l'ID de l'adresse
         $sqlUser = "INSERT INTO Utilisateur (civilite, nom, prenom, email, mot_de_passe, gsm, TVA, profession, gsm_pro, email_pro, id_role, id_adresse) 
                     VALUES (:civilite, :nom, :prenom, :email, :mot_de_passe, :gsm, :TVA, :profession, :gsm_pro, :email_pro, :id_role, :id_adresse)";
@@ -31,7 +52,7 @@ class RegistrationManager
         $prepUser->bindValue(':nom', $user->getNom(), PDO::PARAM_STR);
         $prepUser->bindValue(':prenom', $user->getPrenom(), PDO::PARAM_STR);
         $prepUser->bindValue(':email', $user->getEmail(), PDO::PARAM_STR);
-        $prepUser->bindValue(':mot_de_passe', $user->getMotDePasse(), PDO::PARAM_STR);
+        $prepUser->bindValue(':mot_de_passe', $hashedPassword, PDO::PARAM_STR);
         $prepUser->bindValue(':gsm', $user->getGsm(), PDO::PARAM_STR);
         $prepUser->bindValue(':TVA', $user->getTVA(), PDO::PARAM_STR);
         $prepUser->bindValue(':profession', $user->getProfession(), PDO::PARAM_STR);
@@ -55,5 +76,6 @@ class RegistrationManager
         $prepAdresse = null;
         $prepUser = null;
     }
-  }
+}
+
 }

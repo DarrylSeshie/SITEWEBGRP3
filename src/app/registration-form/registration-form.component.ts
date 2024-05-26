@@ -40,7 +40,11 @@ export class RegistrationFormComponent implements OnInit {
     gsm_pro: 'VIDE',
     giografie: 'VIDE',
     TVA: '',
-    institution: undefined,
+    institution: {
+      nom: '',
+      logo: 'null',
+      id_adresse: -1
+      },
     role: undefined
   };
 

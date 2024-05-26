@@ -39,7 +39,7 @@ try {
             exit;
         }
 
-        if (!password_verify($password, password_hash($user->getMotDePasse(), PASSWORD_BCRYPT))) {
+        if (!password_verify($password, $user->getMotDePasse())) {
             http_response_code(401);
             echo json_encode(["error" => "Bad username/password"]);
             exit;
