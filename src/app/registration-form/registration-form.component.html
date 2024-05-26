@@ -1,64 +1,96 @@
-<div class="row mt-3">
+<form (ngSubmit)="saveUser()">
+  <div class="row mt-3">
     <div class="col-3"></div>
     <div class="col form-floating mb-3">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="civilite" placeholder="Civilité" [(ngModel)]="userToAdd.civilite">
+            <input type="text" class="form-control" id="civilite" placeholder="Civilité" [(ngModel)]="userToAdd.civilite" name="civilite">
             <label for="civilite">Civilité</label>
           </div>
       <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="nom" placeholder="Nom" [(ngModel)]="userToAdd.nom">
+        <input type="text" class="form-control" id="nom" placeholder="Nom" [(ngModel)]="userToAdd.nom" name="nom">
         <label for="nom">Nom</label>
       </div>
       <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="prenom" placeholder="Prénom" [(ngModel)]="userToAdd.prenom">
+        <input type="text" class="form-control" id="prenom" placeholder="Prénom" [(ngModel)]="userToAdd.prenom" name="prenom">
         <label for="prenom">Prénom</label>
       </div>
       <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="email" placeholder="Email" [(ngModel)]="userToAdd.email">
+        <input type="email" class="form-control" id="email" placeholder="Email" [(ngModel)]="userToAdd.email" name="email">
         <label for="email">Email</label>
       </div>
       <div class="form-floating mb-3">
-        <input type="password" class="form-control" id="mot_de_passe" placeholder="Mot de passe" [(ngModel)]="userToAdd.mot_de_passe">
+        <input type="password" class="form-control" id="mot_de_passe" placeholder="Mot de passe" [(ngModel)]="userToAdd.mot_de_passe" name="mot_de_passe">
         <label for="mot_de_passe">Mot de passe</label>
       </div>
       <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="gsm" placeholder="Téléphone privé" [(ngModel)]="userToAdd.gsm">
+        <input type="text" class="form-control" id="gsm" placeholder="Téléphone privé" [(ngModel)]="userToAdd.gsm" name="gsm">
         <label for="gsm">Téléphone privé</label>
       </div>
       <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="TVA" placeholder="TVA" [(ngModel)]="userToAdd.TVA">
+        <input type="text" class="form-control" id="TVA" placeholder="TVA" [(ngModel)]="userToAdd.TVA" name="TVA">
         <label for="TVA">TVA</label>
       </div>
       <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="profession" placeholder="Profession" [(ngModel)]="userToAdd.profession">
+        <input type="text" class="form-control" id="profession" placeholder="Profession" [(ngModel)]="userToAdd.profession" name="profession">
         <label for="profession">Profession</label>
       </div>
       <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="gsm_pro" placeholder="Téléphone professionnel" [(ngModel)]="userToAdd.gsm_pro">
+        <input type="text" class="form-control" id="gsm_pro" placeholder="Téléphone professionnel" [(ngModel)]="userToAdd.gsm_pro" name="gsm_pro">
         <label for="gsm_pro">Téléphone professionnel</label>
       </div>
       <div class="form-floating mb-3" *ngIf="userToAdd.adresse">
-        <input type="text" class="form-control" id="rue_numero" placeholder="Numéro de rue" [(ngModel)]="userToAdd.adresse.rue_numero">
+        <input type="text" class="form-control" id="rue_numero" placeholder="Numéro de rue" [(ngModel)]="userToAdd.adresse.rue_numero" name="rue_numero">
         <label for="rue_numero">Numéro de rue</label>
       </div>
       <div class="form-floating mb-3" *ngIf="userToAdd.adresse">
-        <input type="text" class="form-control" id="code_postal" placeholder="Code postal" [(ngModel)]="userToAdd.adresse.code_postal">
+        <input type="text" class="form-control" id="code_postal" placeholder="Code postal" [(ngModel)]="userToAdd.adresse.code_postal" name="code_postal">
         <label for="code_postal">Code postal</label>
       </div>
       <div class="form-floating mb-3" *ngIf="userToAdd.adresse">
-        <input type="text" class="form-control" id="localite" placeholder="Localité" [(ngModel)]="userToAdd.adresse.localite">
+        <input type="text" class="form-control" id="localite" placeholder="Localité" [(ngModel)]="userToAdd.adresse.localite" name="localite">
         <label for="localite">Localité</label>
       </div>
       <div class="form-floating mb-3" *ngIf="userToAdd.adresse">
-        <input type="text" class="form-control" id="pays" placeholder="Pays" [(ngModel)]="userToAdd.adresse.pays">
+        <input type="text" class="form-control" id="pays" placeholder="Pays" [(ngModel)]="userToAdd.adresse.pays" name="pays">
         <label for="pays">Pays</label>
       </div>
       <p style="color: red;">{{errorMessage}}</p>
       <div class="align-right">
-        <button class="btn btn-success" (click)="saveUser()">Enregistrer</button>
+        <button type="submit" class="btn btn-success">Enregistrer</button>
       </div>
     </div>
     <div class="col-3"></div>
   </div>
-  
+</form>
 
+
+ 
+ <!-- Gestion notif-->
+ <div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToastSucchho" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <div class="alert alert-success">
+        {{ successMessage }}
+ </div>
+</div>
+  </div>
+  <div id="liveToastErrhho" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">      
+      <div class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>
