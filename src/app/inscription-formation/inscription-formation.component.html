@@ -25,33 +25,41 @@
   </div>
 </div>
 
-<!-- Pop-up message -->
-<div class="popup" *ngIf="popUpVisible">
-  <div class="popup-content">
-    {{ popUpMessage }}
-  </div>
-</div>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-<style>
-.popup {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: #37f590;
-    padding: 20px;
-    border: 1px solid #ccc;
-    z-index: 1000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    width: 300px; /* Larger width */
-    height: 80px; /* Larger height */
-}
 
-.popup-content {
-    font-size: 18px; /* Larger font size */
-    text-align: center;
-}
-</style>
+
+
+<!-- Gestion notif-->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToastSuccessah" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <div class="alert alert-success">
+        {{ successMessage }}
+      </div>
+    </div>
+  </div>
+  <div id="liveToastErrorah" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">      
+      <div class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>

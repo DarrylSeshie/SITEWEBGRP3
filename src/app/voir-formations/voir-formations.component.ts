@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Formation } from '../models/formation.model';
 import { FormationService } from '../services/formation.service';
-
+declare const bootstrap: any;
 @Component({
   selector: 'app-voir-formations',
   templateUrl: './voir-formations.component.html',
@@ -12,8 +12,12 @@ export class VoirFormationsComponent implements OnInit {
   formations: Formation[] = [];
   formations2: Formation[] = [];
   userId: number;
-  popUpVisible: boolean = false;
-  popUpMessage: string = '';
+ 
+
+
+   // message de notifs
+   successMessage: string = '';
+   errorMessage: string = '';
 
   constructor(private formationService: FormationService) {
     this.userId = Number(localStorage.getItem('userId'));
@@ -65,24 +69,35 @@ export class VoirFormationsComponent implements OnInit {
     this.formationService.deleteParticipant(this.userId, id_produit).subscribe(
       response => {
         this.loadFormations(); // Refresh the list after deletion
-        this.showPopUp('Désinscription réussie !');
+        this.showSuccessToast(' Vous vous êtes bien désinscris ');
       },
       error => {
         console.error('Error deleting participant', error);
-        this.showPopUp('Erreur lors de la désinscription.');
+        this.showErrorToast('Erreur lors de la desinscription.');
       }
     );
   }
 
-  showPopUp(message: string): void {
-    this.popUpMessage = message;
-    this.popUpVisible = true;
-    setTimeout(() => {
-      this.popUpVisible = false;
-    }, 3000); // Hide the pop-up after 3 seconds
-  }
+
 
   hasRole(roleId: number): boolean {
     return this.formations.some(formation => formation.id_role === roleId);
   }
+
+  private showSuccessToast(message: string) {
+    this.successMessage = message;
+    const toastElement = document.getElementById('liveToastSuccessahh');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.errorMessage = '';
+  }
+
+  private showErrorToast(message: string) {
+    const toastElement = document.getElementById('liveToastErrorahh');
+    const toastBootstrap = new bootstrap.Toast(toastElement);
+    toastBootstrap.show();
+    this.errorMessage = message;
+    this.successMessage = '';
+  }
+
 }
