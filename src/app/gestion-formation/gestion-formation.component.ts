@@ -6,6 +6,12 @@ import { TypeProduit } from '../models/typeProduit.model';
 import { TypeProduitService } from '../services/typeProduit.service';
 import { User } from '../models/user.model';
 import { FormateurService } from '../services/formateur.service';
+import { LieuService } from '../services/lieu.service';
+import { Lieu } from '../models/lieu.model';
+import { ImageService } from '../services/image.service';
+import { Image } from '../models/image.model';
+
+
 
 declare const bootstrap: any;
 @Component({
@@ -54,17 +60,56 @@ export class GestionFormationComponent {
     id_formateur: -1,
   };
   formateurs : User[] = [];
+  lieux : Lieu[] = [];
+  types : TypeProduit[] = [];
+  images : Image[] = [];
 
 
   ProduitToUpdate: Formation | null = null;
-  constructor(private formationService:FormationService,private formateurService: FormateurService) { }
+  constructor(private formationService:FormationService,private formateurService: FormateurService,
+    private lieuService: LieuService ,private imageService: ImageService,
+    private typeService: TypeProduitService
+  ) { }
 
   ngOnInit(): void {
     this.loadFormations();
     this.loadCount();
     this.loadFormateurs();
+    this.loadLieux();
+    this.loadTypesProduits();
+    this.loadImages();
+  }
+  loadTypesProduits(){
+    this.typeService.getTypeProduits(1, 10).subscribe(
+      (types) => {
+        this.types = types;
+      },
+      (error) => {
+        console.error('Error fetching formateurs:', error);
+      }
+    );
+  }
+  loadImages(){
+    this.imageService.getImages(1, 20).subscribe(
+      (images) => {
+        this.images = images;
+      },
+      (error) => {
+        console.error('Error fetching formateurs:', error);
+      }
+    );
   }
   
+  loadLieux(){
+    this.lieuService.getLieux(1, 20).subscribe(
+      (lieux) => {
+        this.lieux = lieux;
+      },
+      (error) => {
+        console.error('Error fetching formateurs:', error);
+      }
+    );
+  }
   loadFormateurs(){
     this.formateurService.getUsers(1, 20).subscribe(
       (formateurs) => {
