@@ -191,22 +191,28 @@
           <input type="number" max="1000" class="form-control" id="prix" placeholder="prix" [(ngModel)]="produit.prix" name="prix" autofocus required>
           <label for="prix">prix</label>
         </div>
+    
         <div class="form-floating mb-3">
-          <input type="number" class="form-control" id="id_image" placeholder="id_image" [(ngModel)]="produit.id_image" name="id_image" autofocus required>
-          <label for="id_image">id_image</label>
+          <select class="form-control" id="id_imager" [(ngModel)]="produit.id_image"name="id_image"  placeholder="Selectionner le formateur">
+            <option *ngFor="let image of images" [value]="image.id_image">{{ image.nom }}</option>
+          </select>
+          <label for="id_image">Image</label>
+        </div>
+       
+        <div class="form-floating mb-3">
+          <select class="form-control" id="id_lieu" [(ngModel)]="produit.id_lieu"name="id_lieu"  placeholder="Selectionner le formateur">
+            <option *ngFor="let lieu of lieux" [value]="lieu.id_lieu">{{ lieu.nom }}</option>
+          </select>
+          <label for="id_lieu">Lieu</label>
         </div>
         <div class="form-floating mb-3">
-          <input type="number" class="form-control" id="id_lieu" placeholder="id_lieu" [(ngModel)]="produit.id_lieu" name="id_lieu" autofocus required>
-          <label for="id_lieu">id_lieu</label>
+          <select class="form-control" id="id_type_produit" [(ngModel)]="produit.id_type_produit"name="id_type_produit"  placeholder="Selectionner le formateur">
+              <option value="1">Formation</option>
+              <option value="2">Journée</option>
+          </select>
+          <label for="id_type_produit">Type</label>
         </div>
-        <div class="form-floating mb-3">
-          <input type="number" max="2" class="form-control" id="id_type_produit" placeholder="id_type_produit" [(ngModel)]="produit.id_type_produit" name="id_type_produit" autofocus required>
-          <label for="id_type_produit">type produit</label>
-        </div>
-        <div class="form-floating mb-3">
-          <input type="number" max="2" class="form-control" id="id_formateur" placeholder="Mettez le code du formateur" [(ngModel)]="produit.id_formateur" name="id_formateur" autofocus required>
-          <label for="id_formateur">Code du Formateur</label>
-        </div>
+      
         <div class="form-floating mb-3">
           <select class="form-control" id="id_formateur" [(ngModel)]="produit.id_formateur"name="id_formateur"  placeholder="Selectionner le formateur">
             <option *ngFor="let formateur of formateurs" [value]="formateur.id_utilisateur">{{ formateur.nom }}</option>
