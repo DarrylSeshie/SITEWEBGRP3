@@ -1,3 +1,9 @@
 .align-right {
     text-align: right;
   }
+.text {
+  text-align: center;
+}
+#mauve{
+  background-color: #800860;
+}

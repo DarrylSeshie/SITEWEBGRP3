@@ -22,14 +22,16 @@ $http_method = $_SERVER['REQUEST_METHOD'];
 
 
 if ($http_method === "POST") {
-      // Requête POST pour ajouter un nouvel utilisateur
-      $jsonStr = file_get_contents('php://input');
-      $userArray = json_decode($jsonStr, true);
-  
-      if (!empty($userArray) && is_array($userArray)) {
+  // Requête POST pour ajouter un nouvel utilisateur
+  $jsonStr = file_get_contents('php://input');
+  $userArray = json_decode($jsonStr, true);
+
+  if (!empty($userArray) && is_array($userArray)) {
+      // Vérification de l'adresse e-mail
+      if (filter_var($userArray['email'], FILTER_VALIDATE_EMAIL)) {
           // Validation réussie, création de l'objet User
           $user = new User($userArray);
-  
+
           try {
               // Enregistrement de l'utilisateur
               $registrationManager->saveUser($user);
@@ -41,16 +43,22 @@ if ($http_method === "POST") {
               echo json_encode(array("error" => $e->getMessage()));
           }
       } else {
-          // Si les données JSON sont vides ou invalides
+          // Si l'adresse e-mail est invalide
           http_response_code(400);
-          echo json_encode(array("error" => "Données JSON invalides pour l'ajout d'utilisateur"));
+          echo json_encode(array("error" => "Adresse e-mail invalide"));
       }
+  } else {
+      // Si les données JSON sont vides ou invalides
+      http_response_code(400);
+      echo json_encode(array("error" => "Données JSON invalides pour l'ajout d'utilisateur"));
+  }
+
+} elseif ($http_method === "OPTIONS") {
+ 
+  http_response_code(200);
   
-}  elseif ($http_method === "OPTIONS") {
-   
-  http_response_code(200) ;
 } else {
   http_response_code(400);
   echo json_encode(array("error" => "Méthode non implémentée"));
 }
-?>
+

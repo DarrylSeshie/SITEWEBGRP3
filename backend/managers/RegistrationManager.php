@@ -10,25 +10,7 @@ class RegistrationManager
     }
 
     public function saveUser($user)
-    {
-        // Vérifier si tous les champs requis sont renseignés
-        if (
-            empty($user->getCivilite()) ||
-            empty($user->getNom()) ||
-            empty($user->getPrenom()) ||
-            empty($user->getEmail()) ||
-            empty($user->getMotDePasse()) ||
-            empty($user->getGsm()) ||
-            empty($user->getTVA()) ||
-            empty($user->getProfession()) ||
-            empty($user->getAddress()->getRueNumero()) ||
-            empty($user->getAddress()->getCodePostal()) ||
-            empty($user->getAddress()->getLocalite()) ||
-            empty($user->getAddress()->getPays())
-        ) {
-            // Si un champ requis est vide, retourner false
-            return false;
-        }
+    {   
 
         try {
             // Insérer l'adresse

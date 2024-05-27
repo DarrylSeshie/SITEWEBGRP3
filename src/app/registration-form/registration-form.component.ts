@@ -39,9 +39,9 @@ export class RegistrationFormComponent implements OnInit {
       localite: '',
       pays: ''
     },
-    email_pro: 'VIDE',   
-    gsm_pro: 'VIDE',
-    giografie: 'VIDE',
+    email_pro: '',   
+    gsm_pro: '',
+    giografie: '',
     TVA: '',
     institution: {
       id_institution: -1,
@@ -77,8 +77,7 @@ export class RegistrationFormComponent implements OnInit {
         this.totalUsers ++ ;
         this.addUserEvent.emit(user);
         sub.unsubscribe();
-        this.showSuccessToast('Inscription avec succès.');
-        
+        this.router.navigate(['/']);
       },
       error: (error) => {
         this.errorMessage = error.error.error;
