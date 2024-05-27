@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : lun. 27 mai 2024 à 02:17
+-- Généré le : lun. 27 mai 2024 à 02:55
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.2.12
 
@@ -74,15 +74,15 @@ CREATE TABLE `donne` (
 --
 
 INSERT INTO `donne` (`id_utilisateur`, `id_produit`) VALUES
+(5, 1),
+(5, 2),
+(5, 5),
+(5, 9),
 (11, 4),
-(11, 5),
 (12, 3),
 (12, 6),
-(12, 9),
-(15, 2),
 (15, 6),
 (15, 7),
-(19, 1),
 (19, 4);
 
 -- --------------------------------------------------------
@@ -219,6 +219,7 @@ CREATE TABLE `participe` (
 --
 
 INSERT INTO `participe` (`id_utilisateur`, `id_produit`) VALUES
+(5, 1),
 (20, 1),
 (20, 2),
 (20, 3),
@@ -267,15 +268,15 @@ CREATE TABLE `produit` (
 --
 
 INSERT INTO `produit` (`id_produit`, `titre`, `sous_titre`, `date_debut`, `date_fin`, `date_fin_inscription`, `descriptif`, `objectif`, `contenu`, `methodologie`, `public_cible`, `prix`, `id_image`, `id_lieu`, `id_type_produit`) VALUES
-(1, 'F02', 'Accompagner l\'etudiant infirmier en stage ', '2024-05-20', '2024-05-23', '2024-05-16', 'Adopter la posture de refecrence/coach en equipe...', 'Devenir pro', 'Contenu de la formation 1', 'Méthodologie de la formation 1', 'Etudiant', 10, 12, 1, 1),
-(2, 'R03', 'Solliciter l\'expression des émotion', '2024-05-23', '2024-05-30', '2024-05-21', 'Solliciter l\'expression des émotions chez les patients et résidents par le biais du journal créatif', 'Objectif de la formation 2', 'Contenu de la formation 2', 'Méthodologie de la formation 2', 'Etudiant', 12, 10, 1, 1),
+(1, 'F02', 'Accompagner l\'etudiant infirmier en stage ', '2024-06-07', '2024-06-14', '2024-06-05', 'Adopter la posture de refecrence/coach en equipe...', 'Devenir pro', 'Contenu de la formation 1', 'Méthodologie de la formation 1', 'Etudiant', 10, 12, 1, 1),
+(2, 'R03', 'Solliciter l\'expression des émotion', '2024-06-10', '2024-06-17', '2024-05-07', 'Solliciter l\'expression des émotions chez les patients et résidents par le biais du journal créatif', 'Objectif de la formation 2', 'Contenu de la formation 2', 'Méthodologie de la formation 2', 'Etudiant', 12, 10, 1, 1),
 (3, 'F03', 'Description de la formation 3', '2024-07-01', '2024-07-10', '2024-06-25', 'Ceci est le descriptif de la formation 3', 'Objectif de la formation 3', 'Contenu de la formation 3', 'Méthodologie de la formation 3', 'Public cible de la formation 3', 20, 3, 1, 1),
 (4, 'FQ4', 'Description de la formation 4', '2024-08-01', '2024-08-10', '2024-07-25', 'Ceci est le descriptif de la formation 4', 'Objectif de la formation 4', 'Contenu de la formation 4', 'Méthodologie de la formation 4', 'Public cible de la formation 4', 11, 4, 1, 1),
-(5, 'PH05', 'Description de la formation 5', '2024-09-01', '2024-09-10', '2024-08-25', 'Ceci est le descriptif de la formation 5', 'Objectif de la formation 5', 'Contenu de la formation 5', 'Méthodologie de la formation 5', 'Public cible de la formation 5', 5, 5, 1, 1),
+(5, 'PH05', 'Description de la formation 5', '2024-04-10', '2024-04-17', '2024-04-05', 'Ceci est le descriptif de la formation 5', 'Objectif de la formation 5', 'Contenu de la formation 5', 'Méthodologie de la formation 5', 'Public cible de la formation 5', 5, 5, 1, 1),
 (6, 'Q08', 'Initiation à l\'evaluation des apt pro', '2024-05-15', '2024-05-17', '2024-05-12', 'Il est parfois difficile d\'evaluer les aptitude professionelles de maniere objective .\r\nla methode ESAP change la donne.', 'Objectif de la journée 1', 'Contenu de la journée 1', 'Méthodologie de la journée 1', 'Travailleur', 50, 9, 1, 2),
 (7, 'NM22', 'Description de la journée 2', '2024-06-15', '2024-06-15', '2024-06-10', 'Ceci est le descriptif de la journée 2', 'Objectif de la journée 2', 'Contenu de la journée 2', 'Méthodologie de la journée 2', 'Public cible de la journée 2', 60, 11, 1, 2),
 (8, 'JDF003', 'Description de la journée 3', '2024-07-15', '2024-07-15', '2024-07-10', 'Ceci est le descriptif de la journée 3', 'Objectif de la journée 3', 'Contenu de la journée 3', 'Méthodologie de la journée 3', 'Public cible de la journée 3', 55, 3, 1, 2),
-(9, 'JBBL09', 'Description de la journée 4', '2024-08-15', '2024-08-15', '2024-08-10', 'Ceci est le descriptif de la journée 4', 'Objectif de la journée 4', 'Contenu de la journée 4', 'Méthodologie de la journée 4', 'Public cible de la journée 4', 65, 2, 1, 2),
+(9, 'JBBL09', 'Description de la journée 4', '2024-03-15', '2024-03-17', '2024-03-10', 'Ceci est le descriptif de la journée 4', 'Objectif de la journée 4', 'Contenu de la journée 4', 'Méthodologie de la journée 4', 'Public cible de la journée 4', 65, 2, 1, 2),
 (10, 'T76Days', 'Description de la journée 5', '2024-09-15', '2024-09-15', '2024-09-10', 'Ceci est le descriptif de la journée 6', 'Objectif de la journée 6', 'Contenu de la journée 5', 'Méthodologie de la journée 5', 'Public cible de la journée 5', 705, 1, 1, 2);
 
 -- --------------------------------------------------------
@@ -384,8 +385,8 @@ INSERT INTO `utilisateur` (`id_utilisateur`, `civilite`, `nom`, `prenom`, `email
 (39, 'Mme', 'Paya', 'team', 'Team.paya@example.com', '$2y$10$bZOgNA/cew9YpTZxvZzEPuNqnrRyvE9eb//kSpTWIAcB1R5V5D1bi', '0734567890', 'CH987654321', 'Pharmacienne', '0490123456', 'c.leroy@pharma.ch', 4, 2, 4),
 (40, 'M.', 'Anani', 'Shalom', 'Shalom.anani@gmail.com', '$2y$10$bZOgNA/cew9YpTZxvZzEPuNqnrRyvE9eb//kSpTWIAcB1R5V5D1bi', '0790123456', 'AT321987654', 'Médecin urgentiste', '0487654321', 'c.sanchez@hopital.at', 3, 1, 2),
 (41, 'M.', 'Danne', 'Soanne', 'Soanne.LPB@example.com', '$2y$10$bZOgNA/cew9YpTZxvZzEPuNqnrRyvE9eb//kSpTWIAcB1R5V5D1bi', '0612345678', 'BE123456789', 'Médecin généraliste', '0478901234', 'jean.dupont@clinique.com', 4, 1, 2),
-(42, 'Mlle', 'Seshie', 'Jeremie', 'Jeremie.Seshie@gmail.com', '$2y$10$bZOgNA/cew9YpTZxvZzEPuNqnrRyvE9eb//kSpTWIAcB1R5V5D1bi', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4);
-
+(42, 'Mlle', 'Seshie', 'Jeremie', 'Jeremie.Seshie@gmail.com', '$2y$10$bZOgNA/cew9YpTZxvZzEPuNqnrRyvE9eb//kSpTWIAcB1R5V5D1bi', '0654321876', 'DE654321789', 'Kinésithérapeute', '0478901234', 's.lefevre@cabinet.de', 4, 2, 4),
+(93, 'Mme', 'HDE', 'wooo', 'dsn2ur@gmaidsgdsfsdfgfgsdfgdsfl.com', 'AdminHelha1234', '0483574178', 'BE77895641', 'Etudiante', '01478', 'VIDE', 4, 4, 4);
 
 --
 -- Index pour les tables déchargées

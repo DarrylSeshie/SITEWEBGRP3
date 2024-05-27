@@ -1,155 +1,148 @@
 <body class="body">
-    <br />
-    <nav class="navbar navbar-expand-lg navbar-light bg-light custom-nav" style="right: 150px;">
-        <div class="container d-flex">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <button
-                        (click)="selectMenu('future')"
-                        class="btn btn-sm btn-outline-secondary me-2"
-                        type="button">
-                        <h4>Formations futures</h4>
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button
-                        (click)="selectMenu('past')"
-                        class="btn btn-sm btn-outline-secondary me-2"
-                        type="button"
-                    >
-                        <h4>Formations passées</h4>
-                    </button>
-                </li>
-                <li class="nav-item">
-                    <button
-                        (click)="selectMenu('in_process')"
-                        class="btn btn-sm btn-outline-secondary me-2"
-                        type="button"
-                    >
-                        <h4>Formations en cours</h4>
-                    </button>
-                </li>
-                <li class="nav-item" *ngIf="hasRole(3)">
-                  <button (click)="selectMenu('formation')" class="btn btn-sm btn-outline-secondary me-2" type="button">
-                    <h4>Formations données</h4>
-                  </button>
-                </li>
-                <li class="nav-item" *ngIf="hasRole(2)">
-                    <button (click)="selectMenu('gestionnaire')" class="btn btn-sm btn-outline-secondary me-2" type="button">
-                      <h4>Formations données</h4>
-                    </button>
-                  </li>
-                  <li class="nav-item" *ngIf="hasRole(1)">
-                    <button (click)="selectMenu('admine')" class="btn btn-sm btn-outline-secondary me-2" type="button">
-                      <h4>Formations données</h4>
-                    </button>
-                  </li>
-            </ul>
-        </div>
-    </nav>
-  
-    <div class="content">
-        <div *ngIf="selectedMenu === 'future'" class="partie1">
-            <h2 class="text-center mt-2 mb-5">Formations futures</h2>
-            <div *ngFor="let formation of getFilteredFormations('future')">
-                <p class="formation-item">
-                    {{ formation.titre }}
-                    <button class="btn btn-light annule-btn" type="button" (click)="deleteParticipant(formation.id_produit)">
-                        Annuler
-                    </button>
-                </p>
-                <br />
-            </div>
-            <div *ngIf="getFilteredFormations('future').length === 0" class="text-center">
-                <p class="formation-item">Aucune formation future disponible.</p>
-            </div>
-        </div>
-        <div *ngIf="selectedMenu === 'past'" class="partie1">
-            <h2 class="text-center mt-2 mb-5">Formations passées</h2>
-            <div *ngFor="let formation of getFilteredFormations('past')">
-                <p class="formation-item">{{ formation.titre }}</p>
-                <br />
-            </div>
-            <div *ngIf="getFilteredFormations('past').length === 0" class="text-center">
-                <p class="formation-item">Aucune formation passée disponible.</p>
-            </div>
-        </div>
-  
-        <div *ngIf="selectedMenu === 'in_process'" class="partie1">
-            <h2 class="text-center mt-2 mb-5">Formations en cours</h2>
-            <div *ngFor="let formation of getFilteredFormations('in process')">
-                <p class="formation-item">{{ formation.titre }}</p>
-                <br />
-            </div>
-            <div *ngIf="getFilteredFormations('in process').length === 0" class="text-center">
-                <p class="formation-item">Aucune formation en cours disponible.</p>
-            </div>
-        </div>
-  
-        <div *ngIf="selectedMenu === 'formation'" class="partie1">
-            <h2 class="text-center mt-2 mb-5">Formations données</h2>
-            <div *ngFor="let formation of getPastDonneFormations()">
-                <p class="formation-item">{{ formation.titre }}</p>
-                <br />
-            </div>
-            <div *ngIf="getPastDonneFormations().length === 0" class="text-center">
-                <p class="formation-item">Aucune Formation donnée disponible.</p>
-            </div>
-        </div>
-
-        <div *ngIf="selectedMenu === 'gestionnaire'" class="partie1">
-            <h2 class="text-center mt-2 mb-5">Formations données</h2>
-            <div *ngFor="let formation of getFilteredFormationsByRole(2)">
-              <p class="formation-item">{{ formation.titre }}</p>
-              <br />
-            </div>
-            <div *ngIf="getFilteredFormationsByRole(2).length === 0" class="text-center">
-              <p class="formation-item">Aucune Formation donnée disponible.</p>
-            </div>
-          </div>
-        
-          <div *ngIf="selectedMenu === 'admine'" class="partie1">
-            <h2 class="text-center mt-2 mb-5">Formations données</h2>
-            <div *ngFor="let formation of getFilteredFormationsByRole(1)">
-              <p class="formation-item">{{ formation.titre }}</p>
-              <br />
-            </div>
-            <div *ngIf="getFilteredFormationsByRole(1).length === 0" class="text-center">
-              <p class="formation-item">Aucune Formation donnée disponible.</p>
-            </div>
-          </div>
+  <br />
+  <nav class="navbar navbar-expand-lg navbar-light bg-light custom-nav" style="right: 150px;">
+    <div class="container d-flex">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <button (click)="selectMenu('future')" class="btn btn-sm btn-outline-secondary me-2" type="button">
+            <h4>Formations futures</h4>
+          </button>
+        </li>
+        <li class="nav-item">
+          <button (click)="selectMenu('past')" class="btn btn-sm btn-outline-secondary me-2" type="button">
+            <h4>Formations passées</h4>
+          </button>
+        </li>
+        <li class="nav-item">
+          <button (click)="selectMenu('in_process')" class="btn btn-sm btn-outline-secondary me-2" type="button">
+            <h4>Formations en cours</h4>
+          </button>
+        </li>
+        <li class="nav-item" *ngIf="hasRole(3)">
+          <button (click)="selectMenu('formation')" class="btn btn-sm btn-outline-secondary me-2" type="button">
+            <h4>Formations données</h4>
+          </button>
+        </li>
+        <li class="nav-item" *ngIf="hasRole(2)">
+          <button (click)="selectMenu('gestionnaire')" class="btn btn-sm btn-outline-secondary me-2" type="button">
+            <h4>Formations données</h4>
+          </button>
+        </li>
+        <li class="nav-item" *ngIf="hasRole(1)">
+          <button (click)="selectMenu('admine')" class="btn btn-sm btn-outline-secondary me-2" type="button">
+            <h4>Formations données</h4>
+          </button>
+        </li>
+      </ul>
     </div>
+  </nav>
 
-    
-</body>
-
-
-<!-- Gestion notif-->
-<div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div id="liveToastSuccessahh" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
-        <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
-        <strong class="me-auto">ceREF</strong>
-        <small>Maintenant</small>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+  <div class="content">
+    <div *ngIf="selectedMenu === 'future'" class="partie1">
+      <h2 class="text-center mt-2 mb-5">Formations futures</h2>
+      <div *ngFor="let formation of getFilteredFormations('future')">
+        <p class="formation-item">
+          {{ formation.titre }}
+          <button class="btn btn-light annule-btn" type="button" (click)="deleteParticipant(formation.id_produit)">
+            Annuler
+          </button>
+        </p>
+        <br />
       </div>
-      <div class="toast-body">
-        <div class="alert alert-success">
-          {{ successMessage }}
-        </div>
+      <div *ngIf="getFilteredFormations('future').length === 0" class="text-center">
+        <p class="formation-item">Aucune formation future disponible.</p>
       </div>
     </div>
-    <div id="liveToastErrorahh" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="toast-header">
-        <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
-        <strong class="me-auto">ceREF</strong>
-        <small>Maintenant</small>
-        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    <div *ngIf="selectedMenu === 'past'" class="partie1">
+      <h2 class="text-center mt-2 mb-5">Formations passées</h2>
+      <div *ngFor="let formation of getFilteredFormations('past')">
+        <p class="formation-item">{{ formation.titre }}</p>
+        <br />
       </div>
-      <div class="toast-body">      
-        <div class="alert alert-danger">
-          {{ errorMessage }}
-        </div>
+      <div *ngIf="getFilteredFormations('past').length === 0" class="text-center">
+        <p class="formation-item">Aucune formation passée disponible.</p>
+      </div>
+    </div>
+
+    <div *ngIf="selectedMenu === 'in_process'" class="partie1">
+      <h2 class="text-center mt-2 mb-5">Formations en cours</h2>
+      <div *ngFor="let formation of getFilteredFormations('in process')">
+        <p class="formation-item">{{ formation.titre }}</p>
+        <br />
+      </div>
+      <div *ngIf="getFilteredFormations('in process').length === 0" class="text-center">
+        <p class="formation-item">Aucune formation en cours disponible.</p>
+      </div>
+    </div>
+
+    <div *ngIf="selectedMenu === 'formation'" class="partie1">
+      <h2 class="text-center mt-2 mb-5">Formations données</h2>
+      <div *ngFor="let formation of formations2">
+        <p class="formation-item">{{ formation.titre }}</p>
+        <br />
+      </div>
+      <div *ngIf="formations2.length === 0" class="text-center">
+        <p class="formation-item">Aucune formation donnée disponible.</p>
+      </div>
+    </div>
+
+    <div *ngIf="selectedMenu === 'gestionnaire'" class="partie1">
+      <h2 class="text-center mt-2 mb-5">Formations données</h2>
+      <div *ngFor="let formation of getFilteredFormationsByRole(2)">
+        <p class="formation-item">{{ formation.titre }}</p>
+        <br />
+      </div>
+      <div *ngIf="getFilteredFormationsByRole(2).length === 0" class="text-center">
+        <p class="formation-item">Aucune formation donnée disponible.</p>
+      </div>
+    </div>
+
+    <div *ngIf="selectedMenu === 'admine'" class="partie1">
+      <h2 class="text-center mt-2 mb-5">Formations données</h2>
+      <div *ngFor="let formation of getFilteredFormationsByRole(1)">
+        <p class="formation-item">{{ formation.titre }}</p>
+        <br />
+      </div>
+      <div *ngIf="getFilteredFormationsByRole(1).length === 0" class="text-center">
+        <p class="formation-item">Aucune formation donnée disponible.</p>
       </div>
     </div>
   </div>
+
+  <div *ngIf="selectedFormation">
+    <h2>Détails de la formation</h2>
+    <p>ID: {{ selectedFormation.id }}</p>
+    <p>Titre: {{ selectedFormation.titre }}</p>
+    <p>Description: {{ selectedFormation.description }}</p>
+  </div>
+</body>
+
+<!-- Gestion notif-->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="liveToastSuccessahh" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">
+      <div class="alert alert-success">
+        {{ successMessage }}
+      </div>
+    </div>
+  </div>
+  <div id="liveToastErrorahh" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <img src="/assets/fleche_ceref.jpeg" class="rounded me-2" alt="logo_ceref" style="width: 15px; height: 15px;">
+      <strong class="me-auto">ceREF</strong>
+      <small>Maintenant</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body">      
+      <div class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>

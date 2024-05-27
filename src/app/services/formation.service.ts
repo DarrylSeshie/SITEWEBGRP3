@@ -45,7 +45,7 @@ export class FormationService {
   }
 
   getDonneFormationsByUser(userId: number): Observable<Formation[]> {
-    const url = `http://localhost/PROJET_ceREF/backend/donne.php?id_utilisateur=${userId}`;
+    const url = `http://localhost/PROJET_ceREF/backend/donne.php?id=${userId}`;
     return this.http.get<Formation[]>(url);
   }
 

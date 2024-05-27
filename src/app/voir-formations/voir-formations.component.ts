@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Formation } from '../models/formation.model';
 import { FormationService } from '../services/formation.service';
 declare const bootstrap: any;
+
 @Component({
   selector: 'app-voir-formations',
   templateUrl: './voir-formations.component.html',
@@ -10,14 +11,12 @@ declare const bootstrap: any;
 export class VoirFormationsComponent implements OnInit {
   selectedMenu: string = 'future';
   formations: Formation[] = [];
-  formations2: Formation[] = [];
+  formations2: any[] = [];
   userId: number;
- 
+  selectedFormation: any = null;
 
-
-   // message de notifs
-   successMessage: string = '';
-   errorMessage: string = '';
+  successMessage: string = '';
+  errorMessage: string = '';
 
   constructor(private formationService: FormationService) {
     this.userId = Number(localStorage.getItem('userId'));
@@ -42,15 +41,44 @@ export class VoirFormationsComponent implements OnInit {
           console.error('Error fetching formations', error);
         }
       );
+      this.loadDonneFormation();
+    }
+  }
+
+  loadDonneFormation(): void {
+    if (this.userId) {
       this.formationService.getDonneFormationsByUser(this.userId).subscribe(
-        formations => {
-          this.formations2 = formations;
+        lieux => {
+          this.formations2 = [];
+          lieux.forEach(lieu => {
+            this.formationService.getFormationById(lieu.id_produit).subscribe(
+              formation => {
+                this.formations2.push(formation);
+                console.log('Formation ajoutée:', formation);
+              },
+              error => {
+                console.error('Error fetching formation details:', error);
+              }
+            );
+          });
         },
         error => {
-          console.error('Error fetching donne formations', error);
+          console.error('Error fetching donne formations:', error);
         }
       );
     }
+  }
+
+  selectFormation(formationId: number): void {
+    this.formationService.getFormationById(formationId).subscribe(
+      formation => {
+        this.selectedFormation = formation;
+        console.log('Détails de la formation:', formation);
+      },
+      error => {
+        console.error('Error fetching formation:', error);
+      }
+    );
   }
 
   getFilteredFormations(status: string): Formation[] {
@@ -69,16 +97,14 @@ export class VoirFormationsComponent implements OnInit {
     this.formationService.deleteParticipant(this.userId, id_produit).subscribe(
       response => {
         this.loadFormations(); // Refresh the list after deletion
-        this.showSuccessToast(' Vous vous êtes bien désinscris ');
+        this.showSuccessToast('Vous vous êtes bien désinscrit');
       },
       error => {
         console.error('Error deleting participant', error);
-        this.showErrorToast('Erreur lors de la desinscription.');
+        this.showErrorToast('Erreur lors de la désinscription.');
       }
     );
   }
-
-
 
   hasRole(roleId: number): boolean {
     return this.formations.some(formation => formation.id_role === roleId);
@@ -93,11 +119,10 @@ export class VoirFormationsComponent implements OnInit {
   }
 
   private showErrorToast(message: string) {
+    this.errorMessage = message;
+    this.successMessage = '';
     const toastElement = document.getElementById('liveToastErrorahh');
     const toastBootstrap = new bootstrap.Toast(toastElement);
     toastBootstrap.show();
-    this.errorMessage = message;
-    this.successMessage = '';
   }
-
 }
